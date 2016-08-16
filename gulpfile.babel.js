@@ -15,8 +15,12 @@ import webpack from 'webpack-stream';
 const SOURCE = './source';
 const OUT = './www';
 
+// формируем пути ко всем статичным файлам, которые нам нужно просто скопировать
+// в конечную директорию (не обрабатывая их)
 const notStaticDirs = ['styles', 'scripts'];
-const staticResourcesSrc = notStaticDirs.map((dir) => `${SOURCE}/!${dir}/**/*`).concat([`${SOURCE}/**/*`]);
+const staticResourcesSrc = notStaticDirs
+	.map((dir) => `${SOURCE}/!${dir}/**/*`)
+	.concat([`${SOURCE}/**/*`]);
 
 
 function errorHandler(taskName) {
