@@ -12,5 +12,6 @@ module.exports = {
         "no-use-before-define": ["error", "nofunc"],
         "comma-dangle": ["error", "always-multiline"],
         "no-param-reassign": "off",
+		"react/require-extension": "off"
     }
 };
