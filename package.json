@@ -17,11 +17,17 @@
   "bugs": {
     "url": "https://github.com/yandexdataschool/prj-c-dudeka/issues"
   },
+  "scripts": {
+    "test": "eslint ." 
+  },
   "homepage": "",
   "devDependencies": {
     "babel": "^6.5.2",
+    "babel-core": "^6.13.2",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.13.2",
+    "eslint": "^3.3.1",
+    "eslint-plugin-react": "^6.1.1",
     "gulp": "^3.9.1",
     "gulp-plumber": "^1.1.0",
     "gulp-plumber-error-handler": "^1.0.0",
