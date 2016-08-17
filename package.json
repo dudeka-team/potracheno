@@ -18,7 +18,7 @@
     "url": "https://github.com/yandexdataschool/prj-c-dudeka/issues"
   },
   "scripts": {
-    "test": "eslint ." 
+    "lint": "eslint ." 
   },
   "homepage": "",
   "devDependencies": {
