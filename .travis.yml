@@ -1,14 +1,6 @@
 language: node_js
 node_js:
-	- '6'
-	- '6.1'
+- '6'
 script: 
-	- npm run test
-	- npm run lint
-# deploy:
-#   - provider: heroku
-#   	app: prj-c-dudeka
-#   	on: 
-#   		branch: backend-master
-#   	api_key:
-#     	secure: 
+- npm run test
+- npm run lint
