@@ -35,7 +35,6 @@
     "gulp": "^3.9.1",
     "gulp-plumber": "^1.1.0",
     "gulp-plumber-error-handler": "^1.0.0",
-    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "mocha": "^3.0.2",

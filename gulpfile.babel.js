@@ -1,15 +1,17 @@
+/* eslint-disable import/no-extraneous-dependencies, arrow-body-style */
+
 // common
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
 import plumberErrorHandler from 'gulp-plumber-error-handler';
 import sourcemaps from 'gulp-sourcemaps';
-import rename from 'gulp-rename';
 
 // styles
 import sass from 'gulp-sass';
 
 // scripts
 import webpack from 'webpack-stream';
+import webpackConfig from './webpack.config.babel';
 
 
 const SOURCE = './source';
@@ -19,7 +21,7 @@ const OUT = './www';
 // в конечную директорию (не обрабатывая их)
 const notStaticDirs = ['styles', 'scripts'];
 const staticResourcesSrc = notStaticDirs
-	.map((dir) => `${SOURCE}/!${dir}/**/*`)
+	.map((dir) => `!${SOURCE}/${dir}/**/*`)
 	.concat([`${SOURCE}/**/*`]);
 
 
@@ -29,10 +31,6 @@ function errorHandler(taskName) {
 	};
 }
 
-function flatten(path) {
-	path.dirname = '';
-	return path;
-};
 
 gulp.task('compile-styles', () => {
 	return gulp
@@ -48,12 +46,11 @@ gulp.task('compile-scripts', () => {
 	return gulp
 		.src(`${SOURCE}/scripts/index.js`)
 		.pipe(plumber(errorHandler('compile-scripts')))
-		.pipe(webpack(require('./webpack.config.babel')))
+		.pipe(webpack(webpackConfig))
 		.pipe(gulp.dest(`${OUT}/scripts`));
 });
 
 gulp.task('copy-static-files', () => {
-
 	return gulp
 		.src(staticResourcesSrc)
 		.pipe(plumber(errorHandler('copy-static-files')))
