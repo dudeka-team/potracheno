@@ -15,6 +15,8 @@
     "no-use-before-define": ["error", "nofunc"],
     "comma-dangle": ["error", "always-multiline"],
     "no-param-reassign": "off",
-    "react/require-extension": "off"
+    "react/require-extension": "off",
+    "react/jsx-indent": [2, "tab"],
+    "react/prefer-es6-class": ["error", "never"]
   }
 }

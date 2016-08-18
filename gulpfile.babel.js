@@ -5,6 +5,7 @@ import gulp from 'gulp';
 import plumber from 'gulp-plumber';
 import plumberErrorHandler from 'gulp-plumber-error-handler';
 import sourcemaps from 'gulp-sourcemaps';
+import changed from 'gulp-changed';
 
 // styles
 import sass from 'gulp-sass';
@@ -16,13 +17,6 @@ import webpackConfig from './webpack.config.babel';
 
 const SOURCE = './source';
 const OUT = './www';
-
-// формируем пути ко всем статичным файлам, которые нам нужно просто скопировать
-// в конечную директорию (не обрабатывая их)
-const notStaticDirs = ['styles', 'scripts'];
-const staticResourcesSrc = notStaticDirs
-	.map((dir) => `!${SOURCE}/${dir}/**/*`)
-	.concat([`${SOURCE}/**/*`]);
 
 
 function errorHandler(taskName) {
@@ -44,7 +38,7 @@ gulp.task('compile-styles', () => {
 
 gulp.task('compile-scripts', () => {
 	return gulp
-		.src(`${SOURCE}/scripts/index.js`)
+		.src(`${SOURCE}/scripts/index.jsx`)
 		.pipe(plumber(errorHandler('compile-scripts')))
 		.pipe(webpack(webpackConfig))
 		.pipe(gulp.dest(`${OUT}/scripts`));
@@ -52,14 +46,28 @@ gulp.task('compile-scripts', () => {
 
 gulp.task('copy-static-files', () => {
 	return gulp
-		.src(staticResourcesSrc)
+		.src(`${SOURCE}/static/**/*`)
 		.pipe(plumber(errorHandler('copy-static-files')))
+		.pipe(changed(`${OUT}/static`))
 		.pipe(gulp.dest(OUT));
 });
 
-gulp.task('default', ['copy-static-files', 'compile-styles', 'compile-scripts'], () => {
-	gulp.watch(`${SOURCE}/**/*`, ['copy-static-files']);
+gulp.task('copy-markup', () => {
+	return gulp
+		.src(`${SOURCE}/*.html`)
+		.pipe(plumber(errorHandler('copy-markup')))
+		.pipe(changed(`${OUT}/static`))
+		.pipe(gulp.dest(OUT));
+});
+
+gulp.task('default', [
+	'copy-static-files',
+	'copy-markup',
+	'compile-styles',
+	'compile-scripts',
+], () => {
 	gulp.watch(`${SOURCE}/styles/**/*.sass`, ['compile-styles']);
-	gulp.watch(`${SOURCE}/scripts/**/*.js`, ['compile-scripts']);
-	gulp.watch(staticResourcesSrc, ['copy-static-files']);
+	gulp.watch(`${SOURCE}/scripts/**/*.{js,jsx}`, ['compile-scripts']);
+	gulp.watch(`${SOURCE}/static/**/*`, ['copy-static-files']);
+	gulp.watch(`${SOURCE}/*.html`, ['copy-markup']);
 });
