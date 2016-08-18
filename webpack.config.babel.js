@@ -1,23 +1,26 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
 import path from 'path';
 import webpack from 'webpack';
 
 const SOURCE = './source';
 
 const config = {
-	entry: `${SOURCE}/scripts/index.js`,
+	entry: `${SOURCE}/scripts/index.jsx`,
 	output: {
 		filename: 'bundle.js',
 	},
 	devtool: 'source-map',
 	resolve: {
 		root: path.resolve(`${SOURCE}/scripts`),
+		extensions: ['', '.js', '.jsx'],
 	},
 	module: {
 		loaders: [
 			{
-				test: /\.js?$/,
+				test: /\.jsx?$/,
 				exclude: /(node_modules)/,
-				loader: 'babel',
+				loader: 'babel-loader',
 			},
 		],
 	},
