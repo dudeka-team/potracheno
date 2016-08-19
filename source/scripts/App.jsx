@@ -1,7 +1,15 @@
 import React from 'react';
+import {Link} from 'react-router';
 
-export default function App() {
+export default function App(props) {
 	return (
-		<div>Hello, World!</div>
+		<div className="root">
+			<div>App header</div>
+			<div>{props.children}</div>
+			<div className="bottom-nav">
+				<Link to="/events">Events</Link>
+				<Link to="/balance">Balance</Link>
+			</div>
+		</div>
 	);
 }
