@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './App';
+import Routes from './Routes';
 
 
 document.addEventListener('deviceready', onDeviceReady);
 
 function onDeviceReady() {
-	ReactDOM.render(<App />, document.querySelector('#app'));
+	ReactDOM.render(<Routes />, document.querySelector('#app'));
 }
