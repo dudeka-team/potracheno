@@ -1,10 +1,11 @@
 import React from 'react';
-import {AppBar} from 'react-toolbox/lib/app_bar';
 
-export default function EventsPage() {
+export default function EventPage() {
 	return (
-		<AppBar fixed flat>
-			<a href="/">React Toolbox Docs</a>
-		</AppBar>
+		<div>
+			<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+				<i className="material-icons">add</i>
+			</button>
+		</div>
 	);
 }
