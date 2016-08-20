@@ -6,6 +6,7 @@ import plumber from 'gulp-plumber';
 import plumberErrorHandler from 'gulp-plumber-error-handler';
 import sourcemaps from 'gulp-sourcemaps';
 import changed from 'gulp-changed';
+import browserSync from 'browser-sync';
 
 // styles
 import sass from 'gulp-sass';
@@ -15,6 +16,7 @@ import webpack from 'webpack-stream';
 import webpackConfig from './webpack.config.babel';
 
 
+const bSync = browserSync.create();
 const SOURCE = './source';
 const OUT = './www';
 
@@ -33,7 +35,8 @@ gulp.task('compile-styles', () => {
 		.pipe(sourcemaps.init())
 		.pipe(sass().on('error', sass.logError))
 		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest(`${OUT}/styles`));
+		.pipe(gulp.dest(`${OUT}/styles`))
+		.pipe(bSync.stream());
 });
 
 gulp.task('compile-scripts', () => {
@@ -66,8 +69,20 @@ gulp.task('default', [
 	'compile-styles',
 	'compile-scripts',
 ], () => {
+	bSync.init({
+		server: OUT,
+		port: 5000,
+	});
+
 	gulp.watch(`${SOURCE}/styles/**/*.sass`, ['compile-styles']);
-	gulp.watch(`${SOURCE}/scripts/**/*.{js,jsx}`, ['compile-scripts']);
-	gulp.watch(`${SOURCE}/static/**/*`, ['copy-static-files']);
-	gulp.watch(`${SOURCE}/*.html`, ['copy-markup']);
+
+	gulp
+		.watch(`${SOURCE}/scripts/**/*.{js,jsx}`, ['compile-scripts'])
+		.on('change', bSync.reload);
+	gulp
+		.watch(`${SOURCE}/static/**/*`, ['copy-static-files'])
+		.on('change', bSync.reload);
+	gulp
+		.watch(`${SOURCE}/*.html`, ['copy-markup'])
+		.on('change', bSync.reload);
 });
