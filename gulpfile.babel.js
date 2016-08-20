@@ -41,7 +41,7 @@ gulp.task('compile-scripts', () => {
 		.src(`${SOURCE}/scripts/index.jsx`)
 		.pipe(plumber(errorHandler('compile-scripts')))
 		.pipe(webpack(webpackConfig))
-		.pipe(gulp.dest(`${OUT}/scripts`));
+		.pipe(gulp.dest(OUT));
 });
 
 gulp.task('copy-static-files', () => {
