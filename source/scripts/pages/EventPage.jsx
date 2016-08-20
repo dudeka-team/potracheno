@@ -1,11 +1,27 @@
 import React from 'react';
+import Tabs from '../components/Tabs';
 
-export default function EventPage() {
-	return (
-		<div>
-			<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-				<i className="material-icons">add</i>
-			</button>
-		</div>
-	);
-}
+const tabsConfig = [
+	{
+		name: 'purchases',
+		labelContent: 'Покупки',
+		content: 'Контент покупок',
+	},
+	{
+		name: 'balance',
+		labelContent: 'Баланс',
+		content: 'Контент баланса',
+	},
+];
+
+const EventPage = React.createClass({
+	render() {
+		return (
+			<div className="event-page">
+				<Tabs config={tabsConfig} />
+			</div>
+		);
+	},
+});
+
+export default EventPage;
