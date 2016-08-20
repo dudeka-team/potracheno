@@ -16,6 +16,7 @@
     "comma-dangle": ["error", "always-multiline"],
     "no-param-reassign": "off",
     "arrow-body-style": "off",
+    "linebreak-style": "off",
     "react/require-extension": "off",
     "react/jsx-indent": [2, "tab"],
     "react/jsx-indent-props": [2, "tab"],

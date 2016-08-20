@@ -3,6 +3,7 @@ import {Router, Route, hashHistory} from 'react-router';
 import App from './App';
 import EventsPage from './pages/EventsPage';
 import BalancePage from './pages/BalancePage';
+import EventPage from './pages/EventPage';
 
 export default function Routes() {
 	return (
@@ -10,6 +11,7 @@ export default function Routes() {
 			<Route path="/" component={App}>
 				<Route path="events" component={EventsPage} />
 				<Route path="balance" component={BalancePage} />
+				<Route path="event" component={EventPage} />
 			</Route>
 		</Router>
 	);

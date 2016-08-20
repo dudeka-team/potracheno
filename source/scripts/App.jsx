@@ -9,6 +9,7 @@ export default function App(props) {
 			<div className="bottom-nav">
 				<Link to="/events">Events</Link>
 				<Link to="/balance">Balance</Link>
+				<Link to="/event">Event page</Link>
 			</div>
 		</div>
 	);
