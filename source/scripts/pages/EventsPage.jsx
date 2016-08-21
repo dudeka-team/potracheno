@@ -5,14 +5,16 @@ let data = [{
 	date: '5 марта',
 	sum: '5 490',
 	direction: 'вам должны',
-	id: '1'
+	id: '1',
+	members: [{name: 'Вася'}, {name: 'Петя'}, {name: 'Миша'}]
 },
 {
 	title: 'Поездка на дачу',
 	date: '16 апреля',
-	sum: '5 490',
+	sum: '2 200',
 	direction: 'вам должны',
-	id: '2'
+	id: '2',
+	members: [{name: 'Вася'}, {name: 'Петя'}, {name: 'Миша'}, {name: 'Витя'}]
 }];
 
 
@@ -23,11 +25,11 @@ let EventListItems = React.createClass({
 				<li className="events-item" key={item.id}>
 					<div className="events-item__title">{item.title}</div>
 					<div className="events-item__result">
-						<span className="events-item__sum">5 490 Р вам должны</span>
+						<span className="events-item__sum">{`${item.sum} Р ${item.direction}`}</span>
 					</div>
 					<div className="events-item__description">
-						<span className="events-item__members">5 участников</span>
-						<span className="events-item__date">5 марта</span>
+						<span className="events-item__members">{`${item.members.length} участников`}</span>
+						<span className="events-item__date">{item.date}</span>
 					</div>
 				</li>
 			);
