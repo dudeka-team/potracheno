@@ -7,7 +7,7 @@ export default function App(props) {
 			<div>App header</div>
 			<div>{props.children}</div>
 			<div className="bottom-nav">
-				<Link to="/events">Events</Link>
+			    <Link to="/events">Events</Link>
 				<Link to="/balance">Balance</Link>
 				<Link to="/event">Event page</Link>
 			</div>
