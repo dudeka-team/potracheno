@@ -1,0 +1,33 @@
+$tabsHeight = 50px
+
+$tabsLinksColor = #afbac2
+$tabsAccent = #3f95ff
+$tabsBorderColor = #dedede
+
+.tabs
+	&__nav
+		display table
+		table-layout fixed
+		width 100%
+		height $tabsHeight
+		line-height $tabsHeight
+		white-space nowrap
+		border-bottom 1px solid $tabsBorderColor
+
+	&__link
+		display table-cell
+		text-align center
+		text-transform uppercase
+		color $tabsLinksColor
+		border-bottom 2px solid transparent
+		cursor pointer
+
+		&.is-active
+			color $tabsAccent
+			border-bottom-color $tabsAccent
+
+	&__item
+		display none
+
+		&.is-active
+			display block

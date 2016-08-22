@@ -1,0 +1,44 @@
+$topBarHeight = 56px
+$topBarBorderColor = #e1e4e7
+$topBarTitleColor = #2e363e
+$topBarSubtitleColor = #9fafba
+
+.top-bar
+	display flex
+	align-items center
+	justify-content center
+	height $topBarHeight
+	padding 0 8px
+	border-bottom 1px solid $topBarBorderColor
+	box-shadow 0 0 4px rgba(0, 0, 0, .1)
+
+	&__heading
+		flex-grow 1
+		flex-shrink 1
+		margin 0 8px
+		line-height 1.3
+
+	&__title
+		font-size 20px
+		font-weight 500
+		color $topBarTitleColor
+
+	&__subtitle
+		font-size 14px
+		color $topBarSubtitleColor
+
+	&__icon
+		flex-grow 0
+		flex-shrink 0
+		display block
+		width 24px
+		height 24px
+		margin 0 8px
+		background-position center
+		background-repeat no-repeat
+
+		&--burger
+			background-image url('../img/burger.svg')
+
+		&--add
+			background-image url('../img/add.svg')

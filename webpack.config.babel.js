@@ -27,12 +27,7 @@ const config = {
 	plugins: [
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.optimize.DedupePlugin(),
-		new webpack.NoErrorsPlugin(),
-		new webpack.optimize.UglifyJsPlugin({
-			compressor: {
-				screw_ie8: true,
-			},
-		}),
+		new webpack.NoErrorsPlugin()
 	],
 };
 

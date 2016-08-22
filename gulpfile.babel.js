@@ -9,7 +9,7 @@ import changed from 'gulp-changed';
 import browserSync from 'browser-sync';
 
 // styles
-import sass from 'gulp-sass';
+import stylus from 'gulp-stylus';
 
 // scripts
 import webpack from 'webpack-stream';
@@ -27,13 +27,12 @@ function errorHandler(taskName) {
 	};
 }
 
-
 gulp.task('compile-styles', () => {
 	return gulp
-		.src(`${SOURCE}/styles/**/*.sass`)
+		.src(`${SOURCE}/styles/main.styl`)
 		.pipe(plumber(errorHandler('compile-styles')))
 		.pipe(sourcemaps.init())
-		.pipe(sass().on('error', sass.logError))
+		.pipe(stylus())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(`${OUT}/styles`))
 		.pipe(bSync.stream());
@@ -74,7 +73,7 @@ gulp.task('default', [
 		port: 5000,
 	});
 
-	gulp.watch(`${SOURCE}/styles/**/*.sass`, ['compile-styles']);
+	gulp.watch(`${SOURCE}/**/*.styl`, ['compile-styles']);
 
 	gulp
 		.watch(`${SOURCE}/scripts/**/*.{js,jsx}`, ['compile-scripts'])
