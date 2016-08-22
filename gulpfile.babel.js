@@ -73,7 +73,7 @@ gulp.task('default', [
 		port: 5000,
 	});
 
-	gulp.watch(`${SOURCE}/scripts/**/*.styl`, ['compile-styles']);
+	gulp.watch(`${SOURCE}/**/*.styl`, ['compile-styles']);
 
 	gulp
 		.watch(`${SOURCE}/scripts/**/*.{js,jsx}`, ['compile-scripts'])
