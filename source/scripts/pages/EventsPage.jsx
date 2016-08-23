@@ -1,18 +1,22 @@
 import React from 'react';
 import EventsList from '../components/EventsList';
-import Popup from '../components/Popup';
-import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
+import {Popup, PopupFooter} from '../components/Popup';
+import {SquareButton} from '../components/SquareButton';
 
 const EventsPage = React.createClass({
 	render() {
 		return  (
 			<div>
 				<EventsList />
-				<Popup>
-					<TopBar>
-						<TopBarIcon icon="burger"/>
-						<TopBarHeading title="Шашлые"/>
-					</TopBar>
+				<Popup title="Шашлык" closeIcon={true}>
+					<EventsList />
+					<EventsList />
+					<EventsList />
+					<EventsList />
+					<PopupFooter>
+						<SquareButton title="ОТМЕНИТЬ"/>
+						<SquareButton title="ДОБАВИТЬ"/>
+					</PopupFooter>
 				</Popup>
 			</div>
 		);
