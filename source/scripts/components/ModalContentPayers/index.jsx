@@ -17,23 +17,24 @@ let data = {
 	}]
 }
 
-const ModalContentPayers = React.createClass({
-	getInitialState: function() {
-		return {data: data};
-	},
+class ModalContentPayers extends React.Component {
+	constructor() {
+		super();
+		this.state = {data};
+	}
 	render() {
 		return  (
 			<div className="modal-content-payers">
 				<div className='modal-content-payers__header'>{this.state.data.modalHeader}</div>
 				<ModalContentPayersList data={this.state.data}/>
 				<div className="modal-content-payers__bottom-bar">
-					<button className='modal-content-payers__button'>Кнопка</button>
-					<button className='modal-content-payers__button'>Кнопка</button>
+					<button className='modal-content-payers__button modal-content-payers__button--cancel-button'>Отмена</button>
+					<button className='modal-content-payers__button modal-content-payers__button--add-button'>Добавить</button>
 				</div>
 			</div>
 		);
 	}
-})
+}
 
 
 export default ModalContentPayers;
