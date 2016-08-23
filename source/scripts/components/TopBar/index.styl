@@ -2,6 +2,7 @@ $topBarHeight = 56px
 $topBarBorderColor = #e1e4e7
 $topBarTitleColor = #2e363e
 $topBarSubtitleColor = #9fafba
+$icons = burger plus add-person arrow-back check-active info
 
 .top-bar
 	display flex
@@ -16,15 +17,19 @@ $topBarSubtitleColor = #9fafba
 		flex-grow 1
 		flex-shrink 1
 		margin 0 8px
-		line-height 1.3
 
 	&__title
 		font-size 20px
 		font-weight 500
-		color: $topBarTitleColor
+		color $topBarTitleColor
+
+		.top-bar__heading--with-subtitle &
+			font-size 16px
+			line-height 20px
 
 	&__subtitle
-		font-size 14px
+		font-size 13px
+		line-height 16px
 		color $topBarSubtitleColor
 
 	&__icon
@@ -36,9 +41,8 @@ $topBarSubtitleColor = #9fafba
 		margin 0 8px
 		background-position center
 		background-repeat no-repeat
+		cursor pointer
 
-		&--burger
-			background-image url('../img/burger.svg')
-
-		&--add
-			background-image url('../img/add.svg')
+		for $icon in $icons
+			&--{$icon}
+				background-image url('../img/' + $icon + '.svg')
