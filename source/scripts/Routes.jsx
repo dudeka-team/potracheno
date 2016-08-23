@@ -4,6 +4,7 @@ import App from './App';
 import EventsPage from './pages/EventsPage';
 import BalancePage from './pages/BalancePage';
 import EventPage from './pages/EventPage';
+import PurchasePage from './pages/PurchasePage';
 
 export default function Routes() {
 	return (
@@ -12,6 +13,7 @@ export default function Routes() {
 				<Route path="events" component={EventsPage} />
 				<Route path="balance" component={BalancePage} />
 				<Route path="event" component={EventPage} />
+				<Route path="purchase" component={PurchasePage} />
 			</Route>
 		</Router>
 	);
