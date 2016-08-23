@@ -5,7 +5,6 @@
 	height 100%
 	left 0
 	top 0
-	overflow scroll
 
 .popup-layout
 	opacity 0.36
@@ -26,12 +25,58 @@
 	z-index 2000
 	display table-cell
 	vertical-align middle
+	padding 56px 0 74px 0
 
 .popup-inner
 	width 280px
-	background-color #fff
+	max-height 100%
 	margin 0 auto
 	box-shadow 0 15px 12px 0 rgba(0, 0, 0, 0.22)
+	overflow scroll
 
-.popup-inner .top-bar
-	box-shadow none
+
+
+
+.popup-header
+	background-color #fff
+	width 280px
+	height 56px
+	box-sizing border-box
+	padding 21px
+	box-shadow 0 0 2px 0 rgba(0, 0, 0, 0.2)
+	position fixed
+	top 0
+	border-radius 2px 2px 0 0
+		
+	&__icon
+		width 13px
+		height 13px
+		display inline-block
+		background-position center
+		background-repeat no-repeat
+		margin 0 21px 0 0
+
+		&_burger
+			background-image url('../img/burger.svg')
+
+		&_add
+			background-image url('../img/add.svg')
+		
+	&__title
+		display inline-block
+		color #2e363e
+		font-weight bold
+
+
+
+		
+.popup-footer
+	background-color #fff
+	width 280px
+	height 56px
+	box-sizing border-box
+	box-shadow 0 0 2px 0 rgba(0, 0, 0, 0.2)
+	position fixed
+	bottom 18px
+	border-radius 0 0 2px 2px
+	text-align right
