@@ -8,10 +8,7 @@ const Popup = React.createClass({
 	            <div className="popup-layout"></div>
 	        	<div className="popup-wrapper">
 	        		<div className="popup-inner">
-	        			<TopBar>
-							<TopBarIcon icon="burger" />
-							<TopBarHeading title="Шашлык" />
-						</TopBar>
+	        			{this.props.children}
 	        		</div>
 	        	</div>
 	        </div>
