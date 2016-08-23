@@ -1,11 +1,15 @@
 import React from 'react';
 import EventsList from '../components/EventsList';
+import Popup from '../components/Popup';
 
 
 const EventsPage = React.createClass({
 	render() {
 		return  (
-			<EventsList />
+			<div>
+				<EventsList />
+				<Popup />
+			</div>
 		);
 	}
 })
