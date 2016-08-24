@@ -7,10 +7,11 @@ import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
 
 import appReducer from './reducers/app';
 import Routes from './Routes';
+
+injectTapEventPlugin();
 
 const store = createStore(
 	combineReducers({
