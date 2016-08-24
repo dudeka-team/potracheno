@@ -25,14 +25,12 @@
 	z-index 2000
 	display table-cell
 	vertical-align middle
-	padding 56px 0 74px 0
 
 .popup-inner
 	width 280px
-	max-height 100%
 	margin 0 auto
 	box-shadow 0 15px 12px 0 rgba(0, 0, 0, 0.22)
-	overflow scroll
+	overflow hidden
 
 
 
@@ -45,8 +43,8 @@
 	padding 21px
 	box-shadow 0 0 2px 0 rgba(0, 0, 0, 0.2)
 	position fixed
-	top 0
 	border-radius 2px 2px 0 0
+	z-index 2000
 		
 	&__icon
 		width 13px
@@ -68,6 +66,11 @@
 		font-weight bold
 
 
+.popup-content
+	max-height 96vh
+	overflow scroll
+	padding 56px 0
+	
 
 		
 .popup-footer
@@ -77,6 +80,6 @@
 	box-sizing border-box
 	box-shadow 0 0 2px 0 rgba(0, 0, 0, 0.2)
 	position fixed
-	bottom 18px
 	border-radius 0 0 2px 2px
 	text-align right
+	margin -56px 0 0 0

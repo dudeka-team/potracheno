@@ -30,3 +30,14 @@ export const PopupFooter = React.createClass({
         );
     }
 });
+
+
+export const PopupContent = React.createClass({
+    render() {
+        return (
+        	<div className="popup-content">
+	            {this.props.children}
+        	</div>
+        );
+    }
+});
