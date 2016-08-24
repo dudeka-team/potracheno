@@ -35,7 +35,7 @@ export const PopupFooter = React.createClass({
 export const PopupContent = React.createClass({
     render() {
         return (
-        	<div className="popup-content">
+        	<div className={`popup-content ${(this.props.withFooter && "popup-content_with-footer") || (!this.props.withFooter && "popup-content_without-footer")}`}>
 	            {this.props.children}
         	</div>
         );

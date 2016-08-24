@@ -9,7 +9,7 @@ const EventsPage = React.createClass({
 			<div>
 				<EventsList />
 				<Popup title="Шашлык" closeIcon={true}>
-					<PopupContent>
+					<PopupContent withFooter={true}>
 						<EventsList />
 						<EventsList />
 						<EventsList />
