@@ -5,8 +5,13 @@ import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
 import appReducer from './reducers/app';
 import Routes from './Routes';
+
+injectTapEventPlugin();
 
 const store = createStore(
 	combineReducers({
@@ -26,8 +31,10 @@ function onDeviceReady() {
 
 function AppRoot() {
 	return (
-		<Provider store={store}>
-			<Routes history={history} />
-		</Provider>
+		<MuiThemeProvider>
+			<Provider store={store}>
+				<Routes history={history} />
+			</Provider>
+		</MuiThemeProvider>
 	);
 }

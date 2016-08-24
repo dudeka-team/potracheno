@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "test": "mocha -r babel-core/register ./tests/*.js",
-    "lint": "eslint source/scripts/**/*.js"
+    "lint": "eslint source/scripts/*"
   },
   "bugs": {
     "url": "https://github.com/yandexdataschool/prj-c-dudeka/issues"
@@ -46,11 +46,13 @@
     "webpack-stream": "^3.2.0"
   },
   "dependencies": {
+    "material-ui": "^0.15.4",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",
     "react-router-redux": "^4.0.5",
+    "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.5.2"
   }
 }
