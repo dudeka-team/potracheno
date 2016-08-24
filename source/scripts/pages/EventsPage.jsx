@@ -1,9 +1,13 @@
 import React from 'react';
+import EventsList from '../components/EventsList';
 
-export default function EventsPage() {
-	return (
-		<div>
-			<div className="events-page">Events page</div>
-		</div>
-	);
-}
+const EventsPage = React.createClass({
+	render() {
+		return  (
+			<EventsList />
+		);
+	}
+})
+
+export default EventsPage;
+
