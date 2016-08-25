@@ -2,12 +2,13 @@ import React from 'react';
 import Popup from '../components/Popup';
 import Payers from '../components/Payers';
 
+
 const PayersPage = React.createClass({
 	render() {
 		return (
 			<div>
 				<Popup
-					title="Шашлык"
+					title="Кто платит"
 					closeIcon
 					okButton={{
 						text: 'Добавить',

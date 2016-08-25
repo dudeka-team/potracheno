@@ -1,8 +1,9 @@
 import React from 'react';
-import PayersList from '../PayersList';
+import List from 'components/List';
+import ListItem from 'components/ListItem';
+
 
 const data = {
-	modalHeader: 'Кто платит',
 	payers: [{
 		name: 'Петя',
 		id: 1,
@@ -40,10 +41,16 @@ const Payers = React.createClass({
 		};
 	},
 	render() {
+		let listItems = this.state.data.payers.map(item => {
+			return (
+				<ListItem id={item.id} text={item.name} key={item.id} isCheckBox />
+			);
+		});
 		return (
 			<div className="payers">
-				<div className="payers__header">{this.state.data.modalHeader}</div>
-				<PayersList data={this.state.data} />
+				<List>
+					{listItems}
+				</List>
 			</div>
 		);
 	},

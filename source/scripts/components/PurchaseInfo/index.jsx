@@ -1,5 +1,6 @@
 import React from 'react';
-import ParticipantList from '../List';
+import List from '../List';
+import ListItem from '../ListItem';
 
 
 const users = {
@@ -66,10 +67,20 @@ const users = {
 const PurchaseInfo = React.createClass({
 	getInitialState() {
 		return {
-			users
-		}
+			users,
+		};
 	},
 	render() {
+		let participants = this.state.users.participantList.map(item => {
+			return (
+				<ListItem id={item.id} text={item.name} key={item.id} isCheckBox={false} />
+			);
+		});
+		let nonParticipants = this.state.users.nonParticipantList.map(item => {
+			return (
+				<ListItem id={item.id} text={item.name} key={item.id} isCheckBox={false} />
+			);
+		});
 		return (
 			<div>
 				<div className="purchase-info">
@@ -79,14 +90,14 @@ const PurchaseInfo = React.createClass({
 				<div className="list-header">
 				Участвуют в покупке
 				</div>
-				<ParticipantList data={this.state.users.participantList} />
+				<List>{participants}</List>
 				<div className="list-header">
 				Не участвуют в покупке
 				</div>
-				<ParticipantList data={this.state.users.nonParticipantList} />
+				<List>{nonParticipants}</List>
 			</div>
 		);
-	}
-})
+	},
+});
 
 export default PurchaseInfo;
