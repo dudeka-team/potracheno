@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 const Header = React.createClass({
 	render() {
@@ -6,4 +6,9 @@ const Header = React.createClass({
 	},
 });
 
+Header.propTypes = {
+	text: PropTypes.string.isRequired,
+};
+
 export default Header;
+
