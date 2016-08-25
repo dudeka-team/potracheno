@@ -24,8 +24,8 @@ export default function PurchaseMainInputBlock(props) {
 			/>
 			<Input
 				style={{
-						marginTop: '42px',
-						fontSize: '16px'
+					marginTop: '42px',
+					fontSize: '16px'
 				}}
 				label='Название покупки'
 				labelTransform={{

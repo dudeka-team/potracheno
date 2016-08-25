@@ -6,18 +6,6 @@ import {Popup, PopupContent, PopupFooter} from '../components/Popup';
 import {SquareButton} from '../components/SquareButton';
 import PurchaseInfo from '../components/PurchaseInfo';
 
-<<<<<<< HEAD
-const EventsPage = React.createClass({
-	render() {
-		return  (
-			<div>
-			</div>
-		);
-	}
-})
-=======
->>>>>>> master
-
 function goToNewEventPage() {
 	hashHistory.push('/events/new');
 }
