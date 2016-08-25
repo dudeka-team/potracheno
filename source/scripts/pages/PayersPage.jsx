@@ -1,12 +1,14 @@
 import React from 'react';
-import PurchaseInfo from '../components/PurchaseInfo';
 import Popup from '../components/Popup';
-const PurchasePage = React.createClass({
+import Payers from '../components/Payers';
+
+
+const PayersPage = React.createClass({
 	render() {
 		return (
 			<div>
 				<Popup
-					title="Шашлык"
+					title="Кто платит"
 					closeIcon
 					okButton={{
 						text: 'Добавить',
@@ -17,11 +19,11 @@ const PurchasePage = React.createClass({
 						onClick: () => {},
 					}}
 				>
-					<PurchaseInfo />
+					<Payers />
 				</Popup>
 			</div>
 		);
 	},
 });
 
-export default PurchasePage;
+export default PayersPage;

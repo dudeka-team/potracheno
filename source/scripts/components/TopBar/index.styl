@@ -2,7 +2,7 @@ $topBarHeight = 56px
 $topBarBorderColor = #e1e4e7
 $topBarTitleColor = #2e363e
 $topBarSubtitleColor = #9fafba
-$icons = burger plus add-person arrow-back check-active info
+$icons = burger plus add-person arrow-back check-active info arrow-forward-gray arrow-forward-blue
 
 .top-bar
 	display flex
@@ -42,6 +42,9 @@ $icons = burger plus add-person arrow-back check-active info
 		background-position center
 		background-repeat no-repeat
 		cursor pointer
+
+		&--disabled
+			opacity .2
 
 		for $icon in $icons
 			&--{$icon}

@@ -58,11 +58,11 @@ export default class Input extends React.Component {
 		return (
 			<div className='Input' style={this.style}>
 				{
-					this.labelExists ?
+					this.labelExists &&
 						<div
 							className='floating-text'
 							style={this.state.focused ? this.labelTransformedStyle : this.labelStyle}
-						>{this.labelText}</div> : ''
+						>{this.labelText}</div>
 				}
 				<input
 					className={classList.join(' ')}
