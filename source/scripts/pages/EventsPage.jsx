@@ -7,18 +7,6 @@ const EventsPage = React.createClass({
 	render() {
 		return  (
 			<div>
-				<EventsList />
-				<Popup title="Шашлык" closeIcon={true}>
-					<PopupContent withFooter={true}>
-						<EventsList />
-						<EventsList />
-						<EventsList />
-					</PopupContent>
-					<PopupFooter>
-						<SquareButton title="ОТМЕНИТЬ"/>
-						<SquareButton title="ДОБАВИТЬ"/>
-					</PopupFooter>
-				</Popup>
 			</div>
 		);
 	}

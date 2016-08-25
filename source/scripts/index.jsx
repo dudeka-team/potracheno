@@ -26,7 +26,6 @@ const history = syncHistoryWithStore(hashHistory, store);
 document.addEventListener('DOMContentLoaded', onDeviceReady);
 
 function onDeviceReady() {
-	
 	ReactDOM.render(<AppRoot />, document.querySelector('#app'));
 }
 
