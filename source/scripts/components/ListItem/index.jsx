@@ -3,10 +3,12 @@ import CheckBox from '../CheckBox';
 
 const ListItem = React.createClass({
 	render() {
+		console.log(this.props.id)
 		return (
 			<li style={this.props.style} className={(this.props.isBordered ? "list-item_bordered " : "") + "list-item"}>
 				{this.props.text && <div className="list-item__text">{this.props.text}</div>}
 				{this.props.price && <div className="list-item__price">{this.props.price}</div>}
+				{this.props.iconId === this.props.id && <div className="list-item__icon">{this.props.isIcon}</div>}
 				{this.props.isCheckBox && <CheckBox id={this.props.id} />}
 			</li>
 		);
@@ -17,6 +19,7 @@ ListItem.propTypes = {
 	text: PropTypes.string.isRequired,
 	price: PropTypes.string,
 	isCheckBox: PropTypes.bool,
+	iconId: PropTypes.bool
 };
 
 export default ListItem;
