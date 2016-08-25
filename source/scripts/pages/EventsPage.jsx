@@ -1,31 +1,22 @@
 import React from 'react';
+import {hashHistory} from 'react-router';
+import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsList from '../components/EventsList';
-import Popup from '../components/Popup';
 
-const EventsPage = React.createClass({
-	render() {
-		return (
-			<div>
-				<EventsList />
-				<Popup
-					title="Шашлык"
-					closeIcon
-					okButton={{
-						text: 'Добавить',
-						onClick: () => {},
-					}}
-					cancelButton={{
-						text: 'Отменить',
-						onClick: () => {},
-					}}
-				>
-					<EventsList />
-					<EventsList />
-					<EventsList />
-				</Popup>
-			</div>
-		);
-	},
-});
 
-export default EventsPage;
+function goToNewEventPage() {
+	hashHistory.push('/events/new');
+}
+
+export default function EventsPage() {
+	return (
+		<div>
+			<TopBar>
+				<TopBarIcon icon="burger" />
+				<TopBarHeading title="Мероприятия" />
+				<TopBarIcon icon="plus" onClick={goToNewEventPage} />
+			</TopBar>
+			<EventsList />
+		</div>
+	);
+}
