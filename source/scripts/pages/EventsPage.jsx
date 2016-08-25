@@ -6,7 +6,6 @@ import {Popup, PopupContent, PopupFooter} from '../components/Popup';
 import {SquareButton} from '../components/SquareButton';
 import PurchaseInfo from '../components/PurchaseInfo';
 
-
 function goToNewEventPage() {
 	hashHistory.push('/events/new');
 }

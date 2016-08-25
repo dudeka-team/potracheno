@@ -1,7 +1,9 @@
 import React from 'react';
 
+import RaisedButton from 'material-ui/RaisedButton';
+
 export default function BalancePage() {
 	return (
-		<div className="balance-page">Balance page</div>
+		<RaisedButton label="Default" />
 	);
 }

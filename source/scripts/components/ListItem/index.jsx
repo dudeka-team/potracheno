@@ -4,7 +4,7 @@ import CheckBox from '../CheckBox';
 const ListItem = React.createClass({
 	render() {
 		return (
-			<li className={(this.props.isBordered ? "list-item_bordered " : "") + "list-item"}>
+			<li style={this.props.style} className={(this.props.isBordered ? "list-item_bordered " : "") + "list-item"}>
 				{this.props.text && <div className="list-item__text">{this.props.text}</div>}
 				{this.props.price && <div className="list-item__price">{this.props.price}</div>}
 				{this.props.isCheckBox && <CheckBox id={this.props.id} />}
