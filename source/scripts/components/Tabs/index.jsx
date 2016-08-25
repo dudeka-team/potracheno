@@ -1,33 +1,70 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 
-export function TopBar(props) {
+
+const Tabs = React.createClass({
+	getInitialState() {
+		return {
+			activeTab: null,
+		};
+	},
+
+	handleTabChange(event) {
+		const {target} = event;
+		const targetTab = target.getAttribute('data-tab');
+
+		if (targetTab) {
+			this.setState({
+				activeTab: targetTab,
+			});
+		}
+	},
+
+	render() {
+		const {state, props} = this;
+		const {config} = this.props;
+		const activeTabName = state.activeTab || props.defaultTab || config[0].name;
+
+		return (
+			<div className="tabs">
+				<div className="tabs__nav" onClick={this.handleTabChange}>
+					{config.map((item) => (
+						<TabsItem
+							key={item.name}
+							isActive={activeTabName === item.name}
+							name={item.name}
+							className="tabs__link"
+						>
+							{item.labelContent}
+						</TabsItem>
+					))}
+				</div>
+				<div className="tabs__content">
+					{config.map((item) => (
+						<TabsItem
+							key={item.name}
+							isActive={activeTabName === item.name}
+							name={item.name}
+							className="tabs__item"
+						>
+							{item.content}
+						</TabsItem>
+					))}
+				</div>
+			</div>
+		);
+	},
+});
+
+function TabsItem(props) {
+	let classes = props.className || '';
+
+	if (props.isActive) {
+		classes += ' is-active';
+	}
+
 	return (
-		<div className="top-bar">
-			{props.children}
-		</div>
+		<div className={classes.trim()} data-tab={props.name}>{props.children}</div>
 	);
 }
 
-export function TopBarHeading(props) {
-	return (
-		<div className="top-bar__heading">
-			<div className="top-bar__title">{props.title}</div>
-			{props.subtitle && <div className="top-bar__subtitle">{props.subtitle}</div>}
-		</div>
-	);
-}
-
-TopBarHeading.propTypes = {
-	title: PropTypes.string.isRequired,
-	subtitle: PropTypes.string,
-};
-
-export function TopBarIcon(props) {
-	return (
-		<div className={`top-bar__icon top-bar__icon--${props.icon}`} />
-	);
-}
-
-TopBarIcon.propTypes = {
-	icon: PropTypes.oneOf(['burger', 'add']).isRequired,
-};
+export default Tabs;

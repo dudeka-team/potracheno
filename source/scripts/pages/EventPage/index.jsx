@@ -1,11 +1,40 @@
 import React from 'react';
+import Tabs from '../../components/Tabs';
+import BalancePage from '../BalancePage';
+import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
-export default function EventPage() {
-	return (
-		<div>
-			<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-				<i className="material-icons">add</i>
-			</button>
-		</div>
-	);
-}
+const tabsConfig = [
+	{
+		name: 'purchases',
+		labelContent: 'Покупки',
+		content: 'Контент покупок',
+	},
+	{
+		name: 'balance',
+		labelContent: 'Баланс',
+		content: <BalancePage />
+	},
+	{
+		name: 'members',
+		labelContent: 'Учасники',
+		content: 'Контент учасников',
+	},
+];
+
+const EventPage = React.createClass({
+	render() {
+		return (
+			<div className="event-page">
+				<TopBar>
+					<TopBarIcon icon="arrow-back" />
+					<TopBarHeading title="Дача у Дамира" subtitle="5 участников - 12 апреля"/>
+					<TopBarIcon icon="arrow-share" />
+					<TopBarIcon icon="more-actions" />
+				</TopBar>
+				<Tabs config={tabsConfig} />
+			</div>
+		);
+	},
+});
+
+export default EventPage;

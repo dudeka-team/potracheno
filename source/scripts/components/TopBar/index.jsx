@@ -54,6 +54,8 @@ TopBarIcon.propTypes = {
 		'check-active',
 		'arrow-forward-blue',
 		'arrow-forward-gray',
+		'arrow-share',
+		'more-actions',
 	]).isRequired,
 	onClick: PropTypes.func,
 	disabled: PropTypes.bool,
