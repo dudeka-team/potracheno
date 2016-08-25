@@ -1,6 +1,7 @@
 import React from 'react';
 import SquareButton from '../SquareButton';
 
+
 export default function Popup(props) {
 	const {okButton, cancelButton} = props;
 	const rootClasses = ['popup'];
