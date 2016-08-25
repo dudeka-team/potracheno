@@ -1,14 +1,14 @@
 import React from 'react';
-import PurchaseList from './../components/PurchaseList';
+import PurchaseList from './../components/List';
 
-class PurchasePage extends React.Component {
+const PurchasePage = React.createClass({
 	render() {
 		return (
 			<div>
-				<PurchaseList />
+				<List />
 			</div>
 		)
 	}
-}
+})
 
 export default PurchasePage
