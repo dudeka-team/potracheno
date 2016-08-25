@@ -13,9 +13,9 @@ export default class Input extends React.Component {
 
 	init(props) {
 		if (props.label !== undefined) {
-			this.float = true;
+			this.labelExists = true;
 		}
-		this.inlineStyle = props.style;
+		this.style = props.style;
 		this.hint = props.hint ? props.hint : '';
 		this.labelText = props.label;
 		this.labelStyle = props.labelStyle;
@@ -51,25 +51,21 @@ export default class Input extends React.Component {
 	}
 
 	render() {
-		var classes = ['input'];
+		var classList = ['input'];
 		if (this.state.empty) {
-			classes.push('input_empty');
+			classList.push('input_empty');
 		}
 		return (
-			<div className='Input' style={this.inlineStyle}>
+			<div className='Input' style={this.style}>
 				{
-					this.float ?
-							<div
-								className='floating-text'
-								style={this.state.focused ? this.labelTransformedStyle : this.labelStyle}
-							>
-								{this.labelText}
-							</div>
-							: ''
-
+					this.labelExists ?
+						<div
+							className='floating-text'
+							style={this.state.focused ? this.labelTransformedStyle : this.labelStyle}
+						>{this.labelText}</div> : ''
 				}
 				<input
-					className={classes.join(' ')}
+					className={classList.join(' ')}
 					type='text'
 					value={this.state.value}
 					onChange={this.handleChange.bind(this)}
