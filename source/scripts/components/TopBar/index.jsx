@@ -9,8 +9,14 @@ export function TopBar(props) {
 }
 
 export function TopBarHeading(props) {
+	const classes = ['top-bar__heading'];
+
+	if (props.subtitle) {
+		classes.push('top-bar__heading--with-subtitle');
+	}
+
 	return (
-		<div className="top-bar__heading">
+		<div className={classes.join(' ')}>
 			<div className="top-bar__title">{props.title}</div>
 			{props.subtitle && <div className="top-bar__subtitle">{props.subtitle}</div>}
 		</div>
@@ -29,5 +35,12 @@ export function TopBarIcon(props) {
 }
 
 TopBarIcon.propTypes = {
-	icon: PropTypes.oneOf(['burger', 'add']).isRequired,
+	icon: PropTypes.oneOf([
+		'burger',
+		'plus',
+		'info',
+		'add-person',
+		'arrow-back',
+		'check-active',
+	]).isRequired,
 };
