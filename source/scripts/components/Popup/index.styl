@@ -1,87 +1,91 @@
-.popup-container
-	display table
-	position absolute
-	width 100%
-	height 100%
-	left 0
-	top 0
+barsHeight = 56px
+verticalPadding = 18px
 
-.popup-layout
-	opacity 0.36
-	background-color #000
-	width 100%
-	height 100%
+.popup
 	position absolute
 	top 0
 	left 0
-	z-index 1000
-	
-.popup-wrapper
 	width 100%
 	height 100%
-	position relative
-	top 0
-	left 0
-	z-index 2000
-	display table-cell
-	vertical-align middle
+	padding verticalPadding 0
+	display flex
+	align-items center
+	justify-content center
 
-.popup-inner
-	width 280px
-	margin 0 auto
-	box-shadow 0 15px 12px 0 rgba(0, 0, 0, 0.22)
-	overflow hidden
-	border-radius 2px
-	position relative
+	&__overlay
+		opacity 0.36
+		background-color #000
+		width 100%
+		height 100%
+		position absolute
+		top 0
+		left 0
+		z-index 1000
 
+	&__wrapper
+		position relative
+		top 0
+		left 0
+		z-index 2000
+		max-width 280px
+		width 100%
+		max-height 100%
+		padding-top 56px
+		padding-bottom 56px
+		box-shadow 0 15px 12px 0 rgba(0, 0, 0, 0.22)
+		border-radius 2px
 
+		.popup_without-footer &
+			padding-bottom 0
 
+	&__inner
+		max-height "calc(100vh - %s)" % (barsHeight * 2 + verticalPadding * 2)
+		overflow-y scroll
 
-.popup-header
-	background-color #fff
-	width 280px
-	height 56px
-	box-sizing border-box
-	padding 21px
-	box-shadow 0 0 2px 0 rgba(0, 0, 0, 0.2)
-	position fixed
-	border-radius 2px 2px 0 0
-	z-index 2000
-		
+	&__header
+		position absolute
+		top 0
+		left 0
+		right 0
+		display flex
+		align-items center
+		background-color #fff
+		height barsHeight
+		box-sizing border-box
+		padding 0 8px
+		font-size 0
+		box-shadow 0 0 2px 0 rgba(0, 0, 0, 0.2)
+		border-radius 2px 2px 0 0
+
 	&__icon
-		width 13px
-		height 13px
-		display inline-block
+		width 24px
+		height 24px
+		margin: 0 8px
 		background-position center
 		background-repeat no-repeat
-		margin 0 21px 0 0
+		cursor pointer
 
-		&_burger
-			background-image url('../img/burger.svg')
+		&:not(:first-child)
+			margin-right 16px
 
-		&_add
-			background-image url('../img/add.svg')
-		
+		&_close
+			background-image url('../img/cross.svg')
+
 	&__title
-		display inline-block
+		margin: 0 8px
 		color #2e363e
+		font-size 1rem
 		font-weight bold
 
-
-.popup-content
-	max-height 96vh
-	overflow scroll
-	padding 56px 0
-	
-
-		
-.popup-footer
-	background-color #fff
-	width 280px
-	height 56px
-	box-sizing border-box
-	box-shadow 0 0 2px 0 rgba(0, 0, 0, 0.2)
-	position fixed
-	border-radius 0 0 2px 2px
-	text-align right
-	margin -56px 0 0 0
+	&__footer
+		position absolute
+		bottom 0
+		left 0
+		right 0
+		box-sizing border-box
+		height barsHeight
+		padding: 10px 16px
+		background-color #fff
+		box-shadow 0 0 2px 0 rgba(0, 0, 0, 0.2)
+		border-radius 0 0 2px 2px
+		text-align right
