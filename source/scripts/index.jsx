@@ -21,7 +21,8 @@ const store = createStore(
 	window.devToolsExtension && window.devToolsExtension()
 );
 
-const history = syncHistoryWithStore(hashHistory, store);
+// eslint-disable-next-line import/prefer-default-export
+export const history = syncHistoryWithStore(hashHistory, store);
 
 document.addEventListener('DOMContentLoaded', onDeviceReady);
 

@@ -29,8 +29,18 @@ TopBarHeading.propTypes = {
 };
 
 export function TopBarIcon(props) {
+	const baseClass = 'top-bar__icon';
+	const classes = [baseClass, `${baseClass}--${props.icon}`];
+
+	if (props.disabled) {
+		classes.push(`${baseClass}--disabled`);
+	}
+
 	return (
-		<div className={`top-bar__icon top-bar__icon--${props.icon}`} />
+		<div
+			className={classes.join(' ')}
+			onClick={!props.disabled && props.onClick}
+		/>
 	);
 }
 
@@ -42,5 +52,9 @@ TopBarIcon.propTypes = {
 		'add-person',
 		'arrow-back',
 		'check-active',
+		'arrow-forward-blue',
+		'arrow-forward-gray',
 	]).isRequired,
+	onClick: PropTypes.func,
+	disabled: PropTypes.bool,
 };

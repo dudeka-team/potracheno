@@ -7,11 +7,10 @@ export default function App(props) {
 	const {pathname} = props.location;
 	return (
 		<div className="root">
-			{pathname.match(/^\/events\/?$/) && <EventsPageTopBar />}
 			{pathname.match(/^\/event\/\d*\/?$/) && <EventPageTopBar />}
 			{pathname.match(/^\/event\/\d*\/purchase\/new\/?$/) && <NewPurchaseTopBar />}
 			<div>{props.children}</div>
-			<div className="bottom-nav">
+			<div className="bottom-nav" style={{marginTop: '15rem'}}>
 				<Link to="/events">Events</Link>
 				<Link to="/balance">Balance</Link>
 				<Link to="/event">Event page</Link>
@@ -19,16 +18,6 @@ export default function App(props) {
 				<Link to="/payers">Payers page</Link>
 			</div>
 		</div>
-	);
-}
-
-function EventsPageTopBar() {
-	return (
-		<TopBar>
-			<TopBarIcon icon="burger" />
-			<TopBarHeading title="Мероприятия" />
-			<TopBarIcon icon="plus" />
-		</TopBar>
 	);
 }
 
