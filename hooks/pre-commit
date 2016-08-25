@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+scripts=(
+	"eslint source/scripts/**"
+)
+
+run_script() {
+	local script=$1
+
+	echo -n "running $script... "
+
+	local output=""
+	output=$(PATH=./node_modules/.bin:$PATH eval $script 2>&1)
+	local result=$?
+	if [[ $result -ne 0 ]]; then
+		echo "failed!"
+		echo "$output"
+	else
+		echo "passed!"
+	fi
+	return $result
+}
+
+
+run_hook() {
+	# Guard to avoid running hooks when rebasing, just exit with success immediately
+	if [[ $(git branch | grep '*' | sed 's/* //') == "(no branch)" ]]; then
+		exit 0
+	fi
+
+	local result=0
+
+	for i in ${!scripts[*]}; do
+		run_script "${scripts[$i]}"
+		local result=$?
+		[[ $result -ne 0 ]] && break
+	done
+
+	return $result
+}
+
+run_hook
