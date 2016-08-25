@@ -17,11 +17,11 @@ const EventsListItems = React.createClass({
 			);
 		});
 		return (
-      		<ul className="events-list">
-        		{listItems}
-      		</ul>
-    	);
-	}
+			<ul className="events-list">
+				{listItems}
+			</ul>
+		);
+	},
 });
 
 export default EventsListItems;

@@ -1,5 +1,4 @@
 import React from 'react';
-
 class BlueSubtitle extends React.Component {
 	render() {
 		return (
@@ -9,5 +8,6 @@ class BlueSubtitle extends React.Component {
 		);
 	}
 }
+
 
 export default BlueSubtitle;

@@ -1,7 +1,7 @@
 import React from 'react';
 import List from '../List';
 import ListItem from '../ListItem';
-import Header from '../Header';
+import BlueSubtitle from '../BlueSubtitle';
 
 
 const users = {
@@ -88,9 +88,9 @@ const PurchaseInfo = React.createClass({
 					<div className="purchase-info__author">Андрей заплатил</div>
 					<div className="purchase-info__price">2500 р</div>
 				</div>
-				<Header text='Участвуют в покупке'/>
+				<BlueSubtitle text="Участвуют в покупке" />
 				<List>{participants}</List>
-				<Header text='Не участвуют в покупке'/>
+				<BlueSubtitle text="Не участвуют в покупке" />
 				<List>{nonParticipants}</List>
 			</div>
 		);
