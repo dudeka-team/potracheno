@@ -1,6 +1,7 @@
 import React from 'react';
 import EventsList from '../components/EventsList';
 import Popup from '../components/Popup';
+import Payers from '../components/Payers';
 
 const EventsPage = React.createClass({
 	render() {
@@ -22,6 +23,7 @@ const EventsPage = React.createClass({
 					<EventsList />
 					<EventsList />
 					<EventsList />
+					<Payers />
 				</Popup>
 			</div>
 		);
