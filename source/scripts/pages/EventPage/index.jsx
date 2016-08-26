@@ -2,13 +2,15 @@ import React from 'react';
 import {hashHistory} from 'react-router';
 import Tabs from '../../components/Tabs';
 import BalancePage from '../BalancePage';
+import EventPurchasesPage from '../EventPurchasesPage';
+import EventMembersPage from '../EventMembersPage';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 const tabsConfig = [
 	{
 		name: 'purchases',
 		labelContent: 'Покупки',
-		content: 'Контент покупок',
+		content: <EventPurchasesPage />,
 	},
 	{
 		name: 'balance',
@@ -18,7 +20,7 @@ const tabsConfig = [
 	{
 		name: 'members',
 		labelContent: 'Учасники',
-		content: 'Контент учасников',
+		content: <EventMembersPage />
 	},
 ];
 
