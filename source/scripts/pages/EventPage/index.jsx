@@ -15,12 +15,12 @@ const tabsConfig = [
 	{
 		name: 'balance',
 		labelContent: 'Баланс',
-		content: <BalancePage />
+		content: <BalancePage />,
 	},
 	{
 		name: 'members',
 		labelContent: 'Участники',
-		content: <EventMembersPage />
+		content: <EventMembersPage />,
 	},
 ];
 
@@ -33,8 +33,8 @@ const EventPage = React.createClass({
 		return (
 			<div className="event-page">
 				<TopBar>
-					<TopBarIcon icon="arrow-back" onClick={goToEvents}/>
-					<TopBarHeading title="Дача у Дамира" subtitle="5 участников - 12 апреля"/>
+					<TopBarIcon icon="arrow-back" onClick={goToEvents} />
+					<TopBarHeading title="Дача у Дамира" subtitle="5 участников - 12 апреля" />
 					<TopBarIcon icon="arrow-share" />
 					<TopBarIcon icon="more-actions" />
 				</TopBar>

@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Checkbox from '../Checkbox';
+import CheckBox from '../CheckBox';
 
 export default function ListItem(props) {
 	const rootClasses = ['list-item'];
@@ -12,7 +12,7 @@ export default function ListItem(props) {
 		<li className={rootClasses.join(' ')}>
 			{props.text && <div className="list-item__text">{props.text}</div>}
 			{props.price && <div className="list-item__price">{props.price}</div>}
-			{props.isCheckBox && <Checkbox />}
+			{props.isCheckBox && <CheckBox />}
 		</li>
 	);
 }
@@ -21,5 +21,5 @@ ListItem.propTypes = {
 	text: PropTypes.string.isRequired,
 	price: PropTypes.string,
 	isCheckBox: PropTypes.bool,
-	iconId: PropTypes.number
+	iconId: PropTypes.number,
 };

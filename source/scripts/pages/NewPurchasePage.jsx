@@ -6,54 +6,52 @@ import NewPurchaseParticipants from '../components/NewPurchaseParticipants';
 import Popup from '../components/Popup';
 import Payers from '../components/Payers';
 
-var mockUsers = [
+let mockUsers = [
 	{
 		name: 'Дамир',
-		loan: '500'
+		loan: '500',
 	},
 	{
 		name: 'Юрий',
-		loan: '500'
+		loan: '500',
 	},
 	{
 		name: 'Алексей',
-		loan: '500'
+		loan: '500',
 	},
 	{
 		name: 'Дамир',
-		loan: '500'
-	}
+		loan: '500',
+	},
 ];
 
-export default class NewPurchasePage extends React.Component {
-	constructor(props) {
-		super();
-		this.state = {
-			popup: false
-		}
-	}
+const NewPurchasePage = React.createClass({
+	getInitialState() {
+		return {
+			popup: false,
+		};
+	},
 	changePayer(e) {
-		console.log(e.target.state)
 		this.setState({
 			popup: false,
-			payer: e.target.innerHTML
-		})
-	}
+			payer: e.target.innerHTML,
+		});
+	},
 	render() {
 		return (
 			<div>
 				{
-					this.state.popup &&  (
-						<Popup title="Кто оплачивает">
-							<Payers changePayer={this.changePayer.bind(this)} />
-						</Popup>
-					)
+				this.state.popup && (
+					<Popup title="Кто оплачивает">
+						<Payers changePayer={this.changePayer} />
+					</Popup>
+				)
 				}
 				<PurchaseParticipants
 					payer={this.state.payer}
 					onClick={() => {
 						this.setState({
-							popup: true
+							popup: true,
 						});
 					}}
 				/>
@@ -63,5 +61,7 @@ export default class NewPurchasePage extends React.Component {
 				<NewPurchaseParticipants users={mockUsers} />
 			</div>
 		);
-	}
-}
+	},
+});
+
+export default NewPurchasePage;

@@ -8,7 +8,7 @@ const PurchasePage = React.createClass({
 			<div>
 				<Popup
 					title="Шашлык"
-					closeIcon
+					npmcloseIcon
 					okButton={{
 						text: 'Добавить',
 						onClick: () => {},
@@ -24,3 +24,5 @@ const PurchasePage = React.createClass({
 		);
 	},
 });
+
+export default PurchasePage;

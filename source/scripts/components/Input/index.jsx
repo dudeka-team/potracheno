@@ -1,16 +1,14 @@
 import React from 'react';
 
-export default class Input extends React.Component {
-	constructor(props) {
-		super();
-		this.init(props);
-		this.state = {
+const Input = React.createClass({
+	getInitialState() {
+		this.init(this.props);
+		return {
 			focused: false,
 			empty: true,
-			value: this.hint
+			value: this.hint,
 		};
-	}
-
+	},
 	init(props) {
 		if (props.label !== undefined) {
 			this.labelExists = true;
@@ -20,57 +18,62 @@ export default class Input extends React.Component {
 		this.labelText = props.label;
 		this.labelStyle = props.labelStyle;
 		this.labelTransform = props.labelTransform;
-		this.labelTransformedStyle = Object.assign({}, this.labelStyle)
+		this.labelTransformedStyle = Object.assign({}, this.labelStyle);
 		Object.assign(this.labelTransformedStyle, this.labelTransform);
-	}
+	},
 
 	handleFocus() {
 		if (this.state.empty) {
 			this.setState({
 				focused: true,
 				empty: false,
-				value: ''
+				value: '',
 			});
 		}
-	}
+	},
 
 	handleUnfocus() {
 		if (this.state.value === '') {
 			this.setState({
 				focused: false,
 				empty: true,
-				value: this.hint
+				value: this.hint,
 			});
 		}
-	}
+	},
+
+	handleChange(event) {
+		this.setState({value: event.target.value});
+	},
 
 	render() {
-		var classList = ['input'];
+		const classList = ['input'];
 		if (this.state.empty) {
 			classList.push('input_empty');
 		}
 		return (
-			<div className='Input' style={this.style}>
+			<div className="Input" style={this.style}>
 				{
 					this.labelExists &&
 						<div
-							className='floating-text'
+							className="floating-text"
 							style={this.state.focused ? this.labelTransformedStyle : this.labelStyle}
 						>{this.labelText}</div>
 				}
 				<input
 					className={classList.join(' ')}
-					type='text'
+					type="text"
 					value={this.state.value}
-					onChange={this.handleChange.bind(this)}
-					onFocus={this.handleFocus.bind(this)}
-					onBlur={this.handleUnfocus.bind(this)}
+					onChange={this.handleChange}
+					onFocus={this.handleFocus}
+					onBlur={this.handleUnfocus}
 				/>
 			</div>
 		);
-	}
+	},
 
-	handleChange(event) {
-		this.setState({ value: event.target.value });
-	}
-}
+
+});
+
+
+export default Input;
