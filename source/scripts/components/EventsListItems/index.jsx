@@ -4,7 +4,7 @@ const EventsListItems = React.createClass({
 	render() {
 		let listItems = this.props.data.map(item => {
 			return (
-				<li className="events-item" key={item.id}>
+				<li className="events-item" key={item.id} onClick={this.props.goToEvent}>
 					<div className="events-item__title">{item.title}</div>
 					<div className="events-item__result">
 						<span className="events-item__sum">{`${item.sum} Р ${item.direction}`}</span>

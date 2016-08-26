@@ -1,6 +1,7 @@
 import React from 'react';
 import PurchaseInfo from '../components/PurchaseInfo';
 import Popup from '../components/Popup';
+
 const PurchasePage = React.createClass({
 	render() {
 		return (
