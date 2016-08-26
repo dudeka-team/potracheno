@@ -11,6 +11,8 @@
       "beforeColon": false,
       "afterColon": true
     }],
+    "array-callback-return": "off",
+    "consistent-return": "off",
     "object-curly-spacing": ["error", "never"],
     "no-use-before-define": ["error", "nofunc"],
     "comma-dangle": ["error", "always-multiline"],
@@ -23,5 +25,6 @@
     "react/prefer-es6-class": ["error", "never"],
     "react/prop-types": "off",
     "react/prefer-stateless-function": "off",
+
   }
 }

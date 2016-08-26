@@ -7,6 +7,7 @@ import plumberErrorHandler from 'gulp-plumber-error-handler';
 import sourcemaps from 'gulp-sourcemaps';
 import changed from 'gulp-changed';
 import browserSync from 'browser-sync';
+import autoprefixer from 'gulp-autoprefixer';
 
 // styles
 import stylus from 'gulp-stylus';
@@ -33,6 +34,7 @@ gulp.task('compile-styles', () => {
 		.pipe(plumber(errorHandler('compile-styles')))
 		.pipe(sourcemaps.init())
 		.pipe(stylus())
+		.pipe(autoprefixer({browsers: ['> 1%'], cascade: false}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(`${OUT}/styles`))
 		.pipe(bSync.stream());

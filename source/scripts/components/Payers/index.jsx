@@ -45,7 +45,13 @@ const Payers = React.createClass({
 	render() {
 		let listItems = this.state.data.payers.map(item => {
 			return (
-				<ListItem onClick={this.props.changePayer} id={item.id} text={item.name} key={item.id} isCheckBox={false} iconId={7} />
+				<ListItem
+					onClick={this.props.changePayer}
+					id={item.id}
+					text={item.name} key={item.id}
+					isCheckBox={false}
+					iconId={7}
+				/>
 			);
 		});
 		return (

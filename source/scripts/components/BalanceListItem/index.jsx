@@ -1,13 +1,11 @@
 import React from 'react';
+import List from '../List';
 
-class BalanceListItem extends React.Component {
+const BalanceListItem = React.createClass({
 	render() {
+		const curUser = this.props.curUser.name;
 
-		let curUser = this.props.curUser.name;
-		let eventUsers = this.props.eventUsers;
-		let purchases = this.props.data;
-
-		let listItems = this.props.data.map(item => {
+		const listItems = this.props.data.map(item => {
 			return (
 				((curUser.indexOf(item.owner) !== -1) &&
 				item.members.map(member => {
@@ -19,19 +17,22 @@ class BalanceListItem extends React.Component {
 									<span className="balance-list-item__icon balance-list-item__icon_to-you" />
 									{`${member}`}
 								</div>
-								<div className="balance-list-item__sum">{Math.round(item.sum/item.members.length)} Р</div>
+								<div className="balance-list-item__sum">
+									{Math.round(item.sum / item.members.length)} Р
+								</div>
 							</li>
-						)
+						);
 					}
 				}))
 			);
 		});
+
 		return (
-			<div>
+			<List>
 				{listItems}
-			</div>
+			</List>
 		);
-	}
-}
+	},
+});
 
 export default BalanceListItem;

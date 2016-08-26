@@ -1,4 +1,5 @@
 import React from 'react';
+import 'react-fastclick';
 import {Link} from 'react-router';
 import {TopBar, TopBarHeading, TopBarIcon} from './components/TopBar';
 

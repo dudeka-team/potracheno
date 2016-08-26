@@ -8,7 +8,7 @@ export default React.createClass({
 			<div>
 				<Popup
 					title="Шашлык"
-					closeIcon
+					npmcloseIcon
 					okButton={{
 						text: 'Добавить',
 						onClick: () => {},
@@ -24,3 +24,5 @@ export default React.createClass({
 		);
 	},
 });
+
+export default PurchasePage;
