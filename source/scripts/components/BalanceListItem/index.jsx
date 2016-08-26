@@ -2,12 +2,16 @@ import React from 'react';
 
 class BalanceListItem extends React.Component {
 	render() {
-		let owner = this.props.curUser.name;
+
+		let curUser = this.props.curUser.name;
+		let eventUsers = this.props.eventUsers;
+		let purchases = this.props.data;
+
 		let listItems = this.props.data.map(item => {
 			return (
-				((owner.indexOf(item.owner) !== -1) &&
+				((curUser.indexOf(item.owner) !== -1) &&
 				item.members.map(member => {
-					if (member !== owner) {
+					if (member !== curUser) {
 						return (
 							<li className="balance-list-item" key={item.member}>
 								<div className="balance-list-item__direction">
