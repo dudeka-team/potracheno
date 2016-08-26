@@ -20,13 +20,8 @@ export default class Input extends React.Component {
 		this.labelText = props.label;
 		this.labelStyle = props.labelStyle;
 		this.labelTransform = props.labelTransform;
-		this.labelTransformedStyle = {};
-		for (var prop in this.labelStyle) {
-			this.labelTransformedStyle[prop] = this.labelStyle[prop];
-		}
-		for (var prop in this.labelTransform) {
-			this.labelTransformedStyle[prop] = this.labelTransform[prop];
-		}
+		this.labelTransformedStyle = Object.assign({}, this.labelStyle)
+		Object.assign(this.labelTransformedStyle, this.labelTransform);
 	}
 
 	handleFocus() {
