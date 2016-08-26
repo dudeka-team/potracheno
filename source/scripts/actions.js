@@ -1,5 +1,5 @@
 export AddPurchase() {
 	return {
 		
-	}
+	};
 }
