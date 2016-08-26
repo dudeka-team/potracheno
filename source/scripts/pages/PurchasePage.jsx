@@ -24,5 +24,3 @@ export default React.createClass({
 		);
 	},
 });
-
-export default PurchasePage;
