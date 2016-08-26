@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 scripts=(
-	"eslint source/scripts/**"
+	"eslint source/scripts/**/*"
 )
 
 run_script() {
