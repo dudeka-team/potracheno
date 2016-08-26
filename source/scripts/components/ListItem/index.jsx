@@ -21,4 +21,5 @@ ListItem.propTypes = {
 	text: PropTypes.string.isRequired,
 	price: PropTypes.string,
 	isCheckBox: PropTypes.bool,
+	iconId: PropTypes.number
 };

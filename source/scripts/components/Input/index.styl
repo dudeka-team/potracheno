@@ -1,0 +1,33 @@
+.Input
+	position relative
+
+.input
+	width 100%
+	border none
+	outline 0px
+	color #2e363e
+	border-bottom 1px solid #e1e4e7
+	box-sizing border-box
+	padding 0px
+	padding-bottom 9px
+	line-height 1.2
+	font-size inherit
+
+	&_empty
+		color rgba(46, 54, 62, 0.32)
+
+	&:focus
+		padding-bottom 8px
+		border-width 2px
+		border-color #3f95ff
+
+.floating-text
+	position absolute
+	top 0px
+	left 0px
+	line-height normal
+	color rgba(46, 54, 62, 0.32)
+	pointer-events none
+	transition transform 0.3s, color 0.3s
+	will-change transform
+	transform-origin left top

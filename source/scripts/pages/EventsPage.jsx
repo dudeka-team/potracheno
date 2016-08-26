@@ -3,7 +3,6 @@ import {hashHistory} from 'react-router';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsList from '../components/EventsList';
 
-
 function goToNewEventPage() {
 	hashHistory.push('/events/new');
 }
