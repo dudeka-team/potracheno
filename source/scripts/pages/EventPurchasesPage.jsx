@@ -2,16 +2,16 @@ import React from 'react';
 import List from '../components/List';
 import ListItem from '../components/ListItem';
 
-class EventPurchasesPage extends React.Component {
+const EventPurchasesPage = React.createClass({
 	render() {
 		return (
 			<div>
 				<List>
-					<ListItem text="покупка"/>
+					<ListItem text="покупка" />
 				</List>
 			</div>
 			);
-	}
-}
+	},
+});
 
 export default EventPurchasesPage;

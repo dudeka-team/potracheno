@@ -2,13 +2,12 @@ import React from 'react';
 import List from '../components/List';
 import ListItem from '../components/ListItem';
 
-let members = ['Дамир (Вы)', 'Женя', 'Дан', 'Андрей', 'Юра', 'Костя'];
+const members = ['Дамир (Вы)', 'Женя', 'Дан', 'Андрей', 'Юра', 'Костя'];
 
-class EventMembersPage extends React.Component {
+const EventMembersPage = React.createClass({
 	render() {
-
 		let membersItems = members.map(member => {
-			return <ListItem text={member} />
+			return (<ListItem text={member} />);
 		});
 
 		return (
@@ -18,7 +17,7 @@ class EventMembersPage extends React.Component {
 				</List>
 			</div>
 			);
-	}
-}
+	},
+});
 
 export default EventMembersPage;
