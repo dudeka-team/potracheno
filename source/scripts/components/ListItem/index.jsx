@@ -1,22 +1,24 @@
 import React, {PropTypes} from 'react';
-import CheckBox from '../CheckBox';
+import Checkbox from '../Checkbox';
 
-const ListItem = React.createClass({
-	render() {
-		return (
-			<li className={(this.props.isBordered ? "list-item_bordered " : "") + "list-item"}>
-				{this.props.text && <div className="list-item__text">{this.props.text}</div>}
-				{this.props.price && <div className="list-item__price">{this.props.price}</div>}
-				{this.props.isCheckBox && <CheckBox id={this.props.id} />}
-			</li>
-		);
-	},
-});
+export default function ListItem(props) {
+	const rootClasses = ['list-item'];
+
+	if (props.isBordered) {
+		rootClasses.push('list-item_bordered');
+	}
+
+	return (
+		<li className={rootClasses.join(' ')}>
+			{props.text && <div className="list-item__text">{props.text}</div>}
+			{props.price && <div className="list-item__price">{props.price}</div>}
+			{props.isCheckBox && <Checkbox />}
+		</li>
+	);
+}
 
 ListItem.propTypes = {
 	text: PropTypes.string.isRequired,
 	price: PropTypes.string,
 	isCheckBox: PropTypes.bool,
 };
-
-export default ListItem;
