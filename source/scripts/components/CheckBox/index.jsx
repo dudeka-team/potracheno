@@ -1,18 +1,12 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import shortid from 'shortid';
 
-const CheckBox = React.createClass({
-	render() {
-		return (
-			<div className="checkbox-wrapper">
-				<input id={'checkbox-' + this.props.id} onClick={this.updateState} className="checkbox" type="checkbox" />
-				<label className="checkbox-label" htmlFor={'checkbox-' + this.props.id}></label>
-			</div>
-		);
-	},
-});
-
-CheckBox.propTypes = {
-	id: PropTypes.number.isRequired,
-};
-
-export default CheckBox;
+export default function Checkbox(props) {
+	const id = shortid.generate();
+	return (
+		<div className="checkbox-wrapper">
+			<input id={id} onClick={props.onClick} className="checkbox" type="checkbox" />
+			<label className="checkbox-label" htmlFor={id} />
+		</div>
+	);
+}

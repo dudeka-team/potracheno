@@ -24,5 +24,3 @@ const PurchasePage = React.createClass({
 		);
 	},
 });
-
-export default PurchasePage;
