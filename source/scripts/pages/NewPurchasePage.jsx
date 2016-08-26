@@ -26,7 +26,7 @@ var mockUsers = [
 export default function(props) {
 	return (
 		<div>
-			<PurchaseParticipants />
+			<PurchaseParticipants payer='Дамир'/>
 			<Separator />
 			<NewPurchaseInputs />
 			<Separator />

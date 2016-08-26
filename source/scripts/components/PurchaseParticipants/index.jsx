@@ -7,10 +7,7 @@ export default function PurchaseParticipants(props) {
 		<div>
 			<div className='purchase-participants'>
 				<p className='purchase-participants__title'> Кто оплачивает </p>
-				<div className='purchase-participants__list'>
-					<Chip name="Дамир (Вы)" />
-					<ChipAddButton />
-				</div>
+				<p className='purchase-payer'>{props.payer}</p>
 			</div>
 		</div>
 	);

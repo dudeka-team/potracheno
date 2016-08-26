@@ -8,7 +8,7 @@ export default function App(props) {
 	return (
 		<div className="root">
 			{pathname.match(/^\/event\/\d*\/?$/) && <EventPageTopBar />}
-			{pathname.match(/^\/event\/\d*\/purchase\/new\/?$/) && <NewPurchaseTopBar />}
+			{(/^\/newpurchase/.test(pathname)) && <NewPurchaseTopBar />}
 			<div>{props.children}</div>
 			<div className="bottom-nav" style={{marginTop: '15rem'}}>
 				<Link to="/events">Events</Link>
