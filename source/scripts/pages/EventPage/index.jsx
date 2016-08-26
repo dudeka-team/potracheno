@@ -19,7 +19,7 @@ const tabsConfig = [
 	},
 	{
 		name: 'members',
-		labelContent: 'Учасники',
+		labelContent: 'Участники',
 		content: <EventMembersPage />
 	},
 ];
