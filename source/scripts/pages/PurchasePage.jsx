@@ -2,7 +2,7 @@ import React from 'react';
 import PurchaseInfo from '../components/PurchaseInfo';
 import Popup from '../components/Popup';
 
-const PurchasePage = React.createClass({
+export default React.createClass({
 	render() {
 		return (
 			<div>
