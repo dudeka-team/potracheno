@@ -1,5 +1,6 @@
 import React from 'react';
 import EventListItems from '../EventsListItems';
+import {hashHistory} from 'react-router';
 
 const data = [{
 	title: 'Трип по Европе',
@@ -18,6 +19,9 @@ const data = [{
 		members: [{name: 'Вася'}, {name: 'Петя'}, {name: 'Миша'}, {name: 'Витя'}],
 	}];
 
+function goToEvent() {
+	hashHistory.push('/event');
+}
 
 const EventsList = React.createClass({
 	getInitialState() {
@@ -26,7 +30,7 @@ const EventsList = React.createClass({
 	render() {
 		return (
 			<div className="events-box">
-				<EventListItems data={this.state.data} />
+				<EventListItems data={this.state.data} goToEvent={goToEvent}/>
 			</div>
 		);
 	},

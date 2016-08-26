@@ -29,6 +29,10 @@ export default function BalancePage() {
 			<List>
 				<BalanceListItem data={purchases} curUser={curUser} />
 			</List>
+			<BlueSubtitle text="Баланс участников"/>
+			<List>
+				<BalanceListItem data={purchases} curUser={curUser} />
+			</List>
 		</div>
 	);
 }

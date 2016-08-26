@@ -1,4 +1,5 @@
 import React from 'react';
+import {hashHistory} from 'react-router';
 import Tabs from '../../components/Tabs';
 import BalancePage from '../BalancePage';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
@@ -21,12 +22,16 @@ const tabsConfig = [
 	},
 ];
 
+function goToEvents() {
+	hashHistory.push('/events');
+}
+
 const EventPage = React.createClass({
 	render() {
 		return (
 			<div className="event-page">
 				<TopBar>
-					<TopBarIcon icon="arrow-back" />
+					<TopBarIcon icon="arrow-back" onClick={goToEvents}/>
 					<TopBarHeading title="Дача у Дамира" subtitle="5 участников - 12 апреля"/>
 					<TopBarIcon icon="arrow-share" />
 					<TopBarIcon icon="more-actions" />
