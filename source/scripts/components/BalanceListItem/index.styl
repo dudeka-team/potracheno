@@ -10,27 +10,25 @@
 	align-items center
 	font-size 16px
 	color #2e363e
-	font-weight 300
 	
-
 .balance-list-item__sum
 	display inline-block
-	color #34c082
+	font-weight 500
 
+	&_negative
+		color #f1353b
+
+	&_positive
+		color #34c082
+
+	&_neutral
+		color #2e363e
 	
-.balance-list-item__icon
+.balance-list-item__arrow
 	width 24px
 	height 24px
 	margin 0 8px
 	display inline-block
-
-	
-.balance-list-item__icon_to-you
-	background: url(../img/arrow-back-long.svg)
-	background-repeat no-repeat
-	background-position center
-	
-.balance-list-item__icon_from-you
-	background: url(../img/arrow-forward-long.svg)
+	background: url('../img/arrow-forward-long.svg')
 	background-repeat no-repeat
 	background-position center
