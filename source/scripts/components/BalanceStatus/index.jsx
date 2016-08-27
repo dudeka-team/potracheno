@@ -8,12 +8,11 @@ export default function BalanceStatus(props) {
 			<div className="balance-status__sum">{props.sum} р</div>
 		</div>
 	);
-};
-
+}
 
 BalanceStatus.propTypes = {
-    text: PropTypes.string.isRequired,
-    sum: PropTypes.number.isRequired,
+	text: PropTypes.string.isRequired,
+	sum: PropTypes.number.isRequired,
 };
 
 // Usage example

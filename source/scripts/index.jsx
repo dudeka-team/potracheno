@@ -12,6 +12,7 @@ import {appReducer} from './reducers/app';
 import Routes from './Routes';
 
 injectTapEventPlugin();
+moment.locale('ru');
 
 const store = createStore(
 	combineReducers({

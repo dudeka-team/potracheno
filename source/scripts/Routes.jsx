@@ -8,6 +8,7 @@ import EventPage from './pages/EventPage';
 import PurchasePage from './pages/PurchasePage';
 import NewPurchasePage from './pages/NewPurchasePage';
 import PayersPage from './pages/PayersPage';
+import DemoPage from './pages/DemoPage';
 
 export default function Routes(props) {
 	return (
@@ -21,6 +22,7 @@ export default function Routes(props) {
 				<Route path="purchase" component={PurchasePage} />
 				<Route path="newpurchase" component={NewPurchasePage} />
 				<Route path="payers" component={PayersPage} />
+				<Route path="demo" component={DemoPage} />
 			</Route>
 		</Router>
 	);

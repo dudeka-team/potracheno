@@ -4,7 +4,7 @@ export default function BalanceListItem(props) {
 	const sumClass = 'balance-list-item__sum';
 
 	return (
-		<li className="balance-list-item">
+		<div className="balance-list-item">
 			<div className="balance-list-item__direction">
 				{props.from}
 				<span className="balance-list-item__arrow" />
@@ -13,12 +13,9 @@ export default function BalanceListItem(props) {
 			<div className={[sumClass, `${sumClass}_${props.debtType}`].join(' ')}>
 				{props.sum} P
 			</div>
-		</li>
+		</div>
 	);
-};
-
-export default BalanceListItem;
-
+}
 
 BalanceListItem.propTypes = {
 	sum: PropTypes.number.isRequired,

@@ -1,6 +1,5 @@
 import React from 'react';
-import List from '../List';
-import ListItem from '../ListItem';
+import UniversalListItem from '../UniversalListItem';
 
 
 const data = {
@@ -43,22 +42,18 @@ const Payers = React.createClass({
 		};
 	},
 	render() {
-		let listItems = this.state.data.payers.map(item => {
-			return (
-				<ListItem
-					onClick={this.props.changePayer}
-					id={item.id}
-					text={item.name} key={item.id}
-					isCheckBox={false}
-					iconId={7}
-				/>
-			);
-		});
 		return (
 			<div className="payers">
-				<List>
-					{listItems}
-				</List>
+				{this.state.data.payers.map(item => {
+					return (
+						<UniversalListItem
+							onClick={this.props.changePayer}
+							id={item.id}
+							text={item.name} key={item.id}
+							iconId={7}
+						/>
+					);
+				})}
 			</div>
 		);
 	},

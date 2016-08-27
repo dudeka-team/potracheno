@@ -6,13 +6,12 @@ export default function BlueSubtitle(props) {
 			{props.text}
 		</div>
 	);
-};
+}
 
 BlueSubtitle.propTypes = {
-	text: PropTypes.string.isRequired, 
+	text: PropTypes.string.isRequired,
 };
 
 
 // Usage example
 // <BlueSubtitle text="Ваш баланс" />
-
