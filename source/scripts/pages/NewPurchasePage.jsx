@@ -9,49 +9,75 @@ import Payers from '../components/Payers';
 let mockUsers = [
 	{
 		name: 'Дамир',
-		loan: '500',
+		loan: 500,
 	},
 	{
 		name: 'Юрий',
-		loan: '500',
+		loan: 500,
 	},
 	{
 		name: 'Алексей',
-		loan: '500',
+		loan: 500,
 	},
 	{
 		name: 'Дамир',
-		loan: '500',
+		loan: 500,
 	},
 ];
 
 const NewPurchasePage = React.createClass({
 	getInitialState() {
 		return {
-			popup: false,
+			popupOpened: false,
 		};
 	},
-	changePayer(e) {
+
+	openPopup() {
 		this.setState({
-			popup: false,
-			payer: e.target.innerHTML,
+			popupOpened: true,
 		});
 	},
+
+	closePopup() {
+		this.setState({
+			popupOpened: false,
+		});
+	},
+
+	changePayer() {
+		this.setState({
+			popupOpened: false,
+		});
+	},
+
 	render() {
+		const {state} = this;
 		return (
 			<div>
 				{
-				this.state.popup && (
-					<Popup title="Кто оплачивает">
-						<Payers changePayer={this.changePayer} />
-					</Popup>
-				)
+					state.popupOpened && (
+						<Popup
+							title="Кто платит"
+							closeIcon
+							okButton={{
+								text: 'Добавить',
+								onClick: this.closePopup,
+							}}
+							cancelButton={{
+								text: 'Отменить',
+								onClick: this.closePopup,
+							}}
+							onClose={this.closePopup}
+						>
+							<Payers changePayer={this.changePayer} />
+						</Popup>
+					)
 				}
 				<PurchaseParticipants
 					payer={this.state.payer}
 					onClick={() => {
 						this.setState({
-							popup: true,
+							popupOpened: true,
 						});
 					}}
 				/>

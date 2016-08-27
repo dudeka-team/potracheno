@@ -47,7 +47,7 @@ const Payers = React.createClass({
 				{this.state.data.payers.map(item => {
 					return (
 						<UniversalListItem
-							onClick={this.props.changePayer}
+							changePayer={this.props.changePayer}
 							id={item.id}
 							text={item.name} key={item.id}
 							iconId={7}

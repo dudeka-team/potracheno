@@ -15,7 +15,7 @@ export default function App(props) {
 				<Link to="/event">Event page</Link>
 				<Link to="/newpurchase">New purchase</Link>
 				<Link to="/purchase">Purchase page</Link>
-				<Link to="/payers">Payers page</Link>
+				<Link to="/demo">Demo page</Link>
 			</div>
 		</div>
 	);

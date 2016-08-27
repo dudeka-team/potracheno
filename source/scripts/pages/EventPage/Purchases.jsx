@@ -1,35 +1,86 @@
 import React from 'react';
-import PersonAdd from 'material-ui/svg-icons/social/person-add';
-
-import PurchaseListItem from '../../components/PurchaseListItem';
+import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import Fab from '../../components/Fab';
+import PurchaseInfo from '../../components/PurchaseInfo';
+import PurchaseListItem from '../../components/PurchaseListItem';
+import Popup from '../../components/Popup';
 
+
+const purchases = [
+	{
+		buyer: 'Женя',
+		title: 'Пицца',
+		subtitle: 'все 5 человек',
+		price: 2000
+	},
+	{
+		buyer: 'Петя',
+		title: 'Овощи',
+		subtitle: 'все 5 человек',
+		price: 2000
+	},
+	{
+		buyer: 'Вася',
+		title: 'Сок',
+		subtitle: 'все 5 человек',
+		price: 2000
+	}
+]
 
 const EventPurchasesPage = React.createClass({
+	getInitialState() {
+		return {
+			popupOpened: false,
+		};
+	},
+
+	openPopup() {
+		this.setState({
+			popupOpened: true,
+		});
+	},
+
+	closePopup() {
+		this.setState({
+			popupOpened: false,
+		});
+	},
+
 	render() {
+		const {state} = this;
 		return (
 			<div>
-				<PurchaseListItem
-					buyer="Андрей"
-					title="Шашлык"
-					subtitle="все 5 участников"
-					price={1500}
-				/>
-				<PurchaseListItem
-					buyer="Андрей"
-					title="Шашлык"
-					subtitle="все 5 участников"
-					price={1500}
-				/>
-				<PurchaseListItem
-					buyer="Андрей"
-					title="Шашлык"
-					subtitle="все 5 участников"
-					price={1500}
-				/>
-				<Fab icon={<PersonAdd />} />
+				{
+					state.popupOpened && (
+						<Popup
+							title="Шашлык"
+							closeIcon
+							onClose={this.closePopup}
+						>
+							<PurchaseInfo />
+						</Popup>
+					)
+				}
+				{
+					purchases.map((item) => {
+						return (
+							<PurchaseListItem 
+								buyer={item.buyer} 
+								title={item.title} 
+								subtitle={item.subtitle} 
+								price={item.price}
+								onClick={() => {
+									this.setState({
+										popupOpened: true,
+									});
+								}}
+							/>
+						)
+					})
+				}
+				<Fab><AddShoppingCart /></Fab>
 			</div>
-			);
+		);
 	},
 });
 
