@@ -1,26 +1,26 @@
 import React from 'react';
 import {hashHistory} from 'react-router';
 import Tabs from '../../components/Tabs';
-import BalancePage from '../BalancePage';
-import EventPurchasesPage from '../EventPurchasesPage';
-import EventMembersPage from '../EventMembersPage';
+import Balance from './Balance';
+import Purchases from './Purchases';
+import Members from './Members';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 const tabsConfig = [
 	{
 		name: 'purchases',
 		labelContent: 'Покупки',
-		content: <EventPurchasesPage />,
+		content: <Purchases />,
 	},
 	{
 		name: 'balance',
 		labelContent: 'Баланс',
-		content: <BalancePage />,
+		content: <Balance />,
 	},
 	{
 		name: 'members',
 		labelContent: 'Участники',
-		content: <EventMembersPage />,
+		content: <Members />,
 	},
 ];
 

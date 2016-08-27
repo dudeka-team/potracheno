@@ -1,8 +1,9 @@
 import React from 'react';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 
-import PurchaseListItem from '../components/PurchaseListItem';
-import Fab from '../components/Fab';
+import PurchaseListItem from '../../components/PurchaseListItem';
+import Fab from '../../components/Fab';
+
 
 const EventPurchasesPage = React.createClass({
 	render() {

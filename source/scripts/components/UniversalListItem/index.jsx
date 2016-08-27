@@ -1,26 +1,32 @@
 import React, {PropTypes} from 'react';
 import Checkbox from '../Checkbox';
 
-export default function UniversalListItem(props) {
-	const rootClasses = ['list-item'];
+const UniversalListItem = React.createClass({
+	propTypes: {
+		text: PropTypes.string.isRequired,
+		price: PropTypes.number,
+		isCheckable: PropTypes.bool,
+		isBordered: PropTypes.bool,
+		isChecked: PropTypes.bool,
+	},
 
-	if (props.isBordered) {
-		rootClasses.push('list-item_bordered');
-	}
+	render() {
+		const baseClass = 'universal-list-item';
+		const rootClasses = [baseClass];
+		const {props} = this;
 
-	return (
-		<div className={rootClasses.join(' ')}>
-			<div className="list-item__text">{props.text}</div>
-			{props.price && <div className="list-item__price">{props.price} Р</div>}
-			{props.isCheckbox && <Checkbox />}
-		</div>
-	);
-}
+		if (props.isBordered) {
+			rootClasses.push(`${baseClass}_bordered`);
+		}
 
-UniversalListItem.propTypes = {
-	text: PropTypes.string.isRequired,
-	price: PropTypes.number,
-	isCheckbox: PropTypes.bool,
-	isBordered: PropTypes.bool,
-	iconId: PropTypes.number,
-};
+		return (
+			<div className={rootClasses.join(' ')}>
+				<div className={`${baseClass}__text`}>{props.text}</div>
+				{props.price && <div className={`${baseClass}__price`}>{props.price} Р</div>}
+				{props.isCheckbox && <Checkbox checked />}
+			</div>
+		);
+	},
+});
+
+export default UniversalListItem;

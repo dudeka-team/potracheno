@@ -1,5 +1,5 @@
 import React from 'react';
-import UniversalListItem from '../components/UniversalListItem';
+import UniversalListItem from '../../components/UniversalListItem';
 
 const members = ['Дамир (Вы)', 'Женя', 'Дан', 'Андрей', 'Юра', 'Костя'];
 
@@ -11,7 +11,7 @@ const EventMembersPage = React.createClass({
 					return (<UniversalListItem text={member} />);
 				})}
 			</div>
-			);
+		);
 	},
 });
 

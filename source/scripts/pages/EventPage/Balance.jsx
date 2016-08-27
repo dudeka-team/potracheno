@@ -1,6 +1,6 @@
 import React from 'react';
-import BlueSubtitle from '../components/BlueSubtitle';
-import BalanceListItem from '../components/BalanceListItem';
+import BlueSubtitle from '../../components/BlueSubtitle';
+import BalanceListItem from '../../components/BalanceListItem';
 
 export default function BalancePage() {
 	return (

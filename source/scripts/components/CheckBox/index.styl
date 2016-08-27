@@ -1,50 +1,40 @@
 .checkbox
+	position relative
+	display block
+	width 18px
+	height 18px
 	margin-left 19px
-	width: 18px
-	height: 18px
+	border 2px solid #A0B0BE
+	border-radius 10%
+	cursor pointer
+	transition .2s
 
-	&__input
-		display none
-
-	&__label
+	&::before,
+	&::after
+		content ''
 		display block
-		box-sizing border-box
-		width 18px
-		height 18px
-		border 2px solid #A0B0BE
-		border-radius 10%
-		position relative
-		cursor pointer
+
+	&::before
+		position absolute
+		height 200%
+		width 200%
+		top -50%
+		left -50%
+		z-index -1
+		border-radius 50%
+		transition .3s
+
+	&::after
+		height 100%
+		width 100%
+		background url('../img/check.svg') center center no-repeat
+		background-size cover
+		transform scale(0)
 		transition .2s
 
-		&::before,
-		&::after
-			content ''
-			display block
-
-		&::before
-			position absolute
-			height 200%
-			width 200%
-			top -50%
-			left -50%
-			z-index -1
-			border-radius 50%
-			transition .3s
+	&_checked
+		background #3f95ff
+		border-color transparent
 
 		&::after
-			content ''
-			display block
-			height 100%
-			width 100%
-			background url('../img/check.svg') center center no-repeat
-			background-size cover
-			transform scale(0)
-			transition .2s
-
-		.checkbox__input:checked + &
-			background #3f95ff
-			border-color transparent
-
-			&::after
-				transform scale(1.3)
+			transform scale(1.3)
