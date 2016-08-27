@@ -9,17 +9,18 @@ const style = {
 
 export default function Fab(props) {
 	return (
-		<FloatingActionButton
-			style={style}
-			onClick={props.onClick}
-		>
-			{props.children}
-		</FloatingActionButton>
+		<div>
+			<FloatingActionButton
+				style={style}
+				onClick={props.onClick}
+			>
+				{props.children}
+			</FloatingActionButton>
+		</div>
 	);
 }
 
 Fab.propTypes = {
-	icon: PropTypes.object,
 	onClick: PropTypes.func,
 };
 

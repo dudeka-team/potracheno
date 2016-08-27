@@ -1,4 +1,5 @@
 import React from 'react';
+import {hashHistory} from 'react-router';
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import Fab from '../../components/Fab';
 import PurchaseInfo from '../../components/PurchaseInfo';
@@ -27,7 +28,12 @@ const purchases = [
 	}
 ]
 
+function goToNewPurchase() {
+	hashHistory.push('newpurchase');
+}
+
 const EventPurchasesPage = React.createClass({
+
 	getInitialState() {
 		return {
 			popupOpened: false,
@@ -78,7 +84,7 @@ const EventPurchasesPage = React.createClass({
 						)
 					})
 				}
-				<Fab><AddShoppingCart /></Fab>
+				<Fab><AddShoppingCart onClick={goToNewPurchase}/></Fab>
 			</div>
 		);
 	},
