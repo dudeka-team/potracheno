@@ -1,6 +1,7 @@
 import React from 'react';
 import List from '../components/List';
 import PurchaseListItem from '../components/PurchaseListItem';
+import FAButton from '../components/FAButton';
 
 const EventPurchasesPage = React.createClass({
 	render() {
@@ -27,6 +28,7 @@ const EventPurchasesPage = React.createClass({
 					/>
 
 				</List>
+				<FAButton />
 			</div>
 			);
 	},
