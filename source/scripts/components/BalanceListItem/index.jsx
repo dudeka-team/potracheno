@@ -1,38 +1,32 @@
-import React from 'react';
-import List from '../List';
+import React, {PropTypes} from 'react';
 
-const BalanceListItem = React.createClass({
-	render() {
-		const curUser = this.props.curUser.name;
+export default function BalanceListItem(props) {
+	const sumClass = 'balance-list-item__sum';
 
-		const listItems = this.props.data.map(item => {
-			return (
-				((curUser.indexOf(item.owner) !== -1) &&
-				item.members.map(member => {
-					if (member !== curUser) {
-						return (
-							<li className="balance-list-item" key={item.member}>
-								<div className="balance-list-item__direction">
-									Вам
-									<span className="balance-list-item__icon balance-list-item__icon_to-you" />
-									{`${member}`}
-								</div>
-								<div className="balance-list-item__sum">
-									{Math.round(item.sum / item.members.length)} Р
-								</div>
-							</li>
-						);
-					}
-				}))
-			);
-		});
-
-		return (
-			<List>
-				{listItems}
-			</List>
-		);
-	},
-});
+	return (
+		<li className="balance-list-item">
+			<div className="balance-list-item__direction">
+				{props.from}
+				<span className="balance-list-item__arrow" />
+				{props.to}
+			</div>
+			<div className={[sumClass, `${sumClass}_${props.debtType}`].join(' ')}>
+				{props.sum} P
+			</div>
+		</li>
+	);
+};
 
 export default BalanceListItem;
+
+
+BalanceListItem.propTypes = {
+	sum: PropTypes.number.isRequired,
+	from: PropTypes.string.isRequired,
+	to: PropTypes.string.isRequired,
+	debtType: PropTypes.oneOf(['positive', 'negative', 'neutral']).isRequired,
+};
+
+
+// Usage example
+// <BalanceListItem sum={2000} from="Вы" to="Дамир" debtType="positive" />
