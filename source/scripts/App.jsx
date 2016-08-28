@@ -1,5 +1,4 @@
 import React from 'react';
-import 'react-fastclick';
 import {Link} from 'react-router';
 import {TopBar, TopBarHeading, TopBarIcon} from './components/TopBar';
 
@@ -13,11 +12,10 @@ export default function App(props) {
 			<div>{props.children}</div>
 			<div className="bottom-nav" style={{marginTop: '15rem'}}>
 				<Link to="/events">Events</Link>
-				<Link to="/balance">Balance</Link>
 				<Link to="/event">Event page</Link>
 				<Link to="/newpurchase">New purchase</Link>
 				<Link to="/purchase">Purchase page</Link>
-				<Link to="/payers">Payers page</Link>
+				<Link to="/demo">Demo page</Link>
 			</div>
 		</div>
 	);

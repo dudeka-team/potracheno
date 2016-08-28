@@ -46,11 +46,7 @@ export default function NewEventFirst(props) {
 	);
 }
 
-const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-// eslint-disable-next-line max-len
-const months = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Нояб', 'Дек'];
-
 function formatDate(date) {
-	// eslint-disable-next-line max-len
-	return `${days[date.getDay() - 1]}, ${date.getDate()} ${months[date.getMonth()].toLowerCase()} ${date.getFullYear()}`;
+	const formattedDate = moment(date).format('dd, DD MMM YYYY');
+	return formattedDate[0].toUpperCase() + formattedDate.slice(1);
 }

@@ -1,0 +1,44 @@
+.events-item
+	padding 17px 16px
+	border-bottom 1px solid #e1e4e7
+
+	&__leftside
+		display inline-block
+
+	&__rightside
+		display inline-block
+		float right
+		text-align right
+
+	&__title
+		font-size 16px
+		font-weight 500
+		color #2f3539
+		margin 0 0 2px 0
+		line-height 20px
+
+	&__subtitle
+		font-size 14px
+		color #8a99a4
+		line-height 16px
+
+	&__membersCount:after
+		content: "●"
+		font-size: 5px
+		margin: 0 3px
+		position: relative
+		top: -2px
+
+	&__debt-status
+		&_negative
+			color #f1353b
+
+		&_positive
+			color #34c082
+
+	&__sum
+		font-size 20px
+		margin 0 0 3px 0
+
+	&__debtType
+		font-size 12px

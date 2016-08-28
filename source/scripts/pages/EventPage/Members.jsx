@@ -1,22 +1,17 @@
 import React from 'react';
-import List from '../components/List';
-import ListItem from '../components/ListItem';
+import UniversalListItem from '../../components/UniversalListItem';
 
 const members = ['Дамир (Вы)', 'Женя', 'Дан', 'Андрей', 'Юра', 'Костя'];
 
 const EventMembersPage = React.createClass({
 	render() {
-		let membersItems = members.map(member => {
-			return (<ListItem text={member} />);
-		});
-
 		return (
 			<div>
-				<List>
-					{membersItems}
-				</List>
+				{members.map(member => {
+					return (<UniversalListItem text={member} />);
+				})}
 			</div>
-			);
+		);
 	},
 });
 

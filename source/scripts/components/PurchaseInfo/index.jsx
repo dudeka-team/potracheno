@@ -1,6 +1,5 @@
 import React from 'react';
-import List from '../List';
-import ListItem from '../ListItem';
+import UniversalListItem from '../UniversalListItem';
 import BlueSubtitle from '../BlueSubtitle';
 
 
@@ -74,12 +73,12 @@ const PurchaseInfo = React.createClass({
 	render() {
 		let participants = this.state.users.participantList.map(item => {
 			return (
-				<ListItem id={item.id} text={item.name} key={item.id} isCheckBox={false} />
+				<UniversalListItem id={item.id} text={item.name} key={item.id} isCheckbox={false} />
 			);
 		});
 		let nonParticipants = this.state.users.nonParticipantList.map(item => {
 			return (
-				<ListItem id={item.id} text={item.name} key={item.id} isCheckBox={false} />
+				<UniversalListItem id={item.id} text={item.name} key={item.id} isCheckbox={false} />
 			);
 		});
 		return (
@@ -89,9 +88,9 @@ const PurchaseInfo = React.createClass({
 					<div className="purchase-info__price">2500 р</div>
 				</div>
 				<BlueSubtitle text="Участвуют в покупке" />
-				<List>{participants}</List>
+				{participants}
 				<BlueSubtitle text="Не участвуют в покупке" />
-				<List>{nonParticipants}</List>
+				{nonParticipants}
 			</div>
 		);
 	},

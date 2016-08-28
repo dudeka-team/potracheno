@@ -1,12 +1,21 @@
-import React from 'react';
-import shortid from 'shortid';
+import React, {PropTypes} from 'react';
 
 export default function Checkbox(props) {
-	const id = shortid.generate();
+	const baseClass = 'checkbox';
+	const classes = [baseClass];
+
+	if (props.checked) {
+		classes.push(`${baseClass}_checked`);
+	}
+
 	return (
-		<div className="checkbox-wrapper">
-			<input id={id} onClick={props.onClick} className="checkbox" type="checkbox" />
-			<label className="checkbox-label" htmlFor={id} />
-		</div>
+		<div className={classes.join(' ')} {...props} />
 	);
 }
+
+Checkbox.propTypes = {
+	checked: PropTypes.bool,
+};
+
+// Usage example
+// <Checkbox checked />

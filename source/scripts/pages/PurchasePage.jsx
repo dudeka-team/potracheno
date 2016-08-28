@@ -8,7 +8,7 @@ export default React.createClass({
 			<div>
 				<Popup
 					title="Шашлык"
-					npmcloseIcon
+					closeIcon
 					okButton={{
 						text: 'Добавить',
 						onClick: () => {},

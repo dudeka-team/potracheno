@@ -3,6 +3,9 @@
   "env": {
     "browser": true
   },
+  "globals": {
+    "moment": true
+  },
   "rules": {
     "indent": ["error", "tab", {
       "SwitchCase": 1
@@ -24,7 +27,6 @@
     "react/jsx-indent-props": [2, "tab"],
     "react/prefer-es6-class": ["error", "never"],
     "react/prop-types": "off",
-    "react/prefer-stateless-function": "off",
-
+    "react/prefer-stateless-function": "off"
   }
 }

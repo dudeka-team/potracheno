@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 export default function BlueSubtitle(props) {
 	return (
@@ -7,3 +7,11 @@ export default function BlueSubtitle(props) {
 		</div>
 	);
 }
+
+BlueSubtitle.propTypes = {
+	text: PropTypes.string.isRequired,
+};
+
+
+// Usage example
+// <BlueSubtitle text="Ваш баланс" />
