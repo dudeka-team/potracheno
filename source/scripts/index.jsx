@@ -23,6 +23,15 @@ assign.polyfill();
 injectTapEventPlugin();
 moment.locale('ru');
 
+const firebaseConfig = {
+	apiKey: 'AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q',
+	authDomain: 'dudeka-401e8.firebaseapp.com',
+	databaseURL: 'https://dudeka-401e8.firebaseio.com',
+	storageBucket: 'dudeka-401e8.appspot.com',
+};
+
+firebase.initializeApp(firebaseConfig);
+
 const store = createStore(
 	combineReducers({
 		app: appReducer,
@@ -52,11 +61,3 @@ function AppRoot() {
 		</MuiThemeProvider>
 	);
 }
-
-const config = {
-	apiKey: 'AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q',
-	authDomain: 'dudeka-401e8.firebaseapp.com',
-	databaseURL: 'https://dudeka-401e8.firebaseio.com',
-	storageBucket: 'dudeka-401e8.appspot.com',
-};
-firebase.initializeApp(config);

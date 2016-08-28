@@ -1,14 +1,16 @@
 import React from 'react';
 import {hashHistory} from 'react-router';
+import {connect} from 'react-redux';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
+import {createEventAsync} from '../../actions';
 
 
 function goToEvents() {
 	hashHistory.push('/events');
 }
 
-export default React.createClass({
+const NewEvent = React.createClass({
 	getInitialState() {
 		const now = new Date();
 		return {
@@ -26,6 +28,16 @@ export default React.createClass({
 				currentStep: 2,
 			});
 		}
+	},
+
+	save() {
+		const {state} = this;
+		this.props.dispatch(createEventAsync({
+			name: state.name,
+			start: state.start.valueOf(),
+			end: state.end.valueOf(),
+			participants: state.participants.filter(Boolean),
+		}));
 	},
 
 	render() {
@@ -53,10 +65,7 @@ export default React.createClass({
 				{state.currentStep === 2 && <SecondStep
 					participants={state.participants}
 					saveAvailable={!!state.participants.filter(Boolean).length}
-					save={() => {
-
-						hashHistory.push('/events');
-					}}
+					save={this.save}
 					onChangeParticipant={(index, name) => {
 						const updatedParticipants = [
 							...state.participants.slice(0, index),
@@ -91,3 +100,5 @@ function keepOneEmptyItem(participants) {
 
 	return participants;
 }
+
+export default connect()(NewEvent);
