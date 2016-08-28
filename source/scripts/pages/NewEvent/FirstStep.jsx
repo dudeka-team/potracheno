@@ -22,14 +22,14 @@ export default function NewEventFirst(props) {
 					fullWidth
 					floatingLabelText="Название мероприятия"
 					value={props.eventName}
-					onChange={props.onEditEventName}
+					onChange={props.handleEventNameChange}
 				/>
 
 				<DatePicker
 					fullWidth
 					floatingLabelText="Начало"
 					formatDate={formatDate}
-					onChange={props.onSetStartDate}
+					onChange={props.handleStartDateChange}
 					minDate={props.start}
 					value={props.start}
 				/>
@@ -37,7 +37,7 @@ export default function NewEventFirst(props) {
 					fullWidth
 					floatingLabelText="Завершение"
 					formatDate={formatDate}
-					onChange={props.onSetEndDate}
+					onChange={props.handleEndDateChange}
 					minDate={props.start}
 					value={props.end}
 				/>

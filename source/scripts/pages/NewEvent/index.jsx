@@ -19,7 +19,21 @@ const NewEvent = React.createClass({
 			end: now,
 			participants: [''],
 			currentStep: 1,
+			isSavingData: false,
 		};
+	},
+
+	componentDidUpdate() {
+		const {state, props} = this;
+
+		if (state.isSavingData) {
+			props.dispatch(createEventAsync({
+				name: state.name,
+				start: state.start.valueOf(),
+				end: state.end.valueOf(),
+				participants: state.participants.filter(Boolean),
+			}));
+		}
 	},
 
 	goToSecondStep() {
@@ -31,13 +45,53 @@ const NewEvent = React.createClass({
 	},
 
 	save() {
+		this.setState({
+			isSavingData: true,
+		});
+	},
+
+	handleEventNameChange(event) {
+		this.setState({
+			name: event.target.value,
+		});
+	},
+
+	handleStartDateChange(event, date) {
 		const {state} = this;
-		this.props.dispatch(createEventAsync({
-			name: state.name,
-			start: state.start.valueOf(),
-			end: state.end.valueOf(),
-			participants: state.participants.filter(Boolean),
-		}));
+		this.setState({
+			start: date,
+			end: date > state.end ? date : state.end,
+		});
+	},
+
+	handleEndDateChange(event, date) {
+		this.setState({
+			end: date,
+		});
+	},
+
+	handleParticipantChange(index, name) {
+		const {state} = this;
+		const updatedParticipants = [
+			...state.participants.slice(0, index),
+			name,
+			...state.participants.slice(index + 1),
+		];
+
+		keepOneEmptyItem(updatedParticipants);
+
+		this.setState({
+			participants: updatedParticipants,
+		});
+	},
+
+	handleParticipantInputBlur() {
+		const filteredParticipants = this.state.participants.filter(Boolean);
+		keepOneEmptyItem(filteredParticipants);
+
+		this.setState({
+			participants: filteredParticipants,
+		});
 	},
 
 	render() {
@@ -51,42 +105,17 @@ const NewEvent = React.createClass({
 					secondStepAvailable={!!state.name.trim()}
 					onBack={goToEvents}
 					onForward={this.goToSecondStep}
-					onEditEventName={(event) => this.setState({
-						name: event.target.value,
-					})}
-					onSetStartDate={(event, date) => this.setState({
-						start: date,
-						end: date > state.end ? date : state.end,
-					})}
-					onSetEndDate={(event, date) => this.setState({
-						end: date,
-					})}
+					handleEventNameChange={this.handleEventNameChange}
+					handleStartDateChange={this.handleStartDateChange}
+					handleEndDateChange={this.handleEndDateChange}
 				/>}
 				{state.currentStep === 2 && <SecondStep
 					participants={state.participants}
 					saveAvailable={!!state.participants.filter(Boolean).length}
 					save={this.save}
-					onChangeParticipant={(index, name) => {
-						const updatedParticipants = [
-							...state.participants.slice(0, index),
-							name,
-							...state.participants.slice(index + 1),
-						];
-
-						keepOneEmptyItem(updatedParticipants);
-
-						this.setState({
-							participants: updatedParticipants,
-						});
-					}}
-					onBlur={() => {
-						const filteredParticipants = state.participants.filter(Boolean);
-						keepOneEmptyItem(filteredParticipants);
-
-						this.setState({
-							participants: filteredParticipants,
-						});
-					}}
+					isSavingData={state.isSavingData}
+					handleParticipantChange={this.handleParticipantChange}
+					handleParticipantInputBlur={this.handleParticipantInputBlur}
 				/>}
 			</div>
 		);
