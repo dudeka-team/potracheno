@@ -54,6 +54,7 @@ export default React.createClass({
 					participants={state.participants}
 					saveAvailable={!!state.participants.filter(Boolean).length}
 					save={() => {
+
 						hashHistory.push('/events');
 					}}
 					onChangeParticipant={(index, name) => {

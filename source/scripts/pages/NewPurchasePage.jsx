@@ -1,8 +1,8 @@
 import React from 'react';
-import PurchaseParticipants from '../components/PurchaseParticipants';
+import NewPurchaseParticipants from '../components/NewPurchaseParticipants';
 import Separator from '../components/Separator';
 import NewPurchaseInputs from '../components/NewPurchaseInputs';
-import NewPurchaseParticipants from '../components/NewPurchaseParticipants';
+import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
 import Payers from '../components/Payers';
 
@@ -25,10 +25,47 @@ let mockUsers = [
 	},
 ];
 
+const payers = [
+	{
+		name: 'Дамир (Вы)',
+		id: 0,
+		chosed: true,
+	},
+	{
+		name: 'Петя',
+		id: 1,
+	},
+	{
+		name: 'Вася',
+		id: 2,
+	},
+	{
+		name: 'Катя',
+		id: 3,
+	},
+	{
+		name: 'Вася',
+		id: 4,
+	},
+	{
+		name: 'Катя',
+		id: 5,
+	},
+	{
+		name: 'Вася',
+		id: 6,
+	},
+	{
+		name: 'Катя',
+		id: 7,
+	},
+];
+
 const NewPurchasePage = React.createClass({
 	getInitialState() {
 		return {
 			popupOpened: false,
+			payer: {id: 0, name: 'Дамир (Вы)'},
 		};
 	},
 
@@ -44,10 +81,15 @@ const NewPurchasePage = React.createClass({
 		});
 	},
 
-	changePayer() {
+	changePayer(payer) {
 		this.setState({
 			popupOpened: false,
+			payer,
 		});
+		payers.forEach((item) => {
+			item.chosed = false;
+		});
+		payers[payer.id].chosed = true;
 	},
 
 	render() {
@@ -69,12 +111,12 @@ const NewPurchasePage = React.createClass({
 							}}
 							onClose={this.closePopup}
 						>
-							<Payers changePayer={this.changePayer} />
+							<Payers payers={payers} changePayer={this.changePayer} />
 						</Popup>
 					)
 				}
-				<PurchaseParticipants
-					payer={this.state.payer}
+				<NewPurchasePayer
+					payer={this.state.payer.name}
 					onClick={() => {
 						this.setState({
 							popupOpened: true,

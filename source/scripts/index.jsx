@@ -14,6 +14,8 @@ import 'react-fastclick';
 import {appReducer} from './reducers/app';
 import Routes from './Routes';
 
+import firebase from 'firebase';
+
 injectTapEventPlugin();
 moment.locale('ru');
 
@@ -46,3 +48,11 @@ function AppRoot() {
 		</MuiThemeProvider>
 	);
 }
+
+var config = {
+	apiKey: "AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q",
+	authDomain: "dudeka-401e8.firebaseapp.com",
+	databaseURL: "https://dudeka-401e8.firebaseio.com",
+	storageBucket: "dudeka-401e8.appspot.com",
+};
+firebase.initializeApp(config);
