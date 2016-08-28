@@ -25,11 +25,11 @@ let mockUsers = [
 	},
 ];
 
-var payers = [
+const payers = [
 	{
 		name: 'Дамир (Вы)',
 		id: 0,
-		chosed: true
+		chosed: true,
 	},
 	{
 		name: 'Петя',
@@ -65,7 +65,7 @@ const NewPurchasePage = React.createClass({
 	getInitialState() {
 		return {
 			popupOpened: false,
-			payer: {id: 0, name: 'Дамир (Вы)'}
+			payer: {id: 0, name: 'Дамир (Вы)'},
 		};
 	},
 
@@ -84,7 +84,7 @@ const NewPurchasePage = React.createClass({
 	changePayer(payer) {
 		this.setState({
 			popupOpened: false,
-			payer
+			payer,
 		});
 		payers.forEach((item) => {
 			item.chosed = false;
