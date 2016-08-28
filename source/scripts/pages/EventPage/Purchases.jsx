@@ -12,21 +12,21 @@ const purchases = [
 		buyer: 'Женя',
 		title: 'Пицца',
 		subtitle: 'все 5 человек',
-		price: 2000
+		price: 2000,
 	},
 	{
 		buyer: 'Петя',
 		title: 'Овощи',
 		subtitle: 'все 5 человек',
-		price: 2000
+		price: 2000,
 	},
 	{
 		buyer: 'Вася',
 		title: 'Сок',
 		subtitle: 'все 5 человек',
-		price: 2000
-	}
-]
+		price: 2000,
+	},
+];
 
 function goToNewPurchase() {
 	hashHistory.push('newpurchase');
@@ -56,34 +56,30 @@ const EventPurchasesPage = React.createClass({
 		const {state} = this;
 		return (
 			<div>
-				{
-					state.popupOpened && (
-						<Popup
-							title="Шашлык"
-							closeIcon
-							onClose={this.closePopup}
-						>
-							<PurchaseInfo />
-						</Popup>
-					)
-				}
-				{
-					purchases.map((item) => {
-						return (
-							<PurchaseListItem 
-								buyer={item.buyer} 
-								title={item.title} 
-								subtitle={item.subtitle} 
-								price={item.price}
-								onClick={() => {
-									this.setState({
-										popupOpened: true,
-									});
-								}}
-							/>
-						)
-					})
-				}
+				{state.popupOpened && (
+					<Popup
+						title="Шашлык"
+						closeIcon
+						onClose={this.closePopup}
+					>
+						<PurchaseInfo />
+					</Popup>
+				)}
+				{purchases.map((item) => {
+					return (
+						<PurchaseListItem
+							buyer={item.buyer}
+							title={item.title}
+							subtitle={item.subtitle}
+							price={item.price}
+							onClick={() => {
+								this.setState({
+									popupOpened: true,
+								});
+							}}
+						/>
+					);
+				})}
 				<Fab onClick={goToNewPurchase}><AddShoppingCart /></Fab>
 			</div>
 		);

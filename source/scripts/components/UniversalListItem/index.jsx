@@ -10,7 +10,6 @@ const UniversalListItem = React.createClass({
 		isBordered: PropTypes.bool,
 		isChecked: PropTypes.bool,
 	},
-	
 
 	render() {
 		const baseClass = 'universal-list-item';

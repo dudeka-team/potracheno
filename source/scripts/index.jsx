@@ -10,18 +10,17 @@ import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import assign from 'es6-object-assign';
 
 import 'react-fastclick';
 
 import appReducer from './reducers/app';
 import Routes from './Routes';
 
-import assign from 'es6-object-assign';
-
-assign.polyfill();
 
 injectTapEventPlugin();
 moment.locale('ru');
+assign.polyfill();
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q',
