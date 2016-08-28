@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import firebase from 'firebase';
+
 import {hashHistory} from 'react-router';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
@@ -11,10 +13,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import 'react-fastclick';
 
-import {appReducer} from './reducers/app';
+import appReducer from './reducers/app';
 import Routes from './Routes';
-
-import firebase from 'firebase';
 
 injectTapEventPlugin();
 moment.locale('ru');
@@ -49,10 +49,10 @@ function AppRoot() {
 	);
 }
 
-var config = {
-	apiKey: "AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q",
-	authDomain: "dudeka-401e8.firebaseapp.com",
-	databaseURL: "https://dudeka-401e8.firebaseio.com",
-	storageBucket: "dudeka-401e8.appspot.com",
+const config = {
+	apiKey: 'AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q',
+	authDomain: 'dudeka-401e8.firebaseapp.com',
+	databaseURL: 'https://dudeka-401e8.firebaseio.com',
+	storageBucket: 'dudeka-401e8.appspot.com',
 };
 firebase.initializeApp(config);
