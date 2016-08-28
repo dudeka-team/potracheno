@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {hashHistory} from 'react-router';
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
+import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 
@@ -21,7 +22,10 @@ const store = createStore(
 		app: appReducer,
 		routing: routerReducer,
 	}),
-	window.devToolsExtension && window.devToolsExtension()
+	compose(
+		applyMiddleware(thunk),
+		window.devToolsExtension && window.devToolsExtension()
+	)
 );
 
 // eslint-disable-next-line import/prefer-default-export

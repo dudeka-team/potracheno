@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "test": "mocha -r babel-core/register ./tests/*.js",
-    "lint": "eslint source/scripts/**/*.jsx",
+    "lint": "eslint source/scripts/**/*.{jsx,js}",
     "install": "bash ./install-hooks.sh"
   },
   "bugs": {
@@ -59,6 +59,7 @@
     "react-router-redux": "^4.0.5",
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0",
     "shortid": "^2.2.6"
   }
 }
