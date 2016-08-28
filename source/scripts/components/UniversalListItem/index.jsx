@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Checkbox from '../Checkbox';
+import CheckMark from '../CheckMark';
 
 const UniversalListItem = React.createClass({
 	propTypes: {
@@ -24,6 +25,7 @@ const UniversalListItem = React.createClass({
 				<div className={`${baseClass}__text`}>{props.text}</div>
 				{props.price && <div className={`${baseClass}__price`}>{props.price} Р</div>}
 				{props.isCheckbox && <Checkbox />}
+				{props.checkMark && <CheckMark />}
 			</div>
 		);
 	},
