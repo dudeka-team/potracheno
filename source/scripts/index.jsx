@@ -14,7 +14,6 @@ import {appReducer} from './reducers/app';
 import Routes from './Routes';
 
 import firebase from 'firebase';
-window.firebase = firebase;
 
 injectTapEventPlugin();
 moment.locale('ru');
