@@ -84,7 +84,7 @@ const EventPurchasesPage = React.createClass({
 						)
 					})
 				}
-				<Fab><AddShoppingCart onClick={goToNewPurchase}/></Fab>
+				<Fab onClick={goToNewPurchase}><AddShoppingCart /></Fab>
 			</div>
 		);
 	},
