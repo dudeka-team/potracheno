@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import {hashHistory} from 'react-router';
-import {CREATE_EVENT} from './constants';
+import {CREATE_EVENT, READ_EVENTS} from './constants';
 
 export function createEvent(payload) {
 	return {
@@ -20,4 +20,22 @@ export function createEventAsync(payload) {
 			hashHistory.push('/events');
 		});
 	};
+}
+
+export function readEvents(payload) {
+	return {
+		type: READ_EVENTS,
+		payload,
+	};
+}
+
+export function readEventsAsync(payload) {
+	return (dispatch) => {
+		firebase.database().ref('events').once('value').then(result => {
+			dispatch(readEvents({
+				key: result.key,
+				eventsList: result.val(),
+			}));
+		})
+	}
 }
