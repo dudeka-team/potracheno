@@ -23,13 +23,13 @@ const UniversalListItem = React.createClass({
 
 		return (
 			<div className={rootClasses.join(' ')} onClick={this.props.onClick}>
-				<div className={`${baseClass}__text`}>{props.text}</div>
-				{props.price !== undefined && <div className={`${baseClass}__price`}>{props.price} Р</div>}
 				{props.isCheckbox &&
 					<Checkbox
 						checked={this.props.checkBoxChecked}
 					/>
 				}
+				<div className={`${baseClass}__text`}>{props.text}</div>
+				{props.price !== undefined && <div className={`${baseClass}__price`}>{props.price} Р</div>}
 				{props.checkMark && <CheckMark />}
 			</div>
 		);

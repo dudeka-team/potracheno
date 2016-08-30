@@ -1,5 +1,5 @@
 import {hashHistory} from 'react-router';
-import serverApi from './database';
+import db from './database';
 import {
 	CREATE_EVENT,
 	LOAD_EVENT_DATA,
@@ -15,7 +15,7 @@ export function createEvent(payload) {
 
 export function createEventAsync(payload) {
 	return dispatch => {
-		serverApi.saveEvent(payload).then(result => {
+		db.saveEvent(payload).then(result => {
 			dispatch(createEvent(result));
 
 			hashHistory.push('/events');
@@ -36,17 +36,10 @@ function createPurchase(payload) {
 }
 
 export function loadEventDataAsync(eventId) {
-	return (dispatch) => {
-		firebase
-			.database()
-			.ref(`/events/${eventId}`)
-			.once('value')
-			.then((snapshot) => {
-				dispatch(loadEventData({
-					key: snapshot.key,
-					value: snapshot.val(),
-				}));
-			});
+	return dispatch => {
+		db.loadEvent(eventId).then(result => {
+			dispatch(loadEventData(result));
+		});
 	};
 }
 
