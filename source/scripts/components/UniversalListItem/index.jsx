@@ -19,11 +19,12 @@ const UniversalListItem = React.createClass({
 		if (props.isBordered) {
 			rootClasses.push(`${baseClass}_bordered`);
 		}
+
 		return (
 			<div className={rootClasses.join(' ')} onClick={this.props.changePayer}>
-				<div className={`${baseClass}__text`}>{props.text}</div>
-				{props.price && <div className={`${baseClass}__price`}>{props.price} Р</div>}
 				{props.isCheckbox && <Checkbox />}
+				<div className={`${baseClass}__text`}>{props.text}</div>
+				{props.price && <div className={`${baseClass}__price`}>{props.price} руб.</div>}
 				{props.checkMark && <CheckMark />}
 			</div>
 		);
