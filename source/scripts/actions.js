@@ -1,5 +1,5 @@
 import {hashHistory} from 'react-router';
-import serverApi from './api/remote';
+import serverApi from './database';
 import {CREATE_EVENT} from './constants';
 
 export function createEvent(payload) {
