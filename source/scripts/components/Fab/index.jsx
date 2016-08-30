@@ -12,7 +12,7 @@ export default function Fab(props) {
 		<div>
 			<FloatingActionButton
 				style={style}
-				onClick={props.onClick}
+				{...props}
 			>
 				{props.children}
 			</FloatingActionButton>

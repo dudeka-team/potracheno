@@ -1,6 +1,9 @@
 import {hashHistory} from 'react-router';
 import serverApi from './database';
-import {CREATE_EVENT} from './constants';
+import {
+	CREATE_EVENT,
+	LOAD_EVENT_DATA,
+} from './constants';
 
 export function createEvent(payload) {
 	return {
@@ -16,5 +19,27 @@ export function createEventAsync(payload) {
 
 			hashHistory.push('/events');
 		});
+	};
+}
+
+export function loadEventData(payload) {
+	return {
+		type: LOAD_EVENT_DATA,
+		payload,
+	};
+}
+
+export function loadEventDataAsync(eventId) {
+	return (dispatch) => {
+		firebase
+			.database()
+			.ref(`/events/${eventId}`)
+			.once('value')
+			.then((snapshot) => {
+				dispatch(loadEventData({
+					key: snapshot.key,
+					value: snapshot.val(),
+				}));
+			});
 	};
 }
