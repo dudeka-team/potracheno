@@ -1,1 +1,2 @@
 export const CREATE_EVENT = 'CREATE_EVENT';
+export const LOAD_EVENT_DATA = 'LOAD_EVENT_DATA';
