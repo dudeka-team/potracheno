@@ -1,4 +1,6 @@
 import React from 'react';
+import {hashHistory} from 'react-router';
+import {connect} from 'react-redux';
 import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
@@ -7,11 +9,9 @@ import BlueSubtitle from '../components/BlueSubtitle';
 import UniversalListItem from '../components/UniversalListItem';
 import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
-import {hashHistory} from 'react-router';
-import {connect} from 'react-redux';
 import {createPurchaseAsync} from '../actions';
 
-let mockUsers = [
+const mockUsers = [
 	{
 		id: 0,
 		name: 'Дамир',
@@ -42,6 +42,10 @@ let mockUsers = [
 	},
 ];
 
+function goToEvent() {
+	hashHistory.push('/event');
+}
+
 const NewPurchasePage = React.createClass({
 	getInitialState() {
 		return {
@@ -70,16 +74,16 @@ const NewPurchasePage = React.createClass({
 			popupOpened: false,
 			payer,
 		});
-		let participants = this.state.participants;
+		const participants = this.state.participants;
 		participants.forEach((user) => {
 			user.isPayer = (user.id === payer.id);
 		});
-		this.setState({participants})
+		this.setState({participants});
 	},
 
 	calcLoans(amount) {
-		let participants = this.state.participants,
-			participantsCount = participants.filter(user => user.participate).length;
+		const participants = this.state.participants;
+		const participantsCount = participants.filter(user => user.participate).length;
 
 		if (amount === undefined) {
 			amount = this.state.amount;
@@ -88,7 +92,7 @@ const NewPurchasePage = React.createClass({
 		participants.forEach((user) => {
 			user.loan = user.participate ? amount / participantsCount : 0;
 		});
-		this.setState({participants, amount})
+		this.setState({participants, amount});
 	},
 
 	save() {
@@ -98,6 +102,7 @@ const NewPurchasePage = React.createClass({
 			amount: state.amount,
 			participants: state.participants,
 		}));
+		goToEvent();
 	},
 
 	render() {
@@ -107,7 +112,7 @@ const NewPurchasePage = React.createClass({
 				<TopBar>
 					<TopBarIcon icon="arrow-back" />
 					<TopBarHeading title="Новая покупка" />
-					<TopBarIcon icon="check-active" onClick={this.save}/>
+					<TopBarIcon icon="check-active" onClick={this.save} />
 				</TopBar>
 				{
 					state.popupOpened && <Popup
@@ -147,7 +152,7 @@ const NewPurchasePage = React.createClass({
 						}}
 						onChange={
 							event => {
-								let amount = Number(event.target.value);
+								const amount = Number(event.target.value);
 								if (isNaN(amount)) {
 									return;
 								}
@@ -185,7 +190,7 @@ const NewPurchasePage = React.createClass({
 										() => {
 											user.participate = !user.participate;
 											this.setState({
-												participants: this.state.participants
+												participants: this.state.participants,
 											});
 											this.calcLoans();
 										}

@@ -1,6 +1,7 @@
 import {
 	CREATE_EVENT,
 	LOAD_EVENT_DATA,
+	CREATE_PURCHASE,
 } from '../constants';
 
 const initialState = {
