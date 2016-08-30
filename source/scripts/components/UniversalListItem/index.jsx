@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Checkbox from '../Checkbox';
+import Checkbox from '../CheckBox';
 import CheckMark from '../CheckMark';
 
 const UniversalListItem = React.createClass({
@@ -9,7 +9,7 @@ const UniversalListItem = React.createClass({
 		isCheckable: PropTypes.bool,
 		isBordered: PropTypes.bool,
 		isChecked: PropTypes.bool,
-		checkBoxChecked: PropTypes.bool
+		checkBoxChecked: PropTypes.bool,
 	},
 
 	render() {
