@@ -1,14 +1,10 @@
 import React from 'react';
-import {hashHistory} from 'react-router';
+import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
 import {createEventAsync} from '../../actions';
 
-
-function goToEvents() {
-	hashHistory.push('/events');
-}
 
 const NewEvent = React.createClass({
 	getInitialState() {
@@ -34,6 +30,10 @@ const NewEvent = React.createClass({
 				participants: state.participants.filter(Boolean),
 			}));
 		}
+	},
+
+	goToEvents() {
+		this.props.router.push('/events');
 	},
 
 	goToSecondStep() {
@@ -103,7 +103,7 @@ const NewEvent = React.createClass({
 					start={state.start}
 					end={state.end}
 					secondStepAvailable={!!state.name.trim()}
-					onBack={goToEvents}
+					onBack={this.goToEvents}
 					onForward={this.goToSecondStep}
 					handleEventNameChange={this.handleEventNameChange}
 					handleStartDateChange={this.handleStartDateChange}
@@ -130,4 +130,4 @@ function keepOneEmptyItem(participants) {
 	return participants;
 }
 
-export default connect()(NewEvent);
+export default connect()(withRouter(NewEvent));
