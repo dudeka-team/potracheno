@@ -71,12 +71,12 @@ const PurchaseInfo = React.createClass({
 		};
 	},
 	render() {
-		let participants = this.state.users.participantList.map(item => {
+		const participants = this.state.users.participantList.map(item => {
 			return (
 				<UniversalListItem id={item.id} text={item.name} key={item.id} isCheckbox={false} />
 			);
 		});
-		let nonParticipants = this.state.users.nonParticipantList.map(item => {
+		const nonParticipants = this.state.users.nonParticipantList.map(item => {
 			return (
 				<UniversalListItem id={item.id} text={item.name} key={item.id} isCheckbox={false} />
 			);

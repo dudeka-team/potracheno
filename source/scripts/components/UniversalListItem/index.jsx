@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Checkbox from '../Checkbox';
+import Checkbox from '../CheckBox';
 import CheckMark from '../CheckMark';
 
 const UniversalListItem = React.createClass({
@@ -9,11 +9,12 @@ const UniversalListItem = React.createClass({
 		isCheckable: PropTypes.bool,
 		isBordered: PropTypes.bool,
 		isChecked: PropTypes.bool,
+		checkBoxChecked: PropTypes.bool,
 	},
 
 	render() {
 		const baseClass = 'universal-list-item';
-		const rootClasses = [baseClass];
+		const rootClasses = [baseClass, 'unselectable'];
 		const {props} = this;
 
 		if (props.isBordered) {
@@ -21,10 +22,14 @@ const UniversalListItem = React.createClass({
 		}
 
 		return (
-			<div className={rootClasses.join(' ')} onClick={this.props.changePayer}>
-				{props.isCheckbox && <Checkbox />}
+			<div className={rootClasses.join(' ')} onClick={this.props.onClick}>
+				{props.isCheckbox &&
+					<Checkbox
+						checked={this.props.checkBoxChecked}
+					/>
+				}
 				<div className={`${baseClass}__text`}>{props.text}</div>
-				{props.price && <div className={`${baseClass}__price`}>{props.price} руб.</div>}
+				{props.price !== undefined && <div className={`${baseClass}__price`}>{props.price} Р</div>}
 				{props.checkMark && <CheckMark />}
 			</div>
 		);
