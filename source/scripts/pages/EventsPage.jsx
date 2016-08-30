@@ -18,14 +18,9 @@ const EventsPage = React.createClass({
 		props.dispatch(readEventsAsync());
 	},
 
-	componentWillReceiveProps(nextProps) {
-	    console.log(nextProps)
-	},
-
 	render() {
 		const {state, props} = this;
 		let eventsListMarkup = null;
-		console.log(props.isDataLoaded)
 		if (props.isDataLoaded) {
 			eventsListMarkup = props.events.map(eventId => {
 				return (
@@ -39,7 +34,6 @@ const EventsPage = React.createClass({
 					/>
 				);
 			});
-			console.log(eventsListMarkup);
 		}
 
 		return (
