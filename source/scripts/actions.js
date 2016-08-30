@@ -1,5 +1,5 @@
-import firebase from 'firebase';
 import {hashHistory} from 'react-router';
+import serverApi from './database';
 import {
 	CREATE_EVENT,
 	LOAD_EVENT_DATA,
@@ -14,11 +14,8 @@ export function createEvent(payload) {
 
 export function createEventAsync(payload) {
 	return (dispatch) => {
-		firebase.database().ref('events').push(payload).then((result) => {
-			dispatch(createEvent({
-				key: result.key,
-				value: payload,
-			}));
+		serverApi.saveEvent(payload).then((result) => {
+			dispatch(createEvent(result));
 
 			hashHistory.push('/events');
 		});
