@@ -2,15 +2,15 @@ import firebase from 'firebase';
 
 const Database = {};
 
-Database.saveEvent = function(data) {
+Database.saveEvent = (data) => {
 	return firebase
 		.database()
 		.ref('events')
 		.push(data)
-		.then(res => ({
-			key: res.key,
+		.then(result => ({
+			key: result.key,
 			eventInfo: data,
 		}));
-}
+};
 
 export default Database;
