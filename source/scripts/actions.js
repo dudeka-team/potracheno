@@ -1,6 +1,6 @@
 import {hashHistory} from 'react-router';
+import serverApi from './api/remote';
 import {CREATE_EVENT} from './constants';
-import serverApi from 'api/remote';
 
 export function createEvent(payload) {
 	return {
@@ -11,11 +11,8 @@ export function createEvent(payload) {
 
 export function createEventAsync(payload) {
 	return (dispatch) => {
-		serverApi.saveToDb('events', payload).then((result) => {
-			dispatch(createEvent({
-				key: result.key,
-				eventInfo: payload,
-			}));
+		serverApi.saveEvent(payload).then((result) => {
+			dispatch(createEvent(result));
 
 			hashHistory.push('/events');
 		});
