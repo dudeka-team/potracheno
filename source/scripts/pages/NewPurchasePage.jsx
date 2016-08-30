@@ -1,63 +1,45 @@
 import React from 'react';
-import NewPurchaseParticipants from '../components/NewPurchaseParticipants';
 import Separator from '../components/Separator';
 import NewPurchaseInputs from '../components/NewPurchaseInputs';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
 import Payers from '../components/Payers';
+import BlueSubtitle from '../components/BlueSubtitle';
+import UniversalListItem from '../components/UniversalListItem';
+import Input from '../components/Input';
+import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
+import {hashHistory} from 'react-router';
+import {connect} from 'react-redux';
+import {createPurchaseAsync} from '../actions';
 
 let mockUsers = [
 	{
-		name: 'Дамир',
-		loan: 500,
-	},
-	{
-		name: 'Юрий',
-		loan: 500,
-	},
-	{
-		name: 'Алексей',
-		loan: 500,
-	},
-	{
-		name: 'Дамир',
-		loan: 500,
-	},
-];
-
-const payers = [
-	{
-		name: 'Дамир (Вы)',
 		id: 0,
-		chosed: true,
+		name: 'Дамир',
+		isPayer: true,
+		participate: true,
+		loan: 0,
 	},
 	{
-		name: 'Петя',
 		id: 1,
+		name: 'Юрий',
+		isPayer: false,
+		participate: true,
+		loan: 0,
 	},
 	{
-		name: 'Вася',
 		id: 2,
+		name: 'Алексей',
+		isPayer: false,
+		participate: true,
+		loan: 0,
 	},
 	{
-		name: 'Катя',
 		id: 3,
-	},
-	{
-		name: 'Вася',
-		id: 4,
-	},
-	{
-		name: 'Катя',
-		id: 5,
-	},
-	{
-		name: 'Вася',
-		id: 6,
-	},
-	{
-		name: 'Катя',
-		id: 7,
+		name: 'Дамир',
+		isPayer: false,
+		participate: true,
+		loan: 0,
 	},
 ];
 
@@ -66,6 +48,9 @@ const NewPurchasePage = React.createClass({
 		return {
 			popupOpened: false,
 			payer: {id: 0, name: 'Дамир (Вы)'},
+			participants: mockUsers,
+			amount: 0,
+			name: '',
 		};
 	},
 
@@ -86,34 +71,61 @@ const NewPurchasePage = React.createClass({
 			popupOpened: false,
 			payer,
 		});
-		payers.forEach((item) => {
-			item.chosed = false;
+		let participants = this.state.participants;
+		participants.forEach((user) => {
+			user.isPayer = (user.id === payer.id);
 		});
-		payers[payer.id].chosed = true;
+		this.setState({participants})
+	},
+
+	calcLoans(amount) {
+		let participants = this.state.participants,
+			participantsCount = participants.filter(user => user.participate).length;
+
+		if (amount === undefined) {
+			amount = this.state.amount;
+		}
+
+		participants.forEach((user) => {
+			user.loan = user.participate ? amount / participantsCount : 0;
+		});
+		this.setState({participants, amount})
+	},
+
+	save() {
+		const {state, props} = this;
+		props.dispatch(createPurchaseAsync({
+			name: state.name,
+			amount: state.amount,
+			participants: state.participants,
+		}));
 	},
 
 	render() {
 		const {state} = this;
 		return (
 			<div>
+				<TopBar>
+					<TopBarIcon icon="arrow-back" />
+					<TopBarHeading title="Новая покупка" />
+					<TopBarIcon icon="check-active" onClick={this.save}/>
+				</TopBar>
 				{
-					state.popupOpened && (
-						<Popup
-							title="Кто платит"
-							closeIcon
-							okButton={{
-								text: 'Добавить',
-								onClick: this.closePopup,
-							}}
-							cancelButton={{
-								text: 'Отменить',
-								onClick: this.closePopup,
-							}}
-							onClose={this.closePopup}
-						>
-							<Payers payers={payers} changePayer={this.changePayer} />
-						</Popup>
-					)
+					state.popupOpened && <Popup
+						title="Кто платит"
+						closeIcon
+						okButton={{
+							text: 'Добавить',
+							onClick: this.closePopup,
+						}}
+						cancelButton={{
+							text: 'Отменить',
+							onClick: this.closePopup,
+						}}
+						onClose={this.closePopup}
+					>
+						<Payers payers={mockUsers} changePayer={this.changePayer} />
+					</Popup>
 				}
 				<NewPurchasePayer
 					payer={this.state.payer.name}
@@ -124,12 +136,80 @@ const NewPurchasePage = React.createClass({
 					}}
 				/>
 				<Separator />
-				<NewPurchaseInputs />
+				<div style={{padding: '16px 16px 14px 16px'}}>
+					<Input
+						hint="0 руб."
+						style={{
+							fontSize: '30px',
+							marginTop: '20px',
+						}}
+						label="Сумма"
+						labelStyle={{
+							top: '-21px',
+							fontSize: '12px',
+							color: '#818f99',
+							opacity: '0',
+							transition: 'opacity 0.15s',
+						}}
+						labelTransform={{
+							opacity: '1',
+						}}
+						onChange={
+							event => {
+								let amount = Number(event.target.value);
+								if (isNaN(amount)) {
+									return;
+								}
+								this.calcLoans(amount);
+							}
+						}
+					/>
+					<Input
+						style={{
+							marginTop: '42px',
+							fontSize: '16px',
+						}}
+						label="Название покупки"
+						labelTransform={{
+							transform: 'scale(0.75) translateY(-24px)',
+							color: '#818f99',
+						}}
+						onChange={event => this.setState({name: event.target.value})}
+					/>
+				</div>
 				<Separator />
-				<NewPurchaseParticipants users={mockUsers} />
+				<div>
+					<BlueSubtitle text="Участники покупки" />
+					{
+						this.state.participants
+							.map((user, index) => {
+								return (<UniversalListItem
+									id={user.id}
+									key={index}
+									text={user.name}
+									price={Math.round(user.loan * 10) / 10}
+									isCheckbox
+									checkBoxChecked={user.participate}
+									onClick={
+										() => {
+											user.participate = !user.participate;
+											this.setState({
+												participants: this.state.participants
+											});
+											this.calcLoans();
+										}
+									}
+									isBordered
+									style={{
+										padding: '18px 19px 18px 16px',
+									}}
+								/>);
+							})
+					}
+				</div>
 			</div>
 		);
 	},
 });
 
-export default NewPurchasePage;
+export default connect()(NewPurchasePage);

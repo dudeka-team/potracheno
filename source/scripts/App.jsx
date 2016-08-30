@@ -8,7 +8,6 @@ export default function App(props) {
 	return (
 		<div className="root">
 			{pathname.match(/^\/event\/\d*\/?$/) && <EventPageTopBar />}
-			{(/^\/newpurchase/.test(pathname)) && <NewPurchaseTopBar />}
 			<div>{props.children}</div>
 			<div className="bottom-nav" style={{marginTop: '15rem'}}>
 				<Link to="/events">Events</Link>
@@ -28,16 +27,6 @@ function EventPageTopBar() {
 			<TopBarHeading title="Пикник на обочине" subtitle="5 участников • 12 апреля" />
 			<TopBarIcon icon="add-person" />
 			<TopBarIcon icon="info" />
-		</TopBar>
-	);
-}
-
-function NewPurchaseTopBar() {
-	return (
-		<TopBar>
-			<TopBarIcon icon="arrow-back" />
-			<TopBarHeading title="Новая покупка" />
-			<TopBarIcon icon="check-active" />
 		</TopBar>
 	);
 }

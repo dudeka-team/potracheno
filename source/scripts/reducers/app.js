@@ -35,6 +35,20 @@ export default function appReducer(state = initialState, {type, payload}) {
 				currentEvent: payload.value,
 			});
 		}
+			
+		case CREATE_PURCHASE: {
+			const {key} = payload;
+			const newEventsList = state.events.slice();
+
+			newEventsList[0].purchases.push(key);
+
+			return Object.assign({}, state, {
+				events: newEventsList,
+				eventsById: Object.assign({}, state.eventsById, {
+					[key]: payload.eventInfo,
+				}),
+			});
+		}
 
 		default: {
 			return state;

@@ -23,11 +23,7 @@ const config = {
 				loader: 'babel-loader',
 			},
 		],
-	},
-	plugins: [
-		new webpack.optimize.OccurrenceOrderPlugin(),
-		new webpack.NoErrorsPlugin(),
-	],
+	}
 };
 
 module.exports = config;

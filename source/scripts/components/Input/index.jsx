@@ -44,6 +44,7 @@ const Input = React.createClass({
 
 	handleChange(event) {
 		this.setState({value: event.target.value});
+		this.props.onChange(event);
 	},
 
 	render() {

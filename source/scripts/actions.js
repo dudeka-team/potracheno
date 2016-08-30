@@ -3,6 +3,7 @@ import {hashHistory} from 'react-router';
 import {
 	CREATE_EVENT,
 	LOAD_EVENT_DATA,
+	CREATE_PURCHASE,
 } from './constants';
 
 export function createEvent(payload) {
@@ -13,8 +14,8 @@ export function createEvent(payload) {
 }
 
 export function createEventAsync(payload) {
-	return (dispatch) => {
-		firebase.database().ref('events').push(payload).then((result) => {
+	return dispatch => {
+		firebase.database().ref('events').push(payload).then(result => {
 			dispatch(createEvent({
 				key: result.key,
 				value: payload,
@@ -28,7 +29,12 @@ export function createEventAsync(payload) {
 export function loadEventData(payload) {
 	return {
 		type: LOAD_EVENT_DATA,
-		payload,
+	};
+}
+
+function createPurchase(payload) {
+	return {
+		type: CREATE_PURCHASE,
 	};
 }
 
@@ -44,5 +50,18 @@ export function loadEventDataAsync(eventId) {
 					value: snapshot.val(),
 				}));
 			});
+	};
+}
+
+export function createPurchaseAsync(payload) {
+	return dispatch => {
+		firebase.database().ref('purchases/').push(payload).then(result => {
+			dispatch(createPurchase({
+				key: result.key,
+				purchaseInfo: payload,
+			}));
+		});
+
+		hashHistory.push('event');
 	};
 }
