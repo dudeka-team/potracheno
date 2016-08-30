@@ -1,47 +1,72 @@
 import React from 'react';
-import {hashHistory} from 'react-router';
+import {withRouter} from 'react-router';
+import {connect} from 'react-redux';
+import CircularProgress from 'material-ui/CircularProgress';
+
+import {loadEventDataAsync} from '../../actions';
+
 import Tabs from '../../components/Tabs';
-import Balance from './Balance';
-import Purchases from './Purchases';
-import Members from './Members';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
-const tabsConfig = [
-	{
-		name: 'purchases',
-		labelContent: 'Покупки',
-		content: <Purchases />,
-	},
-	{
-		name: 'balance',
-		labelContent: 'Баланс',
-		content: <Balance />,
-	},
-	{
-		name: 'members',
-		labelContent: 'Участники',
-		content: <Members />,
-	},
-];
+import Balance from './Balance';
+import Purchases from './Purchases';
+import Participants from './Participants';
 
-function goToEvents() {
-	hashHistory.push('/events');
-}
 
 const EventPage = React.createClass({
+	componentDidMount() {
+		const {params, dispatch} = this.props;
+		dispatch(loadEventDataAsync(params.id));
+	},
+
+	goToEvents() {
+		this.props.router.push('/events');
+	},
+
 	render() {
+		const {props} = this;
 		return (
-			<div className="event-page">
-				<TopBar>
-					<TopBarIcon icon="arrow-back" onClick={goToEvents} />
-					<TopBarHeading title="Дача у Дамира" subtitle="5 участников - 12 апреля" />
-					<TopBarIcon icon="arrow-share" />
-					<TopBarIcon icon="more-actions" />
-				</TopBar>
-				<Tabs config={tabsConfig} />
+			<div>
+				{props.currentEvent ?
+					<div>
+						<TopBar>
+							<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
+							<TopBarHeading title="Дача у Дамира" subtitle="5 участников - 12 апреля" />
+							<TopBarIcon icon="arrow-share" />
+							<TopBarIcon icon="more-actions" />
+						</TopBar>
+						<Tabs
+							config={[
+								{
+									name: 'purchases',
+									labelContent: 'Покупки',
+									content: <Purchases />,
+								},
+								{
+									name: 'balance',
+									labelContent: 'Баланс',
+									content: <Balance />,
+								},
+								{
+									name: 'members',
+									labelContent: 'Участники',
+									content: <Participants participants={[]} />,
+								},
+							]}
+						/>
+					</div>
+					:
+					<CircularProgress />
+				}
 			</div>
 		);
 	},
 });
 
-export default EventPage;
+function mapStateToProps(state) {
+	return {
+		currentEvent: state.app.currentEvent,
+	};
+}
+
+export default connect(mapStateToProps)(withRouter(EventPage));
