@@ -1,6 +1,5 @@
 import React from 'react';
 import Separator from '../components/Separator';
-import NewPurchaseInputs from '../components/NewPurchaseInputs';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
 import Payers from '../components/Payers';
@@ -114,14 +113,6 @@ const NewPurchasePage = React.createClass({
 					state.popupOpened && <Popup
 						title="Кто платит"
 						closeIcon
-						okButton={{
-							text: 'Добавить',
-							onClick: this.closePopup,
-						}}
-						cancelButton={{
-							text: 'Отменить',
-							onClick: this.closePopup,
-						}}
 						onClose={this.closePopup}
 					>
 						<Payers payers={mockUsers} changePayer={this.changePayer} />

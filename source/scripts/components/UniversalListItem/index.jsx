@@ -14,7 +14,7 @@ const UniversalListItem = React.createClass({
 
 	render() {
 		const baseClass = 'universal-list-item';
-		const rootClasses = [baseClass];
+		const rootClasses = [baseClass, 'unselectable'];
 		const {props} = this;
 
 		if (props.isBordered) {
