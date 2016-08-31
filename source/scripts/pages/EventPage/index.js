@@ -38,7 +38,7 @@ const EventPage = React.createClass({
 					<Wrapper>
 						<TopBar>
 							<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
-							<TopBarHeading title="Дача у Дамира" subtitle="5 участников - 12 апреля" />
+							<TopBarHeading title={this.props.currentEvent.name} subtitle="5 участников - 12 апреля" />
 							<TopBarIcon icon="arrow-share" />
 							<TopBarIcon icon="more-actions" />
 						</TopBar>

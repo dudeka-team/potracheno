@@ -71,26 +71,27 @@ const PurchaseInfo = React.createClass({
 		};
 	},
 	render() {
-		const participants = this.state.users.participantList.map(item => {
-			return (
-				<UniversalListItem id={item.id} text={item.name} key={item.id} isCheckbox={false} />
-			);
-		});
-		const nonParticipants = this.state.users.nonParticipantList.map(item => {
-			return (
-				<UniversalListItem id={item.id} text={item.name} key={item.id} isCheckbox={false} />
-			);
-		});
+		const payer = this.props.participants.find(user => user.isPayer).name;
+		const participants = this.props.participants.filter(user => user.participate);
+		const nonParticipants = this.props.participants.filter(user => !user.participate);
 		return (
 			<div>
 				<div className="purchase-info">
-					<div className="purchase-info__author">Андрей заплатил</div>
-					<div className="purchase-info__price">2500 р</div>
+					<div className="purchase-info__author">{payer} заплатил</div>
+					<div className="purchase-info__price">{this.props.amount}</div>
 				</div>
 				<BlueSubtitle text="Участвуют в покупке" />
-				{participants}
+				{participants.map(item => {
+					return (
+						<UniversalListItem id={item.id} text={item.name} key={item.id} isCheckbox={false} />
+					);
+				})}
 				<BlueSubtitle text="Не участвуют в покупке" />
-				{nonParticipants}
+				{nonParticipants.map(item => {
+					return (
+						<UniversalListItem id={item.id} text={item.name} key={item.id} isCheckbox={false} />
+					);
+				})}
 			</div>
 		);
 	},
