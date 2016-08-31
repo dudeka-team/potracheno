@@ -1,2 +1,4 @@
 export const CREATE_EVENT = 'CREATE_EVENT';
 export const READ_EVENTS = 'READ_EVENTS';
+export const LOAD_EVENT_DATA = 'LOAD_EVENT_DATA';
+export const CREATE_PURCHASE = 'CREATE_PURCHASE';

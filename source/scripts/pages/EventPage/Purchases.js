@@ -33,7 +33,6 @@ function goToNewPurchase() {
 }
 
 const EventPurchasesPage = React.createClass({
-
 	getInitialState() {
 		return {
 			popupOpened: false,
@@ -65,9 +64,10 @@ const EventPurchasesPage = React.createClass({
 						<PurchaseInfo />
 					</Popup>
 				)}
-				{purchases.map((item) => {
+				{purchases.map((item, i) => {
 					return (
 						<PurchaseListItem
+							key={i}
 							buyer={item.buyer}
 							title={item.title}
 							subtitle={item.subtitle}

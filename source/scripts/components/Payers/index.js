@@ -8,11 +8,11 @@ const Payers = React.createClass({
 				{this.props.payers.map(item => {
 					return (
 						<UniversalListItem
-							changePayer={() => this.props.changePayer(item)}
+							onClick={() => this.props.changePayer(item)}
 							id={item.id}
 							text={item.name} key={item.id}
 							iconId={7}
-							checkMark={item.chosed}
+							checkMark={item.isPayer}
 						/>
 					);
 				})}

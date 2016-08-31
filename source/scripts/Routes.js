@@ -15,7 +15,7 @@ export default function Routes(props) {
 				<IndexRedirect to="events" />
 				<Route path="events" component={EventsPage} />
 				<Route path="events/new" component={NewEventPage} />
-				<Route path="event" component={EventPage} />
+				<Route path="events/:id" component={EventPage} />
 				<Route path="purchase" component={PurchasePage} />
 				<Route path="newpurchase" component={NewPurchasePage} />
 				<Route path="demo" component={DemoPage} />

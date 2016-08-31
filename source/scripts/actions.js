@@ -1,6 +1,12 @@
-import firebase from 'firebase';
 import {hashHistory} from 'react-router';
-import {CREATE_EVENT, READ_EVENTS} from './constants';
+import firebase from 'firebase';
+import db from './database';
+import {
+	READ_EVENTS,
+	CREATE_EVENT,
+	LOAD_EVENT_DATA,
+	CREATE_PURCHASE,
+} from './constants';
 
 export function createEvent(payload) {
 	return {
@@ -10,12 +16,9 @@ export function createEvent(payload) {
 }
 
 export function createEventAsync(payload) {
-	return (dispatch) => {
-		firebase.database().ref('events').push(payload).then((result) => {
-			dispatch(createEvent({
-				key: result.key,
-				eventInfo: payload,
-			}));
+	return dispatch => {
+		db.saveEvent(payload).then(result => {
+			dispatch(createEvent(result));
 
 			hashHistory.push('/events');
 		});
@@ -29,13 +32,45 @@ export function readEvents(payload) {
 	};
 }
 
-export function readEventsAsync(payload) {
+export function readEventsAsync() {
 	return (dispatch) => {
-		firebase.database().ref('events').once('value').then(result => {
-			dispatch(readEvents({
+		db.readEvents().then(result => {
+			dispatch(readEvents(result));
+		});
+	};
+}
+
+export function loadEventData(payload) {
+	return {
+		type: LOAD_EVENT_DATA,
+		payload,
+	};
+}
+
+export function loadEventDataAsync(eventId) {
+	return dispatch => {
+		db.loadEvent(eventId).then(result => {
+			dispatch(loadEventData(result));
+		});
+	};
+}
+
+function createPurchase(payload) {
+	return {
+		type: CREATE_PURCHASE,
+		payload,
+	};
+}
+
+export function createPurchaseAsync(payload) {
+	return dispatch => {
+		firebase.database().ref('purchases/').push(payload).then(result => {
+			dispatch(createPurchase({
 				key: result.key,
-				eventsList: result.val(),
+				purchaseInfo: payload,
 			}));
-		})
-	}
+		});
+
+		hashHistory.push('event');
+	};
 }

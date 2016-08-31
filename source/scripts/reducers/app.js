@@ -1,9 +1,14 @@
-import {CREATE_EVENT, READ_EVENTS} from '../constants';
+import {
+	READ_EVENTS,
+	CREATE_EVENT,
+	LOAD_EVENT_DATA,
+	CREATE_PURCHASE,
+} from '../constants';
 
 const initialState = {
 	events: [],
 	eventsById: {},
-	isDataLoaded: false,
+	currentEvent: null,
 };
 
 export default function appReducer(state = initialState, {type, payload}) {
@@ -19,6 +24,29 @@ export default function appReducer(state = initialState, {type, payload}) {
 			return Object.assign({}, state, {
 				events: newEventsList,
 				eventsById: Object.assign({}, state.eventsById, {
+					[key]: payload.value,
+				}),
+			});
+		}
+
+		case LOAD_EVENT_DATA: {
+			return Object.assign({}, state, {
+				eventsById: Object.assign({}, state.eventsById, {
+					[payload.key]: payload.value,
+				}),
+				currentEvent: payload.value,
+			});
+		}
+
+		case CREATE_PURCHASE: {
+			const {key} = payload;
+			const newEventsList = state.events.slice();
+
+			newEventsList[0].purchases.push(key);
+
+			return Object.assign({}, state, {
+				events: newEventsList,
+				eventsById: Object.assign({}, state.eventsById, {
 					[key]: payload.eventInfo,
 				}),
 			});
@@ -28,7 +56,6 @@ export default function appReducer(state = initialState, {type, payload}) {
 			return Object.assign({}, state, {
 				events: Object.keys(payload.eventsList),
 				eventsById: payload.eventsList,
-				isDataLoaded: true,
 			});
 		}
 

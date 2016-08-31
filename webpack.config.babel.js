@@ -1,12 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
 import path from 'path';
-import webpack from 'webpack';
 
 const SOURCE = './source';
 
 const config = {
-	entry: `${SOURCE}/scripts/index.jsx`,
+	entry: `${SOURCE}/scripts/index.js`,
 	output: {
 		filename: 'bundle.js',
 	},
@@ -24,10 +23,6 @@ const config = {
 			},
 		],
 	},
-	plugins: [
-		new webpack.optimize.OccurrenceOrderPlugin(),
-		new webpack.NoErrorsPlugin(),
-	],
 };
 
 module.exports = config;
