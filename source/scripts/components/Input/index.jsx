@@ -5,10 +5,10 @@ const Input = React.createClass({
 		this.init(this.props);
 		return {
 			focused: false,
-			empty: true,
-			value: this.hint,
+			value: '',
 		};
 	},
+	
 	init(props) {
 		if (props.label !== undefined) {
 			this.labelExists = true;
@@ -23,21 +23,15 @@ const Input = React.createClass({
 	},
 
 	handleFocus() {
-		if (this.state.empty) {
-			this.setState({
-				focused: true,
-				empty: false,
-				value: '',
-			});
-		}
+		this.setState({
+			focused: true,
+		});
 	},
 
 	handleUnfocus() {
 		if (this.state.value === '') {
 			this.setState({
 				focused: false,
-				empty: true,
-				value: this.hint,
 			});
 		}
 	},
@@ -55,12 +49,11 @@ const Input = React.createClass({
 		}
 		return (
 			<div className="Input" style={this.style}>
-				{
-					this.labelExists &&
-						<div
-							className="floating-text"
-							style={this.state.focused ? this.labelTransformedStyle : this.labelStyle}
-						>{this.labelText}</div>
+				{this.labelExists &&
+					<div
+						className="floating-text"
+						style={this.state.focused ? this.labelTransformedStyle : this.labelStyle}
+					>{this.labelText}</div>
 				}
 				<input
 					className={classList.join(' ')}
@@ -70,6 +63,7 @@ const Input = React.createClass({
 					onFocus={this.handleFocus}
 					onBlur={this.handleUnfocus}
 					disabled={props.disabled ? true : false}
+					placeholder={this.hint}
 				/>
 			</div>
 		);
