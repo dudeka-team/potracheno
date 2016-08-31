@@ -54,6 +54,7 @@ const EventPage = React.createClass({
 					<Wrapper>
 						<TopBar>
 							<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
+
 							<TopBarHeading
 								title={currentEvent.name}
 								subtitle={subtitle}
@@ -66,7 +67,11 @@ const EventPage = React.createClass({
 								{
 									name: 'purchases',
 									labelContent: 'Покупки',
-									content: <Purchases params={{id: this.props.params.id}} purchases={purchases} />,
+									content: <Purchases
+										eventId={this.props.params.id}
+										purchases={purchases}
+										currentEvent={currentEvent}
+									/>,
 								},
 								{
 									name: 'balance',

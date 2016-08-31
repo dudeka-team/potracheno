@@ -31,6 +31,7 @@ const EventsPage = React.createClass({
 					<div>
 						{
 							props.events
+								.slice()
 								.reverse()
 								.map(eventId => ({
 									eventId,
