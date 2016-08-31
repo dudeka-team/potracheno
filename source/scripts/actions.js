@@ -1,12 +1,10 @@
 import {hashHistory} from 'react-router';
 import {createAction} from 'redux-actions';
-import firebase from 'firebase';
 import db from './database';
 import {
 	READ_EVENTS,
 	CREATE_EVENT,
 	LOAD_EVENT_DATA,
-	CREATE_PURCHASE,
 } from './constants';
 
 export function createEvent(payload) {

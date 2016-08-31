@@ -7,27 +7,6 @@ import PurchaseListItem from '../../components/PurchaseListItem';
 import Popup from '../../components/Popup';
 
 
-const purchases = [
-	{
-		buyer: 'Женя',
-		title: 'Пицца',
-		subtitle: 'все 5 человек',
-		price: 2000,
-	},
-	{
-		buyer: 'Петя',
-		title: 'Овощи',
-		subtitle: 'все 5 человек',
-		price: 2000,
-	},
-	{
-		buyer: 'Вася',
-		title: 'Сок',
-		subtitle: 'все 5 человек',
-		price: 2000,
-	},
-];
-
 const EventPurchasesPage = React.createClass({
 	getInitialState() {
 		return {
@@ -71,7 +50,7 @@ const EventPurchasesPage = React.createClass({
 						if (participant.isPayer) {
 							payer = participant.name;
 						}
-					})
+					});
 					return (
 						<PurchaseListItem
 							key={index}

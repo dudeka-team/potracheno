@@ -1,6 +1,5 @@
-import {hashHistory} from 'react-router';
 import {createAction} from 'redux-actions';
-import firebase from 'firebase';
+import {hashHistory} from 'react-redux';
 import db from '../database';
 import {
 	CREATE_PURCHASE,

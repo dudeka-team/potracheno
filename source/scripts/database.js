@@ -41,6 +41,6 @@ Database.addPurchase = function addPurchase(eventId, data) {
 			key: result.key,
 			purchaseData: data,
 		}));
-}
+};
 
 export default Database;

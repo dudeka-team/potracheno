@@ -15,9 +15,6 @@ const initialState = {
 };
 
 export default function appReducer(state = initialState, {type, payload}) {
-	if (type === CREATE_PURCHASE) {
-		console.log(state);
-	}
 	switch (type) {
 		case CREATE_EVENT_LOADING: {
 			return Object.assign({}, state, {
@@ -58,17 +55,15 @@ export default function appReducer(state = initialState, {type, payload}) {
 		}
 
 		case CREATE_PURCHASE: {
-			const {eventId} = payload;
 			const currentEvent = Object.assign({}, state.currentEvent);
 			currentEvent.purchases = Object.assign({}, currentEvent.purchases, {
 				[payload.key]: payload.purchaseData,
 			});
-			const newEventsList = state.events.slice();
 
 			return Object.assign({}, state, {
 				currentEvent,
 				eventsById: Object.assign({}, state.eventsById, {
-					[currentEvent.id]: currentEvent
+					[currentEvent.id]: currentEvent,
 				}),
 			});
 		}

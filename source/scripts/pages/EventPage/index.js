@@ -28,17 +28,36 @@ const EventPage = React.createClass({
 	render() {
 		const {props} = this;
 		const {currentEvent} = props;
-		let purchases = [];
-		if (currentEvent !== null && currentEvent.purchases !== undefined) {
-			purchases = Object.keys(currentEvent.purchases).map(purchaseId => currentEvent.purchases[purchaseId]);
+		const purchases = Object
+			.keys((currentEvent && currentEvent.purchases) || [])
+			.map((purchaseId) => currentEvent.purchases[purchaseId]);
+		let subtitle = '';
+
+		if (currentEvent) {
+			const participantsStatus = `${currentEvent.participants.length} участников`;
+			const formattedStart = moment(currentEvent.start).format('DD MMMM');
+			const formattedEnd = moment(currentEvent.end).format('DD MMMM');
+			let formattedDate;
+
+			if (formattedStart === formattedEnd) {
+				formattedDate = formattedStart;
+			} else {
+				formattedDate = `${formattedStart}–${formattedEnd}`;
+			}
+
+			subtitle = `${participantsStatus} • ${formattedDate}`;
 		}
+
 		return (
 			<Wrapper>
 				{currentEvent ?
 					<Wrapper>
 						<TopBar>
 							<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
-							<TopBarHeading title={this.props.currentEvent.name} subtitle="5 участников - 12 апреля" />
+							<TopBarHeading
+								title={currentEvent.name}
+								subtitle={subtitle}
+							/>
 							<TopBarIcon icon="arrow-share" />
 							<TopBarIcon icon="more-actions" />
 						</TopBar>

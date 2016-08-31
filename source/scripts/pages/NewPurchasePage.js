@@ -1,7 +1,10 @@
 import React from 'react';
-import {createPurchaseAsync} from '../actions/createPurchase';
-import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router';
+import {CircularProgress} from 'material-ui';
+
+import {createPurchaseAsync} from '../actions/createPurchase';
+
 import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
@@ -10,8 +13,7 @@ import BlueSubtitle from '../components/BlueSubtitle';
 import UniversalListItem from '../components/UniversalListItem';
 import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
-import {withRouter} from 'react-router';
-import {CircularProgress} from 'material-ui';
+
 
 const mockUsers = [
 	{
@@ -115,18 +117,18 @@ const NewPurchasePage = React.createClass({
 	},
 
 	render() {
-		const {props, state} = this;
+		const {state} = this;
 		return (
 			<div>
 				<TopBar>
-					<TopBarIcon icon="arrow-back" onClick={this.goToEvent}/>
+					<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 					<TopBarHeading title="Новая покупка" />
 					{state.isSavingData ?
 						<CircularProgress size={0.3} />
 						:
-						<TopBarIcon icon="check-active" onClick={this.save} /> 
+						<TopBarIcon icon="check-active" onClick={this.save} />
 					}
-					
+
 				</TopBar>
 				{
 					state.popupOpened && <Popup
