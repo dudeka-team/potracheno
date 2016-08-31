@@ -42,7 +42,7 @@ gulp.task('compile-styles', () => {
 
 gulp.task('compile-scripts', () => {
 	return gulp
-		.src(`${SOURCE}/scripts/index.jsx`)
+		.src(`${SOURCE}/scripts/index.js`)
 		.pipe(plumber(errorHandler('compile-scripts')))
 		.pipe(webpack(webpackConfig))
 		.pipe(gulp.dest(OUT));
