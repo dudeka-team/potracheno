@@ -44,9 +44,11 @@ const Input = React.createClass({
 
 	handleChange(event) {
 		this.setState({value: event.target.value});
+		this.props.onChange(event);
 	},
 
 	render() {
+		const {props} = this;
 		const classList = ['input'];
 		if (this.state.empty) {
 			classList.push('input_empty');
@@ -62,11 +64,12 @@ const Input = React.createClass({
 				}
 				<input
 					className={classList.join(' ')}
-					type="text"
+					type={props.type ? props.type : 'text'}
 					value={this.state.value}
 					onChange={this.handleChange}
 					onFocus={this.handleFocus}
 					onBlur={this.handleUnfocus}
+					disabled={props.disabled ? true : false}
 				/>
 			</div>
 		);

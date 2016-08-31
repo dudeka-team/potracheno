@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "test": "mocha -r babel-core/register ./tests/*.js",
-    "lint": "eslint source/scripts/{**/*.{js,jsx},*.{js,jsx}}",
+    "lint": "eslint source/scripts/**/*.{jsx,js} source/scripts/pages/**/*.{jsx,js} source/scripts/components/**/*.{jsx,js}",
     "install": "bash ./install-hooks.sh"
   },
   "bugs": {
