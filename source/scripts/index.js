@@ -48,7 +48,6 @@ export const history = syncHistoryWithStore(hashHistory, store);
 document.addEventListener('DOMContentLoaded', onDeviceReady);
 
 function onDeviceReady() {
-	hashHistory.push('events/0');
 	ReactDOM.render(<AppRoot />, document.querySelector('#app'));
 }
 

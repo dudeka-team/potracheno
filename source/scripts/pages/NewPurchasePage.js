@@ -1,4 +1,5 @@
 import React from 'react';
+import {createPurchaseAsync} from '../actions/createPurchase';
 import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import Separator from '../components/Separator';
@@ -9,7 +10,6 @@ import BlueSubtitle from '../components/BlueSubtitle';
 import UniversalListItem from '../components/UniversalListItem';
 import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
-import {createPurchaseAsync} from '../actions';
 import {withRouter} from 'react-router';
 import {CircularProgress} from 'material-ui';
 
