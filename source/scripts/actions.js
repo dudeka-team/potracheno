@@ -22,18 +22,15 @@ export function createEvent(payload) {
 	};
 }
 
-export function readEvents(payload) {
+export function readEvents() {
 	return {
 		type: READ_EVENTS,
-		payload,
-	};
-}
-
-export function readEventsAsync() {
-	return (dispatch) => {
-		db.readEvents().then(result => {
-			dispatch(readEvents(result));
-		});
+		payload: new Promise((resolve, reject) => {
+			db
+				.readEvents()
+				.then(resolve)
+				.catch(reject);
+		}),
 	};
 }
 

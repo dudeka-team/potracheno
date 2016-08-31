@@ -7,12 +7,7 @@ Database.readEvents = function readEvents() {
 		.database()
 		.ref('events')
 		.once('value')
-		.then((snapshot) => {
-			return ({
-				key: snapshot.key,
-				eventsList: snapshot.val(),
-			});
-		});
+		.then((snapshot) => snapshot.val());
 };
 
 Database.saveEvent = function saveEvent(data) {
@@ -20,12 +15,10 @@ Database.saveEvent = function saveEvent(data) {
 		.database()
 		.ref('events')
 		.push(data)
-		.then((snapshot) => {
-			return ({
-				key: snapshot.key,
-				eventInfo: data,
-			});
-		});
+		.then((snapshot) => ({
+			key: snapshot.key,
+			eventInfo: data,
+		}));
 };
 
 Database.loadEvent = function loadEvent(eventId) {

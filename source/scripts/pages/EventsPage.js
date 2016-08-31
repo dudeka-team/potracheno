@@ -1,20 +1,21 @@
 import React from 'react';
-import {hashHistory, Link} from 'react-router';
+import {withRouter, Link} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
-import {readEventsAsync} from '../actions';
+import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
 
-function goToNewEventPage() {
-	hashHistory.push('/events/new');
-}
 
 const EventsPage = React.createClass({
 	componentDidMount() {
 		const {props} = this;
-		props.dispatch(readEventsAsync());
+		props.dispatch(readEvents());
+	},
+
+	goToNewEvent() {
+		this.props.router.push('/events/new');
 	},
 
 	render() {
@@ -24,12 +25,13 @@ const EventsPage = React.createClass({
 				<TopBar>
 					<TopBarIcon icon="burger" />
 					<TopBarHeading title="Мероприятия" />
-					<TopBarIcon icon="plus" onClick={goToNewEventPage} />
+					<TopBarIcon icon="plus" onClick={this.goToNewEvent} />
 				</TopBar>
 				{props.events.length ?
 					<div>
 						{
 							props.events
+								.reverse()
 								.map(eventId => ({
 									eventId,
 									event: props.eventsById[eventId],
@@ -65,4 +67,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(EventsPage);
+export default connect(mapStateToProps)(withRouter(EventsPage));
