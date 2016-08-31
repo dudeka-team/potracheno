@@ -25,9 +25,10 @@ const EventPage = React.createClass({
 
 	render() {
 		const {props} = this;
+		const {currentEvent} = props;
 		return (
 			<div>
-				{props.currentEvent ?
+				{currentEvent ?
 					<div>
 						<TopBar>
 							<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
@@ -50,7 +51,7 @@ const EventPage = React.createClass({
 								{
 									name: 'members',
 									labelContent: 'Участники',
-									content: <Participants participants={[]} />,
+									content: <Participants participants={currentEvent.participants} />,
 								},
 							]}
 						/>

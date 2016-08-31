@@ -69,7 +69,7 @@ const Input = React.createClass({
 					onChange={this.handleChange}
 					onFocus={this.handleFocus}
 					onBlur={this.handleUnfocus}
-					disabled={props.disabled ? true : false}
+					disabled={props.disabled}
 				/>
 			</div>
 		);
