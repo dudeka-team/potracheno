@@ -17,7 +17,7 @@ export default function Routes(props) {
 				<Route path="events/new" component={NewEventPage} />
 				<Route path="events/:id" component={EventPage} />
 				<Route path="purchase" component={PurchasePage} />
-				<Route path="newpurchase" component={NewPurchasePage} />
+				<Route path="events/:id/purchases/new" component={NewPurchasePage} />
 				<Route path="demo" component={DemoPage} />
 			</Route>
 		</Router>

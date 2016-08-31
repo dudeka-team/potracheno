@@ -66,7 +66,7 @@ const EventPage = React.createClass({
 								{
 									name: 'purchases',
 									labelContent: 'Покупки',
-									content: <Purchases purchases={purchases} />,
+									content: <Purchases params={{id: this.props.params.id}} purchases={purchases} />,
 								},
 								{
 									name: 'balance',
