@@ -6,15 +6,15 @@ export default function FlexContainer(props) {
 	const {alignItems, justifyContent, flexDirection} = props;
 
 	if (alignItems) {
-		classes.push(`ai_${alignItems}`);
+		classes.push(`flex_ai-${alignItems}`);
 	}
 
 	if (justifyContent) {
-		classes.push(`jc_${justifyContent}`);
+		classes.push(`flex_jc-${justifyContent}`);
 	}
 
 	if (flexDirection) {
-		classes.push(`fd_${flexDirection}`);
+		classes.push(`flex_fd-${flexDirection}`);
 	}
 
 	return (
@@ -32,6 +32,5 @@ FlexContainer.propTypes = {
 
 // Usage example
 // <FlexContainer alignItems='center' justifyContent='center' flexDirection='row-reverse'>
-	// <div>center</div>
+//	 <div>center</div>
 // </FlexContainer>
-

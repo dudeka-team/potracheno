@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -6,18 +7,14 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 
 const SecondStep = React.createClass({
-	goToPrevPage() {
-		this.props.router.push('/events/new/step1');
-	},
-
 	render() {
 		const {props} = this;
 		return (
 			<div>
 				<TopBar>
-					<TopBarIcon icon="arrow-back" onClick={this.goToPrevPage} />
+					<TopBarIcon icon="arrow-back" onClick={props.goToFirstStep} />
 					<TopBarHeading title="Добавить участников" />
-					{props.isSavingData ?
+					{props.isCreatingEvent ?
 						<CircularProgress size={0.3} />
 						:
 						<TopBarIcon icon="check-active" onClick={props.save} disabled={!props.saveAvailable} />
@@ -43,4 +40,10 @@ const SecondStep = React.createClass({
 	},
 });
 
-export default withRouter(SecondStep);
+function mapStateToProps(state) {
+	return {
+		isCreatingEvent: state.app.isCreatingEvent,
+	};
+}
+
+export default connect(mapStateToProps)(withRouter(SecondStep));

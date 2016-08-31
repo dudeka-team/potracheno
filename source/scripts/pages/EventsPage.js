@@ -29,19 +29,24 @@ const EventsPage = React.createClass({
 				{props.events.length ?
 					<div>
 						{
-							props.events.map(eventId => {
-								return (
-									<Link to={`events/${eventId}`} key={eventId}>
-										<EventsListItem
-											title={props.eventsById[eventId].name}
-											membersCount={props.eventsById[eventId].participants.length}
-											date={props.eventsById[eventId].start}
-											sum={props.eventsById[eventId].sum || 0}
-											debtType="positive"
-										/>
-									</Link>
-								);
-							})
+							props.events
+								.map(eventId => ({
+									eventId,
+									event: props.eventsById[eventId],
+								}))
+								.map(({event, eventId}) => {
+									return (
+										<Link to={`events/${eventId}`} key={eventId}>
+											<EventsListItem
+												title={event.name}
+												membersCount={event.participants.length}
+												date={event.start}
+												sum={event.sum || 0}
+												debtType="positive"
+											/>
+										</Link>
+									);
+								})
 						}
 					</div> :
 					<FlexContainer alignItems="center" justifyContent="center">
