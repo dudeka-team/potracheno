@@ -1,5 +1,5 @@
 import React from 'react';
-import {hashHistory} from 'react-router';
+import {withRouter} from 'react-router';
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import Fab from '../../components/Fab';
 import PurchaseInfo from '../../components/PurchaseInfo';
@@ -28,10 +28,6 @@ const purchases = [
 	},
 ];
 
-function goToNewPurchase() {
-	hashHistory.push('newpurchase');
-}
-
 const EventPurchasesPage = React.createClass({
 	getInitialState() {
 		return {
@@ -51,6 +47,10 @@ const EventPurchasesPage = React.createClass({
 		});
 	},
 
+	goToNewPurchase() {
+		this.props.router.push('/newpurchase');
+	},
+
 	render() {
 		const {state} = this;
 		return (
@@ -64,14 +64,14 @@ const EventPurchasesPage = React.createClass({
 						<PurchaseInfo />
 					</Popup>
 				)}
-				{purchases.map((item, i) => {
+				{this.props.purchases.map((item, i) => {
 					return (
 						<PurchaseListItem
 							key={i}
-							buyer={item.buyer}
-							title={item.title}
+							buyer={item.payer}
+							title={item.name}
 							subtitle={item.subtitle}
-							price={item.price}
+							price={item.amount}
 							onClick={() => {
 								this.setState({
 									popupOpened: true,
@@ -80,10 +80,10 @@ const EventPurchasesPage = React.createClass({
 						/>
 					);
 				})}
-				<Fab onClick={goToNewPurchase}><AddShoppingCart /></Fab>
+				<Fab onClick={this.goToNewPurchase}><AddShoppingCart /></Fab>
 			</div>
 		);
 	},
 });
 
-export default EventPurchasesPage;
+export default withRouter(EventPurchasesPage);

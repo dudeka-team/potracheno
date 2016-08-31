@@ -10,6 +10,8 @@ import UniversalListItem from '../components/UniversalListItem';
 import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import {createPurchaseAsync} from '../actions';
+import {withRouter} from 'react-router';
+import {CircularProgress} from 'material-ui';
 
 const mockUsers = [
 	{
@@ -42,10 +44,6 @@ const mockUsers = [
 	},
 ];
 
-function goToEvent() {
-	hashHistory.push('/event');
-}
-
 const NewPurchasePage = React.createClass({
 	getInitialState() {
 		return {
@@ -54,6 +52,8 @@ const NewPurchasePage = React.createClass({
 			participants: mockUsers,
 			amount: 0,
 			name: '',
+			isSavingData: false,
+			currentEvent: null,
 		};
 	},
 
@@ -98,21 +98,35 @@ const NewPurchasePage = React.createClass({
 	save() {
 		const {state, props} = this;
 		props.dispatch(createPurchaseAsync({
-			name: state.name,
-			amount: state.amount,
-			participants: state.participants,
+			eventId: this.props.currentEvent.id,
+			purchaseData: {
+				name: state.name,
+				amount: state.amount,
+				participants: state.participants,
+			},
 		}));
-		goToEvent();
+		this.setState({
+			isSavingData: true,
+		});
+	},
+
+	goToEvent() {
+		this.props.router.push(`/events/${this.props.currentEvent.id}`);
 	},
 
 	render() {
-		const {state} = this;
+		const {props, state} = this;
 		return (
 			<div>
 				<TopBar>
-					<TopBarIcon icon="arrow-back" />
+					<TopBarIcon icon="arrow-back" onClick={this.goToEvent}/>
 					<TopBarHeading title="Новая покупка" />
-					<TopBarIcon icon="check-active" onClick={this.save} />
+					{state.isSavingData ?
+						<CircularProgress size={0.3} />
+						:
+						<TopBarIcon icon="check-active" onClick={this.save} /> 
+					}
+					
 				</TopBar>
 				{
 					state.popupOpened && <Popup
@@ -209,4 +223,10 @@ const NewPurchasePage = React.createClass({
 	},
 });
 
-export default connect()(NewPurchasePage);
+function mapStateToProps(state) {
+	return {
+		currentEvent: state.app.currentEvent,
+	};
+}
+
+export default withRouter(connect(mapStateToProps)(NewPurchasePage));

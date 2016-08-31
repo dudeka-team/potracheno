@@ -23,15 +23,11 @@ export function createEventAsync(payload) {
 	};
 }
 
+
 export function loadEventData(payload) {
 	return {
 		type: LOAD_EVENT_DATA,
-	};
-}
-
-function createPurchase(payload) {
-	return {
-		type: CREATE_PURCHASE,
+		payload
 	};
 }
 
@@ -43,15 +39,20 @@ export function loadEventDataAsync(eventId) {
 	};
 }
 
+function createPurchase(payload) {
+	return {
+		type: CREATE_PURCHASE,
+		payload,
+	};
+}
+
 export function createPurchaseAsync(payload) {
 	return dispatch => {
-		firebase.database().ref('purchases/').push(payload).then(result => {
+		db.addPurchase(payload.eventId, payload.purchaseData).then(result => {
 			dispatch(createPurchase({
 				key: result.key,
-				purchaseInfo: payload,
+				purchaseData: result.purchaseData,
 			}));
 		});
-
-		hashHistory.push('event');
 	};
 }

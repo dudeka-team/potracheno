@@ -25,6 +25,13 @@ const EventPage = React.createClass({
 
 	render() {
 		const {props} = this;
+		const {currentEvent} = props;
+		const purchases = [];
+		if (currentEvent !== null) {
+			for (var prop in currentEvent.purchases) {
+				purchases.push(currentEvent.purchases[prop]);
+			}
+		}
 		return (
 			<div>
 				{props.currentEvent ?
@@ -40,7 +47,7 @@ const EventPage = React.createClass({
 								{
 									name: 'purchases',
 									labelContent: 'Покупки',
-									content: <Purchases />,
+									content: <Purchases purchases={purchases} />,
 								},
 								{
 									name: 'balance',

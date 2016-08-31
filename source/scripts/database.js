@@ -26,4 +26,15 @@ Database.loadEvent = function loadEvent(eventId) {
 		}));
 };
 
+Database.addPurchase = function addPurchase(eventId, data) {
+	return firebase
+		.database()
+		.ref(`events/${eventId}/purchases`)
+		.push(data)
+		.then(result => ({
+			key: result.key,
+			purchaseData: data,
+		}));
+}
+
 export default Database;
