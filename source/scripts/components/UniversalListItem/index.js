@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Checkbox from '../CheckBox';
+import Checkbox from '../Checkbox';
 import CheckMark from '../CheckMark';
 
 const UniversalListItem = React.createClass({

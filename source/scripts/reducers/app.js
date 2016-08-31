@@ -39,7 +39,7 @@ export default function appReducer(state = initialState, {type, payload}) {
 				currentEvent: payload.value,
 			});
 		}
-			
+
 		case CREATE_PURCHASE: {
 			const {eventId} = payload;
 			const currentEvent = Object.assign({}, state.currentEvent);

@@ -1,4 +1,5 @@
 import {hashHistory} from 'react-router';
+import firebase from 'firebase';
 import db from './database';
 import {
 	CREATE_EVENT,
@@ -27,7 +28,14 @@ export function createEventAsync(payload) {
 export function loadEventData(payload) {
 	return {
 		type: LOAD_EVENT_DATA,
-		payload
+		payload,
+	};
+}
+
+function createPurchase(payload) {
+	return {
+		type: CREATE_PURCHASE,
+		payload,
 	};
 }
 

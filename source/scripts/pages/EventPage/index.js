@@ -5,6 +5,8 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 import {loadEventDataAsync} from '../../actions';
 
+import Wrapper from '../../components/Wrapper';
+import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
@@ -33,9 +35,9 @@ const EventPage = React.createClass({
 			}
 		}
 		return (
-			<div>
-				{props.currentEvent ?
-					<div>
+			<Wrapper>
+				{currentEvent ?
+					<Wrapper>
 						<TopBar>
 							<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 							<TopBarHeading title="Дача у Дамира" subtitle="5 участников - 12 апреля" />
@@ -57,15 +59,17 @@ const EventPage = React.createClass({
 								{
 									name: 'members',
 									labelContent: 'Участники',
-									content: <Participants participants={[]} />,
+									content: <Participants participants={currentEvent.participants} />,
 								},
 							]}
 						/>
-					</div>
+					</Wrapper>
 					:
-					<CircularProgress />
+					<FlexContainer alignItems="center" justifyContent="center">
+						<CircularProgress />
+					</FlexContainer>
 				}
-			</div>
+			</Wrapper>
 		);
 	},
 });

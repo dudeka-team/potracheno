@@ -148,7 +148,7 @@ const NewPurchasePage = React.createClass({
 				<Separator />
 				<div style={{padding: '16px 16px 14px 16px'}}>
 					<Input
-						type='number'
+						type="number"
 						hint="0 руб."
 						style={{
 							fontSize: '30px',
