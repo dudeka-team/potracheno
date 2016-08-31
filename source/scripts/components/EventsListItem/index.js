@@ -28,7 +28,7 @@ export default function EventsListItem(props) {
 
 EventsListItem.propTypes = {
 	title: PropTypes.string.isRequired,
-	date: PropTypes.object.isRequired,
+	date: PropTypes.number.isRequired,
 	debtType: PropTypes.oneOf(['positive', 'negative']).isRequired,
 	membersCount: PropTypes.number.isRequired,
 	sum: PropTypes.number.isRequired,

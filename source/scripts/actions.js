@@ -3,6 +3,7 @@ import {createAction} from 'redux-actions';
 import firebase from 'firebase';
 import db from './database';
 import {
+	READ_EVENTS,
 	CREATE_EVENT,
 	LOAD_EVENT_DATA,
 	CREATE_PURCHASE,
@@ -16,6 +17,18 @@ export function createEvent(payload) {
 				.saveEvent(payload)
 				.then(resolve)
 				.then(() => hashHistory.push('/events'))
+				.catch(reject);
+		}),
+	};
+}
+
+export function readEvents() {
+	return {
+		type: READ_EVENTS,
+		payload: new Promise((resolve, reject) => {
+			db
+				.readEvents()
+				.then(resolve)
 				.catch(reject);
 		}),
 	};
