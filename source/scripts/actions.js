@@ -1,4 +1,5 @@
 import {hashHistory} from 'react-router';
+import {createAction} from 'redux-actions';
 import firebase from 'firebase';
 import db from './database';
 import {
@@ -10,33 +11,17 @@ import {
 export function createEvent(payload) {
 	return {
 		type: CREATE_EVENT,
-		payload,
+		payload: new Promise((resolve, reject) => {
+			db
+				.saveEvent(payload)
+				.then(resolve)
+				.then(() => hashHistory.push('/events'))
+				.catch(reject);
+		}),
 	};
 }
 
-export function createEventAsync(payload) {
-	return dispatch => {
-		db.saveEvent(payload).then(result => {
-			dispatch(createEvent(result));
-
-			hashHistory.push('/events');
-		});
-	};
-}
-
-export function loadEventData(payload) {
-	return {
-		type: LOAD_EVENT_DATA,
-		payload,
-	};
-}
-
-function createPurchase(payload) {
-	return {
-		type: CREATE_PURCHASE,
-		payload,
-	};
-}
+export const loadEventData = createAction(LOAD_EVENT_DATA);
 
 export function loadEventDataAsync(eventId) {
 	return dispatch => {
@@ -45,6 +30,8 @@ export function loadEventDataAsync(eventId) {
 		});
 	};
 }
+
+export const createPurchase = createAction(CREATE_PURCHASE);
 
 export function createPurchaseAsync(payload) {
 	return dispatch => {
