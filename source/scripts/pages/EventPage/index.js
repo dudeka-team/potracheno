@@ -28,11 +28,9 @@ const EventPage = React.createClass({
 	render() {
 		const {props} = this;
 		const {currentEvent} = props;
-		const purchases = [];
-		if (currentEvent !== null) {
-			for (var prop in currentEvent.purchases) {
-				purchases.push(currentEvent.purchases[prop]);
-			}
+		let purchases = [];
+		if (currentEvent !== null && currentEvent.purchases !== undefined) {
+			purchases = Object.keys(currentEvent.purchases).map(purchaseId => currentEvent.purchases[purchaseId]);
 		}
 		return (
 			<Wrapper>
@@ -49,7 +47,7 @@ const EventPage = React.createClass({
 								{
 									name: 'purchases',
 									labelContent: 'Покупки',
-									content: <Purchases purchases={purchases} />,
+									content: <Purchases params={{id: this.props.params.id}} purchases={purchases} />,
 								},
 								{
 									name: 'balance',

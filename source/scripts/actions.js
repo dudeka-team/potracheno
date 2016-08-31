@@ -43,18 +43,3 @@ export function loadEventDataAsync(eventId) {
 		});
 	};
 }
-
-export const createPurchase = createAction(CREATE_PURCHASE);
-
-export function createPurchaseAsync(payload) {
-	return dispatch => {
-		firebase.database().ref('purchases/').push(payload).then(result => {
-			dispatch(createPurchase({
-				key: result.key,
-				purchaseInfo: payload,
-			}));
-		});
-
-		hashHistory.push('event');
-	};
-}

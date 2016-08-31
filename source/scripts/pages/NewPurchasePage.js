@@ -98,7 +98,7 @@ const NewPurchasePage = React.createClass({
 	save() {
 		const {state, props} = this;
 		props.dispatch(createPurchaseAsync({
-			eventId: this.props.currentEvent.id,
+			eventId: this.props.params.id,
 			purchaseData: {
 				name: state.name,
 				amount: state.amount,
@@ -111,7 +111,7 @@ const NewPurchasePage = React.createClass({
 	},
 
 	goToEvent() {
-		this.props.router.push(`/events/${this.props.currentEvent.id}`);
+		this.props.router.push(`/events/${this.props.params.id}`);
 	},
 
 	render() {
