@@ -7,6 +7,7 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
+import promiseMiddleware from 'redux-promise-middleware';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -37,7 +38,12 @@ const store = createStore(
 		routing: routerReducer,
 	}),
 	compose(
-		applyMiddleware(thunk),
+		applyMiddleware(
+			thunk,
+			promiseMiddleware({
+				promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR'],
+			})
+		),
 		window.devToolsExtension && window.devToolsExtension()
 	)
 );

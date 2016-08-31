@@ -3,7 +3,7 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
-import {createEventAsync} from '../../actions';
+import {createEvent} from '../../actions';
 
 
 const NewEvent = React.createClass({
@@ -15,25 +15,17 @@ const NewEvent = React.createClass({
 			end: now,
 			participants: [''],
 			currentStep: 1,
-			isSavingData: false,
 		};
-	},
-
-	componentDidUpdate() {
-		const {state, props} = this;
-
-		if (state.isSavingData) {
-			props.dispatch(createEventAsync({
-				name: state.name,
-				start: state.start.valueOf(),
-				end: state.end.valueOf(),
-				participants: state.participants.filter(Boolean),
-			}));
-		}
 	},
 
 	goToEvents() {
 		this.props.router.push('/events');
+	},
+
+	goToFirstStep() {
+		this.setState({
+			currentStep: 1,
+		});
 	},
 
 	goToSecondStep() {
@@ -45,9 +37,14 @@ const NewEvent = React.createClass({
 	},
 
 	save() {
-		this.setState({
-			isSavingData: true,
-		});
+		const {props, state} = this;
+
+		props.dispatch(createEvent({
+			name: state.name,
+			start: state.start.valueOf(),
+			end: state.end.valueOf(),
+			participants: state.participants.filter(Boolean),
+		}));
 	},
 
 	handleEventNameChange(event) {
@@ -114,6 +111,7 @@ const NewEvent = React.createClass({
 					saveAvailable={!!state.participants.filter(Boolean).length}
 					save={this.save}
 					isSavingData={state.isSavingData}
+					goToFirstStep={this.goToFirstStep}
 					handleParticipantChange={this.handleParticipantChange}
 					handleParticipantInputBlur={this.handleParticipantInputBlur}
 				/>}
