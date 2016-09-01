@@ -110,7 +110,6 @@ const NewEvent = React.createClass({
 					participants={state.participants}
 					saveAvailable={!!state.participants.filter(Boolean).length}
 					save={this.save}
-					isSavingData={state.isSavingData}
 					goToFirstStep={this.goToFirstStep}
 					handleParticipantChange={this.handleParticipantChange}
 					handleParticipantInputBlur={this.handleParticipantInputBlur}

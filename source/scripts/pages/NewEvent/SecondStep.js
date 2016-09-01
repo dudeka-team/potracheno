@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
+
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
@@ -40,9 +41,9 @@ const SecondStep = React.createClass({
 	},
 });
 
-function mapStateToProps(state) {
+function mapStateToProps({events}) {
 	return {
-		isCreatingEvent: state.app.isCreatingEvent,
+		isCreatingEvent: events.isCreatingEvent,
 	};
 }
 

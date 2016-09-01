@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter, Link} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
+
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import {readEvents} from '../actions';
@@ -27,43 +28,49 @@ const EventsPage = React.createClass({
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="plus" onClick={this.goToNewEvent} />
 				</TopBar>
-				{props.events.length ?
-					<div>
-						{
-							props.events
-								.reverse()
-								.map(eventId => ({
-									eventId,
-									event: props.eventsById[eventId],
-								}))
-								.map(({event, eventId}) => {
-									return (
-										<Link to={`events/${eventId}`} key={eventId}>
-											<EventsListItem
-												title={event.name}
-												membersCount={event.participants.length}
-												date={event.start}
-												sum={event.sum || 0}
-												debtType="positive"
-											/>
-										</Link>
-									);
-								})
-						}
-					</div> :
+				{props.isReadingEvents ?
 					<FlexContainer alignItems="center" justifyContent="center">
 						<CircularProgress size={0.4} />
 					</FlexContainer>
+					:
+					props.events
+						.reverse()
+						.map(getEventData(props.eventsById))
+						.map(renderEventPreview)
 				}
 			</div>
 		);
 	},
 });
 
-const mapStateToProps = (state) => {
+function getEventData(eventsById) {
+	return (eventId) => ({
+		eventId,
+		data: eventsById[eventId],
+	});
+}
+
+function renderEventPreview(eventData) {
+	const {eventId, data} = eventData;
+
+	return (
+		<Link to={`events/${eventId}`} key={eventId}>
+			<EventsListItem
+				title={data.name}
+				membersCount={data.participants.length}
+				date={data.start}
+				sum={data.sum || 0}
+				debtType="positive"
+			/>
+		</Link>
+	);
+}
+
+const mapStateToProps = ({events}) => {
 	return {
-		events: state.app.events,
-		eventsById: state.app.eventsById,
+		events: events.events,
+		eventsById: events.eventsById,
+		isReadingEvents: events.isReadingEvents,
 	};
 };
 
