@@ -6,6 +6,7 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
+import {changeCurrentEvent} from '../actions/changeCurrentEvent';
 
 
 const EventsPage = React.createClass({
@@ -18,6 +19,11 @@ const EventsPage = React.createClass({
 		this.props.router.push('/events/new');
 	},
 
+	goToEvent(eventId) {
+		this.props.router.push(`events/${eventId}`);
+		this.props.dispatch(changeCurrentEvent(eventId));
+	},
+
 	render() {
 		const {props} = this;
 		return (
@@ -27,7 +33,7 @@ const EventsPage = React.createClass({
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="plus" onClick={this.goToNewEvent} />
 				</TopBar>
-				{props.events.length ?
+				{props.eventsLoaded ?
 					<div>
 						{
 							props.events
@@ -39,7 +45,7 @@ const EventsPage = React.createClass({
 								}))
 								.map(({event, eventId}) => {
 									return (
-										<Link to={`events/${eventId}`} key={eventId}>
+										<div onClick={() => this.goToEvent(eventId)} key={eventId}>
 											<EventsListItem
 												title={event.name}
 												membersCount={event.participants.length}
@@ -47,7 +53,7 @@ const EventsPage = React.createClass({
 												sum={event.sum || 0}
 												debtType="positive"
 											/>
-										</Link>
+										</div>
 									);
 								})
 						}
@@ -63,6 +69,7 @@ const EventsPage = React.createClass({
 
 const mapStateToProps = (state) => {
 	return {
+		eventsLoaded: state.app.eventsLoaded,
 		events: state.app.events,
 		eventsById: state.app.eventsById,
 	};

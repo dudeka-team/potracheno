@@ -4,7 +4,7 @@ import App from './App';
 import EventsPage from './pages/EventsPage';
 import NewEventPage from './pages/NewEvent';
 import EventPage from './pages/EventPage';
-import PurchasePage from './pages/PurchasePage';
+//import PurchasePage from './pages/PurchasePage';
 import NewPurchasePage from './pages/NewPurchasePage';
 import DemoPage from './pages/DemoPage';
 
@@ -16,7 +16,7 @@ export default function Routes(props) {
 				<Route path="events" component={EventsPage} />
 				<Route path="events/new" component={NewEventPage} />
 				<Route path="events/:id" component={EventPage} />
-				<Route path="purchase" component={PurchasePage} />
+				<Route path="events/:id/" component={EventPage} />
 				<Route path="events/:id/purchases/new" component={NewPurchasePage} />
 				<Route path="demo" component={DemoPage} />
 			</Route>

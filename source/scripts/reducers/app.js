@@ -5,6 +5,7 @@ import {
 	CREATE_EVENT_ERROR,
 	LOAD_EVENT_DATA,
 	CREATE_PURCHASE,
+	CHANGE_CURRENT_EVENT,
 } from '../constants';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
 	eventsById: {},
 	currentEvent: null,
 	isCreatingEvent: false,
+	eventsLoaded: false,
 };
 
 export default function appReducer(state = initialState, {type, payload}) {
@@ -72,6 +74,13 @@ export default function appReducer(state = initialState, {type, payload}) {
 			return Object.assign({}, state, {
 				events: Object.keys(payload),
 				eventsById: payload,
+				eventsLoaded: true,
+			});
+		}
+
+		case CHANGE_CURRENT_EVENT: {
+			return Object.assign({}, state, {
+				currentEvent: state.eventsById[payload],
 			});
 		}
 

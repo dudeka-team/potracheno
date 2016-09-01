@@ -4,8 +4,8 @@ const Input = React.createClass({
 	getInitialState() {
 		this.init(this.props);
 		return {
-			focused: false,
-			value: '',
+			focused: this.props.value ? true : false,
+			value: this.props.value || '',
 		};
 	},
 

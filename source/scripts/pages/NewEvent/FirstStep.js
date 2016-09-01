@@ -1,5 +1,6 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
+import Input from '../../components/Input';
 import DatePicker from 'material-ui/DatePicker';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
@@ -17,11 +18,18 @@ export default function NewEventFirst(props) {
 				/>
 			</TopBar>
 
-			<div style={{padding: '0 1rem'}}>
-				<TextField
-					fullWidth
-					floatingLabelText="Название мероприятия"
+			<div style={{padding: '0 1rem'}}>					
+				<Input
+					style={{
+						marginTop: '34px',
+						fontSize: '20px',
+					}}
 					value={props.eventName}
+					label="Название мероприятия"
+					labelTransform={{
+						transform: 'scale(0.6) translateY(-30px)',
+						color: '#818f99',
+					}}
 					onChange={props.handleEventNameChange}
 				/>
 
