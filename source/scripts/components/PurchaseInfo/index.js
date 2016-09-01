@@ -5,7 +5,7 @@ import BlueSubtitle from '../BlueSubtitle';
 const PurchaseInfo = React.createClass({
 	getInitialState() {
 		const {props} = this;
-		const participants = props.purchase.participants;
+		const {participants} = props.purchase;
 		const nonParticipants = props.eventParticipants
 			.filter(user => participants.indexOf(user) === -1);
 		return {
@@ -22,15 +22,15 @@ const PurchaseInfo = React.createClass({
 					<div className="purchase-info__price">{purchase.amount}</div>
 				</div>
 				<BlueSubtitle text="Участвуют в покупке" />
-				{this.state.participants.map((user, index) => {
+				{this.state.participants.map(user => {
 					return (
-						<UniversalListItem id={index} text={user} key={index} />
+						<UniversalListItem id={user} text={user} key={user} />
 					);
 				})}
 				<BlueSubtitle text="Не участвуют в покупке" />
-				{this.state.nonParticipants.map((user, index) => {
+				{this.state.nonParticipants.map(user => {
 					return (
-						<UniversalListItem id={index} text={user} key={index} />
+						<UniversalListItem id={user} text={user} key={user} />
 					);
 				})}
 			</div>

@@ -172,10 +172,10 @@ const NewPurchasePage = React.createClass({
 					<BlueSubtitle text="Участники покупки" />
 					{
 						this.state.participants
-							.map((user, index) => {
+							.map(user => {
 								return (<UniversalListItem
-									id={index}
-									key={index}
+									id={user.name}
+									key={user.name}
 									text={user.name}
 									price={Math.round(user.loan * 10) / 10}
 									isCheckBox

@@ -46,11 +46,11 @@ const EventPurchasesPage = React.createClass({
 						/>
 					</Popup>
 				)}
-				{this.props.purchases.map((purchase, index) => {
+				{this.props.purchases.map(purchase => {
 					const subtitle = 'Все 5 участников';
 					return (
 						<PurchaseListItem
-							key={index}
+							key={purchase.id}
 							buyer={purchase.payer}
 							title={purchase.name}
 							subtitle={subtitle}

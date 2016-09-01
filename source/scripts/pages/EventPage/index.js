@@ -30,7 +30,7 @@ const EventPage = React.createClass({
 		const {currentEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
-			.map((purchaseId) => currentEvent.purchases[purchaseId]);
+			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
 		let subtitle = '';
 
 		if (currentEvent) {

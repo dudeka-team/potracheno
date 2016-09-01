@@ -4,7 +4,7 @@ const Input = React.createClass({
 	getInitialState() {
 		this.init(this.props);
 		return {
-			focused: this.props.value ? true : false,
+			focused: false,
 			value: this.props.value || '',
 		};
 	},
@@ -20,20 +20,6 @@ const Input = React.createClass({
 		this.labelTransform = props.labelTransform;
 		this.labelTransformedStyle = Object.assign({}, this.labelStyle);
 		Object.assign(this.labelTransformedStyle, this.labelTransform);
-	},
-
-	handleFocus() {
-		this.setState({
-			focused: true,
-		});
-	},
-
-	handleUnfocus() {
-		if (this.state.value === '') {
-			this.setState({
-				focused: false,
-			});
-		}
 	},
 
 	handleChange(event) {
@@ -52,7 +38,7 @@ const Input = React.createClass({
 				{this.labelExists &&
 					<div
 						className="floating-text"
-						style={this.state.focused ? this.labelTransformedStyle : this.labelStyle}
+						style={this.state.focused || this.state.value.length ? this.labelTransformedStyle : this.labelStyle}
 					>{this.labelText}</div>
 				}
 				<input
@@ -60,8 +46,8 @@ const Input = React.createClass({
 					type={props.type ? props.type : 'text'}
 					value={this.state.value}
 					onChange={this.handleChange}
-					onFocus={this.handleFocus}
-					onBlur={this.handleUnfocus}
+					onFocus={() => this.setState({focused: true})}
+					onBlur={() => this.setState({focused: false})}
 					disabled={props.disabled}
 					placeholder={this.hint}
 				/>
