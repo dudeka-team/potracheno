@@ -45,7 +45,7 @@ const EventPurchasesPage = React.createClass({
 				)}
 				{this.props.purchases.map((purchase, i) => {
 					let payer = '';
-					let subtitle = 'Все 5 участников';
+					const subtitle = 'Все 5 участников';
 					purchase.participants.forEach(participant => {
 						if (participant.isPayer) {
 							payer = participant.name;

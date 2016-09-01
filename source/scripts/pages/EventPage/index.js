@@ -71,7 +71,11 @@ const EventPage = React.createClass({
 								{
 									name: 'balance',
 									labelContent: 'Баланс',
-									content: <Balance />,
+									content:
+										<Balance
+											purchases={purchases}
+											participants={currentEvent.participants}
+										/>,
 								},
 								{
 									name: 'members',
