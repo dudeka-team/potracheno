@@ -42,13 +42,14 @@ export default function BalancePage(props) {
 									+ reducedBalance[participant]));
 
 				// записываем объект долга
-				currDebt &&
+				if (currDebt) {
 					eventsParticipantsDebts.push({
 						from: participant,
 						to: payerParticipant,
 						sum: currDebt,
 					});
-
+				}
+				
 				//	изменяем текущий баланс учасников, вычитая долг
 				reducedBalance[participant] -= currDebt;
 				reducedBalance[payerParticipant] += currDebt;
