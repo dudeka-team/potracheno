@@ -40,7 +40,7 @@ const store = createStore(
 				promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR'],
 			})
 		),
-		window.devToolsExtension && window.devToolsExtension()
+		window.devToolsExtension ? window.devToolsExtension() : f => f
 	)
 );
 
