@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter, Link} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
+
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import {readEvents} from '../actions';
@@ -20,8 +21,24 @@ const EventsPage = React.createClass({
 	},
 
 	goToEvent(eventId) {
-		this.props.router.push(`events/${eventId}`);
 		this.props.dispatch(changeCurrentEvent(eventId));
+		this.props.router.push(`events/${eventId}`);
+	},
+
+	renderEventPreview(eventData) {
+		const {eventId, data} = eventData;
+
+		return (
+			<div onClick={() => this.goToEvent(eventId)} key={eventId}>
+				<EventsListItem
+					title={data.name}
+					membersCount={data.participants.length}
+					date={data.start}
+					sum={data.sum || 0}
+					debtType="positive"
+				/>
+			</div>
+		);
 	},
 
 	render() {
@@ -34,30 +51,12 @@ const EventsPage = React.createClass({
 					<TopBarIcon icon="plus" onClick={this.goToNewEvent} />
 				</TopBar>
 				{props.eventsLoaded ?
-					<div>
-						{
-							props.events
-								.slice()
-								.reverse()
-								.map(eventId => ({
-									eventId,
-									event: props.eventsById[eventId],
-								}))
-								.map(({event, eventId}) => {
-									return (
-										<div onClick={() => this.goToEvent(eventId)} key={eventId}>
-											<EventsListItem
-												title={event.name}
-												membersCount={event.participants.length}
-												date={event.start}
-												sum={event.sum || 0}
-												debtType="positive"
-											/>
-										</div>
-									);
-								})
-						}
-					</div> :
+					props.events
+						.slice()
+						.reverse()
+						.map(getEventData(props.eventsById))
+						.map(this.renderEventPreview)
+					:
 					<FlexContainer alignItems="center" justifyContent="center">
 						<CircularProgress size={0.4} />
 					</FlexContainer>
@@ -67,11 +66,18 @@ const EventsPage = React.createClass({
 	},
 });
 
-const mapStateToProps = (state) => {
+function getEventData(eventsById) {
+	return (eventId) => ({
+		eventId,
+		data: eventsById[eventId],
+	});
+}
+
+const mapStateToProps = ({events}) => {
 	return {
-		eventsLoaded: state.app.eventsLoaded,
-		events: state.app.events,
-		eventsById: state.app.eventsById,
+		eventsLoaded: events.loaded,
+		events: events.events,
+		eventsById: events.eventsById,
 	};
 };
 

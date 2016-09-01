@@ -183,7 +183,7 @@ const NewPurchasePage = React.createClass({
 									onClick={
 										() => {
 											user.participate = !user.participate;
-											this.setState({
+									 		this.setState({
 												participants: this.state.participants,
 											});
 											this.calcLoans();

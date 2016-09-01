@@ -42,9 +42,9 @@ const SecondStep = React.createClass({
 	},
 });
 
-function mapStateToProps(state) {
+function mapStateToProps({events}) {
 	return {
-		isCreatingEvent: state.app.isCreatingEvent,
+		isCreatingEvent: events.isCreatingEvent,
 	};
 }
 

@@ -6,7 +6,7 @@ import {hashHistory} from 'react-router';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
-import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
+import {syncHistoryWithStore} from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -15,13 +15,9 @@ import assign from 'es6-object-assign';
 
 import 'react-fastclick';
 
-import appReducer from './reducers/app';
+import reducers from './reducers';
 import Routes from './Routes';
 
-
-injectTapEventPlugin();
-moment.locale('ru');
-assign.polyfill();
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q',
@@ -30,13 +26,13 @@ const firebaseConfig = {
 	storageBucket: 'dudeka-401e8.appspot.com',
 };
 
+injectTapEventPlugin();
+moment.locale('ru');
+assign.polyfill();
 firebase.initializeApp(firebaseConfig);
 
 const store = createStore(
-	combineReducers({
-		app: appReducer,
-		routing: routerReducer,
-	}),
+	combineReducers(reducers),
 	compose(
 		applyMiddleware(
 			thunk,
@@ -48,21 +44,18 @@ const store = createStore(
 	)
 );
 
-// eslint-disable-next-line import/prefer-default-export
-export const history = syncHistoryWithStore(hashHistory, store);
-
-document.addEventListener('DOMContentLoaded', onDeviceReady);
+function AppRoot() {
+	return (
+		<MuiThemeProvider>
+			<Provider store={store}>
+				<Routes history={syncHistoryWithStore(hashHistory, store)} />
+			</Provider>
+		</MuiThemeProvider>
+	);
+}
 
 function onDeviceReady() {
 	ReactDOM.render(<AppRoot />, document.querySelector('#app'));
 }
 
-function AppRoot() {
-	return (
-		<MuiThemeProvider>
-			<Provider store={store}>
-				<Routes history={history} />
-			</Provider>
-		</MuiThemeProvider>
-	);
-}
+document.addEventListener('DOMContentLoaded', onDeviceReady);

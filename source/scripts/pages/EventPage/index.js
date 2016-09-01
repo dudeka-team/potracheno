@@ -76,7 +76,11 @@ const EventPage = React.createClass({
 								{
 									name: 'balance',
 									labelContent: 'Баланс',
-									content: <Balance />,
+									content:
+										<Balance
+											purchases={purchases}
+											participants={currentEvent.participants}
+										/>,
 								},
 								{
 									name: 'members',
@@ -96,9 +100,9 @@ const EventPage = React.createClass({
 	},
 });
 
-function mapStateToProps(state) {
+function mapStateToProps({events}) {
 	return {
-		currentEvent: state.app.currentEvent,
+		currentEvent: events.currentEvent,
 	};
 }
 
