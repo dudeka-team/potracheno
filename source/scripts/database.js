@@ -7,7 +7,7 @@ Database.readEvents = function readEvents() {
 		.database()
 		.ref('events')
 		.once('value')
-		.then((snapshot) => snapshot.val());
+		.then((snapshot) => (snapshot.val() || {}));
 };
 
 Database.saveEvent = function saveEvent(data) {

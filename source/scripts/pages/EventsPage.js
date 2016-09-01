@@ -7,6 +7,7 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
+import {changeCurrentEvent} from '../actions/changeCurrentEvent';
 
 
 const EventsPage = React.createClass({
@@ -19,6 +20,27 @@ const EventsPage = React.createClass({
 		this.props.router.push('/events/new');
 	},
 
+	goToEvent(eventId) {
+		this.props.dispatch(changeCurrentEvent(eventId));
+		this.props.router.push(`events/${eventId}`);
+	},
+
+	renderEventPreview(eventData) {
+		const {eventId, data} = eventData;
+
+		return (
+			<div onClick={() => this.goToEvent(eventId)} key={eventId}>
+				<EventsListItem
+					title={data.name}
+					membersCount={data.participants.length}
+					date={data.start}
+					sum={data.sum || 0}
+					debtType="positive"
+				/>
+			</div>
+		);
+	},
+
 	render() {
 		const {props} = this;
 		return (
@@ -28,15 +50,16 @@ const EventsPage = React.createClass({
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="plus" onClick={this.goToNewEvent} />
 				</TopBar>
-				{props.isReadingEvents ?
+				{props.eventsLoaded ?
+					props.events
+						.slice()
+						.reverse()
+						.map(getEventData(props.eventsById))
+						.map(this.renderEventPreview)
+					:
 					<FlexContainer alignItems="center" justifyContent="center">
 						<CircularProgress size={0.4} />
 					</FlexContainer>
-					:
-					props.events
-						.reverse()
-						.map(getEventData(props.eventsById))
-						.map(renderEventPreview)
 				}
 			</div>
 		);
@@ -50,27 +73,11 @@ function getEventData(eventsById) {
 	});
 }
 
-function renderEventPreview(eventData) {
-	const {eventId, data} = eventData;
-
-	return (
-		<Link to={`events/${eventId}`} key={eventId}>
-			<EventsListItem
-				title={data.name}
-				membersCount={data.participants.length}
-				date={data.start}
-				sum={data.sum || 0}
-				debtType="positive"
-			/>
-		</Link>
-	);
-}
-
 const mapStateToProps = ({events}) => {
 	return {
+		eventsLoaded: events.loaded,
 		events: events.events,
 		eventsById: events.eventsById,
-		isReadingEvents: events.isReadingEvents,
 	};
 };
 

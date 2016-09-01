@@ -9,6 +9,7 @@ const initialState = {
 	eventsById: {},
 	currentEvent: null,
 	isCreatingEvent: false,
+	eventsLoaded: false,
 };
 
 export default handleActions({

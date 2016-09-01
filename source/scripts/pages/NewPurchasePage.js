@@ -2,9 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {CircularProgress} from 'material-ui';
-
 import {createPurchaseAsync} from '../actions/createPurchase';
-
 import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
@@ -14,44 +12,22 @@ import UniversalListItem from '../components/UniversalListItem';
 import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 
-
-const mockUsers = [
-	{
-		id: 0,
-		name: 'Дамир',
-		isPayer: true,
-		participate: true,
-		loan: 0,
-	},
-	{
-		id: 1,
-		name: 'Юрий',
-		isPayer: false,
-		participate: true,
-		loan: 0,
-	},
-	{
-		id: 2,
-		name: 'Алексей',
-		isPayer: false,
-		participate: true,
-		loan: 0,
-	},
-	{
-		id: 3,
-		name: 'Дамир',
-		isPayer: false,
-		participate: true,
-		loan: 0,
-	},
-];
-
 const NewPurchasePage = React.createClass({
 	getInitialState() {
+		let participants = [];
+		const {currentEvent} = this.props;
+		if (currentEvent && currentEvent.participants) {
+			participants = currentEvent.participants.map(userName => ({
+				participate: true,
+				name: userName,
+				loan: 0,
+			}));
+		}
+		const payer = participants[0];
 		return {
 			popupOpened: false,
-			payer: {id: 0, name: 'Дамир (Вы)'},
-			participants: mockUsers,
+			payer,
+			participants,
 			amount: 0,
 			name: '',
 			isSavingData: false,
@@ -72,15 +48,15 @@ const NewPurchasePage = React.createClass({
 	},
 
 	changePayer(payer) {
+		const participants = this.state.participants;
+		participants.forEach((user) => {
+			user.isPayer = (user.name === payer.name);
+		});
 		this.setState({
+			participants,
 			popupOpened: false,
 			payer,
 		});
-		const participants = this.state.participants;
-		participants.forEach((user) => {
-			user.isPayer = (user.id === payer.id);
-		});
-		this.setState({participants});
 	},
 
 	calcLoans(amount) {
@@ -104,7 +80,8 @@ const NewPurchasePage = React.createClass({
 			purchaseData: {
 				name: state.name,
 				amount: state.amount,
-				participants: state.participants,
+				payer: state.payer.name,
+				participants: state.participants.filter(user => user.participate).map(user => user.name),
 			},
 		}));
 		this.setState({
@@ -136,11 +113,11 @@ const NewPurchasePage = React.createClass({
 						closeIcon
 						onClose={this.closePopup}
 					>
-						<Payers payers={mockUsers} changePayer={this.changePayer} />
+						<Payers payers={this.state.participants} changePayer={this.changePayer} />
 					</Popup>
 				}
 				<NewPurchasePayer
-					payer={this.state.payer.name}
+					payer={state.payer ? state.payer.name : ''}
 					onClick={() => {
 						this.setState({
 							popupOpened: true,
@@ -195,27 +172,24 @@ const NewPurchasePage = React.createClass({
 					<BlueSubtitle text="Участники покупки" />
 					{
 						this.state.participants
-							.map((user, index) => {
+							.map(user => {
 								return (<UniversalListItem
-									id={user.id}
-									key={index}
+									id={user.name}
+									key={user.name}
 									text={user.name}
 									price={Math.round(user.loan * 10) / 10}
-									isCheckbox
+									isCheckBox
 									checkBoxChecked={user.participate}
 									onClick={
 										() => {
 											user.participate = !user.participate;
-											this.setState({
+									 		this.setState({
 												participants: this.state.participants,
 											});
 											this.calcLoans();
 										}
 									}
 									isBordered
-									style={{
-										padding: '18px 19px 18px 16px',
-									}}
 								/>);
 							})
 					}

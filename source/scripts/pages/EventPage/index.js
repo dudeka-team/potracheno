@@ -30,7 +30,7 @@ const EventPage = React.createClass({
 		const {currentEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
-			.map((purchaseId) => currentEvent.purchases[purchaseId]);
+			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
 		let subtitle = '';
 
 		if (currentEvent) {
@@ -54,6 +54,7 @@ const EventPage = React.createClass({
 					<Wrapper>
 						<TopBar>
 							<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
+
 							<TopBarHeading
 								title={currentEvent.name}
 								subtitle={subtitle}
@@ -66,7 +67,11 @@ const EventPage = React.createClass({
 								{
 									name: 'purchases',
 									labelContent: 'Покупки',
-									content: <Purchases params={{id: this.props.params.id}} purchases={purchases} />,
+									content: <Purchases
+										eventId={this.props.params.id}
+										purchases={purchases}
+										currentEvent={currentEvent}
+									/>,
 								},
 								{
 									name: 'balance',
@@ -95,9 +100,9 @@ const EventPage = React.createClass({
 	},
 });
 
-function mapStateToProps(state) {
+function mapStateToProps({events}) {
 	return {
-		currentEvent: state.app.currentEvent,
+		currentEvent: events.currentEvent,
 	};
 }
 

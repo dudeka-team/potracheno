@@ -27,7 +27,7 @@ const EventPurchasesPage = React.createClass({
 	},
 
 	goToNewPurchase() {
-		this.props.router.push(`/events/${this.props.params.id}/purchases/new`);
+		this.props.router.push(`/events/${this.props.eventId}/purchases/new`);
 	},
 
 	render() {
@@ -36,31 +36,29 @@ const EventPurchasesPage = React.createClass({
 			<div>
 				{state.popupOpened && (
 					<Popup
-						title="Шашлык"
+						title={this.state.openedPurchase.name}
 						closeIcon
 						onClose={this.closePopup}
 					>
-						<PurchaseInfo />
+						<PurchaseInfo
+							purchase={this.state.openedPurchase}
+							eventParticipants={this.props.currentEvent.participants}
+						/>
 					</Popup>
 				)}
-				{this.props.purchases.map((purchase, i) => {
-					let payer = '';
+				{this.props.purchases.map(purchase => {
 					const subtitle = 'Все 5 участников';
-					purchase.participants.forEach(participant => {
-						if (participant.isPayer) {
-							payer = participant.name;
-						}
-					});
 					return (
 						<PurchaseListItem
-							key={i}
-							buyer={payer}
+							key={purchase.id}
+							buyer={purchase.payer}
 							title={purchase.name}
 							subtitle={subtitle}
 							price={purchase.amount}
 							onClick={() => {
 								this.setState({
 									popupOpened: true,
+									openedPurchase: purchase,
 								});
 							}}
 						/>

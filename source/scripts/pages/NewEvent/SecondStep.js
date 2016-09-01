@@ -1,8 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-
-import TextField from 'material-ui/TextField';
+import Input from '../../components/Input';
 import CircularProgress from 'material-ui/CircularProgress';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
@@ -26,11 +25,13 @@ const SecondStep = React.createClass({
 					{props.participants.map((name, index) => {
 						return (
 							<div key={index}>
-								<TextField
-									value={name}
-									fullWidth
-									onChange={(event) => props.handleParticipantChange(index, event.target.value)}
-									onBlur={props.handleParticipantInputBlur}
+								<Input
+									hint='Имя участника'
+									style={{
+										fontSize: '16px',
+										marginTop: '20px',
+									}}
+									onChange={event => props.handleParticipantChange(index, event.target.value)}
 								/>
 							</div>
 						);

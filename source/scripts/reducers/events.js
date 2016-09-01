@@ -7,6 +7,7 @@ import {
 	READ_EVENTS_LOADING,
 	READ_EVENTS_SUCCESS,
 	READ_EVENTS_ERROR,
+	CHANGE_CURRENT_EVENT,
 } from '../constants';
 
 
@@ -16,7 +17,7 @@ const initialState = {
 	eventsById: {},
 	currentEvent: null,
 	isCreatingEvent: false,
-	isReadingEvents: false,
+	loaded: false,
 };
 
 export default handleActions({
@@ -35,12 +36,15 @@ export default handleActions({
 		return assign({}, state, {
 			events: Object.keys(payload),
 			eventsById: payload,
-			isReadingEvents: false,
+			loaded: true,
 		});
 	},
 
 	[READ_EVENTS_ERROR]: (state) => assign({}, state, {
 		isReadingEvents: false,
+	}),
+	[CHANGE_CURRENT_EVENT]: (state, {payload}) => assign({}, state, {
+		currentEvent: state.eventsById[payload],
 	}),
 }, initialState);
 
