@@ -49,7 +49,7 @@ export default function BalancePage(props) {
 						sum: currDebt,
 					});
 				}
-				
+
 				//	изменяем текущий баланс учасников, вычитая долг
 				reducedBalance[participant] -= currDebt;
 				reducedBalance[payerParticipant] += currDebt;
