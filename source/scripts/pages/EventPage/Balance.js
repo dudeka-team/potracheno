@@ -72,7 +72,7 @@ export default function BalancePage(props) {
 					return (
 						<BalanceListItem
 							key={i}
-							sum={-debt.sum}
+							sum={-Math.round(debt.sum)}
 							from={debt.from}
 							to={debt.to}
 							debtType="neutral"

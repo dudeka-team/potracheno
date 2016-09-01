@@ -26,13 +26,13 @@ const EventPage = React.createClass({
 	},
 
 	render() {
+		
 		const {props} = this;
 		const {currentEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
 		let subtitle = '';
-
 		if (currentEvent) {
 			const participantsStatus = `${currentEvent.participants.length} участников`;
 			const formattedStart = moment(currentEvent.start).format('DD MMMM');

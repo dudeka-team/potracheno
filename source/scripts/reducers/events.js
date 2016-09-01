@@ -8,6 +8,7 @@ import {
 	READ_EVENTS_SUCCESS,
 	READ_EVENTS_ERROR,
 	CHANGE_CURRENT_EVENT,
+	CREATE_PURCHASE,
 } from '../constants';
 
 
@@ -33,6 +34,7 @@ export default handleActions({
 	}),
 
 	[READ_EVENTS_SUCCESS]: (state, {payload}) => {
+		console.log()
 		return assign({}, state, {
 			events: Object.keys(payload),
 			eventsById: payload,
@@ -46,6 +48,19 @@ export default handleActions({
 	[CHANGE_CURRENT_EVENT]: (state, {payload}) => assign({}, state, {
 		currentEvent: state.eventsById[payload],
 	}),
+
+	[CREATE_PURCHASE]: (state, {payload}) => {
+		const currentEvent = Object.assign({}, state.currentEvent);
+		currentEvent.purchases = Object.assign({}, currentEvent.purchases, {
+			[payload.key]: payload.purchaseData,
+		});
+		return Object.assign({}, state, {
+			currentEvent,
+			eventsById: Object.assign({}, state.eventsById, {
+				[currentEvent.id]: currentEvent,
+			}),
+		});
+	},
 }, initialState);
 
 function stopCreatingEvent(state) {

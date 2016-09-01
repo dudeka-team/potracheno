@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {CircularProgress} from 'material-ui';
 import {createPurchaseAsync} from '../actions/createPurchase';
+import {loadEventDataAsync} from '../actions';
 import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
@@ -91,6 +92,7 @@ const NewPurchasePage = React.createClass({
 
 	goToEvent() {
 		this.props.router.push(`/events/${this.props.params.id}`);
+		this.props.dispatch(loadEventDataAsync(this.props.params.id));
 	},
 
 	render() {
