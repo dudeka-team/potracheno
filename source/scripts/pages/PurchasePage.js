@@ -1,4 +1,13 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
+import {TopBar, TopBarIcon, TopBarHeading} from '../components/TopBar';
+import NewPurchasePayer from '../components/NewPurchasePayer';
+import Separator from '../components/Separator';
+import Input from '../components/Input';
+import BlueSubtitle from '../components/BlueSubtitle';
+import UniversalListItem from '../components/UniversalListItem';
+
 
 const PurchasePage = React.createClass({
 	goToEvent() {

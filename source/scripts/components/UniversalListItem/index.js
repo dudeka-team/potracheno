@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import CheckBox from '../CheckBox';
+import Checkbox from '../Checkbox';
 import CheckMark from '../CheckMark';
 
 const UniversalListItem = React.createClass({
@@ -23,11 +23,7 @@ const UniversalListItem = React.createClass({
 
 		return (
 			<div className={rootClasses.join(' ')} onClick={this.props.onClick}>
-				{props.isCheckBox &&
-					<CheckBox
-						checked={this.props.checkBoxChecked}
-					/>
-				}
+				{props.isCheckBox && <Checkbox checked={this.props.checkBoxChecked} />}
 				<div className={`${baseClass}__text`}>{props.text}</div>
 				{props.price !== undefined && <div className={`${baseClass}__price`}>{props.price} Р</div>}
 				{props.checkMark && <CheckMark />}

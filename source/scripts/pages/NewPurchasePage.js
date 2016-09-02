@@ -25,6 +25,7 @@ const NewPurchasePage = React.createClass({
 			}));
 		}
 		const payer = participants[0];
+		payer.isPayer = true;
 		return {
 			popupOpened: false,
 			payer,

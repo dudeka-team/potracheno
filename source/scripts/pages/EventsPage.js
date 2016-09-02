@@ -1,8 +1,9 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter, Link} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
+import Wrapper from '../components/Wrapper';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import {readEvents} from '../actions';
@@ -41,27 +42,41 @@ const EventsPage = React.createClass({
 		);
 	},
 
+	renderEvents(events, eventsById) {
+		let result = events
+			.slice()
+			.reverse()
+			.map(getEventData(eventsById))
+			.map(this.renderEventPreview);
+
+		if (!result.length) {
+			result = (
+				<FlexContainer alignItems="center" justifyContent="center">
+					<p>Мероприятий нет. <Link to="/events/new">Создайте первое!</Link></p>
+				</FlexContainer>
+			);
+		}
+
+		return result;
+	},
+
 	render() {
 		const {props} = this;
 		return (
-			<div>
+			<Wrapper>
 				<TopBar>
 					<TopBarIcon icon="burger" />
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="plus" onClick={this.goToNewEvent} />
 				</TopBar>
 				{props.eventsLoaded ?
-					props.events
-						.slice()
-						.reverse()
-						.map(getEventData(props.eventsById))
-						.map(this.renderEventPreview)
+					this.renderEvents(props.events, props.eventsById)
 					:
 					<FlexContainer alignItems="center" justifyContent="center">
-						<CircularProgress size={0.4} />
+						<CircularProgress />
 					</FlexContainer>
 				}
-			</div>
+			</Wrapper>
 		);
 	},
 });
