@@ -1,5 +1,16 @@
 .Input
 	position relative
+	margin-top 34px
+	font-size 16px
+
+	&_middle
+		font-size 24px
+
+	&_large
+		font-size 30px
+
+	&_margin-top-small
+		margin-top 20px
 
 .input
 	width 100%
@@ -13,15 +24,12 @@
 	line-height 1.2
 	font-size inherit
 
-	&_empty
-		color rgba(46, 54, 62, 0.32)
-
 	&:focus
 		padding-bottom 8px
 		border-width 2px
 		border-color #3f95ff
 
-.floating-text
+.floating-label
 	position absolute
 	top 0px
 	left 0px
@@ -31,3 +39,13 @@
 	transition transform 0.3s, color 0.3s
 	will-change transform
 	transform-origin left top
+
+	&_transformed
+		transform scale(0.75) translateY(-24px)
+		color #818f99
+
+	&_small
+		font-size 16px
+
+	&_fixed
+		top -25px

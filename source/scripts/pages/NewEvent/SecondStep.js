@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-import Input from '../../components/Input';
 import CircularProgress from 'material-ui/CircularProgress';
+import Input from '../../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 
@@ -20,17 +20,13 @@ const SecondStep = React.createClass({
 						<TopBarIcon icon="check-active" onClick={props.save} disabled={!props.saveAvailable} />
 					}
 				</TopBar>
-
 				<div style={{padding: '0 20px'}}>
 					{props.participants.map((name, index) => {
 						return (
 							<div key={index}>
 								<Input
-									hint='Имя участника'
-									style={{
-										fontSize: '16px',
-										marginTop: '20px',
-									}}
+									hint="Имя участника"
+									marginTopSmall
 									onChange={event => props.handleParticipantChange(index, event.target.value)}
 								/>
 							</div>

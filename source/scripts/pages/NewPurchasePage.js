@@ -131,21 +131,10 @@ const NewPurchasePage = React.createClass({
 					<Input
 						type="number"
 						hint="0 руб."
-						style={{
-							fontSize: '30px',
-							marginTop: '20px',
-						}}
+						size="large"
 						label="Сумма"
-						labelStyle={{
-							top: '-21px',
-							fontSize: '12px',
-							color: '#818f99',
-							opacity: '0',
-							transition: 'opacity 0.15s',
-						}}
-						labelTransform={{
-							opacity: '1',
-						}}
+						labelFixed
+						labelSize="small"
 						onChange={
 							event => {
 								const amount = Number(event.target.value);
@@ -157,15 +146,7 @@ const NewPurchasePage = React.createClass({
 						}
 					/>
 					<Input
-						style={{
-							marginTop: '42px',
-							fontSize: '16px',
-						}}
 						label="Название покупки"
-						labelTransform={{
-							transform: 'scale(0.75) translateY(-24px)',
-							color: '#818f99',
-						}}
 						onChange={event => this.setState({name: event.target.value})}
 					/>
 				</div>
@@ -185,7 +166,7 @@ const NewPurchasePage = React.createClass({
 									onClick={
 										() => {
 											user.participate = !user.participate;
-									 		this.setState({
+											this.setState({
 												participants: this.state.participants,
 											});
 											this.calcLoans();
@@ -201,9 +182,9 @@ const NewPurchasePage = React.createClass({
 	},
 });
 
-function mapStateToProps(state) {
+function mapStateToProps({events}) {
 	return {
-		currentEvent: state.app.currentEvent,
+		currentEvent: events.currentEvent,
 	};
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter, Link} from 'react-router';
+import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -7,7 +7,7 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
-import {changeCurrentEvent} from '../actions/changeCurrentEvent';
+import changeCurrentEvent from '../actions/changeCurrentEvent';
 
 
 const EventsPage = React.createClass({

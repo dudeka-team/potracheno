@@ -9,6 +9,7 @@ import {
 	READ_EVENTS_ERROR,
 	CHANGE_CURRENT_EVENT,
 	CREATE_PURCHASE,
+	LOAD_EVENT_DATA,
 } from '../constants';
 
 
@@ -22,6 +23,15 @@ const initialState = {
 };
 
 export default handleActions({
+	[LOAD_EVENT_DATA]: (state, {payload}) => {
+		return Object.assign({}, state, {
+			eventsById: Object.assign({}, state.eventsById, {
+				[payload.key]: payload.value,
+			}),
+			currentEvent: payload.value,
+		});
+	},
+
 	[CREATE_EVENT_LOADING]: (state) => assign({}, state, {
 		isCreatingEvent: true,
 	}),
@@ -34,7 +44,6 @@ export default handleActions({
 	}),
 
 	[READ_EVENTS_SUCCESS]: (state, {payload}) => {
-		console.log()
 		return assign({}, state, {
 			events: Object.keys(payload),
 			eventsById: payload,

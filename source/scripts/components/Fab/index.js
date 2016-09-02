@@ -13,6 +13,7 @@ export default function Fab(props) {
 			<FloatingActionButton
 				style={style}
 				{...props}
+				onTouchTap={props.onClick}
 			>
 				{props.children}
 			</FloatingActionButton>

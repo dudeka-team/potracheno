@@ -1,7 +1,6 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
-import Input from '../../components/Input';
 import DatePicker from 'material-ui/DatePicker';
+import Input from '../../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 
@@ -18,7 +17,7 @@ export default function NewEventFirst(props) {
 				/>
 			</TopBar>
 
-			<div style={{padding: '0 1rem'}}>					
+			<div style={{padding: '0 1rem'}}>
 				<Input
 					style={{
 						marginTop: '34px',

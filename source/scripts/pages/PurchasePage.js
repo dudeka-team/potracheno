@@ -6,7 +6,7 @@ const PurchasePage = React.createClass({
 	},
 
 	edit() {
-		this.props.router.push(`/events/${this.props.params.id}`)
+		this.props.router.push(`/events/${this.props.params.id}`);
 	},
 
 	render() {

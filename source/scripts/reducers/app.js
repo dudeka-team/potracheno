@@ -1,7 +1,4 @@
 import {handleActions} from 'redux-actions';
-import {
-	LOAD_EVENT_DATA,
-} from '../constants';
 
 const initialState = {
 	events: [],
@@ -12,12 +9,5 @@ const initialState = {
 };
 
 export default handleActions({
-	[LOAD_EVENT_DATA]: (state, {payload}) => {
-		return Object.assign({}, state, {
-			eventsById: Object.assign({}, state.eventsById, {
-				[payload.key]: payload.value,
-			}),
-			currentEvent: payload.value,
-		});
-	},
+
 }, initialState);

@@ -2,24 +2,10 @@ import React from 'react';
 
 const Input = React.createClass({
 	getInitialState() {
-		this.init(this.props);
 		return {
 			focused: false,
 			value: this.props.value || '',
 		};
-	},
-
-	init(props) {
-		if (props.label !== undefined) {
-			this.labelExists = true;
-		}
-		this.style = props.style;
-		this.hint = props.hint ? props.hint : '';
-		this.labelText = props.label;
-		this.labelStyle = props.labelStyle;
-		this.labelTransform = props.labelTransform;
-		this.labelTransformedStyle = Object.assign({}, this.labelStyle);
-		Object.assign(this.labelTransformedStyle, this.labelTransform);
 	},
 
 	handleChange(event) {
@@ -28,28 +14,30 @@ const Input = React.createClass({
 	},
 
 	render() {
-		const {props} = this;
-		const classList = ['input'];
-		if (this.state.empty) {
-			classList.push('input_empty');
+		const {props, state} = this;
+		const classList = ['Input'];
+		if (props.size) classList.push(`Input_${props.size}`);
+		if (props.marginTopSmall) classList.push('Input_margin-top-small');
+		const labelClassList = ['floating-label'];
+		if ((state.focused || state.value.length) && !props.labelFixed) {
+			labelClassList.push('floating-label_transformed');
 		}
+		if (props.labelSize) labelClassList.push(`floating-label_${props.labelSize}`);
+		if (props.labelFixed) labelClassList.push('floating-label_fixed');
 		return (
-			<div className="Input" style={this.style}>
-				{this.labelExists &&
-					<div
-						className="floating-text"
-						style={this.state.focused || this.state.value.length ? this.labelTransformedStyle : this.labelStyle}
-					>{this.labelText}</div>
+			<div className={classList.join(' ')}>
+				{props.label &&
+					<div className={labelClassList.join(' ')}>{props.label}</div>
 				}
 				<input
-					className={classList.join(' ')}
+					className="input"
 					type={props.type ? props.type : 'text'}
 					value={this.state.value}
 					onChange={this.handleChange}
 					onFocus={() => this.setState({focused: true})}
 					onBlur={() => this.setState({focused: false})}
 					disabled={props.disabled}
-					placeholder={this.hint}
+					placeholder={props.hint}
 				/>
 			</div>
 		);

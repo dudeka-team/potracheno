@@ -26,7 +26,6 @@ const EventPage = React.createClass({
 	},
 
 	render() {
-		
 		const {props} = this;
 		const {currentEvent} = props;
 		const purchases = Object
