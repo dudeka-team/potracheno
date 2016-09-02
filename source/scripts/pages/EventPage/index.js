@@ -3,7 +3,7 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import {loadEventDataAsync} from '../../actions';
+import fetchEventData from '../../actions/fetchEventData';
 
 import Wrapper from '../../components/Wrapper';
 import FlexContainer from '../../components/FlexContainer';
@@ -18,7 +18,7 @@ import Participants from './Participants';
 const EventPage = React.createClass({
 	componentDidMount() {
 		const {params, dispatch} = this.props;
-		dispatch(loadEventDataAsync(params.id));
+		dispatch(fetchEventData(params.id));
 	},
 
 	goToEvents() {
@@ -27,7 +27,7 @@ const EventPage = React.createClass({
 
 	render() {
 		const {props} = this;
-		const {currentEvent} = props;
+		const {currentEvent, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
@@ -49,7 +49,12 @@ const EventPage = React.createClass({
 
 		return (
 			<Wrapper>
-				{currentEvent ?
+				{isFetchingEvent &&
+					<FlexContainer alignItems="center" justifyContent="center">
+						<CircularProgress />
+					</FlexContainer>
+				}
+				{!isFetchingEvent && currentEvent &&
 					<Wrapper>
 						<TopBar>
 							<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
@@ -89,10 +94,6 @@ const EventPage = React.createClass({
 							]}
 						/>
 					</Wrapper>
-					:
-					<FlexContainer alignItems="center" justifyContent="center">
-						<CircularProgress />
-					</FlexContainer>
 				}
 			</Wrapper>
 		);
@@ -102,6 +103,7 @@ const EventPage = React.createClass({
 function mapStateToProps({events}) {
 	return {
 		currentEvent: events.currentEvent,
+		isFetchingEvent: events.isFetchingEvent,
 	};
 }
 

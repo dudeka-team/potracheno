@@ -3,7 +3,7 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
-import {createEvent} from '../../actions';
+import createEvent from '../../actions/createEvent';
 
 
 const NewEvent = React.createClass({
