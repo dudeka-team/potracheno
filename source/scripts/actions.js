@@ -1,24 +1,11 @@
-import {hashHistory} from 'react-router';
 import {createAction} from 'redux-actions';
+
 import db from './database';
 import {
 	READ_EVENTS,
-	CREATE_EVENT,
 	LOAD_EVENT_DATA,
 } from './constants';
 
-export function createEvent(payload) {
-	return {
-		type: CREATE_EVENT,
-		payload: new Promise((resolve, reject) => {
-			db
-				.saveEvent(payload)
-				.then(resolve)
-				.then(() => hashHistory.push('/events'))
-				.catch(reject);
-		}),
-	};
-}
 
 export function readEvents() {
 	return {
