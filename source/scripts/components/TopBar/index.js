@@ -2,8 +2,10 @@ import React, {PropTypes} from 'react';
 
 export function TopBar(props) {
 	return (
-		<div className="top-bar">
-			{props.children}
+		<div className="top-bar-wrapper">
+			<div className="top-bar">
+				{props.children}
+			</div>
 		</div>
 	);
 }
