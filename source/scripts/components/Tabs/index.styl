@@ -4,7 +4,12 @@ $tabsLinksColor = #afbac2
 $tabsAccent = #3f95ff
 $tabsBorderColor = #dedede
 
+$topBarHeight = 56px
+
 .tabs
+	height "calc(100% - %s)" % $topBarHeight
+	overflow-y hidden
+
 	&__nav
 		display table
 		table-layout fixed
@@ -31,3 +36,7 @@ $tabsBorderColor = #dedede
 
 		&.is-active
 			display block
+
+	&__content
+		overflow-y scroll
+		height "calc(100% - %s)" % $tabsHeight
