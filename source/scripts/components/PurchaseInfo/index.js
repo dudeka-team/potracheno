@@ -17,10 +17,7 @@ const PurchaseInfo = React.createClass({
 		const {purchase} = this.props;
 		return (
 			<div>
-				<div className="purchase-info">
-					<div className="purchase-info__author">{purchase.payer} заплатил</div>
-					<div className="purchase-info__price">{purchase.amount}</div>
-				</div>
+				<UniversalListItem text={purchase.payer} price={purchase.amount} isBordered={true}/>
 				<BlueSubtitle text="Участвуют в покупке" />
 				{this.state.participants.map(user => {
 					return (

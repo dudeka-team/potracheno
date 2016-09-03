@@ -7,7 +7,7 @@ export default function EventParticipants(props) {
 	return (
 		<div>
 			{props.participants.map((participant, i) => (
-				<UniversalListItem key={i} text={participant} />
+				<UniversalListItem key={i} text={participant} isBordered={true}/>
 			))}
 
 			<Fab backgroundColor="#3f95ff">
