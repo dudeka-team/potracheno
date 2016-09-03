@@ -7,12 +7,24 @@ import {
 } from './constants';
 
 
+// const localEvents = ["-KQfLXhgWI7h2Du32Wll"];
+const localEvents = localStorage.getItem('localEvents');
+
 export function readEvents() {
 	return {
 		type: READ_EVENTS,
 		payload: new Promise((resolve, reject) => {
 			db
 				.readEvents()
+				.then(data => {
+					const filteredEvents = {};
+					const eventsKeys = Object.keys(data);
+					localEvents.map(id => {
+						if (eventsKeys.indexOf(id) !== -1)
+							filteredEvents[id] = data[id];
+					});
+					return filteredEvents;
+				})
 				.then(resolve)
 				.catch(reject);
 		}),
