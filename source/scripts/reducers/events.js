@@ -4,12 +4,17 @@ import {
 	CREATE_EVENT_LOADING,
 	CREATE_EVENT_SUCCESS,
 	CREATE_EVENT_ERROR,
+
 	READ_EVENTS_LOADING,
 	READ_EVENTS_SUCCESS,
 	READ_EVENTS_ERROR,
+
+	FETCH_EVENT_DATA_LOADING,
+	FETCH_EVENT_DATA_SUCCESS,
+	FETCH_EVENT_DATA_ERROR,
+
 	CHANGE_CURRENT_EVENT,
 	CREATE_PURCHASE,
-	LOAD_EVENT_DATA,
 } from '../constants';
 
 
@@ -19,16 +24,26 @@ const initialState = {
 	eventsById: {},
 	currentEvent: null,
 	isCreatingEvent: false,
+	isFetchingEvent: false,
 	loaded: false,
 };
 
 export default handleActions({
-	[LOAD_EVENT_DATA]: (state, {payload}) => {
-		return Object.assign({}, state, {
+	[FETCH_EVENT_DATA_LOADING]: (state) => assign({}, state, {
+		isFetchingEvent: true,
+	}),
+
+	[FETCH_EVENT_DATA_ERROR]: (state) => assign({}, state, {
+		isFetchingEvent: false,
+	}),
+
+	[FETCH_EVENT_DATA_SUCCESS]: (state, {payload}) => {
+		return assign({}, state, {
 			eventsById: Object.assign({}, state.eventsById, {
 				[payload.key]: payload.value,
 			}),
 			currentEvent: payload.value,
+			isFetchingEvent: false,
 		});
 	},
 
