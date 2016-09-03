@@ -13,6 +13,8 @@ import UniversalListItem from '../components/UniversalListItem';
 import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 
+const VIEW = "VIEW";
+
 const NewPurchasePage = React.createClass({
 	getInitialState() {
 		let participants = [];
@@ -97,7 +99,7 @@ const NewPurchasePage = React.createClass({
 	},
 
 	render() {
-		const {state} = this;
+		const {state, props} = this;
 		return (
 			<div>
 				<TopBar>
@@ -106,7 +108,11 @@ const NewPurchasePage = React.createClass({
 					{state.isSavingData ?
 						<CircularProgress size={0.3} />
 						:
-						<TopBarIcon icon="check-active" onClick={this.save} />
+						(this.state.mode === VIEW ?
+							<TopBarIcon icon="check-active" onClick={this.save} />
+							:
+							<TopBarIcon icon="pen" onClick={this.save} />
+						)
 					}
 
 				</TopBar>

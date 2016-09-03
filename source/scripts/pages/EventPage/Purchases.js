@@ -46,7 +46,10 @@ const EventPurchasesPage = React.createClass({
 						/>
 					</Popup>
 				)}
-				{this.props.purchases.map(purchase => {
+				{this.props.purchases
+					.slice()
+					.reverse()
+					.map(purchase => {
 					const subtitle = 'Все 5 участников';
 					return (
 						<PurchaseListItem
