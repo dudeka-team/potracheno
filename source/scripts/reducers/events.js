@@ -15,6 +15,8 @@ import {
 
 	CHANGE_CURRENT_EVENT,
 	CREATE_PURCHASE,
+
+	GET_LOCAL_EVENTS
 } from '../constants';
 
 
@@ -22,6 +24,7 @@ const {assign} = Object;
 const initialState = {
 	events: [],
 	eventsById: {},
+	localEvents: {},
 	currentEvent: null,
 	isCreatingEvent: false,
 	isFetchingEvent: false,
@@ -84,6 +87,10 @@ export default handleActions({
 				[currentEvent.id]: currentEvent,
 			}),
 		});
+	},
+
+	[GET_LOCAL_EVENTS]: (state, {payload}) => {
+		return Object.assign({}, state, {localEvents: payload});
 	},
 }, initialState);
 

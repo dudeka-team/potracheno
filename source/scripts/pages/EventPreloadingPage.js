@@ -11,33 +11,38 @@ import FlexContainer from '../components/FlexContainer';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
 import UserSelectionPage from './UserSelectionPage';
 import EventPage from './EventPage';
+import fetchEventData from '../actions/fetchEventData';
+
+import getLocalEvents from '../actions/getLocalEvents';
 
 const EventPreloadingPage = React.createClass({
-	getInitialState() {
-		const localEventsId = localStorage.getItem('localEvents');
-		if (localEventsId !== null) {
-			if (localEventsId.indexOf(this.props.params.id) !== -1) {
-				return {
-	    			isLocal: true,
-	    		}
-			}
-		}
-		return {
-			isLocal: false,
-		}
-	},
+
+	componentWillMount() {
+	    const {params, dispatch} = this.props;
+		dispatch(fetchEventData(params.id));
+		dispatch(getLocalEvents());
+	}, 
 
 	render() {
+		const {props, state} = this;
 		return (
 			<div>
-				{
-					(this.state.isLocal
-						&& <EventPage params={{id: this.props.params.id}}/>)
-							|| <UserSelectionPage id={this.props.params.id} />
+				{	
+					(props.localEvents[props.params.id]
+						&& <EventPage params={{id: this.props.params.id}} />)
+							|| <UserSelectionPage params={{id: this.props.params.id}} />
 				}
 			</div>
 		);
 	},
 });
 
-export default connect()(withRouter(EventPreloadingPage));
+function mapStateToProps({events}) {
+	return {
+		currentEvent: events.currentEvent,
+		isFetchingEvent: events.isFetchingEvent,
+		localEvents: events.localEvents,
+	};
+}
+
+export default connect(mapStateToProps)(withRouter(EventPreloadingPage));

@@ -6,9 +6,13 @@ import {
 	LOAD_EVENT_DATA,
 } from './constants';
 
-
-// const localEvents = ["-KQfLXhgWI7h2Du32Wll"];
-const localEvents = localStorage.getItem('localEvents');
+const localEvents =
+	Object.keys(
+		JSON.parse(
+			localStorage
+				.getItem('localEvents') || "{}"
+				)
+		);
 
 export function readEvents() {
 	return {
