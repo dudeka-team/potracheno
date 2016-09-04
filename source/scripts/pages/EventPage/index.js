@@ -12,7 +12,7 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
-import Participants from './Participants';
+import EventActions from './EventActions';
 
 
 const EventPage = React.createClass({
@@ -31,6 +31,9 @@ const EventPage = React.createClass({
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
+		const actions = Object
+			.keys((currentEvent && currentEvent.actions) || [])
+			.map((text) => Object.assign({text}, currentEvent.actions[text]));
 		let subtitle = '';
 		if (currentEvent) {
 			const participantsStatus = `${currentEvent.participants.length} участников`;
@@ -87,9 +90,9 @@ const EventPage = React.createClass({
 										/>,
 								},
 								{
-									name: 'members',
-									labelContent: 'Участники',
-									content: <Participants participants={currentEvent.participants} />,
+									name: 'actions',
+									labelContent: 'Действия',
+									content: <EventActions actions={actions} eventStart={moment(currentEvent.start).format('DD MMMM')}/>,
 								},
 							]}
 						/>

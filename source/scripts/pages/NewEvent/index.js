@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
 import createEvent from '../../actions/createEvent';
+import {createEventActionAsync, eventActionTypes} from '../../actions/createEventAction';
 
 
 const NewEvent = React.createClass({
@@ -44,6 +45,13 @@ const NewEvent = React.createClass({
 			start: state.start.valueOf(),
 			end: state.end.valueOf(),
 			participants: state.participants.filter(Boolean),
+		}));
+
+		props.dispatch(createEventActionAsync({
+			eventId: props.params.id,
+			eventActionInfo: {
+				text: eventActionTypes.eventCreation(state.name),
+			},
 		}));
 	},
 

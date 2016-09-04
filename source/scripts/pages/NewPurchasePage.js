@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {CircularProgress} from 'material-ui';
 import {createPurchaseAsync} from '../actions/createPurchase';
+import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
 import {loadEventDataAsync} from '../actions';
 import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
@@ -86,6 +87,14 @@ const NewPurchasePage = React.createClass({
 				participants: state.participants.filter(user => user.participate).map(user => user.name),
 			},
 		}));
+		
+		props.dispatch(createEventActionAsync({
+			eventId: this.props.params.id,
+			eventActionInfo: {
+				text: eventActionTypes.addPurchase(state.payer.name, state.name, state.amount, moment(new Date).format('DD MMMM'))
+			},
+		}));
+		
 		this.setState({
 			isSavingData: true,
 		});
