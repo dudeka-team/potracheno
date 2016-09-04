@@ -1,9 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
+
 import {CircularProgress} from 'material-ui';
+
 import {createPurchaseAsync} from '../actions/createPurchase';
 import {loadEventDataAsync} from '../actions';
+
+import {Page, PageContent} from '../components/Page';
 import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
@@ -99,7 +103,7 @@ const NewPurchasePage = React.createClass({
 	render() {
 		const {state} = this;
 		return (
-			<div>
+			<Page>
 				<TopBar>
 					<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 					<TopBarHeading title="Новая покупка" />
@@ -110,75 +114,77 @@ const NewPurchasePage = React.createClass({
 					}
 
 				</TopBar>
-				{
-					state.popupOpened && <Popup
-						title="Кто платит"
-						closeIcon
-						onClose={this.closePopup}
-					>
-						<Payers payers={this.state.participants} changePayer={this.changePayer} />
-					</Popup>
-				}
-				<NewPurchasePayer
-					payer={state.payer ? state.payer.name : ''}
-					onClick={() => {
-						this.setState({
-							popupOpened: true,
-						});
-					}}
-				/>
-				<Separator />
-				<div style={{padding: '16px 16px 14px 16px'}}>
-					<Input
-						type="number"
-						hint="0 руб."
-						size="large"
-						label="Сумма"
-						labelFixed
-						labelSize="small"
-						onChange={
-							event => {
-								const amount = Number(event.target.value);
-								if (isNaN(amount)) {
-									return;
-								}
-								this.calcLoans(amount);
-							}
-						}
-					/>
-					<Input
-						label="Название покупки"
-						onChange={event => this.setState({name: event.target.value})}
-					/>
-				</div>
-				<Separator />
-				<div>
-					<BlueSubtitle text="Участники покупки" />
-					{
-						this.state.participants
-							.map(user => {
-								return (<UniversalListItem
-									id={user.name}
-									key={user.name}
-									text={user.name}
-									price={Math.round(user.loan * 10) / 10}
-									isCheckBox
-									checkBoxChecked={user.participate}
-									onClick={
-										() => {
-											user.participate = !user.participate;
-											this.setState({
-												participants: this.state.participants,
-											});
-											this.calcLoans();
-										}
-									}
-									isBordered
-								/>);
-							})
+				<PageContent>
+					{state.popupOpened &&
+						<Popup
+							title="Кто платит"
+							closeIcon
+							onClose={this.closePopup}
+						>
+							<Payers payers={this.state.participants} changePayer={this.changePayer} />
+						</Popup>
 					}
-				</div>
-			</div>
+					<NewPurchasePayer
+						payer={state.payer ? state.payer.name : ''}
+						onClick={() => {
+							this.setState({
+								popupOpened: true,
+							});
+						}}
+					/>
+					<Separator />
+					<div style={{padding: '16px 16px 14px 16px'}}>
+						<Input
+							type="number"
+							hint="0 руб."
+							size="large"
+							label="Сумма"
+							labelFixed
+							labelSize="small"
+							onChange={
+								event => {
+									const amount = Number(event.target.value);
+									if (isNaN(amount)) {
+										return;
+									}
+									this.calcLoans(amount);
+								}
+							}
+						/>
+						<Input
+							label="Название покупки"
+							onChange={event => this.setState({name: event.target.value})}
+						/>
+					</div>
+					<Separator />
+					<div>
+						<BlueSubtitle text="Участники покупки" />
+						{
+							this.state.participants
+								.map(user => {
+									return (<UniversalListItem
+										id={user.name}
+										key={user.name}
+										text={user.name}
+										price={Math.round(user.loan * 10) / 10}
+										isCheckBox
+										checkBoxChecked={user.participate}
+										onClick={
+											() => {
+												user.participate = !user.participate;
+												this.setState({
+													participants: this.state.participants,
+												});
+												this.calcLoans();
+											}
+										}
+										isBordered
+									/>);
+								})
+						}
+					</div>
+				</PageContent>
+			</Page>
 		);
 	},
 });
