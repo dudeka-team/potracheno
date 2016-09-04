@@ -28,10 +28,14 @@ const NewPurchasePage = React.createClass({
 
 	getInitialState() {
 		const {currentEvent} = this.props;
+		const purchase = {
+			participants: currentEvent && currentEvent.participants || [],
+			payer: currentEvent && currentEvent.participants && currentEvent.participants[0],
+		}
 		return {
 			mode: this.props.mode || CREATE,
 			isSavingData: false,
-			purchase: {participants: []},
+			purchase,
 			eventParticipants: currentEvent && currentEvent.participants || [],
 		};
 	},
@@ -43,7 +47,10 @@ const NewPurchasePage = React.createClass({
 			if (!this.props.currentEvent) {
 				this.setState({
 					eventParticipants: currentEvent.participants,
-					purchase: assign(this.state.purchase, {payer: currentEvent.participants && currentEvent.participants[0]}),
+					purchase: assign(this.state.purchase, {
+						payer: currentEvent.participants && currentEvent.participants[0],
+						participants: currentEvent.participants,
+					}),
 				});
 			}
 			return;
@@ -64,7 +71,7 @@ const NewPurchasePage = React.createClass({
 		if (!count || purchase.participants.indexOf(user) === -1) {
 			return 0;
 		}
-		return Math.round(purchase.amount / count);
+		return Math.round((purchase.amount || 0) / count);
 	},
 
 	save() {
@@ -94,6 +101,8 @@ const NewPurchasePage = React.createClass({
 	},
 
 	createPageTopBar() {
+		const {purchase} = this.state;
+		let disabled = purchase.participants.length === 0 || purchase.amount === undefined;
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
@@ -101,7 +110,7 @@ const NewPurchasePage = React.createClass({
 				{this.state.isSavingData ?
 					<CircularProgress size={0.3} />
 					:
-					<TopBarIcon  icon="check-active" onClick={this.save} />
+					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.save} />
 				}
 			</TopBar>
 		);
@@ -155,7 +164,7 @@ const NewPurchasePage = React.createClass({
 						label="Сумма"
 						labelFixed
 						labelSize="small"
-						value={(mode === EDIT && purchase) ? purchase.amount : ''}
+						value={(mode === EDIT && purchase) ? purchase.amount + '' : ''}
 						onChange={
 							event => {
 								const amount = Number(event.target.value);
