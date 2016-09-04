@@ -48,10 +48,10 @@ Database.addEventAction = function addEventAction(eventId, data) {
 		.database()
 		.ref(`events/${eventId}/actions`)
 		.push(data)
-		.then((snapshot) =>  ({
+		.then((snapshot) => ({
 			key: snapshot.key,
 			eventActionInfo: data,
 		}));
-}
+};
 
 export default Database;

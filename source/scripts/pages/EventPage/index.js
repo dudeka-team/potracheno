@@ -92,7 +92,11 @@ const EventPage = React.createClass({
 								{
 									name: 'actions',
 									labelContent: 'Действия',
-									content: <EventActions actions={actions} eventStart={moment(currentEvent.start).format('DD MMMM')}/>,
+									content:
+										<EventActions
+											actions={actions}
+											eventStart={moment(currentEvent.start).format('DD MMMM')}
+										/>,
 								},
 							]}
 						/>
