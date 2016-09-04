@@ -2,7 +2,7 @@ import React from 'react';
 import {Router, Route, IndexRedirect} from 'react-router';
 import App from './App';
 import EventsPage from './pages/EventsPage';
-import NewEventPage from './pages/NewEvent';
+import NewEventPage from './pages/EditEvent';
 import EventPage from './pages/EventPage';
 import NewPurchasePage from './pages/NewPurchasePage';
 import DemoPage from './pages/DemoPage';
