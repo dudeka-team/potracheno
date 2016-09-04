@@ -13,6 +13,12 @@ const Input = React.createClass({
 		this.props.onChange(event);
 	},
 
+	componentWillReceiveProps(newProps) {
+		if (newProps.value) {
+			this.setState({value: newProps.value});
+		}
+	},
+
 	render() {
 		const {props, state} = this;
 		const classList = ['Input'];

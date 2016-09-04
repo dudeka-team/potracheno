@@ -30,6 +30,11 @@ const EventPurchasesPage = React.createClass({
 		this.props.router.push(`/events/${this.props.eventId}/purchases/new`);
 	},
 
+	goToPurchase(purchaseId) {
+		const {props} = this;
+		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
+	},
+
 	render() {
 		const {state} = this;
 		return (
@@ -58,12 +63,7 @@ const EventPurchasesPage = React.createClass({
 							title={purchase.name}
 							subtitle={subtitle}
 							price={purchase.amount}
-							onClick={() => {
-								this.setState({
-									popupOpened: true,
-									openedPurchase: purchase,
-								});
-							}}
+							onClick={() => this.goToPurchase(purchase.id)}
 						/>
 					);
 				})}

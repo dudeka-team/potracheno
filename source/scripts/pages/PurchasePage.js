@@ -1,23 +1,26 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-import {NewPurchasePage} from './NewPurchasePage';
+import NewPurchasePage from './NewPurchasePage';
+import fetchEventData from '../actions/fetchEventData';
 
 const VIEW = "VIEW";
+const EDIT = "EDIT";
 
 const PurchasePage = React.createClass({
-	getInitialState() {
-		dispatch(loadEventDataAsync(params.id));
-
+	componentDidMount() {
+		const {props} = this;
+		props.dispatch(fetchEventData(props.params.id));
 	},
 	
 	render() {
 		const {currentEvent} = this.props;
-		const purchase = currentEvent && currentEvent.purchases && currentEvent.purchases[this.props.params.purchase_id];
+		const {purchase_id, id} = this.props.params;
+		const purchase = currentEvent && currentEvent.purchases && currentEvent.purchases[purchase_id];
 		return (
 			<NewPurchasePage
-				mode={VIEW}
-				purchase={purchase}
+				mode={EDIT}
+				params={{id, purchase_id}}
 			/>
 		);
 	}

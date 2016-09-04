@@ -12,81 +12,66 @@ import BlueSubtitle from '../components/BlueSubtitle';
 import UniversalListItem from '../components/UniversalListItem';
 import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
+import fetchEventData from '../actions/fetchEventData';
+import fetchPurchaseChange from '../actions/fetchPurchaseChange';
 
-const VIEW = "VIEW";
+const EDIT = "EDIT";
+const CREATE = "CREATE";
+
+const {assign} = Object;
 
 const NewPurchasePage = React.createClass({
+	componentDidMount() {
+		const {params, dispatch} = this.props;
+		dispatch(fetchEventData(params.id));
+	},
+
 	getInitialState() {
-		let participants = [];
 		const {currentEvent} = this.props;
-		if (currentEvent && currentEvent.participants) {
-			participants = currentEvent.participants.map(userName => ({
-				participate: true,
-				name: userName,
-				loan: 0,
-			}));
-		}
-		const payer = participants[0];
-		payer.isPayer = true;
 		return {
-			popupOpened: false,
-			payer,
-			participants,
-			amount: 0,
-			name: '',
+			mode: this.props.mode || CREATE,
 			isSavingData: false,
-			currentEvent: null,
+			purchase: {participants: []},
+			eventParticipants: currentEvent && currentEvent.participants || [],
 		};
 	},
 
-	openPopup() {
-		this.setState({
-			popupOpened: true,
-		});
-	},
-
-	closePopup() {
-		this.setState({
-			popupOpened: false,
-		});
-	},
-
-	changePayer(payer) {
-		const participants = this.state.participants;
-		participants.forEach((user) => {
-			user.isPayer = (user.name === payer.name);
-		});
-		this.setState({
-			participants,
-			popupOpened: false,
-			payer,
-		});
-	},
-
-	calcLoans(amount) {
-		const participants = this.state.participants;
-		const participantsCount = participants.filter(user => user.participate).length;
-
-		if (amount === undefined) {
-			amount = this.state.amount;
+	componentWillReceiveProps(newProps) {
+		const {currentEvent} = newProps;
+		if (!currentEvent || !currentEvent.purchases) return;
+		if (this.props.mode !== EDIT) {
+			if (!this.props.currentEvent) {
+				this.setState({
+					eventParticipants: currentEvent.participants,
+					purchase: assign(this.state.purchase, {payer: currentEvent.participants && currentEvent.participants[0]}),
+				});
+			}
+			return;
 		}
-
-		participants.forEach((user) => {
-			user.loan = user.participate ? amount / participantsCount : 0;
+		const purchase = currentEvent.purchases[this.props.params.purchase_id];
+		if (!purchase.payer) {
+			puchase.payer = purchase.participants[0];
+		}
+		this.setState({
+			purchase,
+			eventParticipants: currentEvent.participants,
 		});
-		this.setState({participants, amount});
+	},
+
+	getLoan(user) {
+		const {purchase} = this.state;
+		const count = purchase.participants.length;
+		if (!count || purchase.participants.indexOf(user) === -1) {
+			return 0;
+		}
+		return Math.round(purchase.amount / count);
 	},
 
 	save() {
 		const {state, props} = this;
 		props.dispatch(createPurchaseAsync({
 			eventId: this.props.params.id,
-			purchaseData: {
-				name: state.name,
-				amount: state.amount,
-				payer: state.payer.name,
-				participants: state.participants.filter(user => user.participate).map(user => user.name),
-			},
+			purchaseData: state.purchase,
 		}));
 		this.setState({
 			isSavingData: true,
@@ -98,41 +83,69 @@ const NewPurchasePage = React.createClass({
 		this.props.dispatch(loadEventDataAsync(this.props.params.id));
 	},
 
+	saveChanges() {
+		const {props, state} = this;
+		const {dispatch} = props;
+		const {purchase_id, id} = props.params;
+		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
+		this.setState({
+			isSavingData: true,
+		});
+	},
+
+	createPageTopBar() {
+		return (
+			<TopBar>
+				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
+				<TopBarHeading title="Новая покупка" />
+				{this.state.isSavingData ?
+					<CircularProgress size={0.3} />
+					:
+					<TopBarIcon  icon="check-active" onClick={this.save} />
+				}
+			</TopBar>
+		);
+	},
+
+	editPageTopBar() {
+		return (
+			<TopBar>
+				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
+				<TopBarHeading title="Редактирование покупки" />
+				{this.state.isSavingData ? 
+					<CircularProgress size={0.3} />
+					:
+					<TopBarIcon  icon="check-active" onClick={this.saveChanges} />
+				}
+			</TopBar>
+		);
+	},
+
 	render() {
 		const {state, props} = this;
+		const {mode} = state;
+		let {purchase} = state;
 		return (
 			<div>
-				<TopBar>
-					<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
-					<TopBarHeading title="Новая покупка" />
-					{state.isSavingData ?
-						<CircularProgress size={0.3} />
-						:
-						(this.state.mode === VIEW ?
-							<TopBarIcon icon="check-active" onClick={this.save} />
-							:
-							<TopBarIcon icon="pen" onClick={this.save} />
-						)
-					}
-
-				</TopBar>
-				{
-					state.popupOpened && <Popup
+				{mode === EDIT && this.editPageTopBar()}
+				{mode === CREATE && this.createPageTopBar()}
+				<NewPurchasePayer
+					payer={purchase.payer || ''}
+					onClick={() => this.setState({popupOpened: true})}
+				/>
+				{state.popupOpened &&
+					<Popup
 						title="Кто платит"
 						closeIcon
-						onClose={this.closePopup}
+						onClose={() => this.setState({popupOpened: false})}
 					>
-						<Payers payers={this.state.participants} changePayer={this.changePayer} />
+						<Payers
+							participants={state.eventParticipants}
+							payer={purchase.payer}
+							changePayer={user => this.setState({purchase: assign(purchase, {payer: user}), popupOpened: false})}
+						/>
 					</Popup>
 				}
-				<NewPurchasePayer
-					payer={state.payer ? state.payer.name : ''}
-					onClick={() => {
-						this.setState({
-							popupOpened: true,
-						});
-					}}
-				/>
 				<Separator />
 				<div style={{padding: '16px 16px 14px 16px'}}>
 					<Input
@@ -142,41 +155,50 @@ const NewPurchasePage = React.createClass({
 						label="Сумма"
 						labelFixed
 						labelSize="small"
+						value={(mode === EDIT && purchase) ? purchase.amount : ''}
 						onChange={
 							event => {
 								const amount = Number(event.target.value);
 								if (isNaN(amount)) {
 									return;
 								}
-								this.calcLoans(amount);
+								purchase.amount = amount;
+								this.setState({purchase});
 							}
 						}
 					/>
 					<Input
 						label="Название покупки"
-						onChange={event => this.setState({name: event.target.value})}
+						value={(mode === EDIT && purchase) ? purchase.name : ''}
+						onChange={event => {
+							purchase.name = event.target.value;
+							this.setState({purchase});
+						}}
 					/>
 				</div>
 				<Separator />
 				<div>
 					<BlueSubtitle text="Участники покупки" />
 					{
-						this.state.participants
+						state.eventParticipants
 							.map(user => {
 								return (<UniversalListItem
-									id={user.name}
-									key={user.name}
-									text={user.name}
-									price={Math.round(user.loan * 10) / 10}
+									id={user}
+									key={user}
+									text={user}
+									price={this.getLoan(user)}
 									isCheckBox
-									checkBoxChecked={user.participate}
+									checkBoxChecked={purchase.participants.indexOf(user) !== -1}
 									onClick={
 										() => {
-											user.participate = !user.participate;
-											this.setState({
-												participants: this.state.participants,
-											});
-											this.calcLoans();
+											const {participants} = purchase;
+											if (participants.indexOf(user) !== -1) {
+												purchase.participants = participants.filter(x => x !== user);
+											}
+											else {
+												participants.push(user);
+											}
+											this.setState({purchase});
 										}
 									}
 									isBordered
@@ -192,6 +214,7 @@ const NewPurchasePage = React.createClass({
 function mapStateToProps({events}) {
 	return {
 		currentEvent: events.currentEvent,
+		isFetchingEvent: events.isFetchingEvent,
 	};
 }
 

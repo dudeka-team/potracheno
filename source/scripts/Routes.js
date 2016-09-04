@@ -12,7 +12,7 @@ export default function Routes(props) {
 	return (
 		<Router history={props.history}>
 			<Route path="/" component={App}>
-				<IndexRedirect to="events/0/purchases/0" />
+				<IndexRedirect to="events" />
 				<Route path="events" component={EventsPage} />
 				<Route path="events/new" component={NewEventPage} />
 				<Route path="events/:id" component={EventPage} />
