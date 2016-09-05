@@ -17,14 +17,27 @@ $icons = burger plus add-person arrow-back check-active info arrow-forward-gray 
 	z-index 1
 
 	&__heading
+		position relative
 		flex-grow 1
 		flex-shrink 1
 		margin 0 8px
+		white-space nowrap
+		overflow hidden
+
+		&::after
+			content ''
+			position absolute
+			right 0
+			top 0
+			bottom 0
+			width 20px
+			background-image linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #fff 100% )
 
 	&__title
 		font-size 20px
 		font-weight 500
 		color $topBarTitleColor
+		max-width 50%
 
 		.top-bar__heading--with-subtitle &
 			font-size 16px
