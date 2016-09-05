@@ -107,7 +107,7 @@ const NewPurchasePage = React.createClass({
 
 	createPageTopBar() {
 		const {purchase} = this.state;
-		let disabled = purchase.participants.length === 0 || purchase.amount === undefined;
+		let disabled = purchase.participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
@@ -122,6 +122,8 @@ const NewPurchasePage = React.createClass({
 	},
 
 	editPageTopBar() {
+		const {purchase} = this.state;
+		let disabled = purchase.participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
@@ -129,7 +131,7 @@ const NewPurchasePage = React.createClass({
 				{this.state.isSavingData ?
 					<CircularProgress size={0.3} />
 					:
-					<TopBarIcon icon="check-active" onClick={this.saveChanges} />
+					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.saveChanges} />
 				}
 			</TopBar>
 		);
