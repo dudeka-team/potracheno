@@ -93,26 +93,26 @@ const EventPage = React.createClass({
 										purchases={purchases}
 										participants={currentEvent.participants}
 									/>,
-								},
-								{
-									name: 'balance',
-									labelContent: 'Баланс',
-									content:
-										<Balance
-											purchases={purchases}
-											participants={currentEvent.participants}
-										/>,
-								},
-								{
-									name: 'actions',
-									labelContent: 'Действия',
-									content:
-										<EventActions
-											actions={actions}
-											eventStart={moment(currentEvent.start).format('DD MMMM')}
-										/>,
-								},
-							]}
+							},
+							{
+								name: 'balance',
+								labelContent: 'Баланс',
+								content:
+									<Balance
+										purchases={purchases}
+										participants={currentEvent.participants}
+									/>,
+							},
+							{
+								name: 'actions',
+								labelContent: 'Действия',
+								content:
+									<EventActions
+										actions={actions}
+										eventStart={moment(currentEvent.start).format('DD MMMM')}
+									/>,
+							},
+						]}
 					/>
 				</Page>
 			);
