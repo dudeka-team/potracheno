@@ -64,7 +64,7 @@ Database.changePurchase = function changePurchase(eventId, purchaseId, purchase)
 			purchaseId,
 			purchase,
 		}));
-}
+};
 
 
 export default Database;

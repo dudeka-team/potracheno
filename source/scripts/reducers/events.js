@@ -88,7 +88,7 @@ export default handleActions({
 	},
 
 	[CHANGE_PURCHASE]: (state, {payload}) => {
-		const {eventId, purchaseId, purchase} = payload;
+		const {eventId, purchase} = payload;
 		const {eventsById} = state;
 
 		const participants = purchase.participants.slice();
@@ -102,7 +102,7 @@ export default handleActions({
 
 		return assign({}, state, {
 			eventsById: assign({}, eventsById, {[eventId]: changedEvent}),
-		})
+		});
 	},
 
 }, initialState);

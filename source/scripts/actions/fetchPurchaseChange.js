@@ -1,5 +1,5 @@
-import db from '../database';
 import {hashHistory} from 'react-router';
+import db from '../database';
 import {
 	CHANGE_PURCHASE,
 } from '../constants';
@@ -14,7 +14,7 @@ export default function fetchPurchaseChange(eventId, purchaseId, purchase) {
 					hashHistory.push(`events/${eventId}`);
 				})
 				.then(resolve)
-				.catch(reject)
+				.catch(reject);
 		}),
 	};
 }
