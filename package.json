@@ -17,7 +17,9 @@
   "scripts": {
     "test": "mocha -r babel-core/register ./tests/*.js",
     "lint": "eslint source/scripts",
-    "install": "bash ./install-hooks.sh"
+    "install": "bash ./install-hooks.sh",
+    "build": "cross-env NODE_ENV=production gulp build",
+    "start-prod": "cross-env NODE_ENV=production gulp"
   },
   "bugs": {
     "url": "https://github.com/yandexdataschool/prj-c-dudeka/issues"

@@ -64,12 +64,14 @@ gulp.task('copy-markup', () => {
 		.pipe(gulp.dest(OUT));
 });
 
-gulp.task('default', [
+gulp.task('build', [
 	'copy-static-files',
 	'copy-markup',
 	'compile-styles',
 	'compile-scripts',
-], () => {
+]);
+
+gulp.task('default', ['build'], () => {
 	bSync.init({
 		server: OUT,
 		port: 5000,

@@ -19,29 +19,30 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import fetchEventData from '../actions/fetchEventData';
 import fetchPurchaseChange from '../actions/fetchPurchaseChange';
 
-const EDIT = "EDIT";
-const CREATE = "CREATE";
+const EDIT = 'EDIT';
+const CREATE = 'CREATE';
 
 const {assign} = Object;
 
 const NewPurchasePage = React.createClass({
-	componentDidMount() {
-		const {params, dispatch} = this.props;
-		dispatch(fetchEventData(params.id));
-	},
-
 	getInitialState() {
 		const {currentEvent} = this.props;
 		const purchase = {
-			participants: currentEvent && currentEvent.participants || [],
+			participants: (currentEvent && currentEvent.participants) || [],
 			payer: currentEvent && currentEvent.participants && currentEvent.participants[0],
-		}
+		};
+
 		return {
 			mode: this.props.mode || CREATE,
 			isSavingData: false,
 			purchase,
-			eventParticipants: currentEvent && currentEvent.participants || [],
+			eventParticipants: (currentEvent && currentEvent.participants) || [],
 		};
+	},
+
+	componentDidMount() {
+		const {params, dispatch} = this.props;
+		dispatch(fetchEventData(params.id));
 	},
 
 	componentWillReceiveProps(newProps) {
@@ -61,7 +62,7 @@ const NewPurchasePage = React.createClass({
 		}
 		const purchase = currentEvent.purchases[this.props.params.purchase_id];
 		if (!purchase.payer) {
-			puchase.payer = purchase.participants[0];
+			purchase.payer = purchase.participants[0];
 		}
 		this.setState({
 			purchase,
@@ -127,7 +128,7 @@ const NewPurchasePage = React.createClass({
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Редактирование покупки" />
-				{this.state.isSavingData ? 
+				{this.state.isSavingData ?
 					<CircularProgress size={0.3} />
 					:
 					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.saveChanges} />
@@ -137,9 +138,10 @@ const NewPurchasePage = React.createClass({
 	},
 
 	render() {
-		const {state, props} = this;
+		const {state} = this;
 		const {mode} = state;
-		let {purchase} = state;
+		const {purchase} = state;
+
 		return (
 			<Page>
 				{mode === EDIT && this.editPageTopBar()}
@@ -158,7 +160,12 @@ const NewPurchasePage = React.createClass({
 							<Payers
 								participants={state.eventParticipants}
 								payer={purchase.payer}
-								changePayer={user => this.setState({purchase: assign(purchase, {payer: user}), popupOpened: false})}
+								changePayer={user => {
+									this.setState({
+										purchase: assign(purchase, {payer: user}),
+										popupOpened: false,
+									});
+								}}
 							/>
 						</Popup>
 					}
@@ -205,18 +212,15 @@ const NewPurchasePage = React.createClass({
 									isCheckBox
 									checkBoxChecked={purchase.participants.indexOf(user) !== -1}
 									isBordered
-									onClick={
-										() => {
-											const {participants} = purchase;
-											if (participants.indexOf(user) !== -1) {
-												purchase.participants = participants.filter(x => x !== user);
-											}
-											else {
-												participants.push(user);
-											}
-											this.setState({purchase});
+									onClick={() => {
+										const {participants} = purchase;
+										if (participants.indexOf(user) !== -1) {
+											purchase.participants = participants.filter(x => x !== user);
+										} else {
+											participants.push(user);
 										}
-									}
+										this.setState({purchase});
+									}}
 								/>);
 							})
 						}
