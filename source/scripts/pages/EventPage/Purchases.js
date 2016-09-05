@@ -6,6 +6,17 @@ import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
 import Popup from '../../components/Popup';
 
+function getSubtitle(participantsCount, eventParticipantsCount) {
+	let result;
+
+	if (participantsCount === 1) {
+		result = `1 из ${eventParticipantsCount} участвует`;
+	} else {
+		result = `${participantsCount} из ${eventParticipantsCount} участвуют`;
+	}
+
+	return result;
+}
 
 const EventPurchasesPage = React.createClass({
 	getInitialState() {
@@ -30,8 +41,14 @@ const EventPurchasesPage = React.createClass({
 		this.props.router.push(`/events/${this.props.eventId}/purchases/new`);
 	},
 
+	goToPurchase(purchaseId) {
+		const {props} = this;
+		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
+	},
+
 	render() {
-		const {state} = this;
+		const {state, props} = this;
+		const {currentEvent} = props;
 		return (
 			<div>
 				{state.popupOpened && (
@@ -41,29 +58,27 @@ const EventPurchasesPage = React.createClass({
 						onClose={this.closePopup}
 					>
 						<PurchaseInfo
-							purchase={this.state.openedPurchase}
-							eventParticipants={this.props.currentEvent.participants}
+							purchase={state.openedPurchase}
+							eventParticipants={currentEvent.participants}
 						/>
 					</Popup>
 				)}
-				{this.props.purchases.map(purchase => {
-					const subtitle = 'Все 5 участников';
-					return (
-						<PurchaseListItem
-							key={purchase.id}
-							buyer={purchase.payer}
-							title={purchase.name}
-							subtitle={subtitle}
-							price={purchase.amount}
-							onClick={() => {
-								this.setState({
-									popupOpened: true,
-									openedPurchase: purchase,
-								});
-							}}
-						/>
-					);
-				})}
+				{props.purchases
+					.slice()
+					.reverse()
+					.map(purchase => {
+						const {participants} = purchase;
+						return (
+							<PurchaseListItem
+								key={purchase.id}
+								buyer={purchase.payer}
+								title={purchase.name}
+								subtitle={getSubtitle(participants.length, currentEvent.participants.length)}
+								price={purchase.amount}
+								onClick={() => this.goToPurchase(purchase.id)}
+							/>
+						);
+					})}
 				<Fab onClick={this.goToNewPurchase}><AddShoppingCart /></Fab>
 			</div>
 		);
