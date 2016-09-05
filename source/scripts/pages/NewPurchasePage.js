@@ -1,9 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
+
 import {CircularProgress} from 'material-ui';
+
 import {createPurchaseAsync} from '../actions/createPurchase';
 import {loadEventDataAsync} from '../actions';
+
+import {Page, PageContent} from '../components/Page';
 import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
@@ -135,61 +139,61 @@ const NewPurchasePage = React.createClass({
 		const {mode} = state;
 		let {purchase} = state;
 		return (
-			<div>
+			<Page>
 				{mode === EDIT && this.editPageTopBar()}
 				{mode === CREATE && this.createPageTopBar()}
-				<NewPurchasePayer
-					payer={purchase.payer || ''}
-					onClick={() => this.setState({popupOpened: true})}
-				/>
-				{state.popupOpened &&
-					<Popup
-						title="Кто платит"
-						closeIcon
-						onClose={() => this.setState({popupOpened: false})}
-					>
-						<Payers
-							participants={state.eventParticipants}
-							payer={purchase.payer}
-							changePayer={user => this.setState({purchase: assign(purchase, {payer: user}), popupOpened: false})}
-						/>
-					</Popup>
-				}
-				<Separator />
-				<div style={{padding: '16px 16px 14px 16px'}}>
-					<Input
-						type="number"
-						hint="0 руб."
-						size="large"
-						label="Сумма"
-						labelFixed
-						labelSize="small"
-						value={(mode === EDIT && purchase) ? purchase.amount + '' : ''}
-						onChange={
-							event => {
-								const amount = Number(event.target.value);
-								if (isNaN(amount)) {
-									return;
+				<PageContent>
+					<NewPurchasePayer
+						payer={purchase.payer || ''}
+						onClick={() => this.setState({popupOpened: true})}
+					/>
+					{state.popupOpened &&
+						<Popup
+							title="Кто платит"
+							closeIcon
+							onClose={() => this.setState({popupOpened: false})}
+						>
+							<Payers
+								participants={state.eventParticipants}
+								payer={purchase.payer}
+								changePayer={user => this.setState({purchase: assign(purchase, {payer: user}), popupOpened: false})}
+							/>
+						</Popup>
+					}
+					<Separator />
+					<div style={{padding: '16px 16px 14px 16px'}}>
+						<Input
+							type="number"
+							hint="0 руб."
+							size="large"
+							label="Сумма"
+							labelFixed
+							labelSize="small"
+							value={(mode === EDIT && purchase) ? purchase.amount + '' : ''}
+							onChange={
+								event => {
+									const amount = Number(event.target.value);
+									if (isNaN(amount)) {
+										return;
+									}
+									purchase.amount = amount;
+									this.setState({purchase});
 								}
-								purchase.amount = amount;
-								this.setState({purchase});
 							}
-						}
-					/>
-					<Input
-						label="Название покупки"
-						value={(mode === EDIT && purchase) ? purchase.name : ''}
-						onChange={event => {
-							purchase.name = event.target.value;
-							this.setState({purchase});
-						}}
-					/>
-				</div>
-				<Separator />
-				<div>
-					<BlueSubtitle text="Участники покупки" />
-					{
-						state.eventParticipants
+						/>
+						<Input
+							label="Название покупки"
+							value={(mode === EDIT && purchase) ? purchase.name : ''}
+							onChange={event => {
+								purchase.name = event.target.value;
+								this.setState({purchase});
+							}}
+						/>
+					</div>
+					<Separator />
+					<div>
+						<BlueSubtitle text="Участники покупки" />
+						{state.eventParticipants
 							.map(user => {
 								return (<UniversalListItem
 									id={user}
@@ -198,6 +202,7 @@ const NewPurchasePage = React.createClass({
 									price={this.getLoan(user)}
 									isCheckBox
 									checkBoxChecked={purchase.participants.indexOf(user) !== -1}
+									isBordered
 									onClick={
 										() => {
 											const {participants} = purchase;
@@ -210,12 +215,12 @@ const NewPurchasePage = React.createClass({
 											this.setState({purchase});
 										}
 									}
-									isBordered
 								/>);
 							})
-					}
-				</div>
-			</div>
+						}
+					</div>
+				</PageContent>
+			</Page>
 		);
 	},
 });
