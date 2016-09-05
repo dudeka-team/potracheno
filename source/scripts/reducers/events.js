@@ -16,7 +16,8 @@ import {
 	CHANGE_CURRENT_EVENT,
 	CREATE_PURCHASE,
 
-	GET_LOCAL_EVENTS
+	GET_LOCAL_EVENTS,
+	SET_LOCAL_EVENTS,
 } from '../constants';
 
 
@@ -92,9 +93,13 @@ export default handleActions({
 	[GET_LOCAL_EVENTS]: (state, {payload}) => {
 		return Object.assign({}, state, {localEvents: payload});
 	},
+
+	[SET_LOCAL_EVENTS]: (state, {payload}) => {
+		return Object.assign({}, state, {localEvents: payload});
+	},
 }, initialState);
 
-function stopCreatingEvent(state) {
+function stopCreatingEvent(state, payload) {
 	return assign({}, state, {
 		isCreatingEvent: false,
 	});

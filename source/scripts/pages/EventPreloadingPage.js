@@ -29,8 +29,8 @@ const EventPreloadingPage = React.createClass({
 			<div>
 				{	
 					(props.localEvents[props.params.id]
-						&& <EventPage params={{id: this.props.params.id}} />)
-							|| <UserSelectionPage params={{id: this.props.params.id}} />
+						&& <EventPage params={{id: props.params.id}} />)
+							|| <UserSelectionPage params={{id: props.params.id}}  />
 				}
 			</div>
 		);

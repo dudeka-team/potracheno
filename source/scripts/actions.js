@@ -6,14 +6,6 @@ import {
 	LOAD_EVENT_DATA,
 } from './constants';
 
-const localEvents =
-	Object.keys(
-		JSON.parse(
-			localStorage
-				.getItem('localEvents') || "{}"
-				)
-		);
-
 export function readEvents() {
 	return {
 		type: READ_EVENTS,
@@ -21,6 +13,13 @@ export function readEvents() {
 			db
 				.readEvents()
 				.then(data => {
+					const localEvents =
+						Object.keys(
+							JSON.parse(
+								localStorage
+									.getItem('localEvents') || "{}"
+									)
+							);
 					const filteredEvents = {};
 					const eventsKeys = Object.keys(data);
 					localEvents.map(id => {
