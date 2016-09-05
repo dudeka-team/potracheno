@@ -15,6 +15,7 @@ import {
 
 	CHANGE_CURRENT_EVENT,
 	CREATE_PURCHASE,
+	CHANGE_PURCHASE,
 } from '../constants';
 
 
@@ -85,6 +86,25 @@ export default handleActions({
 			}),
 		});
 	},
+
+	[CHANGE_PURCHASE]: (state, {payload}) => {
+		const {eventId, purchaseId, purchase} = payload;
+		const {eventsById} = state;
+
+		const participants = purchase.participants.slice();
+		const changedPurchase = assign({}, purchase, {participants});
+
+		const changedEvent = assign({}, eventsById, {
+			[eventId]: assign({}, eventsById[eventId], {
+				purchases: assign({}, eventsById[eventId].purchases, {changedPurchase}),
+			}),
+		});
+
+		return assign({}, state, {
+			eventsById: assign({}, eventsById, {[eventId]: changedEvent}),
+		})
+	},
+
 }, initialState);
 
 function stopCreatingEvent(state) {

@@ -54,4 +54,17 @@ Database.addEventAction = function addEventAction(eventId, data) {
 		}));
 };
 
+Database.changePurchase = function changePurchase(eventId, purchaseId, purchase) {
+	return firebase
+		.database()
+		.ref(`events/${eventId}/purchases/${purchaseId}`)
+		.set(purchase)
+		.then(() => ({
+			eventId,
+			purchaseId,
+			purchase,
+		}));
+}
+
+
 export default Database;

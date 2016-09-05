@@ -3,7 +3,7 @@ import {withRouter, Link} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import Wrapper from '../components/Wrapper';
+import {Page, PageContent} from '../components/Page';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import {readEvents} from '../actions';
@@ -63,20 +63,22 @@ const EventsPage = React.createClass({
 	render() {
 		const {props} = this;
 		return (
-			<Wrapper>
+			<Page>
 				<TopBar>
 					<TopBarIcon icon="burger" />
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="plus" onClick={this.goToNewEvent} />
 				</TopBar>
-				{props.eventsLoaded ?
-					this.renderEvents(props.events, props.eventsById)
-					:
-					<FlexContainer alignItems="center" justifyContent="center">
-						<CircularProgress />
-					</FlexContainer>
-				}
-			</Wrapper>
+				<PageContent>
+					{props.eventsLoaded ?
+						this.renderEvents(props.events, props.eventsById)
+						:
+						<FlexContainer alignItems="center" justifyContent="center">
+							<CircularProgress />
+						</FlexContainer>
+					}
+				</PageContent>
+			</Page>
 		);
 	},
 });

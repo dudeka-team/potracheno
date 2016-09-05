@@ -3,16 +3,18 @@ import UniversalListItem from '../UniversalListItem';
 
 const Payers = React.createClass({
 	render() {
+		const {props} = this;
 		return (
 			<div className="payers">
-				{this.props.payers.map((item, index) => {
+				{props.participants.map((user) => {
 					return (
 						<UniversalListItem
-							onClick={() => this.props.changePayer(item)}
-							id={index}
-							text={item.name} key={index}
+							onClick={() => this.props.changePayer(user)}
+							id={user}
+							text={user}
+							key={user}
 							iconId={7}
-							checkMark={item.isPayer}
+							checkMark={props.payer === user}
 						/>
 					);
 				})}

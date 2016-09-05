@@ -2,10 +2,8 @@ import React, {PropTypes} from 'react';
 
 export function TopBar(props) {
 	return (
-		<div className="top-bar-wrapper">
-			<div className="top-bar">
-				{props.children}
-			</div>
+		<div className="top-bar">
+			{props.children}
 		</div>
 	);
 }
@@ -58,6 +56,7 @@ TopBarIcon.propTypes = {
 		'arrow-forward-gray',
 		'arrow-share',
 		'more-actions',
+		'pen',
 	]).isRequired,
 	onClick: PropTypes.func,
 	disabled: PropTypes.bool,

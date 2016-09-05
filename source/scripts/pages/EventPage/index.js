@@ -5,7 +5,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 import fetchEventData from '../../actions/fetchEventData';
 
-import Wrapper from '../../components/Wrapper';
+import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
@@ -25,12 +25,36 @@ const EventPage = React.createClass({
 		this.props.router.push('/events');
 	},
 
+	formatSubtitle(currentEvent) {
+		const participantsStatus = `${currentEvent.participants.length} участников`;
+		const formattedStart = moment(currentEvent.start).format('DD MMMM');
+		const formattedEnd = moment(currentEvent.end).format('DD MMMM');
+		let formattedDate;
+
+		if (formattedStart === formattedEnd) {
+			formattedDate = formattedStart;
+		} else {
+			formattedDate = `${formattedStart}–${formattedEnd}`;
+		}
+
+		return `${participantsStatus} • ${formattedDate}`;
+	},
+
+	renderPreloader() {
+		return (
+			<FlexContainer alignItems="center" justifyContent="center">
+				<CircularProgress />
+			</FlexContainer>
+		);
+	},
+
 	render() {
 		const {props} = this;
 		const {currentEvent, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
+<<<<<<< HEAD
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
 			.map((text) => Object.assign({text}, currentEvent.actions[text]));
@@ -48,37 +72,45 @@ const EventPage = React.createClass({
 			}
 
 			subtitle = `${participantsStatus} • ${formattedDate}`;
+=======
+
+		if (isFetchingEvent) {
+			return this.renderPreloader();
+>>>>>>> 02d0de098fb1ebda30b2e5b92712e2614ddf1361
 		}
 
-		return (
-			<Wrapper>
-				{isFetchingEvent &&
-					<FlexContainer alignItems="center" justifyContent="center">
-						<CircularProgress />
-					</FlexContainer>
-				}
-				{!isFetchingEvent && currentEvent &&
-					<Wrapper>
-						<TopBar>
-							<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
-
-							<TopBarHeading
-								title={currentEvent.name}
-								subtitle={subtitle}
-							/>
-							<TopBarIcon icon="arrow-share" />
-							<TopBarIcon icon="more-actions" />
-						</TopBar>
-						<Tabs
-							config={[
-								{
-									name: 'purchases',
-									labelContent: 'Покупки',
-									content: <Purchases
-										eventId={this.props.params.id}
+		if (currentEvent) {
+			return (
+				<Page>
+					<TopBar>
+						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
+						<TopBarHeading
+							title={currentEvent.name}
+							subtitle={this.formatSubtitle(currentEvent)}
+						/>
+						<TopBarIcon icon="arrow-share" />
+						<TopBarIcon icon="more-actions" />
+					</TopBar>
+					<Tabs
+						config={[
+							{
+								name: 'purchases',
+								labelContent: 'Покупки',
+								content: <Purchases
+									eventId={this.props.params.id}
+									purchases={purchases}
+									currentEvent={currentEvent}
+								/>,
+							},
+							{
+								name: 'balance',
+								labelContent: 'Баланс',
+								content:
+									<Balance
 										purchases={purchases}
-										currentEvent={currentEvent}
+										participants={currentEvent.participants}
 									/>,
+<<<<<<< HEAD
 								},
 								{
 									name: 'balance',
@@ -104,6 +136,21 @@ const EventPage = React.createClass({
 				}
 			</Wrapper>
 		);
+=======
+							},
+							{
+								name: 'members',
+								labelContent: 'Участники',
+								content: <Participants participants={currentEvent.participants} />,
+							},
+						]}
+					/>
+				</Page>
+			);
+		}
+
+		return null;
+>>>>>>> 02d0de098fb1ebda30b2e5b92712e2614ddf1361
 	},
 });
 

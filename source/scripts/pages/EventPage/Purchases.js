@@ -6,6 +6,14 @@ import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
 import Popup from '../../components/Popup';
 
+function getSubtitle(participantsCount, eventParticipantsCount) {
+	if (participantsCount === 1) {
+		return `1 из ${eventParticipantsCount} участвует`;
+	}
+	else {
+		return `${participantsCount} из ${eventParticipantsCount} участвуют`;
+	}
+}
 
 const EventPurchasesPage = React.createClass({
 	getInitialState() {
@@ -30,8 +38,13 @@ const EventPurchasesPage = React.createClass({
 		this.props.router.push(`/events/${this.props.eventId}/purchases/new`);
 	},
 
+	goToPurchase(purchaseId) {
+		const {props} = this;
+		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
+	},
+
 	render() {
-		const {state} = this;
+		const {state, props} = this;
 		return (
 			<div>
 				{state.popupOpened && (
@@ -41,26 +54,23 @@ const EventPurchasesPage = React.createClass({
 						onClose={this.closePopup}
 					>
 						<PurchaseInfo
-							purchase={this.state.openedPurchase}
-							eventParticipants={this.props.currentEvent.participants}
+							purchase={state.openedPurchase}
+							eventParticipants={props.currentEvent.participants}
 						/>
 					</Popup>
 				)}
-				{this.props.purchases.map(purchase => {
-					const subtitle = 'Все 5 участников';
+				{props.purchases
+					.slice()
+					.reverse()
+					.map(purchase => {
 					return (
 						<PurchaseListItem
 							key={purchase.id}
 							buyer={purchase.payer}
 							title={purchase.name}
-							subtitle={subtitle}
+							subtitle={getSubtitle(purchase.participants.length, props.currentEvent.participants.length)}
 							price={purchase.amount}
-							onClick={() => {
-								this.setState({
-									popupOpened: true,
-									openedPurchase: purchase,
-								});
-							}}
+							onClick={() => this.goToPurchase(purchase.id)}
 						/>
 					);
 				})}

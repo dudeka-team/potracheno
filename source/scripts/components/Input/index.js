@@ -4,13 +4,19 @@ const Input = React.createClass({
 	getInitialState() {
 		return {
 			focused: false,
-			value: this.props.value || '',
+			value: this.props.value !== undefined ? this.props.value : '',
 		};
 	},
 
 	handleChange(event) {
 		this.setState({value: event.target.value});
 		this.props.onChange(event);
+	},
+
+	componentWillReceiveProps(newProps) {
+		if (newProps.value) {
+			this.setState({value: newProps.value});
+		}
 	},
 
 	render() {
