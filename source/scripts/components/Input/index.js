@@ -8,15 +8,15 @@ const Input = React.createClass({
 		};
 	},
 
-	handleChange(event) {
-		this.setState({value: event.target.value});
-		this.props.onChange(event);
-	},
-
 	componentWillReceiveProps(newProps) {
 		if (newProps.value) {
 			this.setState({value: newProps.value});
 		}
+	},
+
+	handleChange(event) {
+		this.setState({value: event.target.value});
+		this.props.onChange(event);
 	},
 
 	render() {
