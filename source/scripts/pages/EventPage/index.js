@@ -54,29 +54,12 @@ const EventPage = React.createClass({
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
-<<<<<<< HEAD
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
 			.map((text) => Object.assign({text}, currentEvent.actions[text]));
-		let subtitle = '';
-		if (currentEvent) {
-			const participantsStatus = `${currentEvent.participants.length} участников`;
-			const formattedStart = moment(currentEvent.start).format('DD MMMM');
-			const formattedEnd = moment(currentEvent.end).format('DD MMMM');
-			let formattedDate;
-
-			if (formattedStart === formattedEnd) {
-				formattedDate = formattedStart;
-			} else {
-				formattedDate = `${formattedStart}–${formattedEnd}`;
-			}
-
-			subtitle = `${participantsStatus} • ${formattedDate}`;
-=======
 
 		if (isFetchingEvent) {
 			return this.renderPreloader();
->>>>>>> 02d0de098fb1ebda30b2e5b92712e2614ddf1361
 		}
 
 		if (currentEvent) {
@@ -110,7 +93,6 @@ const EventPage = React.createClass({
 										purchases={purchases}
 										participants={currentEvent.participants}
 									/>,
-<<<<<<< HEAD
 								},
 								{
 									name: 'balance',
@@ -131,26 +113,12 @@ const EventPage = React.createClass({
 										/>,
 								},
 							]}
-						/>
-					</Wrapper>
-				}
-			</Wrapper>
-		);
-=======
-							},
-							{
-								name: 'members',
-								labelContent: 'Участники',
-								content: <Participants participants={currentEvent.participants} />,
-							},
-						]}
 					/>
 				</Page>
 			);
 		}
 
 		return null;
->>>>>>> 02d0de098fb1ebda30b2e5b92712e2614ddf1361
 	},
 });
 

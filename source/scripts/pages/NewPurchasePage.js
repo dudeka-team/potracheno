@@ -90,9 +90,9 @@ const NewPurchasePage = React.createClass({
 			eventId: this.props.params.id,
 			eventActionInfo: {
 				text: eventActionTypes
-					.addPurchase(state.payer.name,
-									state.name,
-									state.amount
+					.addPurchase(state.purchase.payer,
+									state.purchase.name,
+									state.purchase.amount
 								),
 			},
 		}));
