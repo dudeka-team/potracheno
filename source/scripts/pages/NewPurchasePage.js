@@ -169,7 +169,7 @@ const NewPurchasePage = React.createClass({
 							label="Сумма"
 							labelFixed
 							labelSize="small"
-							value={(mode === EDIT && purchase) ? purchase.amount + '' : ''}
+							value={(mode === EDIT && purchase) ? purchase.amount || '' : ''}
 							onChange={
 								event => {
 									const amount = Number(event.target.value);
