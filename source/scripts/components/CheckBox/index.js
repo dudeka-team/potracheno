@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-export default function Checkbox(props) {
+export default function CheckBox(props) {
 	const baseClass = 'checkbox';
 	const classes = [baseClass];
 
@@ -13,9 +13,9 @@ export default function Checkbox(props) {
 	);
 }
 
-Checkbox.propTypes = {
+CheckBox.propTypes = {
 	checked: PropTypes.bool,
 };
 
 // Usage example
-// <Checkbox checked />
+// <CheckBox checked />
