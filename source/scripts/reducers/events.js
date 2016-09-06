@@ -18,6 +18,8 @@ import {
 
 	GET_LOCAL_EVENTS,
 	SET_LOCAL_EVENTS,
+
+	CHANGE_PURCHASE,
 } from '../constants';
 
 
@@ -97,6 +99,25 @@ export default handleActions({
 	[SET_LOCAL_EVENTS]: (state, {payload}) => {
 		return Object.assign({}, state, {localEvents: payload});
 	},
+
+	[CHANGE_PURCHASE]: (state, {payload}) => {
+		const {eventId, purchase} = payload;
+		const {eventsById} = state;
+
+		const participants = purchase.participants.slice();
+		const changedPurchase = assign({}, purchase, {participants});
+
+		const changedEvent = assign({}, eventsById, {
+			[eventId]: assign({}, eventsById[eventId], {
+				purchases: assign({}, eventsById[eventId].purchases, {changedPurchase}),
+			}),
+		});
+
+		return assign({}, state, {
+			eventsById: assign({}, eventsById, {[eventId]: changedEvent}),
+		});
+	},
+
 }, initialState);
 
 function stopCreatingEvent(state, payload) {

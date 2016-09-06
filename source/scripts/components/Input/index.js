@@ -4,8 +4,14 @@ const Input = React.createClass({
 	getInitialState() {
 		return {
 			focused: false,
-			value: this.props.value || '',
+			value: this.props.value !== undefined ? this.props.value : '',
 		};
+	},
+
+	componentWillReceiveProps(newProps) {
+		if (newProps.value) {
+			this.setState({value: newProps.value});
+		}
 	},
 
 	handleChange(event) {
