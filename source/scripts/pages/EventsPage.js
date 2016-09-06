@@ -9,6 +9,7 @@ import EventsListItem from '../components/EventsListItem';
 import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
+import {getEventBalance} from '../modules/balance';
 
 
 const EventsPage = React.createClass({
@@ -35,7 +36,7 @@ const EventsPage = React.createClass({
 					title={data.name}
 					membersCount={data.participants.length}
 					date={data.start}
-					sum={data.sum || 0}
+					sum={getEventBalance(data)[this.props.localEvents[eventId]] || 0}
 					debtType="positive"
 				/>
 			</div>
@@ -95,6 +96,7 @@ const mapStateToProps = ({events}) => {
 		eventsLoaded: events.loaded,
 		events: events.events,
 		eventsById: events.eventsById,
+		localEvents: events.localEvents,
 	};
 };
 
