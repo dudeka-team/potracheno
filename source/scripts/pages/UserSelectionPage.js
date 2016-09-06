@@ -3,6 +3,7 @@ import {withRouter, Link} from 'react-router';
 import {connect} from 'react-redux';
 import EventPage from './EventPage';
 import setLocalEvents from '../actions/setLocalEvents';
+import {TopBar, TopBarIcon, TopBarHeading} from '../components/TopBar';
 
 const UserSelectionPage = React.createClass({
 
@@ -31,6 +32,10 @@ const UserSelectionPage = React.createClass({
 		
 		return (
 			<div>
+				<TopBar>
+					<TopBarHeading title="" />
+					<TopBarIcon icon="info" />
+				</TopBar>
 				<ul>
 					{currentEvent &&
 						currentEvent.participants.map(participant => {
@@ -45,7 +50,9 @@ const UserSelectionPage = React.createClass({
 						})
 					}
 				</ul>
-				{currentEvent && <input type="button" value="Выбрать" onClick={this.applyEventName} />}
+				{currentEvent && 
+					<input type="button" value="Выбрать" onClick={this.applyEventName} />
+				}
 			</div>
 		);
 	},
