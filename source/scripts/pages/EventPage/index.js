@@ -16,10 +16,10 @@ import Participants from './Participants';
 
 
 const EventPage = React.createClass({
-	componentDidMount() {
-		const {params, dispatch} = this.props;
-		dispatch(fetchEventData(params.id));
-	},
+	// componentDidMount() {
+	// 	const {params, dispatch} = this.props;
+	// 	dispatch(fetchEventData(params.id));
+	// },
 
 	goToEvents() {
 		this.props.router.push('/events');

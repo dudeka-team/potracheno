@@ -6,13 +6,28 @@ import {
 	LOAD_EVENT_DATA,
 } from './constants';
 
-
 export function readEvents() {
 	return {
 		type: READ_EVENTS,
 		payload: new Promise((resolve, reject) => {
 			db
 				.readEvents()
+				.then(data => {
+					const localEvents =
+						Object.keys(
+							JSON.parse(
+								localStorage
+									.getItem('localEvents') || "{}"
+									)
+							);
+					const filteredEvents = {};
+					const eventsKeys = Object.keys(data);
+					localEvents.map(id => {
+						if (eventsKeys.indexOf(id) !== -1)
+							filteredEvents[id] = data[id];
+					});
+					return filteredEvents;
+				})
 				.then(resolve)
 				.catch(reject);
 		}),

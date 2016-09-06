@@ -4,6 +4,7 @@ import App from './App';
 import EventsPage from './pages/EventsPage';
 import NewEventPage from './pages/NewEvent';
 import EventPage from './pages/EventPage';
+import EventPreloadingPage from './pages/EventPreloadingPage';
 import NewPurchasePage from './pages/NewPurchasePage';
 import DemoPage from './pages/DemoPage';
 import PurchasePage from './pages/PurchasePage';
@@ -15,7 +16,7 @@ export default function Routes(props) {
 				<IndexRedirect to="events" />
 				<Route path="events" component={EventsPage} />
 				<Route path="events/new" component={NewEventPage} />
-				<Route path="events/:id" component={EventPage} />
+				<Route path="events/:id" component={EventPreloadingPage} />
 				<Route path="events/:id/purchases/new" component={NewPurchasePage} />
 				<Route path="events/:id/purchases/:purchase_id" component={PurchasePage} />
 				<Route path="demo" component={DemoPage} />

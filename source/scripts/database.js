@@ -18,6 +18,7 @@ Database.saveEvent = function saveEvent(data) {
 		.then((snapshot) => ({
 			key: snapshot.key,
 			eventInfo: data,
+			manager: "Костя",
 		}));
 };
 

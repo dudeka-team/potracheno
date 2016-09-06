@@ -15,6 +15,10 @@ import {
 
 	CHANGE_CURRENT_EVENT,
 	CREATE_PURCHASE,
+
+	GET_LOCAL_EVENTS,
+	SET_LOCAL_EVENTS,
+
 	CHANGE_PURCHASE,
 } from '../constants';
 
@@ -23,6 +27,7 @@ const {assign} = Object;
 const initialState = {
 	events: [],
 	eventsById: {},
+	localEvents: {},
 	currentEvent: null,
 	isCreatingEvent: false,
 	isFetchingEvent: false,
@@ -87,6 +92,14 @@ export default handleActions({
 		});
 	},
 
+	[GET_LOCAL_EVENTS]: (state, {payload}) => {
+		return Object.assign({}, state, {localEvents: payload});
+	},
+
+	[SET_LOCAL_EVENTS]: (state, {payload}) => {
+		return Object.assign({}, state, {localEvents: payload});
+	},
+
 	[CHANGE_PURCHASE]: (state, {payload}) => {
 		const {eventId, purchase} = payload;
 		const {eventsById} = state;
@@ -107,7 +120,7 @@ export default handleActions({
 
 }, initialState);
 
-function stopCreatingEvent(state) {
+function stopCreatingEvent(state, payload) {
 	return assign({}, state, {
 		isCreatingEvent: false,
 	});
