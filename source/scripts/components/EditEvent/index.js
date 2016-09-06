@@ -246,12 +246,12 @@ function markDuplicateParticipants(additionalNames) {
 	const names = {};
 
 	additionalNames.forEach((name) => {
-		names[name] = 1;
+		names[name.toLowerCase()] = 1;
 	});
 
 	return (item) => {
 		const {assign} = Object;
-		const {name} = item;
+		const name = item.name.toLowerCase();
 		const isDuplicate = !!names[name];
 
 		if (!name.trim()) return item;
