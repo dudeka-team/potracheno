@@ -2,7 +2,7 @@ import React from 'react';
 
 export function Page(props) {
 	return (
-		<div className="page">
+		<div className="page" {...props}>
 			{props.children}
 		</div>
 	);
@@ -10,7 +10,7 @@ export function Page(props) {
 
 export function PageContent(props) {
 	return (
-		<div className="page__content">
+		<div className="page__content" {...props}>
 			{props.children}
 		</div>
 	);
