@@ -1,8 +1,18 @@
 
-export function getEventBalance(event) {
+export function getEventBalance(currentEvent) {
+	const purchases = Object
+			.keys((currentEvent && currentEvent.purchases) || [])
+			.map((purchaseId) => 
+				Object
+					.assign(
+						{id: purchaseId}, 
+						currentEvent.purchases[purchaseId]
+					)
+				);
+
 	const participantsBalance = {};
 	//	вычисление баланса мероприятия для каждого учасника
-	event.purchases.forEach(purchase => {
+	purchases.forEach(purchase => {
 		purchase.participants.forEach(participant => {
 			participantsBalance[participant] =
 				(participantsBalance[participant] || 0)

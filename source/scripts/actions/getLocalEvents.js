@@ -1,3 +1,4 @@
+import {createAction} from 'redux-actions';
 import {
 	GET_LOCAL_EVENTS,
 } from '../constants';

@@ -10,12 +10,32 @@ import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
 import {getEventBalance} from '../modules/balance';
+import getLocalEvents from '../actions/getLocalEvents';
 
 
 const EventsPage = React.createClass({
+	getInitialState() {
+	    return {
+	    	balance: {},
+	    };
+	},
+
 	componentDidMount() {
 		const {props} = this;
-		props.dispatch(readEvents());
+		props.dispatch(getLocalEvents());
+		props.dispatch(readEvents(props.localEvents))
+			// .then(data => {
+			// 	const eventsBalances = {};
+			// 	Object.keys(data.value)
+			// 		.forEach(eventId => {
+			// 			eventsBalances[eventId] = getEventBalance(data.value[eventId]);
+
+			// 		});
+			// 	this.setState({
+			// 		balance: eventsBalances,
+			// 	})
+			// 	console.log(this.state); 
+			// });
 	},
 
 	goToNewEvent() {
@@ -29,7 +49,6 @@ const EventsPage = React.createClass({
 
 	renderEventPreview(eventData) {
 		const {eventId, data} = eventData;
-
 		return (
 			<div onClick={() => this.goToEvent(eventId)} key={eventId}>
 				<EventsListItem
@@ -37,7 +56,13 @@ const EventsPage = React.createClass({
 					membersCount={data.participants.length}
 					date={data.start}
 					sum={getEventBalance(data)[this.props.localEvents[eventId]] || 0}
-					debtType="positive"
+					debtType={
+						((getEventBalance(data)[this.props.localEvents[eventId]] > 0) && "positive")
+						||
+						((getEventBalance(data)[this.props.localEvents[eventId]] < 0) && "negative")
+						||
+						(!getEventBalance(data)[this.props.localEvents[eventId]] && "neutural")
+					}
 				/>
 			</div>
 		);

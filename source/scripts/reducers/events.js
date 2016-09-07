@@ -65,9 +65,17 @@ export default handleActions({
 	}),
 
 	[READ_EVENTS_SUCCESS]: (state, {payload}) => {
+
+		const filteredEvents = {};
+		const eventsKeys = Object.keys(payload);
+		Object.keys(state.localEvents).map(id => {
+			if (eventsKeys.indexOf(id) !== -1)
+				filteredEvents[id] = payload[id];
+		});
+
 		return assign({}, state, {
-			events: Object.keys(payload),
-			eventsById: payload,
+			events: Object.keys(filteredEvents),
+			eventsById: filteredEvents,
 			loaded: true,
 		});
 	},
