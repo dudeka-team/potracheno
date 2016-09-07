@@ -119,7 +119,7 @@ const NewPurchasePage = React.createClass({
 			eventActionInfo: {
 				text: eventActionTypes
 					.changePurchaseInfo(state.purchase.payer,
-									state.purchase.name,
+									state.purchase.name
 								),
 			},
 		}));
