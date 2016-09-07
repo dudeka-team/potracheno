@@ -21,6 +21,15 @@ Database.saveEvent = function saveEvent(data) {
 		}));
 };
 
+Database.updateEvent = function updateEvent(payload) {
+	const {id, data} = payload;
+	return firebase
+		.database()
+		.ref(`events/${id}`)
+		.set(data)
+		.then(() => payload);
+};
+
 Database.loadEvent = function loadEvent(eventId) {
 	return firebase
 		.database()
