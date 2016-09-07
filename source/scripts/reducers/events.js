@@ -22,7 +22,6 @@ import {
 	CHANGE_PURCHASE,
 } from '../constants';
 
-
 const {assign} = Object;
 const initialState = {
 	events: [],
@@ -65,12 +64,12 @@ export default handleActions({
 	}),
 
 	[READ_EVENTS_SUCCESS]: (state, {payload}) => {
-
 		const filteredEvents = {};
 		const eventsKeys = Object.keys(payload);
 		Object.keys(state.localEvents).map(id => {
-			if (eventsKeys.indexOf(id) !== -1)
+			if (eventsKeys.indexOf(id) !== -1) {
 				filteredEvents[id] = payload[id];
+			}
 		});
 
 		return assign({}, state, {
@@ -125,10 +124,9 @@ export default handleActions({
 			eventsById: assign({}, eventsById, {[eventId]: changedEvent}),
 		});
 	},
-
 }, initialState);
 
-function stopCreatingEvent(state, payload) {
+function stopCreatingEvent(state) {
 	return assign({}, state, {
 		isCreatingEvent: false,
 	});

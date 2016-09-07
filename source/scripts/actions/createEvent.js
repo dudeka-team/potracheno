@@ -17,12 +17,12 @@ export default function createEvent(payload) {
 				db
 					.saveEvent(payload)
 					.then(data => {
-						resolve(data); 
+						resolve(data);
 						return data;
 					})
 					.then(data => {
 						dispatch(setLocalEvents(data.key, data.eventInfo.manager));
-						hashHistory.push('/events')
+						hashHistory.push('/events');
 					})
 					.catch(reject);
 			}),

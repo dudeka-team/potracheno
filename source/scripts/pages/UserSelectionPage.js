@@ -1,35 +1,34 @@
 import React from 'react';
-import {withRouter, Link} from 'react-router';
+import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
-import EventPage from './EventPage';
 import setLocalEvents from '../actions/setLocalEvents';
 import {TopBar, TopBarIcon, TopBarHeading} from '../components/TopBar';
 
 const UserSelectionPage = React.createClass({
 
 	getInitialState() {
-	    return {};
+		return {};
 	},
 
 	changeEventName(name) {
 		this.setState({
 			currentName: name,
-		})
+		});
 	},
 
 	applyEventName() {
 		this.props.dispatch(
 			setLocalEvents(
-				this.props.params.id, 
+				this.props.params.id,
 				this.state.currentName
 			)
 		);
 	},
 
 	render() {
-		const {props, state} = this;
-		const {currentEvent, isFetchingEvent, localEvents} = props;
-		
+		const {props} = this;
+		const {currentEvent} = props;
+
 		return (
 			<div>
 				<TopBar>
@@ -40,7 +39,7 @@ const UserSelectionPage = React.createClass({
 					{currentEvent &&
 						currentEvent.participants.map(participant => {
 							return (
-								<li 
+								<li
 									key={participant}
 									onClick={() => this.changeEventName(participant)}
 								>
@@ -50,7 +49,7 @@ const UserSelectionPage = React.createClass({
 						})
 					}
 				</ul>
-				{currentEvent && 
+				{currentEvent &&
 					<input type="button" value="Выбрать" onClick={this.applyEventName} />
 				}
 			</div>

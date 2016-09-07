@@ -4,8 +4,11 @@ import BalanceListItem from '../../components/BalanceListItem';
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 
 export default function BalancePage(props) {
-	
-	const eventsParticipantsDebts = getEventsParticipantsDebts(getEventBalance(props.currentEvent), props.currentEvent);
+	const eventsParticipantsDebts =
+		getEventsParticipantsDebts(
+			getEventBalance(props.currentEvent),
+			props.currentEvent
+		);
 
 	return (
 		<div className="balance-page">

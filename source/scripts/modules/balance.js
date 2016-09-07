@@ -2,10 +2,10 @@
 export function getEventBalance(currentEvent) {
 	const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
-			.map((purchaseId) => 
+			.map((purchaseId) =>
 				Object
 					.assign(
-						{id: purchaseId}, 
+						{id: purchaseId},
 						currentEvent.purchases[purchaseId]
 					)
 				);
@@ -22,7 +22,7 @@ export function getEventBalance(currentEvent) {
 	});
 
 	return participantsBalance;
-};
+}
 
 
 export function getEventsParticipantsDebts(participantsBalance, currentEvent) {
@@ -72,4 +72,4 @@ export function getEventsParticipantsDebts(participantsBalance, currentEvent) {
 	});
 
 	return eventsParticipantsDebts;
-};
+}

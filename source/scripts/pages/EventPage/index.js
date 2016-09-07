@@ -3,8 +3,6 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import fetchEventData from '../../actions/fetchEventData';
-
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';

@@ -15,9 +15,9 @@ import getLocalEvents from '../actions/getLocalEvents';
 
 const EventsPage = React.createClass({
 	getInitialState() {
-	    return {
-	    	balance: {},
-	    };
+		return {
+			balance: {},
+		};
 	},
 
 	componentDidMount() {
@@ -45,11 +45,11 @@ const EventsPage = React.createClass({
 					date={data.start}
 					sum={Math.round(getEventBalance(data)[this.props.localEvents[eventId]] || 0)}
 					debtType={
-						((getEventBalance(data)[this.props.localEvents[eventId]] > 0) && "positive")
+						((getEventBalance(data)[this.props.localEvents[eventId]] > 0) && 'positive')
 						||
-						((getEventBalance(data)[this.props.localEvents[eventId]] < 0) && "negative")
+						((getEventBalance(data)[this.props.localEvents[eventId]] < 0) && 'negative')
 						||
-						(!getEventBalance(data)[this.props.localEvents[eventId]] && "neutural")
+						(!getEventBalance(data)[this.props.localEvents[eventId]] && 'neutural')
 					}
 				/>
 			</div>

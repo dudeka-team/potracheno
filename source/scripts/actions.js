@@ -1,5 +1,4 @@
 import {createAction} from 'redux-actions';
-import getLocalEvents from 'actions/getLocalEvents';
 
 import db from './database';
 import {
@@ -7,7 +6,7 @@ import {
 	LOAD_EVENT_DATA,
 } from './constants';
 
-export function readEvents(localEvents) {
+export function readEvents() {
 	return {
 		type: READ_EVENTS,
 		payload: new Promise((resolve, reject) => {

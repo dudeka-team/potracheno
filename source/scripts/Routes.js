@@ -4,7 +4,6 @@ import {Router, Route, IndexRedirect} from 'react-router';
 import App from './App';
 import EventsPage from './pages/EventsPage';
 
-import EventPage from './pages/EventPage';
 import EventPreloadingPage from './pages/EventPreloadingPage';
 import NewEventPage from './pages/NewEvent';
 import EditEventPage from './pages/EditEvent';
