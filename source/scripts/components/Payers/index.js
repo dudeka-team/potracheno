@@ -11,7 +11,7 @@ const Payers = React.createClass({
 						<UniversalListItem
 							onClick={() => this.props.changePayer(user)}
 							id={user}
-							text={user}
+							text={props.getFullName(user)}
 							key={user}
 							iconId={7}
 							checkMark={props.payer === user}

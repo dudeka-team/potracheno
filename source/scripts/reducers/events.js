@@ -16,6 +16,7 @@ import {
 	CHANGE_CURRENT_EVENT,
 	CREATE_PURCHASE,
 	CHANGE_PURCHASE,
+	FETCH_PURCHASE_DELETE,
 } from '../constants';
 
 
@@ -27,6 +28,7 @@ const initialState = {
 	isCreatingEvent: false,
 	isFetchingEvent: false,
 	loaded: false,
+	localEvents: {"-KR4V1W_QuNmxJ2Om1Ma": 'Коля'},
 };
 
 export default handleActions({
@@ -94,14 +96,29 @@ export default handleActions({
 		const participants = purchase.participants.slice();
 		const changedPurchase = assign({}, purchase, {participants});
 
-		const changedEvent = assign({}, eventsById, {
+		const changedEvents = assign({}, eventsById, {
 			[eventId]: assign({}, eventsById[eventId], {
 				purchases: assign({}, eventsById[eventId].purchases, {changedPurchase}),
 			}),
 		});
 
 		return assign({}, state, {
-			eventsById: assign({}, eventsById, {[eventId]: changedEvent}),
+			eventsById: assign({}, eventsById, changedEvents),
+		});
+	},
+
+	[FETCH_PURCHASE_DELETE]: (state, {payload}) => {
+		const {eventId, purchaseId} = payload;
+		const {eventsById} = state;
+
+		const purchases = assign({}, eventsById[eventId].purchases);
+		delete purchases[purchaseId];
+
+		const changedEvent = assign({}, eventsById[eventId], {purchases});
+		const changedEvents = assign({}, eventsById, {[eventId]: changedEvent});
+
+		return assign({}, state, {
+			eventsById: assign({}, changedEvents),
 		});
 	},
 

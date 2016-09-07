@@ -55,4 +55,15 @@ Database.changePurchase = function changePurchase(eventId, purchaseId, purchase)
 		}));
 };
 
+Database.deletePurchase = function deletePurchase(eventId, purchaseId) {
+	return firebase
+		.database()
+		.ref(`events/${eventId}/purchases/${purchaseId}`)
+		.remove()
+		.then(() => ({
+			eventId,
+			purchaseId,
+		}));
+}
+
 export default Database;

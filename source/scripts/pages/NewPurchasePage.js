@@ -18,6 +18,7 @@ import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import fetchEventData from '../actions/fetchEventData';
 import fetchPurchaseChange from '../actions/fetchPurchaseChange';
+import fetchPurchaseDelete from '../actions/fetchPurchaseDelete';
 
 const EDIT = 'EDIT';
 const CREATE = 'CREATE';
@@ -26,17 +27,18 @@ const {assign} = Object;
 
 const NewPurchasePage = React.createClass({
 	getInitialState() {
-		const {currentEvent} = this.props;
+		const {currentEvent, localEvents} = this.props;
+		const eventId = this.props.params.id;
 		const purchase = {
 			participants: (currentEvent && currentEvent.participants) || [],
 			payer: currentEvent && currentEvent.participants && currentEvent.participants[0],
 		};
-
 		return {
 			mode: this.props.mode || CREATE,
 			isSavingData: false,
 			purchase,
 			eventParticipants: (currentEvent && currentEvent.participants) || [],
+			userName: localEvents[eventId],
 		};
 	},
 
@@ -105,6 +107,12 @@ const NewPurchasePage = React.createClass({
 		});
 	},
 
+	deletePurchase() {
+		const {id, purchase_id} = this.props.params;
+		const {dispatch} = this.props;
+		dispatch(fetchPurchaseDelete(id, purchase_id));
+	},
+
 	createPageTopBar() {
 		const {purchase} = this.state;
 		let disabled = purchase.participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
@@ -137,18 +145,21 @@ const NewPurchasePage = React.createClass({
 		);
 	},
 
+	getFullName(name) {
+		return this.state.userName == name ? name + ' (Вы)' : name;
+	},
+
 	render() {
-		const {state} = this;
+		const {state, props} = this;
 		const {mode} = state;
 		const {purchase} = state;
-
 		return (
 			<Page>
 				{mode === EDIT && this.editPageTopBar()}
 				{mode === CREATE && this.createPageTopBar()}
 				<PageContent>
 					<NewPurchasePayer
-						payer={purchase.payer || ''}
+						payer={this.getFullName(purchase.payer) || ''}
 						onClick={() => this.setState({popupOpened: true})}
 					/>
 					{state.popupOpened &&
@@ -158,8 +169,10 @@ const NewPurchasePage = React.createClass({
 							onClose={() => this.setState({popupOpened: false})}
 						>
 							<Payers
+								myName={this.props.localEvents[props.params.id]}
 								participants={state.eventParticipants}
 								payer={purchase.payer}
+								getFullName={this.getFullName}
 								changePayer={user => {
 									this.setState({
 										purchase: assign(purchase, {payer: user}),
@@ -207,7 +220,7 @@ const NewPurchasePage = React.createClass({
 								return (<UniversalListItem
 									id={user}
 									key={user}
-									text={user}
+									text={this.getFullName(user)}
 									price={this.getLoan(user)}
 									isCheckBox
 									checkBoxChecked={purchase.participants.indexOf(user) !== -1}
@@ -223,8 +236,11 @@ const NewPurchasePage = React.createClass({
 									}}
 								/>);
 							})
-						}
+						} 
 					</div>
+					{mode === EDIT &&
+						<button onClick={this.deletePurchase}> удалить покупку </button>
+					}
 				</PageContent>
 			</Page>
 		);
@@ -235,6 +251,7 @@ function mapStateToProps({events}) {
 	return {
 		currentEvent: events.currentEvent,
 		isFetchingEvent: events.isFetchingEvent,
+		localEvents: events.localEvents,
 	};
 }
 
