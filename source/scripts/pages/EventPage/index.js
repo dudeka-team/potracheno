@@ -25,6 +25,11 @@ const EventPage = React.createClass({
 		this.props.router.push('/events');
 	},
 
+	goToEdit() {
+		const {router, params} = this.props;
+		router.push(`/events/${params.id}/edit`);
+	},
+
 	formatSubtitle(currentEvent) {
 		const participantsStatus = `${currentEvent.participants.length} участников`;
 		const formattedStart = moment(currentEvent.start).format('DD MMMM');
@@ -71,6 +76,7 @@ const EventPage = React.createClass({
 							title={currentEvent.name}
 							subtitle={this.formatSubtitle(currentEvent)}
 						/>
+						<TopBarIcon icon="pen" onClick={this.goToEdit} />
 						<TopBarIcon icon="arrow-share" />
 						<TopBarIcon icon="more-actions" />
 					</TopBar>
@@ -82,7 +88,7 @@ const EventPage = React.createClass({
 								content: <Purchases
 									eventId={this.props.params.id}
 									purchases={purchases}
-									currentEvent={currentEvent}
+									eventParticipants={currentEvent.participants}
 								/>,
 							},
 							{

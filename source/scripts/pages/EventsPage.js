@@ -33,7 +33,7 @@ const EventsPage = React.createClass({
 			<div onClick={() => this.goToEvent(eventId)} key={eventId}>
 				<EventsListItem
 					title={data.name}
-					membersCount={data.participants.length}
+					membersCount={data.participants.length + 1}
 					date={data.start}
 					sum={data.sum || 0}
 					debtType="positive"
