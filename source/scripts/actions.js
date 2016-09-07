@@ -13,23 +13,6 @@ export function readEvents(localEvents) {
 		payload: new Promise((resolve, reject) => {
 			db
 				.readEvents()
-				// .then(data => {
-				// 	// const localEvents =
-				// 	// 	Object.keys(
-				// 	// 		JSON.parse(
-				// 	// 			localStorage
-				// 	// 				.getItem('localEvents') || "{}"
-				// 	// 				)
-				// 	// 		);
-				
-					// const filteredEvents = {};
-					// const eventsKeys = Object.keys(data);
-					// Object.keys(localEvents).map(id => {
-					// 	if (eventsKeys.indexOf(id) !== -1)
-					// 		filteredEvents[id] = data[id];
-					// });
-					// return filteredEvents;
-				// })
 				.then(resolve)
 				.catch(reject);
 		}),

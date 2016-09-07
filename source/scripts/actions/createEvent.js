@@ -21,7 +21,7 @@ export default function createEvent(payload) {
 						return data;
 					})
 					.then(data => {
-						dispatch(setLocalEvents(data.key, data.manager));
+						dispatch(setLocalEvents(data.key, data.eventInfo.manager));
 						hashHistory.push('/events')
 					})
 					.catch(reject);

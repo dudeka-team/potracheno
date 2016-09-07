@@ -4,6 +4,8 @@ import {
 
 export default function setLocalEvents(id, name) {
 
+	console.log(id, name);
+
 	const newLocalEventToSave = {};
 	newLocalEventToSave[id] = name;
 

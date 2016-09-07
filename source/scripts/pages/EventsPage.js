@@ -23,19 +23,7 @@ const EventsPage = React.createClass({
 	componentDidMount() {
 		const {props} = this;
 		props.dispatch(getLocalEvents());
-		props.dispatch(readEvents(props.localEvents))
-			// .then(data => {
-			// 	const eventsBalances = {};
-			// 	Object.keys(data.value)
-			// 		.forEach(eventId => {
-			// 			eventsBalances[eventId] = getEventBalance(data.value[eventId]);
-
-			// 		});
-			// 	this.setState({
-			// 		balance: eventsBalances,
-			// 	})
-			// 	console.log(this.state); 
-			// });
+		props.dispatch(readEvents(props.localEvents));
 	},
 
 	goToNewEvent() {
@@ -53,9 +41,9 @@ const EventsPage = React.createClass({
 			<div onClick={() => this.goToEvent(eventId)} key={eventId}>
 				<EventsListItem
 					title={data.name}
-					membersCount={data.participants.length}
+					membersCount={data.participants.length + 1}
 					date={data.start}
-					sum={getEventBalance(data)[this.props.localEvents[eventId]] || 0}
+					sum={Math.round(getEventBalance(data)[this.props.localEvents[eventId]] || 0)}
 					debtType={
 						((getEventBalance(data)[this.props.localEvents[eventId]] > 0) && "positive")
 						||

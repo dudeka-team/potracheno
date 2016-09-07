@@ -16,13 +16,13 @@ import Participants from './Participants';
 
 
 const EventPage = React.createClass({
-	// componentDidMount() {
-	// 	const {params, dispatch} = this.props;
-	// 	dispatch(fetchEventData(params.id));
-	// },
-
 	goToEvents() {
 		this.props.router.push('/events');
+	},
+
+	goToEdit() {
+		const {router, params} = this.props;
+		router.push(`/events/${params.id}/edit`);
 	},
 
 	formatSubtitle(currentEvent) {
@@ -68,6 +68,7 @@ const EventPage = React.createClass({
 							title={currentEvent.name}
 							subtitle={this.formatSubtitle(currentEvent)}
 						/>
+						<TopBarIcon icon="pen" onClick={this.goToEdit} />
 						<TopBarIcon icon="arrow-share" />
 						<TopBarIcon icon="more-actions" />
 					</TopBar>
@@ -79,7 +80,7 @@ const EventPage = React.createClass({
 								content: <Purchases
 									eventId={this.props.params.id}
 									purchases={purchases}
-									currentEvent={currentEvent}
+									eventParticipants={currentEvent.participants}
 								/>,
 							},
 							{
@@ -89,6 +90,7 @@ const EventPage = React.createClass({
 									<Balance
 										purchases={purchases}
 										participants={currentEvent.participants}
+										currentEvent={currentEvent}
 									/>,
 							},
 							{
