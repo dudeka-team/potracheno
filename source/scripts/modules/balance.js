@@ -17,7 +17,7 @@ export function getEventBalance(currentEvent) {
 			participantsBalance[participant] =
 				(participantsBalance[participant] || 0)
 					+ (((participant === purchase.payer) && purchase.amount)
-						- (purchase.amount / purchase.participants.length));
+						- (Math.round(purchase.amount / purchase.participants.length)));
 		});
 		if (purchase.participants.indexOf(purchase.payer) === -1) {
 			participantsBalance[purchase.payer] =

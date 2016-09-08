@@ -37,19 +37,23 @@ const EventsPage = React.createClass({
 
 	renderEventPreview(eventData) {
 		const {eventId, data} = eventData;
+
+		const currentBalance =
+			getEventBalance(data)[this.props.localEvents[eventId]];
+
 		return (
 			<div onClick={() => this.goToEvent(eventId)} key={eventId}>
 				<EventsListItem
 					title={data.name}
 					membersCount={data.participants.length}
 					date={data.start}
-					sum={Math.round(getEventBalance(data)[this.props.localEvents[eventId]] || 0)}
+					sum={Math.round(currentBalance || 0)}
 					debtType={
-						((getEventBalance(data)[this.props.localEvents[eventId]] > 0) && 'positive')
+						((currentBalance > 0) && 'positive')
 						||
-						((getEventBalance(data)[this.props.localEvents[eventId]] < 0) && 'negative')
+						((currentBalance < 0) && 'negative')
 						||
-						(!getEventBalance(data)[this.props.localEvents[eventId]] && 'neutural')
+						(!currentBalance && 'neutural')
 					}
 				/>
 			</div>

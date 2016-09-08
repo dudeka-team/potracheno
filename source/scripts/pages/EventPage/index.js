@@ -19,8 +19,8 @@ const EventPage = React.createClass({
 	},
 
 	goToEdit() {
-		const {router, params} = this.props;
-		router.push(`/events/${params.id}/edit`);
+		const {router} = this.props;
+		router.push(`/events/${this.props.id}/edit`);
 	},
 
 	formatSubtitle(currentEvent) {
@@ -75,19 +75,18 @@ const EventPage = React.createClass({
 							{
 								name: 'purchases',
 								labelContent: 'Покупки',
-								content: <Purchases
-									eventId={this.props.params.id}
-									purchases={purchases}
-									eventParticipants={currentEvent.participants}
-								/>,
+								content:
+									<Purchases
+										eventId={props.id}
+										purchases={purchases}
+										eventParticipants={currentEvent.participants}
+									/>,
 							},
 							{
 								name: 'balance',
 								labelContent: 'Баланс',
 								content:
 									<Balance
-										purchases={purchases}
-										participants={currentEvent.participants}
 										currentEvent={currentEvent}
 									/>,
 							},

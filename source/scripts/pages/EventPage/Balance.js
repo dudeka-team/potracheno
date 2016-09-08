@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import BlueSubtitle from '../../components/BlueSubtitle';
 import BalanceListItem from '../../components/BalanceListItem';
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
@@ -29,7 +29,3 @@ export default function BalancePage(props) {
 		</div>
 	);
 }
-
-BalancePage.propTypes = {
-	purchases: PropTypes.array.isRequired,
-};

@@ -5,11 +5,6 @@ import setLocalEvents from '../actions/setLocalEvents';
 import {TopBar, TopBarIcon, TopBarHeading} from '../components/TopBar';
 
 const UserSelectionPage = React.createClass({
-
-	getInitialState() {
-		return {};
-	},
-
 	changeEventName(name) {
 		this.setState({
 			currentName: name,
@@ -19,7 +14,7 @@ const UserSelectionPage = React.createClass({
 	applyEventName() {
 		this.props.dispatch(
 			setLocalEvents(
-				this.props.params.id,
+				this.props.id,
 				this.state.currentName
 			)
 		);

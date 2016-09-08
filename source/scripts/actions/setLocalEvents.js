@@ -8,12 +8,12 @@ export default function setLocalEvents(id, name) {
 
 	const oldLocalEvents = JSON.parse(localStorage.getItem('localEvents') || '{}');
 
+	const newLocalEvents = Object.assign(oldLocalEvents, newLocalEventToSave);
+
 	localStorage
 			.setItem('localEvents',
-				JSON.stringify(Object.assign(oldLocalEvents, newLocalEventToSave))
+				JSON.stringify(newLocalEvents)
 			);
-
-	const newLocalEvents = JSON.parse(localStorage.getItem('localEvents') || '{}');
 
 	return {
 		type: SET_LOCAL_EVENTS,
