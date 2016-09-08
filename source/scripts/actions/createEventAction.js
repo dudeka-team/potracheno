@@ -12,8 +12,12 @@ export const eventActionTypes = {
 	joinToEvent(participantName) {
 		return `К мероприятию присоединился ${participantName}`;
 	},
-	changeEventInfo(participantName, eventName) {
-		return `${participantName} изменил информацию о мероприятии ${eventName}`;
+	changeEventName(managerName, eventName, date) {
+		return {
+			text: `${managerName} изменил название мероприятия на ${eventName}`,
+			icon: 'pen',
+			date
+		}
 	},
 	addParticipantToEvent(participantName, eventName) {
 		return `${participantName} добавлен в мероприятие ${eventName}`;
@@ -21,10 +25,11 @@ export const eventActionTypes = {
 	participantGoOut(participantName, eventName) {
 		return `${participantName} вышел из мероприятия ${eventName}`;
 	},
-	addPurchase(participantName, purchaseName, purchasePrice) {
+	addPurchase(participantName, purchaseName, purchasePrice, date) {
 		return {
-			text: `${participantName} добавил покупку "${purchaseName}" на сумму ${purchasePrice} руб.`,
+			text: `${participantName} купил "${purchaseName}" на сумму ${purchasePrice} руб.`,
 			icon: 'purchase',
+			date
 		};
 	},
 	changePurchaseInfo(participantName, purchaseName) {

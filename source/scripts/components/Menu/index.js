@@ -45,7 +45,7 @@ const Menu = React.createClass({
 });
 
 Menu.propTypes = {
-	participants: PropTypes.object.isRequired,
+	participants: PropTypes.array.isRequired,
 	name: PropTypes.string,
 	subtitle: PropTypes.string,
 };

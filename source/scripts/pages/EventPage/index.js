@@ -145,7 +145,6 @@ const EventPage = React.createClass({
 								content:
 									<EventActions
 										actions={actions}
-										eventStart={moment(currentEvent.start).format('DD MMMM')}
 									/>,
 							},
 						]}

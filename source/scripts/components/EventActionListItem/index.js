@@ -4,6 +4,8 @@ const EventActionItem = React.createClass({
 	render() {
 		const icon = this.props.icon;
 		const text = this.props.text;
+		const date = this.props.date;
+		
 		return (
 			<div className="event-action">
 				<div className="event-action__icon-wrapper">
@@ -11,7 +13,7 @@ const EventActionItem = React.createClass({
 				</div>
 				<div className="event-action__info">
 					<div className="event-action__text">{text}</div>
-					<div className="event-action__date">16:05</div>
+					<div className="event-action__date">{date}</div>
 				</div>
 			</div>
 		);

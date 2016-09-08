@@ -93,7 +93,8 @@ const NewPurchasePage = React.createClass({
 				config: eventActionTypes
 					.addPurchase(state.purchase.payer,
 									state.purchase.name,
-									state.purchase.amount
+									state.purchase.amount,
+									moment(new Date()).startOf('hour').fromNow(),
 								),
 			},
 		}));

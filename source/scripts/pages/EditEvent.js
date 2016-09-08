@@ -9,6 +9,8 @@ import updateEvent from '../actions/updateEvent';
 import FlexContainer from '../components/FlexContainer';
 import EditEvent from '../components/EditEvent';
 
+import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
+
 const EditEventPage = React.createClass({
 	componentDidMount() {
 		const {props} = this;
@@ -26,6 +28,7 @@ const EditEventPage = React.createClass({
 			start,
 			end,
 			participants,
+			actions
 		} = eventData;
 		const isEventParticipant = (pName) => participants.indexOf(pName) !== -1;
 
@@ -67,11 +70,46 @@ const EditEventPage = React.createClass({
 			end,
 			participants,
 			purchases,
+			actions
 		};
+
+		const dispatchEventManipulation = (condition, parameters) => {
+			if (condition) {
+				dispatch(createEventActionAsync({
+					eventId: this.props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes
+							.changeEventName(...parameters),
+					},
+				}));
+			}
+		}
+
+		dispatchEventManipulation(
+			(updatedEvent.name !== this.props.currentEvent.name), 
+			[updatedEvent.manager, updatedEvent.name, 
+			moment(new Date()).startOf('hour').fromNow()]
+		)
+
+		// if (updatedEvent.name !== this.props.currentEvent.name) {
+		// 	dispatch(createEventActionAsync({
+		// 		eventId: this.props.params.id,
+		// 		eventActionInfo: {
+		// 			config: eventActionTypes
+		// 				.changeEventName(updatedEvent.manager,
+		// 								updatedEvent.name,
+		// 								moment(new Date()).startOf('hour').fromNow(),
+		// 							),
+		// 		},
+		// 	}));
+		// }
+
 		dispatch(updateEvent({
 			id: params.id,
 			data: updatedEvent,
 		}));
+
+		
 	},
 
 	renderPreloader() {
