@@ -41,7 +41,7 @@ const EventsPage = React.createClass({
 			<div onClick={() => this.goToEvent(eventId)} key={eventId}>
 				<EventsListItem
 					title={data.name}
-					membersCount={data.participants.length + 1}
+					membersCount={data.participants.length}
 					date={data.start}
 					sum={Math.round(getEventBalance(data)[this.props.localEvents[eventId]] || 0)}
 					debtType={

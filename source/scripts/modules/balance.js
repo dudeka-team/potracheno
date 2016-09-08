@@ -19,6 +19,11 @@ export function getEventBalance(currentEvent) {
 					+ (((participant === purchase.payer) && purchase.amount)
 						- (purchase.amount / purchase.participants.length));
 		});
+		if (purchase.participants.indexOf(purchase.payer) === -1) {
+			participantsBalance[purchase.payer] =
+				(participantsBalance[purchase.payer] || 0)
+					+ purchase.amount;
+		}
 	});
 
 	return participantsBalance;
