@@ -24,8 +24,8 @@ export const eventActionTypes = {
 	addPurchase(participantName, purchaseName, purchasePrice) {
 		return {
 			text: `${participantName} добавил покупку "${purchaseName}" на сумму ${purchasePrice} руб.`,
-			icon: 'purchase'
-		}
+			icon: 'purchase',
+		};
 	},
 	changePurchaseInfo(participantName, purchaseName) {
 		return `${participantName} изменил покупку "${purchaseName}"`;
