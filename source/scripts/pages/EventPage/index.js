@@ -61,7 +61,7 @@ const EventPage = React.createClass({
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
-			.map((text) => Object.assign({text}, currentEvent.actions[text]));
+			.map((config) => Object.assign({config}, currentEvent.actions[config]));
 
 		if (isFetchingEvent) {
 			return this.renderPreloader();

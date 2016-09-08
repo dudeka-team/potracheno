@@ -90,7 +90,7 @@ const NewPurchasePage = React.createClass({
 		props.dispatch(createEventActionAsync({
 			eventId: this.props.params.id,
 			eventActionInfo: {
-				text: eventActionTypes
+				config: eventActionTypes
 					.addPurchase(state.purchase.payer,
 									state.purchase.name,
 									state.purchase.amount

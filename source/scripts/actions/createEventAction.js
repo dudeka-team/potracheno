@@ -22,7 +22,10 @@ export const eventActionTypes = {
 		return `${participantName} вышел из мероприятия ${eventName}`;
 	},
 	addPurchase(participantName, purchaseName, purchasePrice) {
-		return `${participantName} добавил покупку "${purchaseName}" на сумму ${purchasePrice} руб.`;
+		return {
+			text: `${participantName} добавил покупку "${purchaseName}" на сумму ${purchasePrice} руб.`,
+			icon: 'purchase'
+		}
 	},
 	changePurchaseInfo(participantName, purchaseName) {
 		return `${participantName} изменил покупку "${purchaseName}"`;
