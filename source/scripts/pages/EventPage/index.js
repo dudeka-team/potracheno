@@ -12,6 +12,7 @@ import Balance from './Balance';
 import Purchases from './Purchases';
 
 import Participants from './Participants';
+import fetchEventData from '../../actions/fetchEventData';
 
 
 import Menu from '../../components/Menu';
@@ -24,8 +25,8 @@ const EventPage = React.createClass({
 	},
 
 	componentDidMount() {
-		const {params, dispatch} = this.props;
-		dispatch(fetchEventData(params.id));
+		const {id, dispatch} = this.props;
+		dispatch(fetchEventData(id));
 	},
 
 	goToEvents() {
@@ -45,7 +46,7 @@ const EventPage = React.createClass({
 				menuOpen: false,
 			});
 		}
-	}
+	},
 
 	goToEdit() {
 		const {router} = this.props;
