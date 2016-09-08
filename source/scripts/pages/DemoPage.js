@@ -3,6 +3,8 @@ import IconOpenInNew from 'material-ui/svg-icons/action/open-in-new';
 import Fab from '../components/Fab';
 import Popup from '../components/Popup';
 import PurchaseInfo from '../components/PurchaseInfo';
+import Drover from '../components/Drover';
+
 
 export default React.createClass({
 	getInitialState() {
@@ -45,6 +47,7 @@ export default React.createClass({
 						<PurchaseInfo />
 					</Popup>
 				}
+				<Drover />
 			</div>
 		);
 	},

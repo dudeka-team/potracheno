@@ -45,7 +45,6 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-stylus": "^2.5.0",
     "mocha": "^3.0.2",
-    "react-tap-event-plugin": "^1.0.0",
     "webpack-stream": "^3.2.0"
   },
   "dependencies": {
@@ -60,7 +59,7 @@
     "react-router-redux": "^4.0.5",
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.5.2",
-    "redux-actions": "^0.11.0",
+    "redux-actions": "^0.12.0",
     "redux-promise-middleware": "^4.0.0",
     "redux-thunk": "^2.1.0",
     "shortid": "^2.2.6"

@@ -100,6 +100,18 @@ const NewPurchasePage = React.createClass({
 		const {dispatch} = props;
 		const {purchase_id, id} = props.params;
 		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
+
+		props.dispatch(createEventActionAsync({
+			eventId: this.props.params.id,
+			eventActionInfo: {
+				text: eventActionTypes
+					.changePurchaseInfo(
+						state.purchase.payer,
+						state.purchase.name
+					),
+			},
+		}));
+
 		this.setState({
 			isSavingData: true,
 		});
