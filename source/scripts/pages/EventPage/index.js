@@ -59,6 +59,8 @@ const EventPage = React.createClass({
 			return this.renderPreloader();
 		}
 
+		const currentUser = props.localEvents[props.params.eventId];
+
 		if (currentEvent) {
 			return (
 				<Page>
@@ -89,12 +91,17 @@ const EventPage = React.createClass({
 									<Balance
 										purchases={purchases}
 										participants={currentEvent.participants}
+										currentUser={currentUser}
 									/>,
 							},
 							{
 								name: 'members',
 								labelContent: 'Участники',
-								content: <Participants participants={currentEvent.participants} />,
+								content: 
+									<Participants
+										participants={currentEvent.participants}
+										currentUser={currentUser}
+									/>,
 							},
 						]}
 					/>
