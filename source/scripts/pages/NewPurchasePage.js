@@ -101,17 +101,6 @@ const NewPurchasePage = React.createClass({
 		const {purchase_id, id} = props.params;
 		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
 
-		props.dispatch(createEventActionAsync({
-			eventId: this.props.params.id,
-			eventActionInfo: {
-				text: eventActionTypes
-					.changePurchaseInfo(
-						state.purchase.payer,
-						state.purchase.name
-					),
-			},
-		}));
-
 		this.setState({
 			isSavingData: true,
 		});
@@ -119,7 +108,9 @@ const NewPurchasePage = React.createClass({
 
 	createPageTopBar() {
 		const {purchase} = this.state;
-		let disabled = purchase.participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
+		const disabled = purchase.participants.length === 0
+						|| isNaN(purchase.amount)
+						|| !purchase.amount;
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
@@ -135,7 +126,9 @@ const NewPurchasePage = React.createClass({
 
 	editPageTopBar() {
 		const {purchase} = this.state;
-		let disabled = purchase.participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
+		const disabled = purchase.participants.length === 0
+						|| isNaN(purchase.amount)
+						|| !purchase.amount;
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />

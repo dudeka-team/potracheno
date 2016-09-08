@@ -13,14 +13,15 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 import Balance from './Balance';
 import Purchases from './Purchases';
 
-import EventActions from './EventActions';
-import Drover from '../../components/Drover';
+import Participants from './Participants';
 
+
+import Menu from '../../components/Menu';
 
 const EventPage = React.createClass({
 	getInitialState() {
 		return {
-			droverOpen: false,
+			menuOpen: false,
 		};
 	},
 
@@ -33,19 +34,19 @@ const EventPage = React.createClass({
 		this.props.router.push('/events');
 	},
 
-	openDrover() {
+	openMenu() {
 		this.setState({
-			droverOpen: true,
+			menuOpen: true,
 		});
 	},
 
-	closeDrover(e) {
+	closeMenu(e) {
 		const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 		if (e.pageX < width / 6.0) {
 			this.setState({
-				droverOpen: false,
+				menuOpen: false,
 			});
-		}	
+		}
 	},
 
 	formatSubtitle(currentEvent) {
@@ -85,12 +86,12 @@ const EventPage = React.createClass({
 		if (currentEvent) {
 			return (
 				<Page>
-					<Drover
-						closeDrover={this.closeDrover}
+					<Menu
+						closeMenu={this.closeMenu}
 						participants={currentEvent.participants}
 						name={currentEvent.name}
 						subtitle={this.formatSubtitle(currentEvent)}
-						droverOpen={state.droverOpen}
+						menuOpen={state.menuOpen}
 					/>
 					<TopBar>
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
@@ -99,7 +100,7 @@ const EventPage = React.createClass({
 							subtitle={this.formatSubtitle(currentEvent)}
 						/>
 						<TopBarIcon icon="arrow-share" />
-						<TopBarIcon icon="more-actions" onClick={this.openDrover} />
+						<TopBarIcon icon="more-actions" onClick={this.openMenu} />
 					</TopBar>
 					<Tabs
 						config={[

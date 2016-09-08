@@ -3,7 +3,7 @@ import IconOpenInNew from 'material-ui/svg-icons/action/open-in-new';
 import Fab from '../components/Fab';
 import Popup from '../components/Popup';
 import PurchaseInfo from '../components/PurchaseInfo';
-import Drover from '../components/Drover';
+import Menu from '../components/Menu';
 
 
 export default React.createClass({
@@ -47,7 +47,7 @@ export default React.createClass({
 						<PurchaseInfo />
 					</Popup>
 				}
-				<Drover />
+				<Menu />
 			</div>
 		);
 	},
