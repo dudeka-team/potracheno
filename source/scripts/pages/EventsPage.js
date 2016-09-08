@@ -9,12 +9,21 @@ import EventsListItem from '../components/EventsListItem';
 import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
+import {getEventBalance} from '../modules/balance';
+import getLocalEvents from '../actions/getLocalEvents';
 
 
 const EventsPage = React.createClass({
+	getInitialState() {
+		return {
+			balance: {},
+		};
+	},
+
 	componentDidMount() {
 		const {props} = this;
-		props.dispatch(readEvents());
+		props.dispatch(getLocalEvents());
+		props.dispatch(readEvents(props.localEvents));
 	},
 
 	goToNewEvent() {
@@ -29,14 +38,23 @@ const EventsPage = React.createClass({
 	renderEventPreview(eventData) {
 		const {eventId, data} = eventData;
 
+		const currentBalance =
+			getEventBalance(data)[this.props.localEvents[eventId]];
+
 		return (
 			<div onClick={() => this.goToEvent(eventId)} key={eventId}>
 				<EventsListItem
 					title={data.name}
 					membersCount={data.participants.length}
 					date={data.start}
-					sum={data.sum || 0}
-					debtType="positive"
+					sum={Math.round(currentBalance || 0)}
+					debtType={
+						((currentBalance > 0) && 'positive')
+						||
+						((currentBalance < 0) && 'negative')
+						||
+						(!currentBalance && 'neutural')
+					}
 				/>
 			</div>
 		);
@@ -95,6 +113,7 @@ const mapStateToProps = ({events}) => {
 		eventsLoaded: events.loaded,
 		events: events.events,
 		eventsById: events.eventsById,
+		localEvents: events.localEvents,
 	};
 };
 

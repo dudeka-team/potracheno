@@ -3,8 +3,6 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import fetchEventData from '../../actions/fetchEventData';
-
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
@@ -41,12 +39,17 @@ const EventPage = React.createClass({
 	},
 
 	closeMenu(e) {
-		const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-		if (e.pageX < width / 6.0) {
+		const width = window.innerWidth;
+		if (e.pageX < width / 6) {
 			this.setState({
 				menuOpen: false,
 			});
 		}
+	}
+
+	goToEdit() {
+		const {router} = this.props;
+		router.push(`/events/${this.props.id}/edit`);
 	},
 
 	formatSubtitle(currentEvent) {
@@ -99,6 +102,7 @@ const EventPage = React.createClass({
 							title={currentEvent.name}
 							subtitle={this.formatSubtitle(currentEvent)}
 						/>
+						<TopBarIcon icon="pen" onClick={this.goToEdit} />
 						<TopBarIcon icon="arrow-share" />
 						<TopBarIcon icon="more-actions" onClick={this.openMenu} />
 					</TopBar>
@@ -107,19 +111,19 @@ const EventPage = React.createClass({
 							{
 								name: 'purchases',
 								labelContent: 'Покупки',
-								content: <Purchases
-									eventId={this.props.params.id}
-									purchases={purchases}
-									currentEvent={currentEvent}
-								/>,
+								content:
+									<Purchases
+										eventId={props.id}
+										purchases={purchases}
+										eventParticipants={currentEvent.participants}
+									/>,
 							},
 							{
 								name: 'balance',
 								labelContent: 'Баланс',
 								content:
 									<Balance
-										purchases={purchases}
-										participants={currentEvent.participants}
+										currentEvent={currentEvent}
 									/>,
 							},
 							{
