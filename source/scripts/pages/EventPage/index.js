@@ -3,8 +3,6 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import fetchEventData from '../../actions/fetchEventData';
-
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
@@ -12,22 +10,47 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
+
 import EventActions from './EventActions';
 
+import fetchEventData from '../../actions/fetchEventData';
+
+import Menu from '../../components/Menu';
 
 const EventPage = React.createClass({
+	getInitialState() {
+		return {
+			menuOpen: false,
+		};
+	},
+
 	componentDidMount() {
-		const {params, dispatch} = this.props;
-		dispatch(fetchEventData(params.id));
+		const {id, dispatch} = this.props;
+		dispatch(fetchEventData(id));
 	},
 
 	goToEvents() {
 		this.props.router.push('/events');
 	},
 
+	openMenu() {
+		this.setState({
+			menuOpen: true,
+		});
+	},
+
+	closeMenu(e) {
+		const width = window.innerWidth;
+		if (e.pageX < width / 6) {
+			this.setState({
+				menuOpen: false,
+			});
+		}
+	},
+
 	goToEdit() {
-		const {router, params} = this.props;
-		router.push(`/events/${params.id}/edit`);
+		const {router} = this.props;
+		router.push(`/events/${this.props.id}/edit`);
 	},
 
 	formatSubtitle(currentEvent) {
@@ -54,7 +77,7 @@ const EventPage = React.createClass({
 	},
 
 	render() {
-		const {props} = this;
+		const {props, state} = this;
 		const {currentEvent, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
@@ -70,6 +93,13 @@ const EventPage = React.createClass({
 		if (currentEvent) {
 			return (
 				<Page>
+					<Menu
+						closeMenu={this.closeMenu}
+						participants={currentEvent.participants}
+						name={currentEvent.name}
+						subtitle={this.formatSubtitle(currentEvent)}
+						menuOpen={state.menuOpen}
+					/>
 					<TopBar>
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 						<TopBarHeading
@@ -78,26 +108,26 @@ const EventPage = React.createClass({
 						/>
 						<TopBarIcon icon="pen" onClick={this.goToEdit} />
 						<TopBarIcon icon="arrow-share" />
-						<TopBarIcon icon="more-actions" />
+						<TopBarIcon icon="more-actions" onClick={this.openMenu} />
 					</TopBar>
 					<Tabs
 						config={[
 							{
 								name: 'purchases',
 								labelContent: 'Покупки',
-								content: <Purchases
-									eventId={this.props.params.id}
-									purchases={purchases}
-									eventParticipants={currentEvent.participants}
-								/>,
+								content:
+									<Purchases
+										eventId={props.id}
+										purchases={purchases}
+										eventParticipants={currentEvent.participants}
+									/>,
 							},
 							{
 								name: 'balance',
 								labelContent: 'Баланс',
 								content:
 									<Balance
-										purchases={purchases}
-										participants={currentEvent.participants}
+										currentEvent={currentEvent}
 									/>,
 							},
 							{

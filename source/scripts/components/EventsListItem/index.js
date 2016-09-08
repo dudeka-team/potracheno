@@ -19,6 +19,7 @@ export default function EventsListItem(props) {
 					<div className="events-item__debtType">
 						{props.debtType === 'positive' && 'вам должны'}
 						{props.debtType === 'negative' && 'вы должны'}
+						{props.debtType === 'neutural' && 'нет долгов'}
 					</div>
 				</div>
 			</div>
@@ -29,7 +30,7 @@ export default function EventsListItem(props) {
 EventsListItem.propTypes = {
 	title: PropTypes.string.isRequired,
 	date: PropTypes.number.isRequired,
-	debtType: PropTypes.oneOf(['positive', 'negative']).isRequired,
+	debtType: PropTypes.oneOf(['positive', 'negative', 'neutural']).isRequired,
 	membersCount: PropTypes.number.isRequired,
 	sum: PropTypes.number.isRequired,
 };

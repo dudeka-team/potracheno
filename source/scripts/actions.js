@@ -6,7 +6,6 @@ import {
 	LOAD_EVENT_DATA,
 } from './constants';
 
-
 export function readEvents() {
 	return {
 		type: READ_EVENTS,

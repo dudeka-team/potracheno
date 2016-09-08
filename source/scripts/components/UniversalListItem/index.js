@@ -10,6 +10,7 @@ const UniversalListItem = React.createClass({
 		isBordered: PropTypes.bool,
 		isChecked: PropTypes.bool,
 		checkBoxChecked: PropTypes.bool,
+		isIcon: PropTypes.bool,
 	},
 
 	render() {
@@ -27,6 +28,7 @@ const UniversalListItem = React.createClass({
 				<div className={`${baseClass}__text`}>{props.text}</div>
 				{props.price !== undefined && <div className={`${baseClass}__price`}>{props.price} Р</div>}
 				{props.checkMark && <CheckMark />}
+				{props.isIcon && <div className={`${baseClass}__icon`} />}
 			</div>
 		);
 	},
