@@ -3,8 +3,6 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import fetchEventData from '../../actions/fetchEventData';
-
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
@@ -16,18 +14,13 @@ import Participants from './Participants';
 
 
 const EventPage = React.createClass({
-	componentDidMount() {
-		const {params, dispatch} = this.props;
-		dispatch(fetchEventData(params.id));
-	},
-
 	goToEvents() {
 		this.props.router.push('/events');
 	},
 
 	goToEdit() {
-		const {router, params} = this.props;
-		router.push(`/events/${params.id}/edit`);
+		const {router} = this.props;
+		router.push(`/events/${this.props.id}/edit`);
 	},
 
 	formatSubtitle(currentEvent) {
@@ -82,19 +75,19 @@ const EventPage = React.createClass({
 							{
 								name: 'purchases',
 								labelContent: 'Покупки',
-								content: <Purchases
-									eventId={this.props.params.id}
-									purchases={purchases}
-									eventParticipants={currentEvent.participants}
-								/>,
+								content:
+									<Purchases
+										eventId={props.id}
+										purchases={purchases}
+										eventParticipants={currentEvent.participants}
+									/>,
 							},
 							{
 								name: 'balance',
 								labelContent: 'Баланс',
 								content:
 									<Balance
-										purchases={purchases}
-										participants={currentEvent.participants}
+										currentEvent={currentEvent}
 									/>,
 							},
 							{
