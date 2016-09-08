@@ -100,6 +100,7 @@ const NewPurchasePage = React.createClass({
 		const {dispatch} = props;
 		const {purchase_id, id} = props.params;
 		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
+
 		this.setState({
 			isSavingData: true,
 		});

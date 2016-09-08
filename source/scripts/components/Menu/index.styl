@@ -1,0 +1,84 @@
+.menu
+	width 100%
+	height 100%
+	position absolute
+	top 0
+	right 0
+	z-index 1000
+	pointer-events none
+	
+	&__wrapper
+		width 100%
+		height 100%
+		position absolute
+		top 0
+		right 0
+	
+	&_closed
+		transition background-color .6s
+		.menu__wrapper
+			transform translateX(100%)
+			transition transform .6s
+
+	&_open
+		transition background-color .6s
+		pointer-events unset
+		background-color rgba(0, 0, 0, .5)
+		.menu__wrapper
+			transform translateX(0%)
+			transition transform .6s	
+	
+	&__inner
+		width 84%
+		position absolute
+		top 0
+		right 0
+		height 100%
+		background-color #fff
+		overflow-y scroll
+		
+		.menu__top-bar
+			display flex
+			align-items center
+			justify-content space-between
+			padding 15px 17px 13px 16px
+
+		.icons-section
+			display flex
+			
+			&__icon
+				width 24px
+				height 24px
+				&:hover
+					cursor pointer
+				
+				&_event-edit
+					margin-right 24px
+					background-image url('../img/pen.svg')
+				
+				&_add-person
+					background-image url('../img/person-add.svg')
+
+		.bottom-bar
+			background-color #fff
+			display flex
+			padding 19px
+			align-items center
+			border-top 1px solid #eff2f6
+			
+			&__text
+				font-size 16px
+				font-weight normal
+				color #2e363e
+			
+			&__icon
+				margin-right 27px
+				width 24px
+				height 24px
+				background-image url('../img/exit.svg')
+				
+				&:hover
+					cursor pointer
+
+				
+	

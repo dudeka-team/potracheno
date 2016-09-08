@@ -10,12 +10,42 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
-import Participants from './Participants';
 
+import Participants from './Participants';
+import fetchEventData from '../../actions/fetchEventData';
+
+
+import Menu from '../../components/Menu';
 
 const EventPage = React.createClass({
+	getInitialState() {
+		return {
+			menuOpen: false,
+		};
+	},
+
+	componentDidMount() {
+		const {id, dispatch} = this.props;
+		dispatch(fetchEventData(id));
+	},
+
 	goToEvents() {
 		this.props.router.push('/events');
+	},
+
+	openMenu() {
+		this.setState({
+			menuOpen: true,
+		});
+	},
+
+	closeMenu(e) {
+		const width = window.innerWidth;
+		if (e.pageX < width / 6) {
+			this.setState({
+				menuOpen: false,
+			});
+		}
 	},
 
 	goToEdit() {
@@ -47,7 +77,7 @@ const EventPage = React.createClass({
 	},
 
 	render() {
-		const {props} = this;
+		const {props, state} = this;
 		const {currentEvent, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
@@ -60,6 +90,13 @@ const EventPage = React.createClass({
 		if (currentEvent) {
 			return (
 				<Page>
+					<Menu
+						closeMenu={this.closeMenu}
+						participants={currentEvent.participants}
+						name={currentEvent.name}
+						subtitle={this.formatSubtitle(currentEvent)}
+						menuOpen={state.menuOpen}
+					/>
 					<TopBar>
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 						<TopBarHeading
@@ -68,7 +105,7 @@ const EventPage = React.createClass({
 						/>
 						<TopBarIcon icon="pen" onClick={this.goToEdit} />
 						<TopBarIcon icon="arrow-share" />
-						<TopBarIcon icon="more-actions" />
+						<TopBarIcon icon="more-actions" onClick={this.openMenu} />
 					</TopBar>
 					<Tabs
 						config={[
