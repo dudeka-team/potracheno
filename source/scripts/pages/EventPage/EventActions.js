@@ -16,7 +16,7 @@ export default function EventActions(props) {
 					<EventActionListItem
 						icon={item.config.icon}
 						text={item.config.text}
-						date={item.config.date}
+						date={moment(item.config.date).fromNow()}
 					/>
 				);
 			})}

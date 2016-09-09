@@ -11,37 +11,37 @@ export const eventActionTypes = {
 	joinToEvent(participantName) {
 		return `К мероприятию присоединился ${participantName}`;
 	},
-	changeEventName(managerName, eventName, date) {
+	changeEventName(currentUser, eventName, date) {
 		return {
-			text: `${managerName} изменил название мероприятия на ${eventName}`,
+			text: `${currentUser} изменил название мероприятия на ${eventName}`,
 			icon: 'pen',
 			date,
 		};
 	},
-	changeEventDate(managerName, start, end, date) {
+	changeEventDate(currentUser, start, end, date) {
 		return {
-			text: `${managerName} изменил время мероприятия на ${start}-${end}`,
+			text: `${currentUser} изменил время мероприятия на ${start}-${end}`,
 			icon: 'pen',
 			date,
 		};
 	},
-	addParticipantToEvent(participantName, date) {
+	addParticipantToEvent(currentUser, participantName, date) {
 		return {
-			text: `${participantName} добавлен в мероприятие`,
+			text: `${currentUser} добавил в мероприятие ${participantName}`,
 			icon: 'person',
 			date,
 		};
 	},
-	participantGoOut(participantName, date) {
+	removeParticipantFromEvent(currentUser, participantName, date) {
 		return {
-			text: `${participantName} вышел из мероприятия`,
+			text: `${currentUser} исключил ${participantName} из мероприятия`,
 			icon: 'exit',
 			date,
 		};
 	},
-	addPurchase(participantName, purchaseName, purchasePrice, date) {
+	addPurchase(currentUser, purchaseName, purchasePrice, date) {
 		return {
-			text: `${participantName} купил "${purchaseName}" на сумму ${purchasePrice} руб.`,
+			text: `${currentUser} купил "${purchaseName}" на сумму ${purchasePrice} руб.`,
 			icon: 'purchase',
 			date,
 		};

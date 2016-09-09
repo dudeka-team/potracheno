@@ -100,7 +100,7 @@ const NewPurchasePage = React.createClass({
 					state.purchase.payer,
 					state.purchase.name,
 					state.purchase.amount,
-					moment(new Date()).startOf('hour').fromNow()
+					new Date()
 				),
 			},
 		}));

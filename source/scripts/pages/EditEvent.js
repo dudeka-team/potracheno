@@ -21,7 +21,7 @@ const EditEventPage = React.createClass({
 	},
 
 	save(eventData) {
-		const {currentEvent, params, dispatch} = this.props;
+		const {currentEvent, params, dispatch, localEvents} = this.props;
 		const {
 			name,
 			manager,
@@ -30,6 +30,7 @@ const EditEventPage = React.createClass({
 			participants,
 		} = eventData;
 		const isEventParticipant = (pName) => participants.indexOf(pName) !== -1;
+		const currentUser = localEvents[params.id];
 
 		let purchases = Object
 			.keys(currentEvent.purchases || [])
@@ -93,31 +94,35 @@ const EditEventPage = React.createClass({
 		};
 
 		const getParticipants = (oldPs, newPs) => {
-			const addedParticipants = newPs;
-			oldPs.forEach((oldP) => {
-				newPs.forEach((newP, newPIndex) => {
-					if (oldP === newP) {
-						addedParticipants.splice(newPIndex, 1);
-					}
-				});
-			});
+			let removedParticipants = [];
+			let addedParticipants = [];
+			addedParticipants = newPs.filter((newP) => {
+				return !oldPs.includes(newP);
+			})
 
+			removedParticipants = oldPs.filter((oldP) => {
+				return !newPs.includes(oldP);
+			})
+			  
 			return {
 				addedParticipants,
-			};
+				removedParticipants
+			}
 		};
 
-		const filteredParticipants =
-			getParticipants(
-				currentEvent.participants,
-				updatedEvent.participants
-			);
+		const filteredParticipants = getParticipants(
+			currentEvent.participants,
+			updatedEvent.participants
+		)
 
 		dispatchEventManipulation(
 			(updatedEvent.name !== currentEvent.name),
 			'changeEventName',
-			[updatedEvent.manager, updatedEvent.name,
-			moment(new Date()).startOf('hour').fromNow()]
+			[
+				currentUser, 
+				updatedEvent.name,
+				new Date()
+			]
 		);
 
 		dispatchEventManipulation(
@@ -125,10 +130,10 @@ const EditEventPage = React.createClass({
 			|| updatedEvent.end !== currentEvent.end),
 			'changeEventDate',
 			[
-				updatedEvent.manager,
-				updatedEvent.start,
-				updatedEvent.end,
-				moment(new Date()).startOf('hour').fromNow(),
+				currentUser,
+				moment(updatedEvent.start).format('DD MMMM'),
+				moment(updatedEvent.end).format('DD MMMM'),
+				new Date(),
 			]
 		);
 
@@ -136,7 +141,23 @@ const EditEventPage = React.createClass({
 			dispatchEventManipulation(
 				(filteredParticipants.addedParticipants),
 				'addParticipantToEvent',
-				[p, moment(new Date()).startOf('hour').fromNow()]
+				[
+					currentUser, 
+					p, 
+					new Date()
+				]
+			);
+		});
+
+		filteredParticipants.removedParticipants.forEach((p) => {
+			dispatchEventManipulation(
+				(filteredParticipants.removedParticipants),
+				'removeParticipantFromEvent',
+				[
+					currentUser, 
+					p, 
+					new Date()
+				]
 			);
 		});
 	},
@@ -177,6 +198,7 @@ const EditEventPage = React.createClass({
 function mapStateToProps({events}) {
 	return {
 		currentEvent: events.currentEvent,
+		localEvents: events.localEvents,
 	};
 }
 
