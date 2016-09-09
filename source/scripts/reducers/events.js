@@ -19,6 +19,9 @@ import {
 	GET_LOCAL_EVENTS,
 	SET_LOCAL_EVENTS,
 
+	FETCH_UPDATE_PARTICIPANTS,
+	FETCH_UPDATE_PARTICIPANTS_SUCCESS,
+
 	CHANGE_PURCHASE,
 	FETCH_PURCHASE_DELETE,
 } from '../constants';
@@ -32,7 +35,6 @@ const initialState = {
 	isCreatingEvent: false,
 	isFetchingEvent: false,
 	loaded: false,
-	localEvents: {"-KR4V1W_QuNmxJ2Om1Ma": 'Коля'},
 };
 
 export default handleActions({
@@ -141,6 +143,21 @@ export default handleActions({
 			eventsById: assign({}, changedEvents),
 		});
 	},
+
+	[FETCH_UPDATE_PARTICIPANTS_SUCCESS]: (state, {payload}) => {
+		const {eventId, participantsList} = payload;
+		const {eventsById} = state;
+		const changedEvent = assign({}, eventsById[eventId], {
+			participants: participantsList
+		});
+		return assign({}, state, {
+			eventsById: assign({}, eventsById, {
+				[eventId]: changedEvent,
+			}),
+			currentEvent: changedEvent,
+		});
+	},
+
 }, initialState);
 
 function stopCreatingEvent(state) {

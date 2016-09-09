@@ -3,6 +3,7 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import setLocalEvents from '../actions/setLocalEvents';
 import {TopBar, TopBarIcon, TopBarHeading} from '../components/TopBar';
+import fetchUpdateParticipants from '../actions/fetchUpdateParticipants';
 
 const UserSelectionPage = React.createClass({
 	changeEventName(name) {
@@ -20,10 +21,18 @@ const UserSelectionPage = React.createClass({
 		);
 	},
 
+	addNewParticipant(event) {
+		const {id, currentEvent} = this.props;
+		var name = document.querySelector('.new-praticipant-name').value;
+		const newParticipantsList = currentEvent.participants.slice();
+		newParticipantsList.push(name);
+		this.props.dispatch(fetchUpdateParticipants(id, newParticipantsList));
+	},
+
 	render() {
 		const {props} = this;
 		const {currentEvent} = props;
-
+		console.log('render');
 		return (
 			<div>
 				<TopBar>
@@ -45,7 +54,11 @@ const UserSelectionPage = React.createClass({
 					}
 				</ul>
 				{currentEvent &&
-					<input type="button" value="Выбрать" onClick={this.applyEventName} />
+					<div>
+						<input type="button" value="Выбрать" onClick={this.applyEventName} />
+						<input className="new-praticipant-name" type="text" />
+						<input type="button" value="Добавить участника" onClick={this.addNewParticipant}/>
+					</div>
 				}
 			</div>
 		);

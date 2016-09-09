@@ -75,4 +75,15 @@ Database.deletePurchase = function deletePurchase(eventId, purchaseId) {
 		}));
 }
 
+Database.fetchUpdateParticipants = function fetchUpdateParticipants(eventId, participantsList) {
+	return firebase
+		.database()
+		.ref(`events/${eventId}/participants`)
+		.set(participantsList)
+		.then(() => ({
+			eventId, 
+			participantsList,
+		}));
+}
+
 export default Database;
