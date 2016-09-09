@@ -27,7 +27,7 @@ const EditEventPage = React.createClass({
 			manager,
 			start,
 			end,
-			participants
+			participants,
 		} = eventData;
 		const isEventParticipant = (pName) => participants.indexOf(pName) !== -1;
 
@@ -61,8 +61,8 @@ const EditEventPage = React.createClass({
 		if (!Object.keys(purchases).length) {
 			purchases = [];
 		}
-		console.log(currentEvent)
-		let actions = Object
+
+		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
 			.map((config) => Object.assign({config}, currentEvent.actions[config]));
 
@@ -73,43 +73,72 @@ const EditEventPage = React.createClass({
 			end,
 			participants,
 			purchases,
-			actions
+			actions,
 		};
 
 		dispatch(updateEvent({
 			id: params.id,
 			data: updatedEvent,
 		}));
-		
+
 		const dispatchEventManipulation = (condition, actionType, parameters) => {
 			if (condition) {
 				dispatch(createEventActionAsync({
 					eventId: this.props.params.id,
 					eventActionInfo: {
-						config: eventActionTypes
-							[actionType](...parameters),
+						config: eventActionTypes[actionType](...parameters),
 					},
 				}));
 			}
-		}
+		};
+
+		const getParticipants = (oldPs, newPs) => {
+			const addedParticipants = newPs;
+			oldPs.forEach((oldP) => {
+				newPs.forEach((newP, newPIndex) => {
+					if (oldP === newP) {
+						addedParticipants.splice(newPIndex, 1);
+					}
+				});
+			});
+
+			return {
+				addedParticipants,
+			};
+		};
+
+		const filteredParticipants =
+			getParticipants(
+				currentEvent.participants,
+				updatedEvent.participants
+			);
 
 		dispatchEventManipulation(
-			(updatedEvent.name !== this.props.currentEvent.name), 
+			(updatedEvent.name !== currentEvent.name),
 			'changeEventName',
-			[updatedEvent.manager, updatedEvent.name, 
+			[updatedEvent.manager, updatedEvent.name,
 			moment(new Date()).startOf('hour').fromNow()]
 		);
 
 		dispatchEventManipulation(
-			(updatedEvent.start !== this.props.currentEvent.start || updatedEvent.end !== this.props.currentEvent.end), 
+			(updatedEvent.start !== currentEvent.start
+			|| updatedEvent.end !== currentEvent.end),
 			'changeEventDate',
-			[updatedEvent.manager, updatedEvent.start, updatedEvent.end, moment(new Date()).startOf('hour').fromNow()]
+			[
+				updatedEvent.manager,
+				updatedEvent.start,
+				updatedEvent.end,
+				moment(new Date()).startOf('hour').fromNow(),
+			]
 		);
 
-
-
-
-		
+		filteredParticipants.addedParticipants.forEach((p) => {
+			dispatchEventManipulation(
+				(filteredParticipants.addedParticipants),
+				'addParticipantToEvent',
+				[p, moment(new Date()).startOf('hour').fromNow()]
+			);
+		});
 	},
 
 	renderPreloader() {

@@ -90,12 +90,12 @@ const NewPurchasePage = React.createClass({
 		props.dispatch(createEventActionAsync({
 			eventId: this.props.params.id,
 			eventActionInfo: {
-				config: eventActionTypes
-					.addPurchase(state.purchase.payer,
-									state.purchase.name,
-									state.purchase.amount,
-									moment(new Date()).startOf('hour').fromNow(),
-								),
+				config: eventActionTypes.addPurchase(
+					state.purchase.payer,
+					state.purchase.name,
+					state.purchase.amount,
+					moment(new Date()).startOf('hour').fromNow()
+				),
 			},
 		}));
 

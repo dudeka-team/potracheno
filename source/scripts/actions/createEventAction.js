@@ -6,8 +6,8 @@ import {
 } from '../constants';
 
 export const eventActionTypes = {
-	eventCreation(eventName) {
-		return `Мероприятие ${eventName} создано`;
+	createEvent(managerName) {
+		return `${managerName} создал мероприятие`;
 	},
 	joinToEvent(participantName) {
 		return `К мероприятию присоединился ${participantName}`;
@@ -16,31 +16,35 @@ export const eventActionTypes = {
 		return {
 			text: `${managerName} изменил название мероприятия на ${eventName}`,
 			icon: 'pen',
-			date
-		}
+			date,
+		};
 	},
 	changeEventDate(managerName, start, end, date) {
 		return {
 			text: `${managerName} изменил время мероприятия на ${start}-${end}`,
 			icon: 'pen',
-			date
-		}
+			date,
+		};
 	},
-	addParticipantToEvent(participantName) {
+	addParticipantToEvent(participantName, date) {
 		return {
 			text: `${participantName} добавлен в мероприятие`,
-			icon: 'pen',
-			date
-		}
+			icon: 'person',
+			date,
+		};
 	},
-	participantGoOut(participantName, eventName) {
-		return `${participantName} вышел из мероприятия ${eventName}`;
+	participantGoOut(participantName, date) {
+		return {
+			text: `${participantName} вышел из мероприятия`,
+			icon: 'exit',
+			date,
+		};
 	},
 	addPurchase(participantName, purchaseName, purchasePrice, date) {
 		return {
 			text: `${participantName} купил "${purchaseName}" на сумму ${purchasePrice} руб.`,
 			icon: 'purchase',
-			date
+			date,
 		};
 	},
 	changePurchaseInfo(participantName, purchaseName) {

@@ -7,7 +7,11 @@ export default function EventActions(props) {
 			<EventActionListItem icon="calendar" text="создал мероприятие" />
 			{props.actions.map((item) => {
 				return (
-					<EventActionListItem icon={item.config.icon} text={item.config.text} date={item.config.date}/>
+					<EventActionListItem
+						icon={item.config.icon}
+						text={item.config.text}
+						date={item.config.date}
+					/>
 				);
 			})}
 		</div>

@@ -5,7 +5,6 @@ const EventActionItem = React.createClass({
 		const icon = this.props.icon;
 		const text = this.props.text;
 		const date = this.props.date;
-		
 		return (
 			<div className="event-action">
 				<div className="event-action__icon-wrapper">
