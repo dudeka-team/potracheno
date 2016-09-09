@@ -2,7 +2,7 @@
 	display flex
 	align-items center
 	padding 18px 16px
-	padding-left 19px
+	padding-right 9px
 	background #fff
 
 	&_bordered
@@ -15,7 +15,7 @@
 	&__text
 		flex-grow 1
 		font-size 16px
-		font-weight 400
+		font-weight normal
 		color #2e363e
 
 	&__price
@@ -25,10 +25,14 @@
 		line-height 1.25
 
 	&__icon
-		background-size cover
-		width 24px
-		height 24px
-		background-image url('../img/check-active.svg')
+		width 18px
+		height 18px
+		background-repeat no-repeat
+		background-position 7px 0
+		background-image url('../img/more-actions.svg')
+		
+		&:hover
+			cursor pointer
 
 .unselectable
 	user-select none

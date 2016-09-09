@@ -4,8 +4,8 @@ import Fab from '../../components/Fab';
 import UniversalListItem from '../../components/UniversalListItem';
 
 export default function EventParticipants(props) {
+	const {currentUser} = props;
 	return (
-		const {currentUser} = this.props;
 		<div>
 			{props.participants.map((participant, i) => (
 				<UniversalListItem key={i} text={participant === currentUser ? participant + ' (Вы)' : participant} isBordered />
