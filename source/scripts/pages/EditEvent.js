@@ -27,8 +27,7 @@ const EditEventPage = React.createClass({
 			manager,
 			start,
 			end,
-			participants,
-			actions
+			participants
 		} = eventData;
 		const isEventParticipant = (pName) => participants.indexOf(pName) !== -1;
 
@@ -62,6 +61,10 @@ const EditEventPage = React.createClass({
 		if (!Object.keys(purchases).length) {
 			purchases = [];
 		}
+		console.log(currentEvent)
+		let actions = Object
+			.keys((currentEvent && currentEvent.actions) || [])
+			.map((config) => Object.assign({config}, currentEvent.actions[config]));
 
 		const updatedEvent = {
 			name,
@@ -73,13 +76,18 @@ const EditEventPage = React.createClass({
 			actions
 		};
 
-		const dispatchEventManipulation = (condition, parameters) => {
+		dispatch(updateEvent({
+			id: params.id,
+			data: updatedEvent,
+		}));
+		
+		const dispatchEventManipulation = (condition, actionType, parameters) => {
 			if (condition) {
 				dispatch(createEventActionAsync({
 					eventId: this.props.params.id,
 					eventActionInfo: {
 						config: eventActionTypes
-							.changeEventName(...parameters),
+							[actionType](...parameters),
 					},
 				}));
 			}
@@ -87,27 +95,19 @@ const EditEventPage = React.createClass({
 
 		dispatchEventManipulation(
 			(updatedEvent.name !== this.props.currentEvent.name), 
+			'changeEventName',
 			[updatedEvent.manager, updatedEvent.name, 
 			moment(new Date()).startOf('hour').fromNow()]
-		)
+		);
 
-		// if (updatedEvent.name !== this.props.currentEvent.name) {
-		// 	dispatch(createEventActionAsync({
-		// 		eventId: this.props.params.id,
-		// 		eventActionInfo: {
-		// 			config: eventActionTypes
-		// 				.changeEventName(updatedEvent.manager,
-		// 								updatedEvent.name,
-		// 								moment(new Date()).startOf('hour').fromNow(),
-		// 							),
-		// 		},
-		// 	}));
-		// }
+		dispatchEventManipulation(
+			(updatedEvent.start !== this.props.currentEvent.start || updatedEvent.end !== this.props.currentEvent.end), 
+			'changeEventDate',
+			[updatedEvent.manager, updatedEvent.start, updatedEvent.end, moment(new Date()).startOf('hour').fromNow()]
+		);
 
-		dispatch(updateEvent({
-			id: params.id,
-			data: updatedEvent,
-		}));
+
+
 
 		
 	},

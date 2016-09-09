@@ -19,8 +19,19 @@ export const eventActionTypes = {
 			date
 		}
 	},
-	addParticipantToEvent(participantName, eventName) {
-		return `${participantName} добавлен в мероприятие ${eventName}`;
+	changeEventDate(managerName, start, end, date) {
+		return {
+			text: `${managerName} изменил время мероприятия на ${start}-${end}`,
+			icon: 'pen',
+			date
+		}
+	},
+	addParticipantToEvent(participantName) {
+		return {
+			text: `${participantName} добавлен в мероприятие`,
+			icon: 'pen',
+			date
+		}
 	},
 	participantGoOut(participantName, eventName) {
 		return `${participantName} вышел из мероприятия ${eventName}`;
