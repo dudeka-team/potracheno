@@ -1,7 +1,11 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
+import CircularProgress from 'material-ui/CircularProgress';
+
 import setLocalEvents from '../actions/setLocalEvents';
+
+import FlexContainer from '../components/FlexContainer';
 import {TopBar, TopBarIcon, TopBarHeading} from '../components/TopBar';
 
 const UserSelectionPage = React.createClass({
@@ -20,9 +24,21 @@ const UserSelectionPage = React.createClass({
 		);
 	},
 
+	renderPreloader() {
+		return (
+			<FlexContainer alignItems="center" justifyContent="center">
+				<CircularProgress />
+			</FlexContainer>
+		);
+	},
+
 	render() {
 		const {props} = this;
 		const {currentEvent} = props;
+
+		if (!currentEvent) {
+			return this.renderPreloader();
+		}
 
 		return (
 			<div>
@@ -31,22 +47,18 @@ const UserSelectionPage = React.createClass({
 					<TopBarIcon icon="info" />
 				</TopBar>
 				<ul>
-					{currentEvent &&
-						currentEvent.participants.map(participant => {
-							return (
-								<li
-									key={participant}
-									onClick={() => this.changeEventName(participant)}
-								>
-									{participant}
-								</li>
-							);
-						})
-					}
+					{currentEvent.participants.map(participant => {
+						return (
+							<li
+								key={participant}
+								onClick={() => this.changeEventName(participant)}
+							>
+								{participant}
+							</li>
+						);
+					})}
 				</ul>
-				{currentEvent &&
-					<input type="button" value="Выбрать" onClick={this.applyEventName} />
-				}
+				<input type="button" value="Выбрать" onClick={this.applyEventName} />
 			</div>
 		);
 	},

@@ -44,10 +44,12 @@ export default handleActions({
 
 	[FETCH_EVENT_DATA_SUCCESS]: (state, {payload}) => {
 		return assign({}, state, {
-			eventsById: Object.assign({}, state.eventsById, {
+			eventsById: assign({}, state.eventsById, {
 				[payload.key]: payload.value,
 			}),
-			currentEvent: payload.value,
+			currentEvent: assign({}, payload.value, {
+				participantName: state.localEvents[payload.key],
+			}),
 			isFetchingEvent: false,
 		});
 	},

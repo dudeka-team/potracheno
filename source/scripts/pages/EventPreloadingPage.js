@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 
+import Wrapper from '../components/Wrapper';
 import UserSelectionPage from './UserSelectionPage';
 import EventPage from './EventPage';
 import fetchEventData from '../actions/fetchEventData';
@@ -20,14 +21,14 @@ const EventPreloadingPage = React.createClass({
 		const {props} = this;
 		const {id} = props.params;
 		return (
-			<div>
+			<Wrapper>
 				{
 					props.localEvents[id] ?
 						<EventPage id={id} />
 						:
 						<UserSelectionPage id={id} />
 				}
-			</div>
+			</Wrapper>
 		);
 	},
 });
