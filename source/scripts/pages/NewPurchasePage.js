@@ -81,54 +81,8 @@ const NewPurchasePage = React.createClass({
 		return Math.round((purchase.amount || 0) / count);
 	},
 
-	save() {
-		const {state, props} = this;
-		props.dispatch(createPurchaseAsync({
-			eventId: this.props.params.id,
-			purchaseData: state.purchase,
-		}));
-		this.setState({
-			isSavingData: true,
-		});
-	},
-
-	goToEvent() {
-		this.props.router.push(`/events/${this.props.params.id}`);
-		this.props.dispatch(loadEventDataAsync(this.props.params.id));
-	},
-
-	saveChanges() {
-		const {props, state} = this;
-		const {dispatch} = props;
-		const {purchase_id, id} = props.params;
-		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
-
-		this.setState({
-			isSavingData: true,
-		});
-	},
-
-	deletePurchase() {
-		const {id, purchase_id} = this.props.params;
-		const {dispatch} = this.props;
-		dispatch(fetchPurchaseDelete(id, purchase_id));
-	},
-
-	createPageTopBar() {
-		const {purchase} = this.state;
-		const {participants} = purchase;
-		const disabled = participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
-		return (
-			<TopBar>
-				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
-				<TopBarHeading title="Новая покупка" />
-				{this.state.isSavingData ?
-					<CircularProgress size={0.3} />
-					:
-					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.save} />
-				}
-			</TopBar>
-		);
+	getFullName(name) {
+		return this.state.userName === name ? `${name} (Вы)` : name;
 	},
 
 	editPageTopBar() {
@@ -148,8 +102,54 @@ const NewPurchasePage = React.createClass({
 		);
 	},
 
-	getFullName(name) {
-		return this.state.userName == name ? name + ' (Вы)' : name;
+	createPageTopBar() {
+		const {purchase} = this.state;
+		const {participants} = purchase;
+		const disabled = participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
+		return (
+			<TopBar>
+				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
+				<TopBarHeading title="Новая покупка" />
+				{this.state.isSavingData ?
+					<CircularProgress size={0.3} />
+					:
+					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.save} />
+				}
+			</TopBar>
+		);
+	},
+
+	deletePurchase() {
+		const {id, purchase_id} = this.props.params;
+		const {dispatch} = this.props;
+		dispatch(fetchPurchaseDelete(id, purchase_id));
+	},
+
+	saveChanges() {
+		const {props, state} = this;
+		const {dispatch} = props;
+		const {purchase_id, id} = props.params;
+		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
+
+		this.setState({
+			isSavingData: true,
+		});
+	},
+
+	goToEvent() {
+		this.props.router.push(`/events/${this.props.params.id}`);
+		this.props.dispatch(loadEventDataAsync(this.props.params.id));
+	},
+
+	save() {
+		const {state, props} = this;
+		props.dispatch(createPurchaseAsync({
+			eventId: this.props.params.id,
+			purchaseData: state.purchase,
+		}));
+		this.setState({
+			isSavingData: true,
+		});
 	},
 
 	render() {
@@ -239,7 +239,7 @@ const NewPurchasePage = React.createClass({
 									}}
 								/>);
 							})
-						} 
+						}
 					</div>
 					{mode === EDIT &&
 						<button onClick={this.deletePurchase}> удалить покупку </button>

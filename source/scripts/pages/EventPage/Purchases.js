@@ -50,7 +50,7 @@ const EventPurchasesPage = React.createClass({
 
 	render() {
 		const {state, props} = this;
-		const {currentEvent, localEvents} = props;
+		const {localEvents} = props;
 		const currentUser = localEvents[props.eventId];
 		const {eventParticipants} = props;
 
@@ -75,7 +75,7 @@ const EventPurchasesPage = React.createClass({
 						let payerName = purchase.payer;
 						if (currentUser === payerName) {
 							payerName += 'Вы';
-						} 
+						}
 						const {participants} = purchase;
 						return (
 							<PurchaseListItem

@@ -136,7 +136,7 @@ const EventPage = React.createClass({
 							{
 								name: 'members',
 								labelContent: 'Участники',
-								content: 
+								content:
 									<Participants
 										participants={currentEvent.participants}
 										currentUser={currentUser}

@@ -21,8 +21,8 @@ export default function BalancePage(props) {
 						<BalanceListItem
 							key={i}
 							sum={-Math.round(debt.sum)}
-							from={debt.from + (currentUser === debt.from && ' (Вы)' || '')}
-							to={debt.to + (currentUser === debt.to && ' (Вы)' || '')}
+							from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
+							to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
 							debtType="neutral"
 						/>
 					);

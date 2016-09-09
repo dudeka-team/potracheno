@@ -21,9 +21,9 @@ const UserSelectionPage = React.createClass({
 		);
 	},
 
-	addNewParticipant(event) {
+	addNewParticipant() {
 		const {id, currentEvent} = this.props;
-		var name = document.querySelector('.new-praticipant-name').value;
+		const name = document.querySelector('.new-praticipant-name').value;
 		const newParticipantsList = currentEvent.participants.slice();
 		newParticipantsList.push(name);
 		this.props.dispatch(fetchUpdateParticipants(id, newParticipantsList));
@@ -32,7 +32,6 @@ const UserSelectionPage = React.createClass({
 	render() {
 		const {props} = this;
 		const {currentEvent} = props;
-		console.log('render');
 		return (
 			<div>
 				<TopBar>
@@ -57,7 +56,7 @@ const UserSelectionPage = React.createClass({
 					<div>
 						<input type="button" value="Выбрать" onClick={this.applyEventName} />
 						<input className="new-praticipant-name" type="text" />
-						<input type="button" value="Добавить участника" onClick={this.addNewParticipant}/>
+						<input type="button" value="Добавить участника" onClick={this.addNewParticipant} />
 					</div>
 				}
 			</div>

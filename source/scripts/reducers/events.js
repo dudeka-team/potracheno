@@ -19,7 +19,6 @@ import {
 	GET_LOCAL_EVENTS,
 	SET_LOCAL_EVENTS,
 
-	FETCH_UPDATE_PARTICIPANTS,
 	FETCH_UPDATE_PARTICIPANTS_SUCCESS,
 
 	CHANGE_PURCHASE,
@@ -148,7 +147,7 @@ export default handleActions({
 		const {eventId, participantsList} = payload;
 		const {eventsById} = state;
 		const changedEvent = assign({}, eventsById[eventId], {
-			participants: participantsList
+			participants: participantsList,
 		});
 		return assign({}, state, {
 			eventsById: assign({}, eventsById, {
