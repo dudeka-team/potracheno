@@ -199,7 +199,7 @@ const EditEvent = React.createClass({
 						fullWidth
 						floatingLabelText="Начало"
 						formatDate={formatDate}
-						onChange={state.handleStartDateChange}
+						onChange={this.handleStartDateChange}
 						minDate={state.start}
 						value={state.start}
 					/>
@@ -208,7 +208,7 @@ const EditEvent = React.createClass({
 						fullWidth
 						floatingLabelText="Завершение"
 						formatDate={formatDate}
-						onChange={state.handleEndDateChange}
+						onChange={this.handleEndDateChange}
 						minDate={state.start}
 						value={state.end}
 					/>
