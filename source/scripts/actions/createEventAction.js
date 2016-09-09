@@ -1,5 +1,4 @@
 import {createAction} from 'redux-actions';
-import {hashHistory} from 'react-router';
 import db from '../database';
 import {
 	CREATE_EVENT_ACTION,
@@ -73,7 +72,6 @@ export function createEventActionAsync(payload) {
 				key: result.key,
 				eventActionInfo: result.eventActionInfo,
 			}));
-			hashHistory.push(`events/${payload.eventId}`);
 		});
 	};
 }
