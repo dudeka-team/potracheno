@@ -27,3 +27,5 @@ export const SET_LOCAL_EVENTS = 'SET_LOCAL_EVENTS';
 
 export const CHANGE_PURCHASE = 'CHANGE_PURCHASE';
 export const LOAD_EVENT_DATA = 'LOAD_EVENT_DATA';
+
+export const RELOGIN = 'RELOGIN';

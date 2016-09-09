@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 export default function Chip(props) {
 	return (
-		<div {...props} className={['chip', props.className || ''].join(' ')}>
+		<div className={['chip', props.className || ''].join(' ')}>
 			<p className="chip__text">{props.text}</p>
 			<div className="chip__cancel-button" onClick={props.onClose} />
 		</div>
