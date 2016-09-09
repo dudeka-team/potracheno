@@ -74,7 +74,7 @@ const EventPurchasesPage = React.createClass({
 					.map(purchase => {
 						let payerName = purchase.payer;
 						if (currentUser === payerName) {
-							payerName += 'Вы';
+							payerName += ' (Вы)';
 						}
 						const {participants} = purchase;
 						return (
