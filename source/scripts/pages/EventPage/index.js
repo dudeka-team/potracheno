@@ -13,12 +13,8 @@ import Purchases from './Purchases';
 
 import EventActions from './EventActions';
 
-import Participants from './Participants';
 import fetchEventData from '../../actions/fetchEventData';
 import relogin from '../../actions/relogin';
-
-
-import fetchEventData from '../../actions/fetchEventData';
 
 import Menu from '../../components/Menu';
 
