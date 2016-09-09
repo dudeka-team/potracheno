@@ -11,10 +11,10 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 import Balance from './Balance';
 import Purchases from './Purchases';
 
-import Participants from './Participants';
+import EventActions from './EventActions';
+
 import fetchEventData from '../../actions/fetchEventData';
 import relogin from '../../actions/relogin';
-
 
 import Menu from '../../components/Menu';
 
@@ -88,6 +88,9 @@ const EventPage = React.createClass({
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
+		const actions = Object
+			.keys((currentEvent && currentEvent.actions) || [])
+			.map((config) => Object.assign({config}, currentEvent.actions[config]));
 
 		if (isFetchingEvent) {
 			return this.renderPreloader();
@@ -135,9 +138,21 @@ const EventPage = React.createClass({
 									/>,
 							},
 							{
-								name: 'members',
-								labelContent: 'Участники',
-								content: <Participants participants={currentEvent.participants} />,
+								name: 'balance',
+								labelContent: 'Баланс',
+								content:
+									<Balance
+										purchases={purchases}
+										participants={currentEvent.participants}
+									/>,
+							},
+							{
+								name: 'actions',
+								labelContent: 'Действия',
+								content:
+									<EventActions
+										actions={actions}
+									/>,
 							},
 						]}
 					/>

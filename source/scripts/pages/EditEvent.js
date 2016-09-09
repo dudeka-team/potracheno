@@ -9,6 +9,8 @@ import updateEvent from '../actions/updateEvent';
 import FlexContainer from '../components/FlexContainer';
 import EditEvent from '../components/EditEvent';
 
+import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
+
 const EditEventPage = React.createClass({
 	componentDidMount() {
 		const {props} = this;
@@ -60,6 +62,10 @@ const EditEventPage = React.createClass({
 			purchases = [];
 		}
 
+		const actions = Object
+			.keys((currentEvent && currentEvent.actions) || [])
+			.map((config) => Object.assign({config}, currentEvent.actions[config]));
+
 		const updatedEvent = {
 			name,
 			manager,
@@ -67,11 +73,72 @@ const EditEventPage = React.createClass({
 			end,
 			participants,
 			purchases,
+			actions,
 		};
+
 		dispatch(updateEvent({
 			id: params.id,
 			data: updatedEvent,
 		}));
+
+		const dispatchEventManipulation = (condition, actionType, parameters) => {
+			if (condition) {
+				dispatch(createEventActionAsync({
+					eventId: this.props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes[actionType](...parameters),
+					},
+				}));
+			}
+		};
+
+		const getParticipants = (oldPs, newPs) => {
+			const addedParticipants = newPs;
+			oldPs.forEach((oldP) => {
+				newPs.forEach((newP, newPIndex) => {
+					if (oldP === newP) {
+						addedParticipants.splice(newPIndex, 1);
+					}
+				});
+			});
+
+			return {
+				addedParticipants,
+			};
+		};
+
+		const filteredParticipants =
+			getParticipants(
+				currentEvent.participants,
+				updatedEvent.participants
+			);
+
+		dispatchEventManipulation(
+			(updatedEvent.name !== currentEvent.name),
+			'changeEventName',
+			[updatedEvent.manager, updatedEvent.name,
+			moment(new Date()).startOf('hour').fromNow()]
+		);
+
+		dispatchEventManipulation(
+			(updatedEvent.start !== currentEvent.start
+			|| updatedEvent.end !== currentEvent.end),
+			'changeEventDate',
+			[
+				updatedEvent.manager,
+				updatedEvent.start,
+				updatedEvent.end,
+				moment(new Date()).startOf('hour').fromNow(),
+			]
+		);
+
+		filteredParticipants.addedParticipants.forEach((p) => {
+			dispatchEventManipulation(
+				(filteredParticipants.addedParticipants),
+				'addParticipantToEvent',
+				[p, moment(new Date()).startOf('hour').fromNow()]
+			);
+		});
 	},
 
 	renderPreloader() {
