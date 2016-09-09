@@ -1,7 +1,11 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
+import CircularProgress from 'material-ui/CircularProgress';
+
 import setLocalEvents from '../actions/setLocalEvents';
+
+import FlexContainer from '../components/FlexContainer';
 import {TopBar, TopBarIcon, TopBarHeading} from '../components/TopBar';
 import fetchUpdateParticipants from '../actions/fetchUpdateParticipants';
 
@@ -29,9 +33,22 @@ const UserSelectionPage = React.createClass({
 		this.props.dispatch(fetchUpdateParticipants(id, newParticipantsList));
 	},
 
+	renderPreloader() {
+		return (
+			<FlexContainer alignItems="center" justifyContent="center">
+				<CircularProgress />
+			</FlexContainer>
+		);
+	},
+
 	render() {
 		const {props} = this;
 		const {currentEvent} = props;
+
+		if (!currentEvent) {
+			return this.renderPreloader();
+		}
+
 		return (
 			<div>
 				<TopBar>
@@ -39,18 +56,16 @@ const UserSelectionPage = React.createClass({
 					<TopBarIcon icon="info" />
 				</TopBar>
 				<ul>
-					{currentEvent &&
-						currentEvent.participants.map(participant => {
-							return (
-								<li
-									key={participant}
-									onClick={() => this.changeEventName(participant)}
-								>
-									{participant}
-								</li>
-							);
-						})
-					}
+					{currentEvent.participants.map(participant => {
+						return (
+							<li
+								key={participant}
+								onClick={() => this.changeEventName(participant)}
+							>
+								{participant}
+							</li>
+						);
+					})}
 				</ul>
 				{currentEvent &&
 					<div>

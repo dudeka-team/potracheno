@@ -5,6 +5,7 @@ import {withRouter} from 'react-router';
 import {CircularProgress} from 'material-ui';
 
 import {createPurchaseAsync} from '../actions/createPurchase';
+import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
 import {loadEventDataAsync} from '../actions';
 
 import {Page, PageContent} from '../components/Page';
@@ -85,6 +86,56 @@ const NewPurchasePage = React.createClass({
 		return this.state.userName === name ? `${name} (Вы)` : name;
 	},
 
+	save() {
+		const {state, props} = this;
+		props.dispatch(createPurchaseAsync({
+			eventId: this.props.params.id,
+			purchaseData: state.purchase,
+		}));
+
+		props.dispatch(createEventActionAsync({
+			eventId: this.props.params.id,
+			eventActionInfo: {
+				config: eventActionTypes.addPurchase(
+					state.purchase.payer,
+					state.purchase.name,
+					state.purchase.amount,
+					moment(new Date()).startOf('hour').fromNow()
+				),
+			},
+		}));
+
+		this.setState({
+			isSavingData: true,
+		});
+	},
+
+	goToEvent() {
+		this.props.router.push(`/events/${this.props.params.id}`);
+		this.props.dispatch(loadEventDataAsync(this.props.params.id));
+	},
+
+	saveChanges() {
+		const {props, state} = this;
+		const {dispatch} = props;
+		const {purchase_id, id} = props.params;
+		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
+
+		props.dispatch(createEventActionAsync({
+			eventId: this.props.params.id,
+			eventActionInfo: {
+				text: eventActionTypes
+					.changePurchaseInfo(state.purchase.payer,
+									state.purchase.name
+								),
+			},
+		}));
+
+		this.setState({
+			isSavingData: true,
+		});
+	},
+
 	editPageTopBar() {
 		const {purchase} = this.state;
 		const {participants} = purchase;
@@ -123,33 +174,6 @@ const NewPurchasePage = React.createClass({
 		const {id, purchase_id} = this.props.params;
 		const {dispatch} = this.props;
 		dispatch(fetchPurchaseDelete(id, purchase_id));
-	},
-
-	saveChanges() {
-		const {props, state} = this;
-		const {dispatch} = props;
-		const {purchase_id, id} = props.params;
-		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
-
-		this.setState({
-			isSavingData: true,
-		});
-	},
-
-	goToEvent() {
-		this.props.router.push(`/events/${this.props.params.id}`);
-		this.props.dispatch(loadEventDataAsync(this.props.params.id));
-	},
-
-	save() {
-		const {state, props} = this;
-		props.dispatch(createPurchaseAsync({
-			eventId: this.props.params.id,
-			purchaseData: state.purchase,
-		}));
-		this.setState({
-			isSavingData: true,
-		});
 	},
 
 	render() {

@@ -1,41 +1,47 @@
 import React, {PropTypes} from 'react';
-import Chip from '../Chip';
 import EventStatus from '../EventStatus';
 import BlueSubtitle from '../BlueSubtitle';
 import UniversalListItem from '../UniversalListItem';
 
 const Menu = React.createClass({
 	render() {
-		const classes = ['menu'];
 		const {props} = this;
-		if (props.menuOpen) {
-			classes.push('menu_open');
-		} else {
-			classes.push('menu_closed');
-		}
+		const {currentEvent} = props;
+		const {participantName} = currentEvent;
+		const classes = ['menu', `menu_${props.menuOpen ? 'open' : 'closed'}`];
+		const isManager = participantName === currentEvent.manager;
+
 		return (
 			<div className={classes.join(' ')}>
 				<div className="menu__wrapper" onClick={props.closeMenu}>
 					<div className="menu__inner">
-						<div className="menu__top-bar">
-							<Chip className="menu__chip" text="Дамир(Вы)" />
-							<div className="menu__icons icons-section">
-								<div className="icons-section__icon icons-section__icon_event-edit" />
-								<div className="icons-section__icon icons-section__icon_add-person" />
+						{isManager &&
+							<div className="menu__top-bar">
+								<div className="menu__icons icons-section">
+									<div
+										onClick={props.handleEdit}
+										className="icons-section__icon icons-section__icon_event-edit"
+									/>
+									<div className="icons-section__icon icons-section__icon_add-person" />
+								</div>
 							</div>
-						</div>
-						<EventStatus name={props.name} subtitle={props.subtitle} />
+						}
+						<EventStatus name={currentEvent.name} subtitle={props.subtitle} />
 						<BlueSubtitle text="Участники" />
 						<div className="menu__list">
-							{props.participants.map((item) => {
+							{currentEvent.participants.map((item) => {
 								return (
-									<UniversalListItem text={item} isIcon />
+									<UniversalListItem
+										key={item}
+										text={participantName === item ? `${item} (Вы)` : item}
+										isIcon
+									/>
 								);
 							})}
 						</div>
-						<div className="menu__bottom-bar bottom-bar">
+						<div onClick={props.handleRelogin} className="menu__bottom-bar bottom-bar">
 							<div className="bottom-bar__icon" />
-							<div className="bottom-bar__text">Покинуть мероприятие</div>
+							<div className="bottom-bar__text">Войти под другим именем</div>
 						</div>
 					</div>
 				</div>
@@ -45,9 +51,8 @@ const Menu = React.createClass({
 });
 
 Menu.propTypes = {
-	participants: PropTypes.object.isRequired,
-	name: PropTypes.string,
-	subtitle: PropTypes.string,
+	currentEvent: PropTypes.object.isRequired,
+	subtitle: PropTypes.string.isRequired,
 };
 
 export default Menu;
