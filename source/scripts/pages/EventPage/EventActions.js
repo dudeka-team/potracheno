@@ -1,11 +1,17 @@
 import React from 'react';
 import EventActionListItem from '../../components/EventActionListItem';
 
+const firstAction = {
+	config: {
+		icon: 'calendar',
+		text: 'создано мероприятие',
+	},
+};
+
 export default function EventActions(props) {
 	return (
 		<div>
-			<EventActionListItem icon="calendar" text="создал мероприятие" />
-			{props.actions.map((item) => {
+			{[firstAction].concat(props.actions).reverse().map((item) => {
 				return (
 					<EventActionListItem
 						icon={item.config.icon}
@@ -17,4 +23,3 @@ export default function EventActions(props) {
 		</div>
 	);
 }
-

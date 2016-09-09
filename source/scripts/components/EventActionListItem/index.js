@@ -12,7 +12,7 @@ const EventActionItem = React.createClass({
 				</div>
 				<div className="event-action__info">
 					<div className="event-action__text">{text}</div>
-					<div className="event-action__date">{date}</div>
+					{date && <div className="event-action__date">{date}</div>}
 				</div>
 			</div>
 		);
