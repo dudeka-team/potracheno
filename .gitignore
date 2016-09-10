@@ -1,6 +1,7 @@
 # General files
 *~
 .DS_Store
+.vscode
 
 # Build
 static/index.html
