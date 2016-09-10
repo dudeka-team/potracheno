@@ -139,7 +139,10 @@ const NewPurchasePage = React.createClass({
 	editPageTopBar() {
 		const {purchase} = this.state;
 		const {participants, name} = purchase;
-		const disabled = participants.length === 0 || isNaN(purchase.amount) || !purchase.amount || name === '';
+		const disabled = participants.length === 0 ||
+			isNaN(purchase.amount) ||
+			!purchase.amount ||
+			name === '';
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
@@ -156,7 +159,10 @@ const NewPurchasePage = React.createClass({
 	createPageTopBar() {
 		const {purchase} = this.state;
 		const {participants, name} = purchase;
-		const disabled = participants.length === 0 || isNaN(purchase.amount) || !purchase.amount || name === '';
+		const disabled = participants.length === 0 ||
+			isNaN(purchase.amount) ||
+			!purchase.amount
+			|| name === '';
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
