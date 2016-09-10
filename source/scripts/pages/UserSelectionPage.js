@@ -1,12 +1,12 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
+import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import setLocalEvents from '../actions/setLocalEvents';
 
 import FlexContainer from '../components/FlexContainer';
-import TextField from 'material-ui/TextField';
 import {TopBar, TopBarIcon, TopBarHeading} from '../components/TopBar';
 import fetchUpdateParticipants from '../actions/fetchUpdateParticipants';
 
@@ -91,7 +91,8 @@ const UserSelectionPage = React.createClass({
 				{currentEvent &&
 					<div>
 						<input type="button" value="Выбрать" onClick={this.applyEventName} />
-						<TextField className="new-praticipant-name"
+						<TextField
+							className="new-praticipant-name"
 							type="text"
 							onChange={this.userNameChangeHandler}
 							errorText={state.isDuplicate && 'Имена участников не должны повторяться'
