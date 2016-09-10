@@ -17,7 +17,7 @@ const BalanceCheck = React.createClass({
 	selectAndCopy(eventsParticipantsDebts) {
 		const checkDiv = document.querySelector('.balance-check');
 		checkDiv.textContent = getCheck(eventsParticipantsDebts);
-		var range = document.createRange();
+		const range = document.createRange();
 		range.selectNode(checkDiv);
 		getSelection().addRange(range);
 		try {
@@ -26,7 +26,7 @@ const BalanceCheck = React.createClass({
 				copied: true,
 				resultMsg: 'Чек скопирован в буфер обмена',
 			});
-		} catch(err) {
+		} catch (err) {
 			this.setState({
 				resultMsg: 'Копирование текста на данном девайсе невозможно',
 			});
@@ -38,14 +38,14 @@ const BalanceCheck = React.createClass({
 		const {debts} = props;
 		return (
 			<div>
-				<div className="balance-check"></div>
+				<div className="balance-check" />
 				{state.copied ?
 					<div className="copy-result-msg">{state.resultMsg}</div>
 					:
 					<button onClick={() => this.selectAndCopy(debts)}> Скопировать чек </button>}
 			</div>
 		);
-	}
+	},
 });
 
 export default BalanceCheck;
