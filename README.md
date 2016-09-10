@@ -4,7 +4,7 @@
 
 ```bash
 $ npm i # install dependencies
-$ gulp # start dev server
+$ npm start # start dev server
 $ npm run start-prod # start server in production mode
 $ npm run build # build project for production
 ```
