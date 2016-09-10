@@ -20,6 +20,8 @@ import {
 	SET_LOCAL_EVENTS,
 
 	CHANGE_PURCHASE,
+
+	REPAY_DEBT_SUCCESS,
 } from '../constants';
 
 const {assign} = Object;
@@ -124,6 +126,19 @@ export default handleActions({
 			eventsById: assign({}, eventsById, {[eventId]: changedEvent}),
 		});
 	},
+
+	[REPAY_DEBT_SUCCESS]: (state, {payload}) => {
+		console.log(payload);
+		const {eventId, sum, name}  = payload;
+
+		const updatedRepayedDebts = Object.assign({}, state.eventsById[eventId].repayedDebts, {[name]: sum});
+		const updatedEvent = Object.assign({}, state.eventsById[eventId], {repayedDebts: updatedRepayedDebts});
+
+		return Object.assign({}, state, {
+			eventsById: assign({}, state.eventsById, {[eventId]: updatedEvent}),
+		});
+	},
+
 }, initialState);
 
 function stopCreatingEvent(state) {

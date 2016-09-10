@@ -124,7 +124,7 @@ const EventPage = React.createClass({
 								labelContent: 'Баланс',
 								content:
 									<Balance
-										currentEvent={currentEvent}
+										eventId={props.id}
 									/>,
 							},
 							{
