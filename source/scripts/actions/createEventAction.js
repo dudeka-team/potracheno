@@ -41,7 +41,7 @@ export const eventActionTypes = {
 	},
 	addPurchase(currentUser, purchaseName, purchasePrice, date) {
 		return {
-			text: `${currentUser} купил "${purchaseName}" на сумму ${purchasePrice} руб.`,
+			text: `_b${currentUser} купил _b"${purchaseName}" на сумму _b${purchasePrice} руб.`,
 			icon: 'purchase',
 			date,
 		};
