@@ -20,7 +20,11 @@ const Popup = React.createClass({
 		const {props} = this;
 		const {okButton, cancelButton, unBordered, largeHeader} = props;
 		const rootClasses = ['popup'];
-		const headerClasses = `popup__header ${largeHeader && 'popup__header_large'} ${unBordered && 'popup__header_unbordered'}`;
+		const headerClasses = ['popup__header'];
+		if (largeHeader) headerClasses.push('popup__header_large');
+		if (unBordered) headerClasses.push('popup__header_unbordered');
+		const titleClasses = ['popup__title'];
+		if (largeHeader) titleClasses.push('popup__title_large');
 
 		if (!okButton && !cancelButton) {
 			rootClasses.push('popup_without-footer');
@@ -31,12 +35,12 @@ const Popup = React.createClass({
 				<div className="popup__overlay" onClick={props.onClose} />
 				<div className="popup__wrapper">
 					<div className="popup__inner">
-						<div className={headerClasses}>
+						<div className={headerClasses.join(' ')}>
 							{props.closeIcon && <div
 								className="popup__icon popup__icon_close"
 								onClick={props.onClose}
 							/>}
-							<div className={`popup__title ${largeHeader && 'popup__title_large'}`}>{props.title}</div>
+							<div className={titleClasses.join(' ')}>{props.title}</div>
 						</div>
 						<div className={`popup__content ${unBordered && 'popup__content_unbordered'}`}>
 							{props.children}

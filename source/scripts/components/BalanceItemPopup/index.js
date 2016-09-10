@@ -1,7 +1,5 @@
 import React from 'react';
-import connect from 'react-redux';
 import TextField from 'material-ui/TextField';
-import BalanceListItem from '../BalanceListItem';
 import SubHeader from '../SubHeader';
 
 import Popup from '../Popup';
@@ -68,7 +66,8 @@ const BalanceItemPupop = React.createClass({
 							style={{width: '100%'}}
 							type="number"
 							onChange={this.amountChange}
-							errorText={state.isAmountInvalid && 'Сумма должна быть неотрицательной и не превосходить сумму долга'}
+							errorText={state.isAmountInvalid &&
+								'Сумма должна быть неотрицательной и не превосходить сумму долга'}
 						/>
 					</div>
 				</div>
@@ -80,4 +79,7 @@ const BalanceItemPupop = React.createClass({
 export default BalanceItemPupop;
 
 // Example of usage:
-// <BalanceItemPupop debt={debt} onClose={() => ...} onSubmit={({payedDebt, to, from, sum}) => ...} />
+// <BalanceItemPupop
+//		debt={debt} onClose={() => ...}
+//		onSubmit={({payedDebt, to, from, sum}) => ...}
+// />

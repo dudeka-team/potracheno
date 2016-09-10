@@ -1,7 +1,6 @@
 import React from 'react';
 import BlueSubtitle from '../../components/BlueSubtitle';
 import BalanceListItem from '../../components/BalanceListItem';
-import BalanceItemPopup from '../../components/BalanceItemPopup';
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 
 export default function BalancePage(props) {
@@ -16,7 +15,6 @@ export default function BalancePage(props) {
 	return (
 		<div className="balance-page">
 			<BlueSubtitle text="Баланс участников" />
-			<BalanceItemPopup debt={eventsParticipantsDebts[0]} />
 			<div>{
 				eventsParticipantsDebts.map((debt, i) => {
 					return (
