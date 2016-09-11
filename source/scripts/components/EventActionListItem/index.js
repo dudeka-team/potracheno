@@ -13,14 +13,20 @@ const EventActionItem = React.createClass({
 				<div className="event-action__info">
 					<div className="event-action__content">
 						{
-							text.split(' ').map((item) => {
-								if (item.includes('_b')) {
-									return <span className='event-action__text event-action__text_bold'>{`${item.slice(2)} `}</span>
-								} else {
-									return <span className='event-action__text'>{`${item} `}</span>
+							text.split('_s_').map((item) => {
+								if (item.includes('b_')) {
+									return (
+										<span className="event-action__text event-action__text_bold">
+											{`${item.slice(2)} `}
+										</span>
+									);
 								}
+
+								return (
+									<span className="event-action__text">{`${item} `}</span>
+								);
 							})
-						}		
+						}
 					</div>
 					{date && <div className="event-action__date">{date}</div>}
 				</div>

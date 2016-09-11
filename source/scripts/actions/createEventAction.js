@@ -4,44 +4,54 @@ import {
 	CREATE_EVENT_ACTION,
 } from '../constants';
 
+const space = '_s_';
+const bold = 'b_';
+
 export const eventActionTypes = {
 	createEvent(managerName) {
-		return `${managerName} создал мероприятие`;
+		return `_b${managerName} создал мероприятие`;
 	},
 	joinToEvent(participantName) {
-		return `К мероприятию присоединился ${participantName}`;
+		return `К мероприятию присоединился _b${participantName}`;
 	},
 	changeEventName(currentUser, eventName, date) {
 		return {
-			text: `${currentUser} изменил название мероприятия на ${eventName}`,
+			text: `${bold}${currentUser}${space}
+			изменил${space}название${space}мероприятия
+			${space}на${space}${bold}${eventName}`,
 			icon: 'pen',
 			date,
 		};
 	},
 	changeEventDate(currentUser, start, end, date) {
 		return {
-			text: `${currentUser} изменил время мероприятия на ${start}-${end}`,
+			text: `${bold}${currentUser}${space}изменил
+			${space}время${space}мероприятия${space}
+			на${space}${bold}${start}-${end}`,
 			icon: 'pen',
 			date,
 		};
 	},
 	addParticipantToEvent(currentUser, participantName, date) {
 		return {
-			text: `${currentUser} добавил в мероприятие ${participantName}`,
+			text: `${bold}${currentUser}${space}добавил${space}
+			в${space}мероприятие${space}${bold}${participantName}`,
 			icon: 'person',
 			date,
 		};
 	},
 	removeParticipantFromEvent(currentUser, participantName, date) {
 		return {
-			text: `${currentUser} исключил ${participantName} из мероприятия`,
+			text: `${bold}${currentUser}${space}исключил${space}
+			${bold}${participantName}${space}из мероприятия`,
 			icon: 'exit',
 			date,
 		};
 	},
 	addPurchase(currentUser, purchaseName, purchasePrice, date) {
 		return {
-			text: `_b${currentUser} купил _b"${purchaseName}" на сумму _b${purchasePrice} руб.`,
+			text: `${bold}${currentUser}${space}купил${space}${bold}
+			"${purchaseName}"${space}на${space}сумму${space}${bold}${purchasePrice} руб.`,
 			icon: 'purchase',
 			date,
 		};

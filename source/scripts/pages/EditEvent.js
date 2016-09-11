@@ -98,30 +98,30 @@ const EditEventPage = React.createClass({
 			let addedParticipants = [];
 			addedParticipants = newPs.filter((newP) => {
 				return !oldPs.includes(newP);
-			})
+			});
 
 			removedParticipants = oldPs.filter((oldP) => {
 				return !newPs.includes(oldP);
-			})
-			  
+			});
+
 			return {
 				addedParticipants,
-				removedParticipants
-			}
+				removedParticipants,
+			};
 		};
 
 		const filteredParticipants = getParticipants(
 			currentEvent.participants,
 			updatedEvent.participants
-		)
+		);
 
 		dispatchEventManipulation(
 			(updatedEvent.name !== currentEvent.name),
 			'changeEventName',
 			[
-				currentUser, 
+				currentUser,
 				updatedEvent.name,
-				new Date()
+				new Date(),
 			]
 		);
 
@@ -142,9 +142,9 @@ const EditEventPage = React.createClass({
 				(filteredParticipants.addedParticipants),
 				'addParticipantToEvent',
 				[
-					currentUser, 
-					p, 
-					new Date()
+					currentUser,
+					p,
+					new Date(),
 				]
 			);
 		});
@@ -154,9 +154,9 @@ const EditEventPage = React.createClass({
 				(filteredParticipants.removedParticipants),
 				'removeParticipantFromEvent',
 				[
-					currentUser, 
-					p, 
-					new Date()
+					currentUser,
+					p,
+					new Date(),
 				]
 			);
 		});
