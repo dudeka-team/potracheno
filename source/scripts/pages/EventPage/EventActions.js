@@ -1,10 +1,18 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router';
 import EventActionListItem from '../../components/EventActionListItem';
 
-export default function EventActions(props) {
+function EventActions(props) {
+	const firstAction = {
+		config: {
+			text: `b_${props.currentEvent.manager}_s_создал_s_мероприятие`,
+			icon: 'calendar'
+		}
+	}
 	return (
 		<div>
-			{props.actions.reverse().map((item) => {
+			{[firstAction, ...props.actions].reverse().map((item) => {
 				return (
 					<EventActionListItem
 						icon={item.config.icon}
@@ -17,3 +25,11 @@ export default function EventActions(props) {
 		</div>
 	);
 }
+
+function mapStateToProps({events}) {
+	return {
+		currentEvent: events.currentEvent
+	}
+}
+
+export default withRouter(connect(mapStateToProps)(EventActions));
