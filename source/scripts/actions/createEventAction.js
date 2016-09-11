@@ -42,28 +42,30 @@ export const eventActionTypes = {
 	},
 	removeParticipantFromEvent(currentUser, participantName, date) {
 		return {
-			text: `${bold}${currentUser}${space}исключил${space}
-			${bold}${participantName}${space}из мероприятия`,
+			text: `${bold}${currentUser}${space}исключил${space}${bold}${participantName}
+			${space}из мероприятия`,
 			icon: 'exit',
 			date,
 		};
 	},
 	addPurchase(currentUser, purchaseName, purchasePrice, date) {
+		console.log(date)
 		return {
-			text: `${bold}${currentUser}${space}купил${space}${bold}
-			"${purchaseName}"${space}на${space}сумму${space}${bold}${purchasePrice} руб.`,
+			text: `${bold}${currentUser}${space}купил${space}${bold}${purchaseName}
+			${space}на${space}сумму`,
 			icon: 'purchase',
 			date,
+			purchasePrice
 		};
 	},
 	changePurchaseInfo(participantName, purchaseName) {
-		return `${participantName} изменил покупку "${purchaseName}"`;
+		return `${participantName} изменил покупку ${purchaseName}`;
 	},
 	noParticipateInPurchase(participantName, purchaseName) {
-		return `${participantName} не участвует в покупке "${purchaseName}"`;
+		return `${participantName} не участвует в покупке ${purchaseName}`;
 	},
 	joinToPurchase(participantName, purchaseName) {
-		return `${participantName} присоединился к покупке "${purchaseName}"`;
+		return `${participantName} присоединился к покупке ${purchaseName}`;
 	},
 	giveBackDebt(creditorName, debtorName) {
 		return `${creditorName} вернул долг ${debtorName}`;
@@ -78,6 +80,7 @@ export const createEventAction = createAction(CREATE_EVENT_ACTION);
 export function createEventActionAsync(payload) {
 	return dispatch => {
 		db.addEventAction(payload.eventId, payload.eventActionInfo).then(result => {
+			console.log(result.eventActionInfo)
 			dispatch(createEventAction({
 				key: result.key,
 				eventActionInfo: result.eventActionInfo,

@@ -121,7 +121,7 @@ const EditEventPage = React.createClass({
 			[
 				currentUser,
 				updatedEvent.name,
-				new Date(),
+				(new Date).getTime(),
 			]
 		);
 
@@ -133,7 +133,7 @@ const EditEventPage = React.createClass({
 				currentUser,
 				moment(updatedEvent.start).format('DD MMMM'),
 				moment(updatedEvent.end).format('DD MMMM'),
-				new Date(),
+				(new Date).getTime(),
 			]
 		);
 
@@ -144,7 +144,7 @@ const EditEventPage = React.createClass({
 				[
 					currentUser,
 					p,
-					new Date(),
+					(new Date).getTime(),
 				]
 			);
 		});
@@ -156,7 +156,7 @@ const EditEventPage = React.createClass({
 				[
 					currentUser,
 					p,
-					new Date(),
+					(new Date).getTime(),
 				]
 			);
 		});

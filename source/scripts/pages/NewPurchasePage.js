@@ -100,7 +100,7 @@ const NewPurchasePage = React.createClass({
 					state.purchase.payer,
 					state.purchase.name,
 					state.purchase.amount,
-					new Date()
+					(new Date).getTime(),
 				),
 			},
 		}));
@@ -124,10 +124,10 @@ const NewPurchasePage = React.createClass({
 		props.dispatch(createEventActionAsync({
 			eventId: this.props.params.id,
 			eventActionInfo: {
-				text: eventActionTypes
-					.changePurchaseInfo(state.purchase.payer,
-									state.purchase.name
-								),
+				text: eventActionTypes.changePurchaseInfo(
+					state.purchase.payer,
+					state.purchase.name
+				),
 			},
 		}));
 
