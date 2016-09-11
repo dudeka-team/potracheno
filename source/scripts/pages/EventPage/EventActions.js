@@ -7,9 +7,9 @@ function EventActions(props) {
 	const firstAction = {
 		config: {
 			text: `b_${props.currentEvent.manager}_s_создал_s_мероприятие`,
-			icon: 'calendar'
-		}
-	}
+			icon: 'calendar',
+		},
+	};
 	return (
 		<div>
 			{[firstAction, ...props.actions].reverse().map((item) => {
@@ -28,8 +28,8 @@ function EventActions(props) {
 
 function mapStateToProps({events}) {
 	return {
-		currentEvent: events.currentEvent
-	}
+		currentEvent: events.currentEvent,
+	};
 }
 
 export default withRouter(connect(mapStateToProps)(EventActions));

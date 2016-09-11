@@ -88,22 +88,40 @@ const NewPurchasePage = React.createClass({
 
 	save() {
 		const {state, props} = this;
+
+		if (state.mode === CREATE) {
+			props.dispatch(createEventActionAsync({
+				eventId: props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.addPurchase(
+						state.purchase.payer,
+						state.purchase.name,
+						state.purchase.amount,
+						(new Date()).getTime()
+					),
+				},
+			}));
+			state.purchase.participants.forEach((item) => {
+				props.dispatch(createEventActionAsync({
+					eventId: props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.addParticipantToPurchase(
+							props.localEvents[props.params.id],
+							item,
+							state.purchase.name,
+							(new Date()).getTime()
+						),
+					},
+				}));
+			});
+		}
+
+
 		props.dispatch(createPurchaseAsync({
-			eventId: this.props.params.id,
+			eventId: props.params.id,
 			purchaseData: state.purchase,
 		}));
 
-		props.dispatch(createEventActionAsync({
-			eventId: this.props.params.id,
-			eventActionInfo: {
-				config: eventActionTypes.addPurchase(
-					state.purchase.payer,
-					state.purchase.name,
-					state.purchase.amount,
-					(new Date()).getTime()
-				),
-			},
-		}));
 
 		this.setState({
 			isSavingData: true,
@@ -120,16 +138,6 @@ const NewPurchasePage = React.createClass({
 		const {dispatch} = props;
 		const {purchase_id, id} = props.params;
 		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
-
-		props.dispatch(createEventActionAsync({
-			eventId: this.props.params.id,
-			eventActionInfo: {
-				text: eventActionTypes.changePurchaseInfo(
-					state.purchase.payer,
-					state.purchase.name
-				),
-			},
-		}));
 
 		this.setState({
 			isSavingData: true,

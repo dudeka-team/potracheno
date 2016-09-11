@@ -8,12 +8,6 @@ const space = '_s_';
 const bold = 'b_';
 
 export const eventActionTypes = {
-	createEvent(managerName) {
-		return `_b${managerName} создал мероприятие`;
-	},
-	joinToEvent(participantName) {
-		return `К мероприятию присоединился _b${participantName}`;
-	},
 	changeEventName(currentUser, eventName, date) {
 		return {
 			text: `${bold}${currentUser}${space}
@@ -57,20 +51,35 @@ export const eventActionTypes = {
 			purchasePrice,
 		};
 	},
-	changePurchaseInfo(participantName, purchaseName) {
-		return `${participantName} изменил покупку ${purchaseName}`;
+	addParticipantToPurchase(currentUser, payerName, purchaseName, date) {
+		let text;
+		if (currentUser === payerName) {
+			text = `${bold}${currentUser}${space}добавил
+			${space}себя${space}в${space}покупку${space}${bold}${purchaseName}`;
+		} else {
+			text = `${bold}${currentUser}${space}добавил${space}${bold}${payerName}
+			${space}в${space}покупку${space}${bold}${purchaseName}`;
+		}
+		return {
+			text,
+			icon: 'pen',
+			date,
+		};
 	},
-	noParticipateInPurchase(participantName, purchaseName) {
-		return `${participantName} не участвует в покупке ${purchaseName}`;
-	},
-	joinToPurchase(participantName, purchaseName) {
-		return `${participantName} присоединился к покупке ${purchaseName}`;
-	},
-	giveBackDebt(creditorName, debtorName) {
-		return `${creditorName} вернул долг ${debtorName}`;
-	},
-	eventClosing(eventName) {
-		return `Мероприятие ${eventName} подошло к концу`;
+	removeParticipantToPurchase(currentUser, payerName, purchaseName, date) {
+		let text;
+		if (currentUser === payerName) {
+			text = `${bold}${currentUser}${space}убрал${space}себя${space}из
+			${space}покупки${space}${bold}${purchaseName}`;
+		} else {
+			text = `${bold}${currentUser}${space}убрал${space}${bold}${payerName}${space}из
+			${space}покупки${space}${bold}${purchaseName}`;
+		}
+		return {
+			text,
+			icon: 'pen',
+			date,
+		};
 	},
 };
 
