@@ -142,7 +142,8 @@ const NewPurchasePage = React.createClass({
 		const disabled = participants.length === 0 ||
 			isNaN(purchase.amount) ||
 			!purchase.amount ||
-			name === '';
+			!(name || '').trim();
+
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
@@ -161,8 +162,8 @@ const NewPurchasePage = React.createClass({
 		const {participants, name} = purchase;
 		const disabled = participants.length === 0 ||
 			isNaN(purchase.amount) ||
-			!purchase.amount
-			|| name === '';
+			!purchase.amount ||
+			!(name || '').trim();
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
