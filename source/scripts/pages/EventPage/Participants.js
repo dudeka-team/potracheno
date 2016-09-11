@@ -6,7 +6,7 @@ import UniversalListItem from '../../components/UniversalListItem';
 export default function EventParticipants(props) {
 	const {currentUser} = props;
 	return (
-		<div>
+		<div style={{height: '100%'}}>
 			{props.participants.map((participant, i) => (
 				<UniversalListItem
 					key={i}
