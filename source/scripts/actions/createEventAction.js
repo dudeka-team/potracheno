@@ -49,13 +49,12 @@ export const eventActionTypes = {
 		};
 	},
 	addPurchase(currentUser, purchaseName, purchasePrice, date) {
-		console.log(date)
 		return {
 			text: `${bold}${currentUser}${space}купил${space}${bold}${purchaseName}
 			${space}на${space}сумму`,
 			icon: 'purchase',
 			date,
-			purchasePrice
+			purchasePrice,
 		};
 	},
 	changePurchaseInfo(participantName, purchaseName) {
@@ -80,7 +79,6 @@ export const createEventAction = createAction(CREATE_EVENT_ACTION);
 export function createEventActionAsync(payload) {
 	return dispatch => {
 		db.addEventAction(payload.eventId, payload.eventActionInfo).then(result => {
-			console.log(result.eventActionInfo)
 			dispatch(createEventAction({
 				key: result.key,
 				eventActionInfo: result.eventActionInfo,

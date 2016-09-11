@@ -32,10 +32,7 @@ const EventActionItem = React.createClass({
 								})
 							}
 						</div>
-						{
-							props.purchasePrice && 
-							<div className="event-action__purchase-price">{props.purchasePrice} Р</div>
-						}
+						{purchasePrice && <div className="event-action__purchase-price">{purchasePrice} Р</div>}
 					</div>
 					{date && <div className="event-action__date">{moment(date).fromNow()}</div>}
 				</div>

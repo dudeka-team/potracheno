@@ -1,8 +1,6 @@
 import React from 'react';
 import EventActionListItem from '../../components/EventActionListItem';
 
-
-
 export default function EventActions(props) {
 	return (
 		<div>
