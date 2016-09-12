@@ -1,7 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
-import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
 import EventStatus from '../EventStatus';
 import GreySubtitle from '../GreySubtitle';
@@ -9,14 +8,26 @@ import UserSelectionListItem from '../UserSelectionListItem';
 import setLocalEvents from '../../actions/setLocalEvents';
 import fetchUpdateParticipants from '../../actions/fetchUpdateParticipants';
 import FlexContainer from '../FlexContainer';
+import Popup from '../Popup';
+import UserSelectionPopup from '../UserSelectionPopup';
 
 const UserSelection = React.createClass({
 	getInitialState() {
 		return {
 			name: '',
-			isDuplicate: false,
-			isEmpty: false,
 		};
+	},
+
+	openPopup() {
+		this.setState({
+			popupOpened: true,
+		});
+	},
+
+	closePopup() {
+		this.setState({
+			popupOpened: false,
+		});
 	},
 
 	changeEventName(name) {
@@ -84,10 +95,30 @@ const UserSelection = React.createClass({
 
 		return (
 			<div>
+				{state.popupOpened &&
+					<Popup
+						title="Добавить себя"
+						okButton={{
+							text: 'Войти',
+							onClick: () => {
+								this.addNewParticipant();
+								this.changeEventName(this.state.name);
+							},
+						}}
+						cancelButton={{
+							text: 'Отмена',
+							onClick: this.closePopup,
+						}}
+						onClose={this.closePopup}
+					>
+						<UserSelectionPopup userNameChange={this.userNameChangeHandler} />
+					</Popup>
+				}
 				<div className="user-selection">
 					<div className="user-selection__top-bar">
 						<div className="user-selection__invite-text">
-							{`${currentEvent.manager} прислал(-а) вам приглашение на мероприятие`}
+							<span className="user-selection__invite-author">{currentEvent.manager}</span>
+							{' прислал(-а) вам приглашение на мероприятие'}
 						</div>
 						<div className="user-selection__icon" />
 					</div>
@@ -98,7 +129,7 @@ const UserSelection = React.createClass({
 					/>
 					<GreySubtitle text="Выберите себя среди участников" userSelection />
 					<div className="user-selection__list">
-						{currentEvent.participants.map(participant => {
+						{currentEvent.participants.sort().map(participant => {
 							return (
 								<UserSelectionListItem
 									key={participant}
@@ -107,19 +138,13 @@ const UserSelection = React.createClass({
 								/>
 							);
 						})}
-					</div>
-					{currentEvent &&
-						<div>
-							<TextField
-								className="new-praticipant-name"
-								type="text"
-								onChange={this.userNameChangeHandler}
-								errorText={state.isDuplicate && 'Имена участников не должны повторяться'
-									|| state.isEmpty && 'Имя не должно быть пустым'}
-							/>
-							<input type="button" value="Добавить участника" onClick={this.addNewParticipant} />
+						<div
+							className="user-selection__add-participant-button"
+							onClick={this.openPopup}
+						>
+							Добавить себя
 						</div>
-					}
+					</div>
 				</div>
 			</div>
 		);
