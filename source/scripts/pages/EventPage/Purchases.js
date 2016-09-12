@@ -6,8 +6,7 @@ import Fab from '../../components/Fab';
 import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
 import Popup from '../../components/Popup';
-import {Page, PageContent} from '../../components/Page';
-import {Tabs, TabsContent} from '../../components/Tabs';
+import {TabsContent} from '../../components/Tabs';
 
 function getSubtitle(participantsCount, eventParticipantsCount) {
 	let result;
@@ -92,7 +91,12 @@ const EventPurchasesPage = React.createClass({
 							);
 						})}
 				</TabsContent>
-				<Fab style={{position: 'absolute', bottom: '10px', right: '10px'}} onClick={this.goToNewPurchase}><AddShoppingCart /></Fab>
+				<Fab
+					style={{position: 'absolute', bottom: '10px', right: '10px'}}
+					onClick={this.goToNewPurchase}
+				>
+					<AddShoppingCart />
+				</Fab>
 			</div>
 		);
 	},

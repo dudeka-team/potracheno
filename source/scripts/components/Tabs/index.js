@@ -19,7 +19,7 @@ export function Tabs(props) {
 
 export function TabsContent(props) {
 	return (
-		<div className='tabs__content'>
+		<div className="tabs__content">
 			{props.children}
 		</div>
 	);

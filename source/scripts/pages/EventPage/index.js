@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import ReactSwipe from 'react-swipe';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import {Page, PageContent} from '../../components/Page';
+import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import {Tabs, TabsContent} from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
@@ -30,10 +30,6 @@ const EventPage = React.createClass({
 	componentDidMount() {
 		const {id, dispatch} = this.props;
 		dispatch(fetchEventData(id));
-	},
-
-	goToEvents() {
-		this.props.router.push('/events');
 	},
 
 	openMenu() {
@@ -76,6 +72,10 @@ const EventPage = React.createClass({
 		return `${participantsStatus} • ${formattedDate}`;
 	},
 
+	goToEvents() {
+		this.props.router.push('/events');
+	},
+
 	renderPreloader() {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center">
@@ -84,7 +84,7 @@ const EventPage = React.createClass({
 		);
 	},
 
-	changedTab(index, element) {
+	changedTab(index) {
 		this.setState({index});
 	},
 
@@ -131,24 +131,24 @@ const EventPage = React.createClass({
 						<TopBarIcon icon="more-actions" onClick={this.openMenu} />
 					</TopBar>
 					<Tabs
-						titles={["покупки", "баланс", "действия"]}
+						titles={['покупки', 'баланс', 'действия']}
 						activeTab={state.index}
 						onTabClick={this.onTabClick}
 					/>
-					<ReactSwipe 
+					<ReactSwipe
 						swipeOptions={{
 							callback: this.changedTab,
 							continuous: false,
 						}}
 						ref="reactSwipe"
 					>
-					<div>
-						<Purchases
-							eventId={props.id}
-							purchases={purchases}
-							eventParticipants={currentEvent.participants}
-							currentUser={currentUser}
-						/>
+						<div>
+							<Purchases
+								eventId={props.id}
+								purchases={purchases}
+								eventParticipants={currentEvent.participants}
+								currentUser={currentUser}
+							/>
 						</div>
 						<TabsContent title="2">
 							<Balance
@@ -164,7 +164,7 @@ const EventPage = React.createClass({
 							/>
 						</TabsContent>
 					</ReactSwipe>
-					
+
 				</Page>
 			);
 		}
