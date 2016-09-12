@@ -1,18 +1,138 @@
 import React from 'react';
+import {withRouter} from 'react-router';
+import {connect} from 'react-redux';
+import TextField from 'material-ui/TextField';
+import CircularProgress from 'material-ui/CircularProgress';
 import EventStatus from '../EventStatus';
 import GreySubtitle from '../GreySubtitle';
+import UserSelectionListItem from '../UserSelectionListItem';
+import setLocalEvents from '../../actions/setLocalEvents';
+import fetchUpdateParticipants from '../../actions/fetchUpdateParticipants';
+import FlexContainer from '../FlexContainer';
 
-export default function UserSelection() {
-	return (
-		<div className="user-selection">
-			<div className="user-selection__top-bar">
-				<div className="user-selection__invite-text">
-					Лина прислала вам приглашение на мероприятие
+const UserSelection = React.createClass({
+	getInitialState() {
+		return {
+			name: '',
+			isDuplicate: false,
+			isEmpty: false,
+		};
+	},
+
+	changeEventName(name) {
+		this.props.dispatch(
+			setLocalEvents(
+				this.props.id,
+				name
+			)
+		);
+		this.setState({
+			currentName: name,
+		});
+	},
+
+	userNameChangeHandler(event) {
+		const {currentEvent} = this.props;
+		const newUserName = event.target.value;
+		const names = currentEvent.participants.map(name => name.toLowerCase());
+		this.setState({
+			isEmpty: false,
+			name: newUserName,
+			isDuplicate: names.indexOf(newUserName.toLowerCase()) !== -1,
+		});
+	},
+
+	addNewParticipant() {
+		const {name} = this.state;
+		if (name === '') return this.setState({isEmpty: true});
+		const {id, currentEvent} = this.props;
+		const newParticipantsList = currentEvent.participants.slice();
+		newParticipantsList.push(name);
+		this.props.dispatch(fetchUpdateParticipants(id, newParticipantsList));
+	},
+
+	formatSubtitle(currentEvent) {
+		const participantsStatus = `${currentEvent.participants.length} участников`;
+		const formattedStart = moment(currentEvent.start).format('DD MMMM');
+		const formattedEnd = moment(currentEvent.end).format('DD MMMM');
+		let formattedDate;
+
+		if (formattedStart === formattedEnd) {
+			formattedDate = formattedStart;
+		} else {
+			formattedDate = `${formattedStart}–${formattedEnd}`;
+		}
+
+		return `${participantsStatus} • ${formattedDate}`;
+	},
+
+	renderPreloader() {
+		return (
+			<FlexContainer alignItems="center" justifyContent="center">
+				<CircularProgress />
+			</FlexContainer>
+		);
+	},
+
+	render() {
+		const {props, state} = this;
+		const {currentEvent} = props;
+
+		if (!currentEvent) {
+			return this.renderPreloader();
+		}
+
+		return (
+			<div>
+				<div className="user-selection">
+					<div className="user-selection__top-bar">
+						<div className="user-selection__invite-text">
+							{`${currentEvent.manager} прислал(-а) вам приглашение на мероприятие`}
+						</div>
+						<div className="user-selection__icon" />
+					</div>
+					<EventStatus
+						name={currentEvent.name}
+						subtitle={`${this.formatSubtitle(currentEvent)}`}
+						userSelection
+					/>
+					<GreySubtitle text="Выберите себя среди участников" userSelection />
+					<div className="user-selection__list">
+						{currentEvent.participants.map(participant => {
+							return (
+								<UserSelectionListItem
+									key={participant}
+									onClick={() => this.changeEventName(participant)}
+									text={participant}
+								/>
+							);
+						})}
+					</div>
+					{currentEvent &&
+						<div>
+							<TextField
+								className="new-praticipant-name"
+								type="text"
+								onChange={this.userNameChangeHandler}
+								errorText={state.isDuplicate && 'Имена участников не должны повторяться'
+									|| state.isEmpty && 'Имя не должно быть пустым'}
+							/>
+							<input type="button" value="Добавить участника" onClick={this.addNewParticipant} />
+						</div>
+					}
 				</div>
-				<div className="user-selection__icon" />
 			</div>
-			<EventStatus name="Выходные на даче" subtitle="6 участников ● 2 сентября" userSelection />
-			<GreySubtitle text="Выберите себя среди участников" userSelection />
-		</div>
-	);
+		);
+	},
+});
+
+
+function mapStateToProps({events}) {
+	return {
+		currentEvent: events.currentEvent,
+		isFetchingEvent: events.isFetchingEvent,
+		localEvents: events.localEvents,
+	};
 }
+
+export default connect(mapStateToProps)(withRouter(UserSelection));

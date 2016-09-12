@@ -2,6 +2,6 @@ import React from 'react';
 
 export default function UserSelectionListItem(props) {
 	return (
-		<div onClick={props.onClick}>{props.text}</div>
+		<div className="user-selection-list-item" onClick={props.onClick}>{props.text}</div>
 	);
 }

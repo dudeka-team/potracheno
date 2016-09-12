@@ -1,6 +1,13 @@
 .user-selection
 	position relative
 	
+	&__list
+		display flex
+		padding-top 3px
+		padding-left 19px
+		padding-right 19px
+		flex-wrap wrap
+
 	&__top-bar
 		padding 24px
 		padding-bottom 20px
@@ -10,13 +17,16 @@
 		font-size 16px
 		font-weight 400
 		color #1c2126
+		line-height 1.23
+		max-width 85%
 		
 	&__icon
+		margin 14px
 		width 24px
 		height 24px
 		background-repeat no-repeat
 		background-image url('img/info.svg')
 		position absolute
-		top 14px
-		right 14px
+		top 0
+		right 0
 	
