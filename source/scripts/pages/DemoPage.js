@@ -3,8 +3,8 @@ import IconOpenInNew from 'material-ui/svg-icons/action/open-in-new';
 import Fab from '../components/Fab';
 import Popup from '../components/Popup';
 import PurchaseInfo from '../components/PurchaseInfo';
-import Menu from '../components/Menu';
 
+import EventActionListItem from '../components/EventActionListItem';
 
 export default React.createClass({
 	getInitialState() {
@@ -29,6 +29,7 @@ export default React.createClass({
 		const {state} = this;
 		return (
 			<div>
+				<EventActionListItem />
 				<Fab onClick={this.openPopup}><IconOpenInNew /></Fab>
 				{state.popupOpened &&
 					<Popup
@@ -47,7 +48,6 @@ export default React.createClass({
 						<PurchaseInfo />
 					</Popup>
 				}
-				<Menu />
 			</div>
 		);
 	},

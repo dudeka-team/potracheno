@@ -19,9 +19,13 @@ import {
 	GET_LOCAL_EVENTS,
 	SET_LOCAL_EVENTS,
 
+	FETCH_UPDATE_PARTICIPANTS_SUCCESS,
+
 	CHANGE_PURCHASE,
 
 	REPAY_DEBT_SUCCESS,
+
+	FETCH_PURCHASE_DELETE,
 } from '../constants';
 
 const {assign} = Object;
@@ -46,10 +50,12 @@ export default handleActions({
 
 	[FETCH_EVENT_DATA_SUCCESS]: (state, {payload}) => {
 		return assign({}, state, {
-			eventsById: Object.assign({}, state.eventsById, {
+			eventsById: assign({}, state.eventsById, {
 				[payload.key]: payload.value,
 			}),
-			currentEvent: payload.value,
+			currentEvent: assign({}, payload.value, {
+				participantName: state.localEvents[payload.key],
+			}),
 			isFetchingEvent: false,
 		});
 	},
@@ -116,14 +122,14 @@ export default handleActions({
 		const participants = purchase.participants.slice();
 		const changedPurchase = assign({}, purchase, {participants});
 
-		const changedEvent = assign({}, eventsById, {
+		const changedEvents = assign({}, eventsById, {
 			[eventId]: assign({}, eventsById[eventId], {
 				purchases: assign({}, eventsById[eventId].purchases, {changedPurchase}),
 			}),
 		});
 
 		return assign({}, state, {
-			eventsById: assign({}, eventsById, {[eventId]: changedEvent}),
+			eventsById: assign({}, eventsById, changedEvents),
 		});
 	},
 
@@ -136,6 +142,35 @@ export default handleActions({
 
 		return Object.assign({}, state, {
 			eventsById: assign({}, state.eventsById, {[eventId]: updatedEvent}),
+		});
+	},
+
+	[FETCH_PURCHASE_DELETE]: (state, {payload}) => {
+		const {eventId, purchaseId} = payload;
+		const {eventsById} = state;
+
+		const purchases = assign({}, eventsById[eventId].purchases);
+		delete purchases[purchaseId];
+
+		const changedEvent = assign({}, eventsById[eventId], {purchases});
+		const changedEvents = assign({}, eventsById, {[eventId]: changedEvent});
+
+		return assign({}, state, {
+			eventsById: assign({}, changedEvents),
+		});
+	},
+
+	[FETCH_UPDATE_PARTICIPANTS_SUCCESS]: (state, {payload}) => {
+		const {eventId, participantsList} = payload;
+		const {eventsById} = state;
+		const changedEvent = assign({}, eventsById[eventId], {
+			participants: participantsList,
+		});
+		return assign({}, state, {
+			eventsById: assign({}, eventsById, {
+				[eventId]: changedEvent,
+			}),
+			currentEvent: changedEvent,
 		});
 	},
 

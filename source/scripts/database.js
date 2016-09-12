@@ -52,6 +52,17 @@ Database.addPurchase = function addPurchase(eventId, data) {
 		}));
 };
 
+Database.addEventAction = function addEventAction(eventId, data) {
+	return firebase
+		.database()
+		.ref(`events/${eventId}/actions`)
+		.push(data)
+		.then((snapshot) => ({
+			key: snapshot.key,
+			eventActionInfo: data,
+		}));
+};
+
 Database.changePurchase = function changePurchase(eventId, purchaseId, purchase) {
 	return firebase
 		.database()
@@ -73,6 +84,28 @@ Database.repayDebt = function repayDebt(eventId, sum, name) {
 			eventId,
 			sum,
 			name,
+		}));
+},
+
+Database.deletePurchase = function deletePurchase(eventId, purchaseId) {
+	return firebase
+		.database()
+		.ref(`events/${eventId}/purchases/${purchaseId}`)
+		.remove()
+		.then(() => ({
+			eventId,
+			purchaseId,
+		}));
+};
+
+Database.fetchUpdateParticipants = function fetchUpdateParticipants(eventId, participantsList) {
+	return firebase
+		.database()
+		.ref(`events/${eventId}/participants`)
+		.set(participantsList)
+		.then(() => ({
+			eventId,
+			participantsList,
 		}));
 };
 

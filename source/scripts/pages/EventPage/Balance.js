@@ -4,8 +4,15 @@ import BlueSubtitle from '../../components/BlueSubtitle';
 import BalanceListItem from '../../components/BalanceListItem';
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
+import BalanceItemPopup from '../../components/BalanceItemPopup';
 
 const BalancePage = React.createClass({
+	getInitialState() {
+	    return {
+	    	showPopup: false,
+	    };
+	},
+
 	repayDebtHandler(debt) {
 		let oldRepayedFrom = 0;
 		let oldRepayedTo = 0;
@@ -18,16 +25,37 @@ const BalancePage = React.createClass({
 		this.props.dispatch(
 			repayDebt(
 				this.props.eventId,
-				100, //временно
+				debt.sum,
 				debt.from,
 				debt.to,
 				oldRepayedFrom,
 				oldRepayedTo
 			)
 		);
+
+		this.setState({
+			showPopup: false,
+		})
+	},
+
+	showRepayPopup(debt) {
+		if (debt.to === this.props.currentUser) {
+			this.setState({
+				showPopup: true,
+				currentDebt: debt,
+			})
+		}
+	},
+
+	closeRepayPopup(debt) {
+		this.setState({
+			showPopup: false,
+		})
 	},
 
 	render() {
+		const {currentUser} = this.props;
+
 		const eventsParticipantsDebts =
 			getEventsParticipantsDebts(
 				getEventBalance(this.props.eventsById[this.props.eventId]),
@@ -43,14 +71,22 @@ const BalancePage = React.createClass({
 							<BalanceListItem
 								key={i}
 								sum={-Math.round(debt.sum)}
-								from={debt.from}
-								to={debt.to}
+								from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
+								to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
 								debtType="neutral"
-								onClick={() => this.repayDebtHandler(debt)}
+								onClick={() => this.showRepayPopup(debt)}
 							/>
 						);
 					})
 				}</div>
+				{
+					this.state.showPopup &&
+						<BalanceItemPopup 
+							debt={this.state.currentDebt}
+							onSubmit={this.repayDebtHandler}
+							onClose={() => this.closeRepayPopup()}
+						/>
+				}
 			</div>
 		);
 	}
@@ -59,7 +95,7 @@ const BalancePage = React.createClass({
 function mapStateToProps({events}) {
 	return {
 		eventsById: events.eventsById,
-	};
+	};	
 }
 
 export default connect(mapStateToProps)(BalancePage);

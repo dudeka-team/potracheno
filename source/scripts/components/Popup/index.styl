@@ -57,6 +57,13 @@ verticalPadding = 18px
 		box-shadow 0 0 2px 0 rgba(0, 0, 0, 0.2)
 		border-radius 2px 2px 0 0
 
+		&_unbordered
+			box-shadow none
+
+		&_large
+			padding-left 16px
+			padding-top 24px
+
 	&__icon
 		width 24px
 		height 24px
@@ -69,13 +76,17 @@ verticalPadding = 18px
 			margin-right 16px
 
 		&_close
-			background-image url('../img/cross.svg')
+			background-image url('img/cross.svg')
 
 	&__title
 		margin: 0 8px
 		color #2e363e
 		font-size 1rem
 		font-weight bold
+
+		&_large
+			font-size 20px
+			font-weight 500			
 
 	&__footer
 		position absolute
@@ -90,6 +101,12 @@ verticalPadding = 18px
 		border-radius 0 0 2px 2px
 		text-align right
 
+		&_unbordered
+			box-shadow none
+
 	&__content
 		background #fff
 		padding-bottom 8px
+
+		&_unbordered
+			padding-bottom 0px

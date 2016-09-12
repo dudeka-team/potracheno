@@ -11,9 +11,10 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 import Balance from './Balance';
 import Purchases from './Purchases';
 
-import Participants from './Participants';
-import fetchEventData from '../../actions/fetchEventData';
+import EventActions from './EventActions';
 
+import fetchEventData from '../../actions/fetchEventData';
+import relogin from '../../actions/relogin';
 
 import Menu from '../../components/Menu';
 
@@ -53,6 +54,11 @@ const EventPage = React.createClass({
 		router.push(`/events/${this.props.id}/edit`);
 	},
 
+	handleRelogin() {
+		const {id, dispatch} = this.props;
+		dispatch(relogin(id));
+	},
+
 	formatSubtitle(currentEvent) {
 		const participantsStatus = `${currentEvent.participants.length} участников`;
 		const formattedStart = moment(currentEvent.start).format('DD MMMM');
@@ -82,29 +88,35 @@ const EventPage = React.createClass({
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
+		const actions = Object
+			.keys((currentEvent && currentEvent.actions) || [])
+			.map((config) => Object.assign({config}, currentEvent.actions[config]));
 
 		if (isFetchingEvent) {
 			return this.renderPreloader();
 		}
 
+		const currentUser = props.localEvents[props.id];
+
 		if (currentEvent) {
+			const subtitle = this.formatSubtitle(currentEvent);
+
 			return (
 				<Page>
 					<Menu
-						closeMenu={this.closeMenu}
-						participants={currentEvent.participants}
-						name={currentEvent.name}
-						subtitle={this.formatSubtitle(currentEvent)}
+						currentEvent={currentEvent}
+						subtitle={subtitle}
 						menuOpen={state.menuOpen}
+						handleEdit={this.goToEdit}
+						handleRelogin={this.handleRelogin}
+						closeMenu={this.closeMenu}
 					/>
 					<TopBar>
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 						<TopBarHeading
 							title={currentEvent.name}
-							subtitle={this.formatSubtitle(currentEvent)}
+							subtitle={subtitle}
 						/>
-						<TopBarIcon icon="pen" onClick={this.goToEdit} />
-						<TopBarIcon icon="arrow-share" />
 						<TopBarIcon icon="more-actions" onClick={this.openMenu} />
 					</TopBar>
 					<Tabs
@@ -117,6 +129,7 @@ const EventPage = React.createClass({
 										eventId={props.id}
 										purchases={purchases}
 										eventParticipants={currentEvent.participants}
+										currentUser={currentUser}
 									/>,
 							},
 							{
@@ -125,12 +138,17 @@ const EventPage = React.createClass({
 								content:
 									<Balance
 										eventId={props.id}
+										currentUser={currentUser}
+										currentEvent={currentEvent}
 									/>,
 							},
 							{
-								name: 'members',
-								labelContent: 'Участники',
-								content: <Participants participants={currentEvent.participants} />,
+								name: 'actions',
+								labelContent: 'Действия',
+								content:
+									<EventActions
+										actions={actions}
+									/>,
 							},
 						]}
 					/>
@@ -146,6 +164,7 @@ function mapStateToProps({events}) {
 	return {
 		currentEvent: events.currentEvent,
 		isFetchingEvent: events.isFetchingEvent,
+		localEvents: events.localEvents,
 	};
 }
 

@@ -18,8 +18,13 @@ const Popup = React.createClass({
 
 	render() {
 		const {props} = this;
-		const {okButton, cancelButton} = props;
+		const {okButton, cancelButton, unBordered, largeHeader} = props;
 		const rootClasses = ['popup'];
+		const headerClasses = ['popup__header'];
+		if (largeHeader) headerClasses.push('popup__header_large');
+		if (unBordered) headerClasses.push('popup__header_unbordered');
+		const titleClasses = ['popup__title'];
+		if (largeHeader) titleClasses.push('popup__title_large');
 
 		if (!okButton && !cancelButton) {
 			rootClasses.push('popup_without-footer');
@@ -30,19 +35,20 @@ const Popup = React.createClass({
 				<div className="popup__overlay" onClick={props.onClose} />
 				<div className="popup__wrapper">
 					<div className="popup__inner">
-						<div className="popup__header">
+						<div className={headerClasses.join(' ')}>
 							{props.closeIcon && <div
 								className="popup__icon popup__icon_close"
 								onClick={props.onClose}
 							/>}
-							<div className="popup__title">{props.title}</div>
+							<div className={titleClasses.join(' ')}>{props.title}</div>
 						</div>
-						<div className="popup__content">
+						<div className={`popup__content ${unBordered && 'popup__content_unbordered'}`}>
 							{props.children}
 						</div>
 						{(okButton || cancelButton) && <PopupFooter
 							okButton={okButton}
 							cancelButton={cancelButton}
+							unBordered={unBordered}
 						/>}
 					</div>
 				</div>
@@ -52,10 +58,10 @@ const Popup = React.createClass({
 });
 
 function PopupFooter(props) {
-	const {okButton, cancelButton} = props;
+	const {okButton, cancelButton, unBordered} = props;
 
 	return (
-		<div className="popup__footer">
+		<div className={`popup__footer ${unBordered && 'popup__footer_unbordered'}`}>
 			{cancelButton && <SquareButton text={cancelButton.text} onClick={cancelButton.onClick} />}
 			{okButton && <SquareButton text={okButton.text} onClick={okButton.onClick} />}
 		</div>

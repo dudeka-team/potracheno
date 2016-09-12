@@ -1,5 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router';
+import {connect} from 'react-redux';
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import Fab from '../../components/Fab';
 import PurchaseInfo from '../../components/PurchaseInfo';
@@ -49,6 +50,8 @@ const EventPurchasesPage = React.createClass({
 
 	render() {
 		const {state, props} = this;
+		const {localEvents} = props;
+		const currentUser = localEvents[props.eventId];
 		const {eventParticipants} = props;
 
 		return (
@@ -69,11 +72,15 @@ const EventPurchasesPage = React.createClass({
 					.slice()
 					.reverse()
 					.map(purchase => {
+						let payerName = purchase.payer;
+						if (currentUser === payerName) {
+							payerName += ' (Вы)';
+						}
 						const {participants} = purchase;
 						return (
 							<PurchaseListItem
 								key={purchase.id}
-								buyer={purchase.payer}
+								buyer={payerName}
 								title={purchase.name}
 								subtitle={getSubtitle(participants.length, eventParticipants.length)}
 								price={purchase.amount}
@@ -87,4 +94,11 @@ const EventPurchasesPage = React.createClass({
 	},
 });
 
-export default withRouter(EventPurchasesPage);
+function mapStateToProps({events}) {
+	return {
+		currentEvent: events.currentEvent,
+		localEvents: events.localEvents,
+	};
+}
+
+export default connect(mapStateToProps)(withRouter(EventPurchasesPage));

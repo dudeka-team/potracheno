@@ -5,6 +5,7 @@ import {withRouter} from 'react-router';
 import {CircularProgress} from 'material-ui';
 
 import {createPurchaseAsync} from '../actions/createPurchase';
+import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
 import {loadEventDataAsync} from '../actions';
 
 import {Page, PageContent} from '../components/Page';
@@ -18,6 +19,7 @@ import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import fetchEventData from '../actions/fetchEventData';
 import fetchPurchaseChange from '../actions/fetchPurchaseChange';
+import fetchPurchaseDelete from '../actions/fetchPurchaseDelete';
 
 const EDIT = 'EDIT';
 const CREATE = 'CREATE';
@@ -26,17 +28,18 @@ const {assign} = Object;
 
 const NewPurchasePage = React.createClass({
 	getInitialState() {
-		const {currentEvent} = this.props;
+		const {currentEvent, localEvents} = this.props;
+		const eventId = this.props.params.id;
 		const purchase = {
 			participants: (currentEvent && currentEvent.participants) || [],
 			payer: currentEvent && currentEvent.participants && currentEvent.participants[0],
 		};
-
 		return {
 			mode: this.props.mode || CREATE,
 			isSavingData: false,
 			purchase,
 			eventParticipants: (currentEvent && currentEvent.participants) || [],
+			userName: localEvents[eventId],
 		};
 	},
 
@@ -79,12 +82,29 @@ const NewPurchasePage = React.createClass({
 		return Math.round((purchase.amount || 0) / count);
 	},
 
+	getFullName(name) {
+		return this.state.userName === name ? `${name} (Вы)` : name;
+	},
+
 	save() {
 		const {state, props} = this;
 		props.dispatch(createPurchaseAsync({
 			eventId: this.props.params.id,
 			purchaseData: state.purchase,
 		}));
+
+		props.dispatch(createEventActionAsync({
+			eventId: this.props.params.id,
+			eventActionInfo: {
+				config: eventActionTypes.addPurchase(
+					state.purchase.payer,
+					state.purchase.name,
+					state.purchase.amount,
+					moment(new Date()).startOf('hour').fromNow()
+				),
+			},
+		}));
+
 		this.setState({
 			isSavingData: true,
 		});
@@ -101,26 +121,19 @@ const NewPurchasePage = React.createClass({
 		const {purchase_id, id} = props.params;
 		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
 
+		props.dispatch(createEventActionAsync({
+			eventId: this.props.params.id,
+			eventActionInfo: {
+				text: eventActionTypes
+					.changePurchaseInfo(state.purchase.payer,
+									state.purchase.name
+								),
+			},
+		}));
+
 		this.setState({
 			isSavingData: true,
 		});
-	},
-
-	createPageTopBar() {
-		const {purchase} = this.state;
-		const {participants} = purchase;
-		const disabled = participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
-		return (
-			<TopBar>
-				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
-				<TopBarHeading title="Новая покупка" />
-				{this.state.isSavingData ?
-					<CircularProgress size={0.3} />
-					:
-					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.save} />
-				}
-			</TopBar>
-		);
 	},
 
 	editPageTopBar() {
@@ -140,18 +153,40 @@ const NewPurchasePage = React.createClass({
 		);
 	},
 
+	createPageTopBar() {
+		const {purchase} = this.state;
+		const {participants} = purchase;
+		const disabled = participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
+		return (
+			<TopBar>
+				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
+				<TopBarHeading title="Новая покупка" />
+				{this.state.isSavingData ?
+					<CircularProgress size={0.3} />
+					:
+					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.save} />
+				}
+			</TopBar>
+		);
+	},
+
+	deletePurchase() {
+		const {id, purchase_id} = this.props.params;
+		const {dispatch} = this.props;
+		dispatch(fetchPurchaseDelete(id, purchase_id));
+	},
+
 	render() {
-		const {state} = this;
+		const {state, props} = this;
 		const {mode} = state;
 		const {purchase} = state;
-
 		return (
 			<Page>
 				{mode === EDIT && this.editPageTopBar()}
 				{mode === CREATE && this.createPageTopBar()}
 				<PageContent>
 					<NewPurchasePayer
-						payer={purchase.payer || ''}
+						payer={this.getFullName(purchase.payer) || ''}
 						onClick={() => this.setState({popupOpened: true})}
 					/>
 					{state.popupOpened &&
@@ -161,8 +196,10 @@ const NewPurchasePage = React.createClass({
 							onClose={() => this.setState({popupOpened: false})}
 						>
 							<Payers
+								myName={this.props.localEvents[props.params.id]}
 								participants={state.eventParticipants}
 								payer={purchase.payer}
+								getFullName={this.getFullName}
 								changePayer={user => {
 									this.setState({
 										purchase: assign(purchase, {payer: user}),
@@ -210,7 +247,7 @@ const NewPurchasePage = React.createClass({
 								return (<UniversalListItem
 									id={user}
 									key={user}
-									text={user}
+									text={this.getFullName(user)}
 									price={this.getLoan(user)}
 									isCheckBox
 									checkBoxChecked={purchase.participants.indexOf(user) !== -1}
@@ -228,6 +265,9 @@ const NewPurchasePage = React.createClass({
 							})
 						}
 					</div>
+					{mode === EDIT &&
+						<button onClick={this.deletePurchase}> удалить покупку </button>
+					}
 				</PageContent>
 			</Page>
 		);
@@ -238,6 +278,7 @@ function mapStateToProps({events}) {
 	return {
 		currentEvent: events.currentEvent,
 		isFetchingEvent: events.isFetchingEvent,
+		localEvents: events.localEvents,
 	};
 }
 
