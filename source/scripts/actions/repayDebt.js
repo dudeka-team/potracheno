@@ -1,5 +1,3 @@
-import {createAction} from 'redux-actions';
-import {hashHistory} from 'react-router';
 import db from '../database';
 import {
 	REPAY_DEBT,

@@ -85,7 +85,7 @@ Database.repayDebt = function repayDebt(eventId, sum, name) {
 			sum,
 			name,
 		}));
-},
+};
 
 Database.deletePurchase = function deletePurchase(eventId, purchaseId) {
 	return firebase

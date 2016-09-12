@@ -8,9 +8,9 @@ import BalanceItemPopup from '../../components/BalanceItemPopup';
 
 const BalancePage = React.createClass({
 	getInitialState() {
-	    return {
-	    	showPopup: false,
-	    };
+		return {
+			showPopup: false,
+		};
 	},
 
 	repayDebtHandler(debt) {
@@ -18,8 +18,12 @@ const BalancePage = React.createClass({
 		let oldRepayedTo = 0;
 
 		if (this.props.eventsById[this.props.eventId].repayedDebts) {
-			oldRepayedFrom = Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.from]) || 0;
-			oldRepayedTo = Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.to]) || 0;
+			oldRepayedFrom =
+				Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.from])
+					|| 0;
+			oldRepayedTo =
+				Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.to])
+					|| 0;
 		}
 
 		this.props.dispatch(
@@ -35,7 +39,7 @@ const BalancePage = React.createClass({
 
 		this.setState({
 			showPopup: false,
-		})
+		});
 	},
 
 	showRepayPopup(debt) {
@@ -43,14 +47,14 @@ const BalancePage = React.createClass({
 			this.setState({
 				showPopup: true,
 				currentDebt: debt,
-			})
+			});
 		}
 	},
 
-	closeRepayPopup(debt) {
+	closeRepayPopup() {
 		this.setState({
 			showPopup: false,
-		})
+		});
 	},
 
 	render() {
@@ -81,7 +85,7 @@ const BalancePage = React.createClass({
 				}</div>
 				{
 					this.state.showPopup &&
-						<BalanceItemPopup 
+						<BalanceItemPopup
 							debt={this.state.currentDebt}
 							onSubmit={this.repayDebtHandler}
 							onClose={() => this.closeRepayPopup()}
@@ -89,13 +93,13 @@ const BalancePage = React.createClass({
 				}
 			</div>
 		);
-	}
+	},
 });
 
 function mapStateToProps({events}) {
 	return {
 		eventsById: events.eventsById,
-	};	
+	};
 }
 
 export default connect(mapStateToProps)(BalancePage);

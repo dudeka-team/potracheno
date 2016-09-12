@@ -134,11 +134,12 @@ export default handleActions({
 	},
 
 	[REPAY_DEBT_SUCCESS]: (state, {payload}) => {
-		console.log(payload);
-		const {eventId, sum, name}  = payload;
+		const {eventId, sum, name} = payload;
 
-		const updatedRepayedDebts = Object.assign({}, state.eventsById[eventId].repayedDebts, {[name]: sum});
-		const updatedEvent = Object.assign({}, state.eventsById[eventId], {repayedDebts: updatedRepayedDebts});
+		const updatedRepayedDebts =
+			Object.assign({}, state.eventsById[eventId].repayedDebts, {[name]: sum});
+		const updatedEvent =
+			Object.assign({}, state.eventsById[eventId], {repayedDebts: updatedRepayedDebts});
 
 		return Object.assign({}, state, {
 			eventsById: assign({}, state.eventsById, {[eventId]: updatedEvent}),

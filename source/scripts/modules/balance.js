@@ -27,14 +27,9 @@ export function getEventBalance(currentEvent) {
 	});
 
 	Object.keys(participantsBalance).forEach(participant => {
-		participantsBalance[participant] = 
-			participantsBalance[participant] 
-				+ ((currentEvent.repayedDebts && (currentEvent.repayedDebts[participant] || 0)) || 0);
+		participantsBalance[participant] +=
+			((currentEvent.repayedDebts && (currentEvent.repayedDebts[participant] || 0)) || 0);
 	});
-
-	console.log(participantsBalance);
-
-
 	return participantsBalance;
 }
 
