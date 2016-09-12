@@ -6,7 +6,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 import {Page, PageContent} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
-import Tabs from '../../components/Tabs';
+import {Tabs, TabsContent} from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 import Balance from './Balance';
@@ -18,24 +18,6 @@ import fetchEventData from '../../actions/fetchEventData';
 import relogin from '../../actions/relogin';
 
 import Menu from '../../components/Menu';
-
-const reactSwipeStyle = {
-	container: {
-		height: 'calc(100% - 53px)',
-		visibility: 'hidden',
-		position: 'relative',
-	},
-	wrapper: {
-		height: '100%',
-		position: 'relative',
-	},
-	child: {
-		height: '100%',
-		float: 'left',
-		width: '100%',
-		position: 'relative',
-	},
-};
 
 const EventPage = React.createClass({
 	getInitialState() {
@@ -159,29 +141,28 @@ const EventPage = React.createClass({
 							continuous: false,
 						}}
 						ref="reactSwipe"
-						style={reactSwipeStyle}
 					>
-						<PageContent>
-							<Purchases
-								eventId={props.id}
-								purchases={purchases}
-								eventParticipants={currentEvent.participants}
-								currentUser={currentUser}
-							/>
-						</PageContent>
-						<div title="2">
+					<div>
+						<Purchases
+							eventId={props.id}
+							purchases={purchases}
+							eventParticipants={currentEvent.participants}
+							currentUser={currentUser}
+						/>
+						</div>
+						<TabsContent title="2">
 							<Balance
 								purchases={purchases}
 								participants={currentEvent.participants}
 								currentUser={currentUser}
 								currentEvent={currentEvent}
 							/>
-						</div>
-						<div title="3">
+						</TabsContent>
+						<TabsContent title="3">
 							<EventActions
 								actions={actions}
 							/>
-						</div>
+						</TabsContent>
 					</ReactSwipe>
 					
 				</Page>

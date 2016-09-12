@@ -16,3 +16,21 @@ body
 .bottom-nav
 	position fixed
 	bottom 0px
+
+.react-swipe-container
+	overflow hidden
+	height "calc(100% - %s)" % ($tabsHeight + $topBarHeight)
+	visibility hidden
+	position relative
+
+	& > div
+		overflow hidden
+		height 100%
+		position relative
+
+		& > div			
+			height 100%
+			float left
+			width 100%
+			position relative
+

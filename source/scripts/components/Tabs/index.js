@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Tabs(props) {
+export function Tabs(props) {
 	return (
 		<div className="tabs__nav">
 			{props.titles.map((title, index) => (
@@ -13,6 +13,14 @@ export default function Tabs(props) {
 					{title}
 				</TabsItem>
 			))}
+		</div>
+	);
+}
+
+export function TabsContent(props) {
+	return (
+		<div className='tabs__content'>
+			{props.children}
 		</div>
 	);
 }
