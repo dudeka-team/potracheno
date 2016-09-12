@@ -4,7 +4,7 @@ export default function BalanceListItem(props) {
 	const sumClass = 'balance-list-item__sum';
 
 	return (
-		<div className="balance-list-item">
+		<div className="balance-list-item" onClick={props.onClick}>
 			<div className="balance-list-item__direction">
 				{props.from}
 				<span className="balance-list-item__arrow" />
