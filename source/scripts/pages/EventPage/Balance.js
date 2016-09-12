@@ -43,12 +43,10 @@ const BalancePage = React.createClass({
 	},
 
 	showRepayPopup(debt) {
-		if (debt.to === this.props.currentUser) {
-			this.setState({
-				showPopup: true,
-				currentDebt: debt,
-			});
-		}
+		this.setState({
+			showPopup: true,
+			currentDebt: debt,
+		});
 	},
 
 	closeRepayPopup() {
