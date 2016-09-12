@@ -4,10 +4,11 @@
 .vscode
 
 # Build
+www/
 static/index.html
 static/bundle.js
-static/bundle.js.map
-www/
+*.js.map
+static/static.zip
 
 # Development stuff
 platforms/
