@@ -8,7 +8,13 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const SOURCE = './source';
 const OUT = './static';
+
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
+
+let entry = [
+	`${SOURCE}/scripts/index.js`,
+	`${SOURCE}/styles/main.styl`,
+];
 let devtool = 'source-map';
 
 const plugins = [
@@ -32,17 +38,17 @@ if (ENVIRONMENT === 'production') {
 			},
 		})
 	);
+} else {
+	entry = [
+		'webpack-dev-server/client?http://localhost:8080',
+		'webpack/hot/dev-server',
+	].concat(entry);
 }
 
 const config = {
 	devtool,
 	plugins,
-	entry: [
-		'webpack-dev-server/client?http://localhost:8080',
-		'webpack/hot/dev-server',
-		`${SOURCE}/scripts/index.js`,
-		`${SOURCE}/styles/main.styl`,
-	],
+	entry,
 	output: {
 		path: path.resolve(__dirname, OUT),
 		filename: 'bundle.js',

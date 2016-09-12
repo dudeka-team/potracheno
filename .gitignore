@@ -8,6 +8,7 @@ static/index.html
 static/bundle.js
 static/bundle.js.map
 www/
+static/static.zip
 
 # Development stuff
 platforms/
