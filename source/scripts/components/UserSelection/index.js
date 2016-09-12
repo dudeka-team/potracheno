@@ -97,6 +97,8 @@ const UserSelection = React.createClass({
 			<div>
 				{state.popupOpened &&
 					<Popup
+						unBordered
+						largeHeader
 						title="Добавить себя"
 						okButton={{
 							text: 'Войти',
