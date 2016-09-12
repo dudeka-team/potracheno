@@ -95,7 +95,7 @@ const EventsPage = React.createClass({
 							<CircularProgress />
 						</FlexContainer>
 					}
-					<ActionButton text='Добавить мероприятие' onClick={this.goToNewEvent}/>
+					<ActionButton text="Добавить мероприятие" onClick={this.goToNewEvent} />
 				</PageContent>
 			</Page>
 		);
