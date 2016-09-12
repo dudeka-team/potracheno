@@ -75,7 +75,7 @@ const BalanceItemPopup = React.createClass({
 export default BalanceItemPopup;
 
 // Example of usage:
-// <BalanceItemPupop
+// <BalanceItemPopup
 //		debt={debt} onClose={() => ...}
 //		onSubmit={({payedDebt, to, from, sum}) => ...}
 // />
