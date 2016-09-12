@@ -4,7 +4,7 @@ import SubHeader from '../SubHeader';
 
 import Popup from '../Popup';
 
-const BalanceItemPupop = React.createClass({
+const BalanceItemPopup = React.createClass({
 	getInitialState() {
 		return {
 			value: 0,
@@ -72,7 +72,7 @@ const BalanceItemPupop = React.createClass({
 	},
 });
 
-export default BalanceItemPupop;
+export default BalanceItemPopup;
 
 // Example of usage:
 // <BalanceItemPupop
