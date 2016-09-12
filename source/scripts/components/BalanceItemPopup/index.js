@@ -43,7 +43,7 @@ const BalanceItemPopup = React.createClass({
 				}}
 				cancelButton={{
 					text: 'отмена',
-					onClick: props.close,
+					onClick: props.onClose,
 				}}
 			>
 				<div className="balance-item-popup-wrapper">
