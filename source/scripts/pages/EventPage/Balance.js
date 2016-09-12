@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import BlueSubtitle from '../../components/BlueSubtitle';
+import GreySubtitle from '../../components/GreySubtitle';
 import BalanceListItem from '../../components/BalanceListItem';
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
@@ -66,7 +66,7 @@ const BalancePage = React.createClass({
 
 		return (
 			<div className="balance-page">
-				<BlueSubtitle text="Баланс участников" />
+				<GreySubtitle text="Баланс участников" />
 				<div>{
 					eventsParticipantsDebts.map((debt, i) => {
 						return (

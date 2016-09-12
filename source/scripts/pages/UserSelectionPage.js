@@ -7,7 +7,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import setLocalEvents from '../actions/setLocalEvents';
 
 import FlexContainer from '../components/FlexContainer';
-import {TopBar, TopBarIcon, TopBarHeading} from '../components/TopBar';
+import UserSelection from '../components/UserSelection';
 import fetchUpdateParticipants from '../actions/fetchUpdateParticipants';
 
 const UserSelectionPage = React.createClass({
@@ -72,22 +72,17 @@ const UserSelectionPage = React.createClass({
 
 		return (
 			<div>
-				<TopBar>
-					<TopBarHeading title="" />
-					<TopBarIcon icon="info" />
-				</TopBar>
-				<ul>
-					{currentEvent.participants.map(participant => {
-						return (
-							<li
-								key={participant}
-								onClick={() => this.changeEventName(participant)}
-							>
-								{participant}
-							</li>
-						);
-					})}
-				</ul>
+				<UserSelection />
+				{currentEvent.participants.map(participant => {
+					return (
+						<div
+							key={participant}
+							onClick={() => this.changeEventName(participant)}
+						>
+							{participant}
+						</div>
+					);
+				})}
 				{currentEvent &&
 					<div>
 						<input type="button" value="Выбрать" onClick={this.applyEventName} />
