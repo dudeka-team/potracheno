@@ -4,7 +4,7 @@ import SubHeader from '../SubHeader';
 
 import Popup from '../Popup';
 
-const BalanceItemPupop = React.createClass({
+const BalanceItemPopup = React.createClass({
 	getInitialState() {
 		return {
 			value: 0,
@@ -46,19 +46,15 @@ const BalanceItemPupop = React.createClass({
 					onClick: props.onClose,
 				}}
 			>
-				<div style={{padding: '6px 24px 0px 24px'}}>
-					<div
-						className="balance-list-item__direction"
-						style={{padding: '18px 0px'}}
-					>
+				<div className="balance-item-popup-wrapper">
+					<div className="balance-list-item__direction">
 						{debt.from}
 						<span className="balance-list-item__arrow" />
 						{debt.to}
 					</div>
-					<SubHeader
-						style={{transform: 'translateY(10px)'}}
-						text="Сколько"
-					/>
+					<div className="sub-header-wrapper">
+						<SubHeader text="Сколько" />
+					</div>
 					<div className="money-input-wrapper">
 						<div className="input-money-label"> руб. </div>
 						<TextField
@@ -76,10 +72,10 @@ const BalanceItemPupop = React.createClass({
 	},
 });
 
-export default BalanceItemPupop;
+export default BalanceItemPopup;
 
 // Example of usage:
-// <BalanceItemPupop
+// <BalanceItemPopup
 //		debt={debt} onClose={() => ...}
 //		onSubmit={({sum, to, from, sum}) => ...}
 // />
