@@ -46,19 +46,15 @@ const BalanceItemPupop = React.createClass({
 					onClick: props.close,
 				}}
 			>
-				<div style={{padding: '6px 24px 0px 24px'}}>
-					<div
-						className="balance-list-item__direction"
-						style={{padding: '18px 0px'}}
-					>
+				<div className="balance-item-popup-wrapper">
+					<div className="balance-list-item__direction">
 						{debt.from}
 						<span className="balance-list-item__arrow" />
 						{debt.to}
 					</div>
-					<SubHeader
-						style={{transform: 'translateY(10px)'}}
-						text="Сколько"
-					/>
+					<div className="sub-header-wrapper">
+						<SubHeader text="Сколько" />
+					</div>
 					<div className="money-input-wrapper">
 						<div className="input-money-label"> руб. </div>
 						<TextField
