@@ -7,8 +7,8 @@ export default function EventStatus(props) {
 	}
 	return (
 		<div className={classes.join(' ')}>
-			<div className={'event-status__name'}>{props.name}</div>
-			<div className={'event-status__subtitle'}>{props.subtitle}</div>
+			<div className="event-status__name">{props.name}</div>
+			<div className="event-status__subtitle">{props.subtitle}</div>
 		</div>
 	);
 }

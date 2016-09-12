@@ -8,6 +8,7 @@ import setLocalEvents from '../actions/setLocalEvents';
 
 import FlexContainer from '../components/FlexContainer';
 import UserSelection from '../components/UserSelection';
+import UserSelectionListItem from '../components/UserSelectionListItem';
 import fetchUpdateParticipants from '../actions/fetchUpdateParticipants';
 
 const UserSelectionPage = React.createClass({
@@ -75,12 +76,11 @@ const UserSelectionPage = React.createClass({
 				<UserSelection />
 				{currentEvent.participants.map(participant => {
 					return (
-						<div
+						<UserSelectionListItem
 							key={participant}
 							onClick={() => this.changeEventName(participant)}
-						>
-							{participant}
-						</div>
+							text={participant}
+						/>
 					);
 				})}
 				{currentEvent &&
