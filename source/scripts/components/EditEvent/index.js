@@ -181,7 +181,7 @@ const EditEvent = React.createClass({
 		return (
 			<Page>
 				<TopBar bordered>
-					<TopBarIcon icon="arrow-back" onClick={this.goBack} />
+					<TopBarIcon icon="close" onClick={this.goBack} />
 					<TopBarHeading title={props.pageTitle} />
 					{props.isCreatingEvent ?
 						<CircularProgress size={0.3} />
