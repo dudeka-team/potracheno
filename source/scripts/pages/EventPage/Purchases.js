@@ -89,7 +89,7 @@ const EventPurchasesPage = React.createClass({
 						);
 					})}
 				<Fab backgroundColor="#ffe151" onClick={this.goToNewPurchase}>
-					<Icon icon="purchase"/>
+					<Icon icon="purchase" />
 				</Fab>
 			</div>
 		);

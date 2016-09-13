@@ -62,7 +62,7 @@ TopBarIcon.propTypes = {
 		'more-actions',
 		'pen',
 		'share',
-		'close'
+		'close',
 	]).isRequired,
 	onClick: PropTypes.func,
 	disabled: PropTypes.bool,
