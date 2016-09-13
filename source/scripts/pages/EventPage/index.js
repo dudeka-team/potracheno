@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
+import Drawer from 'material-ui/Drawer';
 
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
@@ -34,19 +35,8 @@ const EventPage = React.createClass({
 		this.props.router.push('/events');
 	},
 
-	openMenu() {
-		this.setState({
-			menuOpen: true,
-		});
-	},
-
-	closeMenu(e) {
-		const width = window.innerWidth;
-		if (e.pageX < width / 6) {
-			this.setState({
-				menuOpen: false,
-			});
-		}
+	handleToggle() {
+		this.setState({menuOpen: !this.state.menuOpen});
 	},
 
 	goToEdit() {
@@ -103,21 +93,26 @@ const EventPage = React.createClass({
 
 			return (
 				<Page>
-					<Menu
-						currentEvent={currentEvent}
-						subtitle={subtitle}
-						menuOpen={state.menuOpen}
-						handleEdit={this.goToEdit}
-						handleRelogin={this.handleRelogin}
-						closeMenu={this.closeMenu}
-					/>
+					<Drawer
+						onRequestChange={(menuOpen) => this.setState({menuOpen})}
+						docked={false}
+						open={this.state.menuOpen}
+						openSecondary
+					>
+						<Menu
+							currentEvent={currentEvent}
+							subtitle={subtitle}
+							handleEdit={this.goToEdit}
+							handleRelogin={this.handleRelogin}
+						/>
+					</Drawer>
 					<TopBar>
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 						<TopBarHeading
 							title={currentEvent.name}
 							subtitle={subtitle}
 						/>
-						<TopBarIcon icon="more-actions" onClick={this.openMenu} />
+						<TopBarIcon icon="more-actions" onClick={this.handleToggle} />
 					</TopBar>
 					<Tabs
 						config={[
