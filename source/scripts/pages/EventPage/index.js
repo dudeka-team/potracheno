@@ -73,7 +73,7 @@ const EventPage = React.createClass({
 	},
 
 	render() {
-		const {props, state} = this;
+		const {props} = this;
 		const {currentEvent, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
