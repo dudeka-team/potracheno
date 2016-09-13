@@ -9,6 +9,7 @@ import EventsListItem from '../components/EventsListItem';
 import ActionButton from '../components/ActionButton';
 import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
+import Poster from '../components/Poster';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
 import {getEventBalance} from '../modules/balance';
 import getLocalEvents from '../actions/getLocalEvents';
@@ -71,7 +72,7 @@ const EventsPage = React.createClass({
 		if (!result.length) {
 			result = (
 				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-					<p>Мероприятий нет. <Link to="/events/new">Создайте первое!</Link></p>
+					<Poster icon="calendar" text="У вас пока нет мероприятий, создайте первым свое мероприятие и добавьте участников" />
 				</FlexContainer>
 			);
 		}
