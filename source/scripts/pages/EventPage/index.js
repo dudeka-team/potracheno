@@ -1,12 +1,13 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
+import ReactSwipe from 'react-swipe';
 import CircularProgress from 'material-ui/CircularProgress';
 import Drawer from 'material-ui/Drawer';
 
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
-import Tabs from '../../components/Tabs';
+import {Tabs, TabsContent} from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 import Balance from './Balance';
@@ -23,6 +24,7 @@ const EventPage = React.createClass({
 	getInitialState() {
 		return {
 			menuOpen: false,
+			index: 0,
 		};
 	},
 
@@ -31,8 +33,19 @@ const EventPage = React.createClass({
 		dispatch(fetchEventData(id));
 	},
 
-	goToEvents() {
-		this.props.router.push('/events');
+	openMenu() {
+		this.setState({
+			menuOpen: true,
+		});
+	},
+
+	closeMenu(e) {
+		const width = window.innerWidth;
+		if (e.pageX < width / 6) {
+			this.setState({
+				menuOpen: false,
+			});
+		}
 	},
 
 	handleToggle() {
@@ -64,6 +77,10 @@ const EventPage = React.createClass({
 		return `${participantsStatus} • ${formattedDate}`;
 	},
 
+	goToEvents() {
+		this.props.router.push('/events');
+	},
+
 	renderPreloader() {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center">
@@ -72,8 +89,17 @@ const EventPage = React.createClass({
 		);
 	},
 
+	changedTab(index) {
+		this.setState({index});
+	},
+
+	onTabClick(index) {
+		this.setState({index});
+		this.refs.reactSwipe.swipe.slide(index, 200);
+	},
+
 	render() {
-		const {props} = this;
+		const {props, state} = this;
 		const {currentEvent, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
@@ -115,38 +141,41 @@ const EventPage = React.createClass({
 						<TopBarIcon icon="more-actions" onClick={this.handleToggle} />
 					</TopBar>
 					<Tabs
-						config={[
-							{
-								name: 'purchases',
-								labelContent: 'Покупки',
-								content:
-									<Purchases
-										eventId={props.id}
-										purchases={purchases}
-										eventParticipants={currentEvent.participants}
-										currentUser={currentUser}
-									/>,
-							},
-							{
-								name: 'balance',
-								labelContent: 'Баланс',
-								content:
-									<Balance
-										eventId={props.id}
-										currentUser={currentUser}
-										currentEvent={currentEvent}
-									/>,
-							},
-							{
-								name: 'actions',
-								labelContent: 'Действия',
-								content:
-									<EventActions
-										actions={actions}
-									/>,
-							},
-						]}
+						titles={['покупки', 'баланс', 'действия']}
+						activeTab={state.index}
+						onTabClick={this.onTabClick}
 					/>
+					<ReactSwipe
+						swipeOptions={{
+							callback: this.changedTab,
+							continuous: false,
+						}}
+						ref="reactSwipe"
+					>
+						<div>
+							<Purchases
+								eventId={props.id}
+								purchases={purchases}
+								eventParticipants={currentEvent.participants}
+								currentUser={currentUser}
+							/>
+						</div>
+						<TabsContent title="2">
+							<Balance
+								purchases={purchases}
+								participants={currentEvent.participants}
+								currentUser={currentUser}
+								currentEvent={currentEvent}
+								eventId={props.id}
+							/>
+						</TabsContent>
+						<TabsContent title="3">
+							<EventActions
+								actions={actions}
+							/>
+						</TabsContent>
+					</ReactSwipe>
+
 				</Page>
 			);
 		}
