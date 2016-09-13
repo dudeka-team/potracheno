@@ -1,6 +1,6 @@
 import React from 'react';
 import UniversalListItem from '../UniversalListItem';
-import BlueSubtitle from '../BlueSubtitle';
+import GreySubtitle from '../GreySubtitle';
 
 const PurchaseInfo = React.createClass({
 	getInitialState() {
@@ -18,13 +18,13 @@ const PurchaseInfo = React.createClass({
 		return (
 			<div>
 				<UniversalListItem text={purchase.payer} price={purchase.amount} isBordered />
-				<BlueSubtitle text="Участвуют в покупке" />
+				<GreySubtitle text="Участвуют в покупке" />
 				{this.state.participants.map(user => {
 					return (
 						<UniversalListItem id={user} text={user} key={user} />
 					);
 				})}
-				<BlueSubtitle text="Не участвуют в покупке" />
+				<GreySubtitle text="Не участвуют в покупке" />
 				{this.state.nonParticipants.map(user => {
 					return (
 						<UniversalListItem id={user} text={user} key={user} />

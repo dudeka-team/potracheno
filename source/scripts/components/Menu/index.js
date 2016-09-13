@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import EventStatus from '../EventStatus';
-import BlueSubtitle from '../BlueSubtitle';
+import GreySubtitle from '../GreySubtitle';
 import UniversalListItem from '../UniversalListItem';
 
 const Menu = React.createClass({
@@ -27,7 +27,7 @@ const Menu = React.createClass({
 							</div>
 						}
 						<EventStatus name={currentEvent.name} subtitle={props.subtitle} />
-						<BlueSubtitle text="Участники" />
+						<GreySubtitle text="Участники" />
 						<div className="menu__list">
 							{currentEvent.participants.map((item) => {
 								return (

@@ -13,7 +13,7 @@ import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
 import Payers from '../components/Payers';
-import BlueSubtitle from '../components/BlueSubtitle';
+import GreySubtitle from '../components/GreySubtitle';
 import UniversalListItem from '../components/UniversalListItem';
 import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
@@ -138,8 +138,12 @@ const NewPurchasePage = React.createClass({
 
 	editPageTopBar() {
 		const {purchase} = this.state;
-		const {participants} = purchase;
-		const disabled = participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
+		const {participants, name} = purchase;
+		const disabled = participants.length === 0 ||
+			isNaN(purchase.amount) ||
+			!purchase.amount ||
+			!(name || '').trim();
+
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
@@ -155,8 +159,11 @@ const NewPurchasePage = React.createClass({
 
 	createPageTopBar() {
 		const {purchase} = this.state;
-		const {participants} = purchase;
-		const disabled = participants.length === 0 || isNaN(purchase.amount) || !purchase.amount;
+		const {participants, name} = purchase;
+		const disabled = participants.length === 0 ||
+			isNaN(purchase.amount) ||
+			!purchase.amount ||
+			!(name || '').trim();
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
@@ -241,7 +248,7 @@ const NewPurchasePage = React.createClass({
 					</div>
 					<Separator />
 					<div>
-						<BlueSubtitle text="Участники покупки" />
+						<GreySubtitle text="Участники покупки" />
 						{state.eventParticipants
 							.map(user => {
 								return (<UniversalListItem
