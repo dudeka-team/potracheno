@@ -8,6 +8,8 @@
   },
   "rules": {
     "no-mixed-operators": "off",
+    "react/sort-comp": "off",
+    "react/no-string-refs": "off",
     "indent": ["error", "tab", {
       "SwitchCase": 1
     }],

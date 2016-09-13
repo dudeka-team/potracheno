@@ -1,7 +1,6 @@
 # General files
 *~
 .DS_Store
-.vscode
 
 # Build
 www/
@@ -19,3 +18,4 @@ npm-debug.log
 *.pyc
 .vagrant
 .idea
+.vscode

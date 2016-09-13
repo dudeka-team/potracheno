@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import GreySubtitle from '../../components/GreySubtitle';
 import BalanceListItem from '../../components/BalanceListItem';
+import BalanceCheck from '../../components/BalanceCheck';
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
 import BalanceItemPopup from '../../components/BalanceItemPopup';
@@ -67,28 +68,27 @@ const BalancePage = React.createClass({
 		return (
 			<div className="balance-page">
 				<GreySubtitle text="Баланс участников" />
-				<div>{
-					eventsParticipantsDebts.map((debt, i) => {
-						return (
-							<BalanceListItem
-								key={i}
-								sum={-Math.round(debt.sum)}
-								from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
-								to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
-								debtType="neutral"
-								onClick={() => this.showRepayPopup(debt)}
-							/>
-						);
-					})
-				}</div>
-				{
-					this.state.showPopup &&
-						<BalanceItemPopup
-							debt={this.state.currentDebt}
-							onSubmit={this.repayDebtHandler}
-							onClose={() => this.closeRepayPopup()}
+				<div>{eventsParticipantsDebts.map((debt, i) => {
+					return (
+						<BalanceListItem
+							key={i}
+							sum={-Math.round(debt.sum)}
+							from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
+							to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
+							debtType="neutral"
+							onClick={() => this.showRepayPopup(debt)}
 						/>
+					);
+				})
+				}</div>
+				{this.state.showPopup &&
+					<BalanceItemPopup
+						debt={this.state.currentDebt}
+						onSubmit={this.repayDebtHandler}
+						onClose={() => this.closeRepayPopup()}
+					/>
 				}
+				<BalanceCheck debts={eventsParticipantsDebts} />
 			</div>
 		);
 	},

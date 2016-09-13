@@ -1,11 +1,13 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
+import ReactSwipe from 'react-swipe';
 import CircularProgress from 'material-ui/CircularProgress';
+import Drawer from 'material-ui/Drawer';
 
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
-import Tabs from '../../components/Tabs';
+import {Tabs, TabsContent} from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 
 import Balance from './Balance';
@@ -22,16 +24,13 @@ const EventPage = React.createClass({
 	getInitialState() {
 		return {
 			menuOpen: false,
+			index: 0,
 		};
 	},
 
 	componentDidMount() {
 		const {id, dispatch} = this.props;
 		dispatch(fetchEventData(id));
-	},
-
-	goToEvents() {
-		this.props.router.push('/events');
 	},
 
 	openMenu() {
@@ -47,6 +46,10 @@ const EventPage = React.createClass({
 				menuOpen: false,
 			});
 		}
+	},
+
+	handleToggle() {
+		this.setState({menuOpen: !this.state.menuOpen});
 	},
 
 	goToEdit() {
@@ -74,12 +77,25 @@ const EventPage = React.createClass({
 		return `${participantsStatus} • ${formattedDate}`;
 	},
 
+	goToEvents() {
+		this.props.router.push('/events');
+	},
+
 	renderPreloader() {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 				<CircularProgress />
 			</FlexContainer>
 		);
+	},
+
+	changedTab(index) {
+		this.setState({index});
+	},
+
+	onTabClick(index) {
+		this.setState({index});
+		this.refs.reactSwipe.swipe.slide(index, 200);
 	},
 
 	render() {
@@ -103,14 +119,19 @@ const EventPage = React.createClass({
 
 			return (
 				<Page>
-					<Menu
-						currentEvent={currentEvent}
-						subtitle={subtitle}
-						menuOpen={state.menuOpen}
-						handleEdit={this.goToEdit}
-						handleRelogin={this.handleRelogin}
-						closeMenu={this.closeMenu}
-					/>
+					<Drawer
+						onRequestChange={(menuOpen) => this.setState({menuOpen})}
+						docked={false}
+						open={this.state.menuOpen}
+						openSecondary
+					>
+						<Menu
+							currentEvent={currentEvent}
+							subtitle={subtitle}
+							handleEdit={this.goToEdit}
+							handleRelogin={this.handleRelogin}
+						/>
+					</Drawer>
 					<TopBar>
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 						<TopBarHeading
@@ -120,38 +141,41 @@ const EventPage = React.createClass({
 						<TopBarIcon icon="burger" onClick={this.openMenu} />
 					</TopBar>
 					<Tabs
-						config={[
-							{
-								name: 'purchases',
-								labelContent: 'Покупки',
-								content:
-									<Purchases
-										eventId={props.id}
-										purchases={purchases}
-										eventParticipants={currentEvent.participants}
-										currentUser={currentUser}
-									/>,
-							},
-							{
-								name: 'balance',
-								labelContent: 'Баланс',
-								content:
-									<Balance
-										eventId={props.id}
-										currentUser={currentUser}
-										currentEvent={currentEvent}
-									/>,
-							},
-							{
-								name: 'actions',
-								labelContent: 'Действия',
-								content:
-									<EventActions
-										actions={actions}
-									/>,
-							},
-						]}
+						titles={['покупки', 'баланс', 'действия']}
+						activeTab={state.index}
+						onTabClick={this.onTabClick}
 					/>
+					<ReactSwipe
+						swipeOptions={{
+							callback: this.changedTab,
+							continuous: false,
+						}}
+						ref="reactSwipe"
+					>
+						<div>
+							<Purchases
+								eventId={props.id}
+								purchases={purchases}
+								eventParticipants={currentEvent.participants}
+								currentUser={currentUser}
+							/>
+						</div>
+						<TabsContent title="2">
+							<Balance
+								purchases={purchases}
+								participants={currentEvent.participants}
+								currentUser={currentUser}
+								currentEvent={currentEvent}
+								eventId={props.id}
+							/>
+						</TabsContent>
+						<TabsContent title="3">
+							<EventActions
+								actions={actions}
+							/>
+						</TabsContent>
+					</ReactSwipe>
+
 				</Page>
 			);
 		}
