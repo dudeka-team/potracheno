@@ -6,6 +6,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import {Page, PageContent} from '../components/Page';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
+import ActionButton from '../components/ActionButton';
 import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
@@ -83,9 +84,8 @@ const EventsPage = React.createClass({
 		return (
 			<Page>
 				<TopBar>
-					<TopBarIcon icon="burger" />
 					<TopBarHeading title="Мероприятия" />
-					<TopBarIcon icon="plus" onClick={this.goToNewEvent} />
+					<TopBarIcon icon="more-actions" />
 				</TopBar>
 				<PageContent>
 					{props.eventsLoaded ?
@@ -95,6 +95,7 @@ const EventsPage = React.createClass({
 							<CircularProgress />
 						</FlexContainer>
 					}
+					<ActionButton text="Добавить мероприятие" onClick={this.goToNewEvent} />
 				</PageContent>
 			</Page>
 		);
