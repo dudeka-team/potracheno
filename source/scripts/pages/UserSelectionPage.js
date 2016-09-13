@@ -56,7 +56,7 @@ const UserSelectionPage = React.createClass({
 
 	renderPreloader() {
 		return (
-			<FlexContainer alignItems="center" justifyContent="center">
+			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 				<CircularProgress />
 			</FlexContainer>
 		);
