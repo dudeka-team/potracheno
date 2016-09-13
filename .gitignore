@@ -1,14 +1,12 @@
 # General files
 *~
 .DS_Store
-.vscode
 
 # Build
 www/
 static/index.html
 static/bundle.js
 *.js.map
->>>>>>> origin/master
 static/static.zip
 
 # Development stuff
@@ -20,3 +18,4 @@ npm-debug.log
 *.pyc
 .vagrant
 .idea
+.vscode
