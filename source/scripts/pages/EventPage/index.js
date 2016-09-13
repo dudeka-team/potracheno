@@ -3,6 +3,7 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import ReactSwipe from 'react-swipe';
 import CircularProgress from 'material-ui/CircularProgress';
+import Drawer from 'material-ui/Drawer';
 
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
@@ -45,6 +46,10 @@ const EventPage = React.createClass({
 				menuOpen: false,
 			});
 		}
+	},
+
+	handleToggle() {
+		this.setState({menuOpen: !this.state.menuOpen});
 	},
 
 	goToEdit() {
@@ -114,21 +119,26 @@ const EventPage = React.createClass({
 
 			return (
 				<Page>
-					<Menu
-						currentEvent={currentEvent}
-						subtitle={subtitle}
-						menuOpen={state.menuOpen}
-						handleEdit={this.goToEdit}
-						handleRelogin={this.handleRelogin}
-						closeMenu={this.closeMenu}
-					/>
+					<Drawer
+						onRequestChange={(menuOpen) => this.setState({menuOpen})}
+						docked={false}
+						open={this.state.menuOpen}
+						openSecondary
+					>
+						<Menu
+							currentEvent={currentEvent}
+							subtitle={subtitle}
+							handleEdit={this.goToEdit}
+							handleRelogin={this.handleRelogin}
+						/>
+					</Drawer>
 					<TopBar>
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 						<TopBarHeading
 							title={currentEvent.name}
 							subtitle={subtitle}
 						/>
-						<TopBarIcon icon="more-actions" onClick={this.openMenu} />
+						<TopBarIcon icon="more-actions" onClick={this.handleToggle} />
 					</TopBar>
 					<Tabs
 						titles={['покупки', 'баланс', 'действия']}
