@@ -68,7 +68,7 @@ const BalancePage = React.createClass({
 		return (
 			<div className="balance-page">
 				<GreySubtitle text="Баланс участников" />
-				{eventsParticipantsDebts.map((debt, i) => {
+				<div>{eventsParticipantsDebts.map((debt, i) => {
 						return (
 							<BalanceListItem
 								key={i}
@@ -80,7 +80,7 @@ const BalancePage = React.createClass({
 							/>
 						);
 					})
-				}
+				}</div>
 				{this.state.showPopup &&
 						<BalanceItemPopup
 							debt={this.state.currentDebt}
@@ -92,6 +92,12 @@ const BalancePage = React.createClass({
 			</div>
 		);
 	},
+});
+
+function mapStateToProps({events}) {
+	return {
+		eventsById: events.eventsById,
+	};
 }
 
-export default connect()(BalancePage);
+export default connect(mapStateToProps)(BalancePage);
