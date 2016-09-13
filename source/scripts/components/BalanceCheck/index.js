@@ -2,7 +2,7 @@ import React from 'react';
 
 function getCheck(eventsParticipantsDebts) {
 	return eventsParticipantsDebts
-		.map((debt) => `${debt.to} ← ${debt.from}   ${Math.abs(debt.sum)} руб.`)
+		.map((debt) => `${debt.from} → ${debt.to}   ${Math.abs(debt.sum)} руб.`)
 		.join('\n------------------------\n');
 }
 
