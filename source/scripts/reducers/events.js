@@ -22,6 +22,9 @@ import {
 	FETCH_UPDATE_PARTICIPANTS_SUCCESS,
 
 	CHANGE_PURCHASE,
+
+	REPAY_DEBT_SUCCESS,
+
 	FETCH_PURCHASE_DELETE,
 } from '../constants';
 
@@ -127,6 +130,19 @@ export default handleActions({
 
 		return assign({}, state, {
 			eventsById: assign({}, eventsById, changedEvents),
+		});
+	},
+
+	[REPAY_DEBT_SUCCESS]: (state, {payload}) => {
+		const {eventId, sum, name} = payload;
+
+		const updatedRepayedDebts =
+			Object.assign({}, state.eventsById[eventId].repayedDebts, {[name]: sum});
+		const updatedEvent =
+			Object.assign({}, state.eventsById[eventId], {repayedDebts: updatedRepayedDebts});
+
+		return Object.assign({}, state, {
+			eventsById: assign({}, state.eventsById, {[eventId]: updatedEvent}),
 		});
 	},
 
