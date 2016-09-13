@@ -69,24 +69,24 @@ const BalancePage = React.createClass({
 			<div className="balance-page">
 				<GreySubtitle text="Баланс участников" />
 				<div>{eventsParticipantsDebts.map((debt, i) => {
-						return (
-							<BalanceListItem
-								key={i}
-								sum={-Math.round(debt.sum)}
-								from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
-								to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
-								debtType="neutral"
-								onClick={() => this.showRepayPopup(debt)}
-							/>
-						);
-					})
+					return (
+						<BalanceListItem
+							key={i}
+							sum={-Math.round(debt.sum)}
+							from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
+							to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
+							debtType="neutral"
+							onClick={() => this.showRepayPopup(debt)}
+						/>
+					);
+				})
 				}</div>
 				{this.state.showPopup &&
-						<BalanceItemPopup
-							debt={this.state.currentDebt}
-							onSubmit={this.repayDebtHandler}
-							onClose={() => this.closeRepayPopup()}
-						/>
+					<BalanceItemPopup
+						debt={this.state.currentDebt}
+						onSubmit={this.repayDebtHandler}
+						onClose={() => this.closeRepayPopup()}
+					/>
 				}
 				<BalanceCheck debts={eventsParticipantsDebts} />
 			</div>

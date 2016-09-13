@@ -15,7 +15,6 @@ function getOnesignalTags(localEvents) {
 
 export default function getLocalEvents() {
 	const localEvents = JSON.parse(localStorage.getItem('localEvents') || '{}');
-	console.log('getOnesignalTags(localEvents)', getOnesignalTags(localEvents));
 	window.OneSignal.push(['sendTags', getOnesignalTags(localEvents)]);
 
 	return {
