@@ -55,7 +55,7 @@ const EventPurchasesPage = React.createClass({
 		const currentUser = localEvents[props.eventId];
 		const {eventParticipants} = props;
 		let result;
-		if (props.purchases.length === 0) {
+		if (!props.purchases.length) {
 			result = (
 				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 					<Poster icon="purchase" text="У вас пока нет покупок" />
