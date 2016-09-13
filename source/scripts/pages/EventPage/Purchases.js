@@ -88,7 +88,7 @@ const EventPurchasesPage = React.createClass({
 							/>
 						);
 					})}
-				<Fab onClick={this.goToNewPurchase}><AddShoppingCart /></Fab>
+				<Fab backgroundColor="#ffe151" onClick={this.goToNewPurchase}><AddShoppingCart /></Fab>
 			</div>
 		);
 	},

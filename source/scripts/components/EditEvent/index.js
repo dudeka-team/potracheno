@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 
 import {TopBar, TopBarHeading, TopBarIcon} from '../TopBar';
 import {Page, PageContent} from '../Page';
+import FlexContainer from '../FlexContainer';
 
 
 function createParticipant(name = '') {
@@ -189,29 +190,36 @@ const EditEvent = React.createClass({
 				</TopBar>
 				<PageContent style={{padding: '0 1rem 5rem'}}>
 					<TextField
+						hintStyle={{backgroundColor: 'red'}}
 						fullWidth
 						floatingLabelText="Название мероприятия"
 						value={state.name}
 						onChange={this.handleEventNameChange}
 					/>
 
-					<DatePicker
-						fullWidth
-						floatingLabelText="Начало"
-						formatDate={formatDate}
-						onChange={this.handleStartDateChange}
-						minDate={state.start}
-						value={state.start}
-					/>
+					<FlexContainer justifyContent="space-between">
+						<div className="data-picker-wrapper">
+							<DatePicker
+								fullWidth
+								floatingLabelText="Начало"
+								formatDate={formatDate}
+								onChange={this.handleStartDateChange}
+								minDate={state.start}
+								value={state.start}
+							/>
+						</div>
+						<div className="data-picker-wrapper">
+							<DatePicker
+								fullWidth
+								floatingLabelText="Завершение"
+								formatDate={formatDate}
+								onChange={this.handleEndDateChange}
+								minDate={state.start}
+								value={state.end}
+							/>
+						</div>
+					</FlexContainer>
 
-					<DatePicker
-						fullWidth
-						floatingLabelText="Завершение"
-						formatDate={formatDate}
-						onChange={this.handleEndDateChange}
-						minDate={state.start}
-						value={state.end}
-					/>
 
 					<TextField
 						fullWidth

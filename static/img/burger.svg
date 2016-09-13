@@ -10,7 +10,7 @@
                 <g id="Actionbar3-2">
                     <g id="Icon-24px" transform="translate(16.000000, 40.000000)">
                         <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
-                        <path d="M3,18 L21,18 L21,16 L3,16 L3,18 L3,18 Z M3,13 L21,13 L21,11 L3,11 L3,13 L3,13 Z M3,6 L3,8 L21,8 L21,6 L3,6 L3,6 Z" id="Shape" fill="#83919F"></path>
+                        <path d="M3,18 L21,18 L21,16 L3,16 L3,18 L3,18 Z M3,13 L21,13 L21,11 L3,11 L3,13 L3,13 Z M3,6 L3,8 L21,8 L21,6 L3,6 L3,6 Z" id="Shape" fill="#000"></path>
                     </g>
                 </g>
             </g>

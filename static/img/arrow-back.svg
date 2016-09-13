@@ -24,7 +24,7 @@
                     <g id="ic_arrow_back" transform="translate(16.000000, 40.000000)">
                         <g id="Icon-24px">
                             <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
-                            <polygon id="Shape" fill="#83919F" points="20 11 7.83 11 13.42 5.41 12 4 4 12 12 20 13.41 18.59 7.83 13 20 13"></polygon>
+                            <polygon id="Shape" fill="#000" points="20 11 7.83 11 13.42 5.41 12 4 4 12 12 20 13.41 18.59 7.83 13 20 13"></polygon>
                         </g>
                     </g>
                 </g>
