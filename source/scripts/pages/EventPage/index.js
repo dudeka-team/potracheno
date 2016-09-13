@@ -156,6 +156,7 @@ const EventPage = React.createClass({
 								participants={currentEvent.participants}
 								currentUser={currentUser}
 								currentEvent={currentEvent}
+								eventId={props.id}
 							/>
 						</TabsContent>
 						<TabsContent title="3">
