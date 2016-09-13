@@ -145,7 +145,7 @@ const NewPurchasePage = React.createClass({
 			!(name || '').trim();
 
 		return (
-			<TopBar>
+			<TopBar bordered>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Редактирование покупки" />
 				{this.state.isSavingData ?
@@ -165,7 +165,7 @@ const NewPurchasePage = React.createClass({
 			!purchase.amount ||
 			!(name || '').trim();
 		return (
-			<TopBar>
+			<TopBar bordered>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Новая покупка" />
 				{this.state.isSavingData ?

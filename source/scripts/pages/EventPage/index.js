@@ -83,7 +83,7 @@ const EventPage = React.createClass({
 
 	renderPreloader() {
 		return (
-			<FlexContainer alignItems="center" justifyContent="center">
+			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 				<CircularProgress />
 			</FlexContainer>
 		);
@@ -136,9 +136,9 @@ const EventPage = React.createClass({
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 						<TopBarHeading
 							title={currentEvent.name}
-							subtitle={subtitle}
 						/>
-						<TopBarIcon icon="more-actions" onClick={this.handleToggle} />
+						<TopBarIcon icon="share" />
+						<TopBarIcon icon="burger" onClick={this.openMenu} />
 					</TopBar>
 					<Tabs
 						titles={['покупки', 'баланс', 'действия']}

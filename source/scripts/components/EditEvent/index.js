@@ -9,6 +9,9 @@ import TextField from 'material-ui/TextField';
 
 import {TopBar, TopBarHeading, TopBarIcon} from '../TopBar';
 import {Page, PageContent} from '../Page';
+import FlexContainer from '../FlexContainer';
+import Separator from '../Separator';
+import GreySubtitle from '../GreySubtitle';
 
 
 function createParticipant(name = '') {
@@ -158,6 +161,7 @@ const EditEvent = React.createClass({
 			return (
 				<div key={id}>
 					<TextField
+						underlineFocusStyle={{borderColor: '#ffe151'}}
 						fullWidth
 						hintText={'Имя участника'}
 						value={name}
@@ -172,10 +176,12 @@ const EditEvent = React.createClass({
 
 	render() {
 		const {state, props} = this;
+		const labelStyle = {color: '#939fa8'};
+		const underLineStyle = {borderColor: '#ffe151'};
 		return (
 			<Page>
-				<TopBar>
-					<TopBarIcon icon="arrow-back" onClick={this.goBack} />
+				<TopBar bordered>
+					<TopBarIcon icon="close" onClick={this.goBack} />
 					<TopBarHeading title={props.pageTitle} />
 					{props.isCreatingEvent ?
 						<CircularProgress size={0.3} />
@@ -189,31 +195,44 @@ const EditEvent = React.createClass({
 				</TopBar>
 				<PageContent style={{padding: '0 1rem 5rem'}}>
 					<TextField
+						floatingLabelFocusStyle={labelStyle}
+						underlineFocusStyle={underLineStyle}
 						fullWidth
 						floatingLabelText="Название мероприятия"
 						value={state.name}
 						onChange={this.handleEventNameChange}
 					/>
 
-					<DatePicker
-						fullWidth
-						floatingLabelText="Начало"
-						formatDate={formatDate}
-						onChange={this.handleStartDateChange}
-						minDate={state.start}
-						value={state.start}
+					<FlexContainer justifyContent="space-between">
+						<div className="data-picker-wrapper">
+							<DatePicker
+								fullWidth
+								floatingLabelText="Начало"
+								formatDate={formatDate}
+								onChange={this.handleStartDateChange}
+								minDate={state.start}
+								value={state.start}
+							/>
+						</div>
+						<div className="data-picker-wrapper">
+							<DatePicker
+								fullWidth
+								floatingLabelText="Завершение"
+								formatDate={formatDate}
+								onChange={this.handleEndDateChange}
+								minDate={state.start}
+								value={state.end}
+							/>
+						</div>
+					</FlexContainer>
+					<Separator style={{margin: '0 -1rem', width: 'calc(100% + 32px)'}} />
+					<GreySubtitle
+						style={{margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0'}}
+						text="Добавить участников"
 					/>
-
-					<DatePicker
-						fullWidth
-						floatingLabelText="Завершение"
-						formatDate={formatDate}
-						onChange={this.handleEndDateChange}
-						minDate={state.start}
-						value={state.end}
-					/>
-
 					<TextField
+						floatingLabelFocusStyle={labelStyle}
+						underlineFocusStyle={underLineStyle}
 						fullWidth
 						floatingLabelText="Имя организатора"
 						value={state.manager}

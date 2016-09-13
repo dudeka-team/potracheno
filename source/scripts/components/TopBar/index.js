@@ -1,8 +1,12 @@
 import React, {PropTypes} from 'react';
 
 export function TopBar(props) {
+	const classes = ['top-bar'];
+	if (props.bordered) {
+		classes.push('top-bar_bordered');
+	}
 	return (
-		<div className="top-bar">
+		<div className={classes.join(' ')}>
 			{props.children}
 		</div>
 	);
@@ -57,6 +61,8 @@ TopBarIcon.propTypes = {
 		'arrow-share',
 		'more-actions',
 		'pen',
+		'share',
+		'close',
 	]).isRequired,
 	onClick: PropTypes.func,
 	disabled: PropTypes.bool,

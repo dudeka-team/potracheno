@@ -70,7 +70,7 @@ const EventsPage = React.createClass({
 
 		if (!result.length) {
 			result = (
-				<FlexContainer alignItems="center" justifyContent="center">
+				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 					<p>Мероприятий нет. <Link to="/events/new">Создайте первое!</Link></p>
 				</FlexContainer>
 			);
@@ -83,7 +83,7 @@ const EventsPage = React.createClass({
 		const {props} = this;
 		return (
 			<Page>
-				<TopBar>
+				<TopBar bordered>
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="more-actions" />
 				</TopBar>
@@ -91,7 +91,7 @@ const EventsPage = React.createClass({
 					{props.eventsLoaded ?
 						this.renderEvents(props.events, props.eventsById)
 						:
-						<FlexContainer alignItems="center" justifyContent="center">
+						<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 							<CircularProgress />
 						</FlexContainer>
 					}

@@ -59,7 +59,7 @@ const BalanceItemPopup = React.createClass({
 						<div className="input-money-label"> руб. </div>
 						<TextField
 							name="repay-debt-textfield"
-							underlineFocusStyle={{borderColor: '#3f95ff'}}
+							underlineFocusStyle={{borderColor: '#ffe151'}}
 							style={{width: '100%'}}
 							type="number"
 							onChange={this.amountChange}

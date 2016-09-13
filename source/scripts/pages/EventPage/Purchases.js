@@ -1,12 +1,11 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
-import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import Fab from '../../components/Fab';
 import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
 import Popup from '../../components/Popup';
-import {TabsContent} from '../../components/Tabs';
+import Icon from '../../components/Icon';
 
 function getSubtitle(participantsCount, eventParticipantsCount) {
 	let result;
@@ -56,46 +55,41 @@ const EventPurchasesPage = React.createClass({
 		const {eventParticipants} = props;
 
 		return (
-			<div style={{position: 'relative', height: '100%'}}>
-				<TabsContent>
-					{state.popupOpened && (
-						<Popup
-							title={state.openedPurchase.name}
-							closeIcon
-							onClose={this.closePopup}
-						>
-							<PurchaseInfo
-								purchase={state.openedPurchase}
-								eventParticipants={eventParticipants}
+			<div>
+				{state.popupOpened && (
+					<Popup
+						title={state.openedPurchase.name}
+						closeIcon
+						onClose={this.closePopup}
+					>
+						<PurchaseInfo
+							purchase={state.openedPurchase}
+							eventParticipants={eventParticipants}
+						/>
+					</Popup>
+				)}
+				{props.purchases
+					.slice()
+					.reverse()
+					.map(purchase => {
+						let payerName = purchase.payer;
+						if (currentUser === payerName) {
+							payerName += ' (Вы)';
+						}
+						const {participants} = purchase;
+						return (
+							<PurchaseListItem
+								key={purchase.id}
+								buyer={payerName}
+								title={purchase.name}
+								subtitle={getSubtitle(participants.length, eventParticipants.length)}
+								price={purchase.amount}
+								onClick={() => this.goToPurchase(purchase.id)}
 							/>
-						</Popup>
-					)}
-					{props.purchases
-						.slice()
-						.reverse()
-						.map(purchase => {
-							let payerName = purchase.payer;
-							if (currentUser === payerName) {
-								payerName += ' (Вы)';
-							}
-							const {participants} = purchase;
-							return (
-								<PurchaseListItem
-									key={purchase.id}
-									buyer={payerName}
-									title={purchase.name}
-									subtitle={getSubtitle(participants.length, eventParticipants.length)}
-									price={purchase.amount}
-									onClick={() => this.goToPurchase(purchase.id)}
-								/>
-							);
-						})}
-				</TabsContent>
-				<Fab
-					style={{position: 'absolute', bottom: '10px', right: '10px'}}
-					onClick={this.goToNewPurchase}
-				>
-					<AddShoppingCart />
+						);
+					})}
+				<Fab backgroundColor="#ffe151" onClick={this.goToNewPurchase}>
+					<Icon icon="purchase" />
 				</Fab>
 			</div>
 		);
