@@ -10,10 +10,12 @@ $icons = burger plus add-person arrow-back check-active info arrow-forward-gray 
 	justify-content center
 	height $topBarHeight
 	padding 0 4px
-	border-bottom 1px solid $topBarBorderColor
-	box-shadow 0 0 4px rgba(0, 0, 0, .1)
 	background #fff
 	z-index 1
+	
+	&_bordered
+		border-bottom 1px solid $topBarBorderColor
+		box-shadow 0 0 4px rgba(0, 0, 0, .1)
 
 	&__heading
 		position relative

@@ -6,7 +6,7 @@ export default function GreySubtitle(props) {
 		classes.push('grey-subtitle_user-selection');
 	}
 	return (
-		<div className={classes.join(' ')}>
+		<div className={classes.join(' ')} {...props}>
 			{props.text}
 		</div>
 	);

@@ -10,6 +10,8 @@ import TextField from 'material-ui/TextField';
 import {TopBar, TopBarHeading, TopBarIcon} from '../TopBar';
 import {Page, PageContent} from '../Page';
 import FlexContainer from '../FlexContainer';
+import Separator from '../Separator';
+import GreySubtitle from '../GreySubtitle';
 
 
 function createParticipant(name = '') {
@@ -159,6 +161,7 @@ const EditEvent = React.createClass({
 			return (
 				<div key={id}>
 					<TextField
+						underlineFocusStyle={{borderColor: '#ffe151'}}
 						fullWidth
 						hintText={'Имя участника'}
 						value={name}
@@ -173,9 +176,11 @@ const EditEvent = React.createClass({
 
 	render() {
 		const {state, props} = this;
+		const labelStyle = {color: '#939fa8'};
+		const underLineStyle = {borderColor: '#ffe151'};
 		return (
 			<Page>
-				<TopBar>
+				<TopBar bordered>
 					<TopBarIcon icon="arrow-back" onClick={this.goBack} />
 					<TopBarHeading title={props.pageTitle} />
 					{props.isCreatingEvent ?
@@ -190,7 +195,8 @@ const EditEvent = React.createClass({
 				</TopBar>
 				<PageContent style={{padding: '0 1rem 5rem'}}>
 					<TextField
-						hintStyle={{backgroundColor: 'red'}}
+						floatingLabelFocusStyle={labelStyle}
+						underlineFocusStyle={underLineStyle}
 						fullWidth
 						floatingLabelText="Название мероприятия"
 						value={state.name}
@@ -219,9 +225,14 @@ const EditEvent = React.createClass({
 							/>
 						</div>
 					</FlexContainer>
-
-
+					<Separator style={{margin: '0 -1rem', width: 'calc(100% + 32px)'}} />
+					<GreySubtitle
+						style={{margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0'}}
+						text="Добавить участников"
+					/>
 					<TextField
+						floatingLabelFocusStyle={labelStyle}
+						underlineFocusStyle={underLineStyle}
 						fullWidth
 						floatingLabelText="Имя организатора"
 						value={state.manager}

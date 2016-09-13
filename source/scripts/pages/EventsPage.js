@@ -83,7 +83,7 @@ const EventsPage = React.createClass({
 		const {props} = this;
 		return (
 			<Page>
-				<TopBar>
+				<TopBar bordered>
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="more-actions" />
 				</TopBar>

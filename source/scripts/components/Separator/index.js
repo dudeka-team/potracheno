@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function Separator() {
+export default function Separator(props) {
 	return (
-		<div className="separator" />
+		<div className="separator" {...props} />
 	);
 }
