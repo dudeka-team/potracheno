@@ -117,7 +117,7 @@ const EventPage = React.createClass({
 							title={currentEvent.name}
 							subtitle={subtitle}
 						/>
-						<TopBarIcon icon="share" onClick={this.openMenu} />
+						<TopBarIcon icon="share" />
 						<TopBarIcon icon="burger" onClick={this.openMenu} />
 					</TopBar>
 					<Tabs
