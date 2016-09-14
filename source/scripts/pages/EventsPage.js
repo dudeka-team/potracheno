@@ -74,8 +74,8 @@ const EventsPage = React.createClass({
 				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 					<Poster
 						icon="calendar"
-						text="У вас пока нет мероприятий,
-						создайте первым свое мероприятие и добавьте участников"
+						// eslint-disable-next-line max-len
+						text="У вас пока нет мероприятий, создайте первым свое мероприятие и добавьте участников"
 					/>
 				</FlexContainer>
 			);
