@@ -79,6 +79,14 @@ const EventsPage = React.createClass({
 		return result;
 	},
 
+	renderPreloader() {
+		return (
+			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+				<CircularProgress />
+			</FlexContainer>
+		);
+	},
+
 	render() {
 		const {props} = this;
 		return (
@@ -88,12 +96,10 @@ const EventsPage = React.createClass({
 					<TopBarIcon icon="more-actions" />
 				</TopBar>
 				<PageContent>
-					{props.eventsLoaded ?
-						this.renderEvents(props.events, props.eventsById)
+					{props.isFetchingEvents ?
+						this.renderPreloader()
 						:
-						<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-							<CircularProgress />
-						</FlexContainer>
+						this.renderEvents(props.events, props.eventsById)
 					}
 					<ActionButton text="Добавить мероприятие" onClick={this.goToNewEvent} />
 				</PageContent>
@@ -111,7 +117,7 @@ function getEventData(eventsById) {
 
 const mapStateToProps = ({events}) => {
 	return {
-		eventsLoaded: events.loaded,
+		isFetchingEvents: events.isFetchingEvents,
 		events: events.events,
 		eventsById: events.eventsById,
 		localEvents: events.localEvents,
