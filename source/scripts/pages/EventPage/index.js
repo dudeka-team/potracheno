@@ -36,7 +36,7 @@ const EventPage = React.createClass({
 		this.props.router.push('/events');
 	},
 
-	handleToggle() {
+	toggleMenu() {
 		this.setState({menuOpen: !this.state.menuOpen});
 	},
 
@@ -120,7 +120,7 @@ const EventPage = React.createClass({
 							title={currentEvent.name}
 						/>
 						<TopBarIcon icon="share" />
-						<TopBarIcon icon="burger" onClick={this.openMenu} />
+						<TopBarIcon icon="burger" onClick={this.toggleMenu} />
 					</TopBar>
 					<Tabs
 						config={[
