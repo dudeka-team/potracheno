@@ -41,7 +41,7 @@ const NewPurchasePage = React.createClass({
 		const {props} = this;
 		const {eventParticipants, purchase, myName} = props.data;
 		let purchaseCopy;
-		if (props.mode === EDIT) { 
+		if (props.mode === EDIT) {
 			purchaseCopy = Object.assign({}, purchase, {
 				participants: purchase.participants.slice(),
 			});
@@ -125,7 +125,7 @@ const NewPurchasePage = React.createClass({
 	editPageTopBar() {
 		const {purchase, purchaseCopy} = this.state;
 		const {participants, name} = purchase;
-		let changed = purchase.name !== purchaseCopy.name || 
+		const changed = purchase.name !== purchaseCopy.name ||
 			purchase.amount !== purchaseCopy.amount ||
 			purchase.payer !== purchaseCopy.payer ||
 			arraysDiff(purchase.participants.sort(), purchaseCopy.participants.sort());
@@ -150,7 +150,7 @@ const NewPurchasePage = React.createClass({
 	},
 
 	createPageTopBar() {
-		const {purchase, purchaseCopy} = this.state;
+		const {purchase} = this.state;
 		const {participants, name} = purchase;
 		const disabled = participants.length === 0 ||
 			isNaN(purchase.amount) ||
