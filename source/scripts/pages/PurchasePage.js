@@ -23,7 +23,7 @@ const PurchasePage = React.createClass({
 		const {path} = this.props.route;
 		return {
 			mode: /\bnew/.test(path) ? CREATE : EDIT,
-		}
+		};
 	},
 
 	componentDidMount() {
@@ -46,13 +46,13 @@ const PurchasePage = React.createClass({
 				.participants
 				.slice()
 				.sort()
-				.filter(x => x != myName);
+				.filter(x => x !== myName);
 
 			eventParticipants.unshift(myName);
 
 			let purchase = {
 				payer: myName,
-				participants: eventParticipants
+				participants: eventParticipants,
 			};
 			if (mode === EDIT) {
 				purchase = Object.assign({}, currentEvent.purchases[purchase_id]);
@@ -64,8 +64,6 @@ const PurchasePage = React.createClass({
 				eventParticipants,
 			};
 
-			console.log(data);
-
 			return (
 				<NewPurchasePage
 					mode={state.mode}
@@ -74,7 +72,7 @@ const PurchasePage = React.createClass({
 				/>
 			);
 		}
-		else return renderPreloader();
+		return renderPreloader();
 	},
 });
 

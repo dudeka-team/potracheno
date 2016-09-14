@@ -9,7 +9,6 @@ import NewEventPage from './pages/NewEvent';
 import EditEventPage from './pages/EditEvent';
 
 import PurchasePage from './pages/PurchasePage';
-import NewPurchasePage from './pages/NewPurchasePage';
 
 import DemoPage from './pages/DemoPage';
 
