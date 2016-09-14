@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html manifest="index.appcache">
 <head>
 	<meta charset="utf-8" />
 	<meta name="format-detection" content="telephone=no" />
@@ -15,6 +15,7 @@
 
 	<script src="moment.min.js"></script>
 	<script src="moment.ru.min.js"></script>
+	<script src="offline.min.js"></script>
 	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
 	<script>
 		var OneSignal = window.OneSignal || [];
@@ -25,6 +26,22 @@
 				enable: false
 			}
 		}]);
+
+		window.addEventListener('load', function(e) {
+		  window.applicationCache.addEventListener('updateready', function(e) {
+		    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+		      // Browser downloaded a new app cache.
+		      // Swap it in and reload the page to get the new hotness.
+		      window.applicationCache.swapCache();
+		      // if (confirm('A new version of this site is available. Load it?')) {
+		        window.location.reload();
+		      // }
+		    } else {
+		      // Manifest didn't changed. Nothing new to server.
+		    }
+		  }, false);
+
+		}, false);
 	</script>
 </body>
 </html>

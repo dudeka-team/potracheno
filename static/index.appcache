@@ -1,0 +1,35 @@
+CACHE MANIFEST
+# 89cc034afeff2ac0813e
+
+bundle.js
+index.html
+
+CACHE:
+index.html
+bundle.js
+moment.min.js
+moment.ru.min.js
+img/more-actions.svg
+img/arrow-back.svg
+img/share.svg
+img/burger.svg
+img/check-active.svg
+img/check-inactive.svg
+img/purchase.svg
+img/actionIcons/calendar.svg
+img/actionIcons/pen.svg
+img/actionIcons/person.svg
+img/actionIcons/purchase.svg
+img/actionIcons/exit.svg
+img/person-add.svg
+img/close.svg
+img/info.svg
+img/pen.svg
+img/purchase.svg
+img/exit.svg
+
+NETWORK:
+*
+
+SETTINGS:
+prefer-online

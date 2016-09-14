@@ -7,7 +7,7 @@ import {Page, PageContent} from '../components/Page';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import ActionButton from '../components/ActionButton';
-import {readEvents} from '../actions';
+import {readEvents} from '../actions/readEvents';
 import FlexContainer from '../components/FlexContainer';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
 import {getEventBalance} from '../modules/balance';
@@ -24,7 +24,7 @@ const EventsPage = React.createClass({
 	componentDidMount() {
 		const {props} = this;
 		props.dispatch(getLocalEvents());
-		props.dispatch(readEvents(props.localEvents));
+		props.dispatch(readEvents());
 	},
 
 	goToNewEvent() {
