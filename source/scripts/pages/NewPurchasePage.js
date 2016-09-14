@@ -186,8 +186,19 @@ const NewPurchasePage = React.createClass({
 	},
 
 	deletePurchase() {
+		const {state, props} = this;
 		const {id, purchase_id} = this.props.params;
 		const {dispatch} = this.props;
+		props.dispatch(createEventActionAsync({
+			eventId: props.params.id,
+			eventActionInfo: {
+				config: eventActionTypes.deletePurchase(
+					props.localEvents[props.params.id],
+					state.purchase.name,
+					(new Date()).getTime()
+				),
+			},
+		}));
 		dispatch(fetchPurchaseDelete(id, purchase_id));
 	},
 
