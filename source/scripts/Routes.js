@@ -22,7 +22,7 @@ export default function Routes(props) {
 				<Route path="events/new" component={NewEventPage} />
 				<Route path="events/:id" component={EventPreloadingPage} />
 				<Route path="events/:id/edit" component={EditEventPage} />
-				<Route path="events/:id/purchases/new" component={NewPurchasePage} />
+				<Route path="events/:id/purchases/new" component={PurchasePage} />
 				<Route path="events/:id/purchases/:purchase_id" component={PurchasePage} />
 				<Route path="demo" component={DemoPage} />
 			</Route>

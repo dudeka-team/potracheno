@@ -28,49 +28,20 @@ const {assign} = Object;
 
 const NewPurchasePage = React.createClass({
 	getInitialState() {
-		const {currentEvent, localEvents} = this.props;
-		const eventId = this.props.params.id;
-		const purchase = {
-			participants: (currentEvent && currentEvent.participants) || [],
-			payer: currentEvent && currentEvent.participants && currentEvent.participants[0],
-		};
+		const {props} = this;
+		const {eventParticipants, purchase, myName} = props.data;
 		return {
-			mode: this.props.mode || CREATE,
+			mode: props.mode || CREATE,
 			isSavingData: false,
 			purchase,
-			eventParticipants: (currentEvent && currentEvent.participants) || [],
-			userName: localEvents[eventId],
+			eventParticipants,
+			myName,
 		};
 	},
 
 	componentDidMount() {
 		const {params, dispatch} = this.props;
 		dispatch(fetchEventData(params.id));
-	},
-
-	componentWillReceiveProps(newProps) {
-		const {currentEvent} = newProps;
-		if (!currentEvent || !currentEvent.purchases) return;
-		if (this.props.mode !== EDIT) {
-			if (!this.props.currentEvent) {
-				this.setState({
-					eventParticipants: currentEvent.participants,
-					purchase: assign(this.state.purchase, {
-						payer: currentEvent.participants && currentEvent.participants[0],
-						participants: currentEvent.participants,
-					}),
-				});
-			}
-			return;
-		}
-		const purchase = currentEvent.purchases[this.props.params.purchase_id];
-		if (!purchase.payer) {
-			purchase.payer = purchase.participants[0];
-		}
-		this.setState({
-			purchase,
-			eventParticipants: currentEvent.participants,
-		});
 	},
 
 	getLoan(user) {
@@ -83,7 +54,7 @@ const NewPurchasePage = React.createClass({
 	},
 
 	getFullName(name) {
-		return this.state.userName === name ? `${name} (Вы)` : name;
+		return this.state.myName === name ? `${name} (Вы)` : name;
 	},
 
 	save() {
@@ -247,7 +218,7 @@ const NewPurchasePage = React.createClass({
 						/>
 					</div>
 					<Separator />
-					<div>
+					<div style={{paddingRight: '9px'}}>
 						<GreySubtitle text="Участники покупки" />
 						{state.eventParticipants
 							.map(user => {
