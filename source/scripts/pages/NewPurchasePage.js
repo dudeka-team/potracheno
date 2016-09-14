@@ -149,7 +149,7 @@ const NewPurchasePage = React.createClass({
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Редактирование покупки" />
 				{this.state.isSavingData ?
-					<CircularProgress size={0.3} />
+					<CircularProgress size={0.3} color="#ffe151" />
 					:
 					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.saveChanges} />
 				}
@@ -169,7 +169,7 @@ const NewPurchasePage = React.createClass({
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Новая покупка" />
 				{this.state.isSavingData ?
-					<CircularProgress size={0.3} />
+					<CircularProgress size={0.3} color="#ffe151" />
 					:
 					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.save} />
 				}

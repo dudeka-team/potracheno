@@ -80,7 +80,7 @@ const UserSelection = React.createClass({
 	renderPreloader() {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center">
-				<CircularProgress />
+				<CircularProgress color="#ffe151" />
 			</FlexContainer>
 		);
 	},
