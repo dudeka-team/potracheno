@@ -3,7 +3,11 @@ import React, {PropTypes} from 'react';
 export default function FlexContainer(props) {
 	const baseClass = 'flex';
 	const classes = [baseClass];
-	const {alignItems, justifyContent, flexDirection} = props;
+	const {alignItems, justifyContent, flexDirection, fullHeight} = props;
+
+	if (fullHeight) {
+		classes.push('flex_full-height');
+	}
 
 	if (alignItems) {
 		classes.push(`flex_ai-${alignItems}`);
@@ -31,6 +35,7 @@ FlexContainer.propTypes = {
 };
 
 // Usage example
-// <FlexContainer alignItems='center' justifyContent='center' flexDirection='row-reverse'>
+// <FlexContainer alignItems='center' justifyContent='center'
+// flexDirection='row-reverse' fullHeight>
 //	 <div>center</div>
 // </FlexContainer>

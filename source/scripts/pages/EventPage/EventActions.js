@@ -12,9 +12,10 @@ function EventActions(props) {
 	};
 	return (
 		<div>
-			{[firstAction, ...props.actions].reverse().map((item) => {
+			{[firstAction, ...props.actions].reverse().map((item, i) => {
 				return (
 					<EventActionListItem
+						key={i}
 						icon={item.config.icon}
 						text={item.config.text}
 						date={item.config.date}

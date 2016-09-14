@@ -2,11 +2,13 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
+import Drawer from 'material-ui/Drawer';
 
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
+import Menu from '../../components/Menu';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
@@ -16,7 +18,7 @@ import EventActions from './EventActions';
 import fetchEventData from '../../actions/fetchEventData';
 import relogin from '../../actions/relogin';
 
-import Menu from '../../components/Menu';
+import {DRAWER_SWIPE_AREA_WIDTH} from '../../constants';
 
 const EventPage = React.createClass({
 	getInitialState() {
@@ -34,19 +36,8 @@ const EventPage = React.createClass({
 		this.props.router.push('/events');
 	},
 
-	openMenu() {
-		this.setState({
-			menuOpen: true,
-		});
-	},
-
-	closeMenu(e) {
-		const width = window.innerWidth;
-		if (e.pageX < width / 6) {
-			this.setState({
-				menuOpen: false,
-			});
-		}
+	toggleMenu() {
+		this.setState({menuOpen: !this.state.menuOpen});
 	},
 
 	goToEdit() {
@@ -76,14 +67,33 @@ const EventPage = React.createClass({
 
 	renderPreloader() {
 		return (
-			<FlexContainer alignItems="center" justifyContent="center">
-				<CircularProgress />
+			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+				<CircularProgress color="#ffe151" />
 			</FlexContainer>
 		);
 	},
 
+	renderDrawer(currentEvent, subtitle) {
+		return (
+			<Drawer
+				onRequestChange={(menuOpen) => this.setState({menuOpen})}
+				docked={false}
+				swipeAreaWidth={DRAWER_SWIPE_AREA_WIDTH}
+				open={this.state.menuOpen}
+				openSecondary
+			>
+				<Menu
+					currentEvent={currentEvent}
+					subtitle={subtitle}
+					handleEdit={this.goToEdit}
+					handleRelogin={this.handleRelogin}
+				/>
+			</Drawer>
+		);
+	},
+
 	render() {
-		const {props, state} = this;
+		const {props} = this;
 		const {currentEvent, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
@@ -103,63 +113,41 @@ const EventPage = React.createClass({
 
 			return (
 				<Page>
-					<Menu
-						currentEvent={currentEvent}
-						subtitle={subtitle}
-						menuOpen={state.menuOpen}
-						handleEdit={this.goToEdit}
-						handleRelogin={this.handleRelogin}
-						closeMenu={this.closeMenu}
-					/>
+					{this.renderDrawer(currentEvent, subtitle)}
 					<TopBar>
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 						<TopBarHeading
 							title={currentEvent.name}
-							subtitle={subtitle}
 						/>
-						<TopBarIcon icon="more-actions" onClick={this.openMenu} />
+						<TopBarIcon icon="share" />
+						<TopBarIcon icon="burger" onClick={this.toggleMenu} />
 					</TopBar>
 					<Tabs
 						config={[
 							{
-								name: 'purchases',
 								labelContent: 'Покупки',
-								content:
-									<Purchases
-										eventId={props.id}
-										purchases={purchases}
-										eventParticipants={currentEvent.participants}
-										currentUser={currentUser}
-									/>,
+								content: <Purchases
+									eventId={props.id}
+									purchases={purchases}
+									eventParticipants={currentEvent.participants}
+									currentUser={currentUser}
+								/>,
 							},
 							{
-								name: 'balance',
 								labelContent: 'Баланс',
-								content:
-									<Balance
-										purchases={purchases}
-										participants={currentEvent.participants}
-										currentUser={currentUser}
-										currentEvent={currentEvent}
-									/>,
+								content: <Balance
+									purchases={purchases}
+									participants={currentEvent.participants}
+									currentUser={currentUser}
+									currentEvent={currentEvent}
+									eventId={props.id}
+								/>,
 							},
 							{
-								name: 'balance',
-								labelContent: 'Баланс',
-								content:
-									<Balance
-										purchases={purchases}
-										participants={currentEvent.participants}
-										currentUser={currentUser}
-									/>,
-							},
-							{
-								name: 'actions',
 								labelContent: 'Действия',
-								content:
-									<EventActions
-										actions={actions}
-									/>,
+								content: <EventActions
+									actions={actions}
+								/>,
 							},
 						]}
 					/>

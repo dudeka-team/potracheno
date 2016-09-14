@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 
-import {CircularProgress} from 'material-ui';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import {createPurchaseAsync} from '../actions/createPurchase';
 import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
@@ -13,7 +13,7 @@ import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/Popup';
 import Payers from '../components/Payers';
-import BlueSubtitle from '../components/BlueSubtitle';
+import GreySubtitle from '../components/GreySubtitle';
 import UniversalListItem from '../components/UniversalListItem';
 import Input from '../components/Input';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
@@ -153,11 +153,11 @@ const NewPurchasePage = React.createClass({
 			!(name || '').trim();
 
 		return (
-			<TopBar>
+			<TopBar bordered>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Редактирование покупки" />
 				{this.state.isSavingData ?
-					<CircularProgress size={0.3} />
+					<CircularProgress size={0.3} color="#ffe151" />
 					:
 					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.saveChanges} />
 				}
@@ -173,11 +173,11 @@ const NewPurchasePage = React.createClass({
 			!purchase.amount ||
 			!(name || '').trim();
 		return (
-			<TopBar>
+			<TopBar bordered>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Новая покупка" />
 				{this.state.isSavingData ?
-					<CircularProgress size={0.3} />
+					<CircularProgress size={0.3} color="#ffe151" />
 					:
 					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.save} />
 				}
@@ -256,7 +256,7 @@ const NewPurchasePage = React.createClass({
 					</div>
 					<Separator />
 					<div>
-						<BlueSubtitle text="Участники покупки" />
+						<GreySubtitle text="Участники покупки" />
 						{state.eventParticipants
 							.map(user => {
 								return (<UniversalListItem

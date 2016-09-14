@@ -1,13 +1,15 @@
 import React from 'react';
-import {withRouter, Link} from 'react-router';
+import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import {Page, PageContent} from '../components/Page';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
+import ActionButton from '../components/ActionButton';
 import {readEvents} from '../actions';
 import FlexContainer from '../components/FlexContainer';
+import Poster from '../components/Poster';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
 import {getEventBalance} from '../modules/balance';
 import getLocalEvents from '../actions/getLocalEvents';
@@ -69,8 +71,12 @@ const EventsPage = React.createClass({
 
 		if (!result.length) {
 			result = (
-				<FlexContainer alignItems="center" justifyContent="center">
-					<p>Мероприятий нет. <Link to="/events/new">Создайте первое!</Link></p>
+				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+					<Poster
+						icon="calendar"
+						// eslint-disable-next-line max-len
+						text="У вас пока нет мероприятий, создайте первым свое мероприятие и добавьте участников"
+					/>
 				</FlexContainer>
 			);
 		}
@@ -78,23 +84,29 @@ const EventsPage = React.createClass({
 		return result;
 	},
 
+	renderPreloader() {
+		return (
+			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+				<CircularProgress color="#ffe151" />
+			</FlexContainer>
+		);
+	},
+
 	render() {
 		const {props} = this;
 		return (
 			<Page>
-				<TopBar>
-					<TopBarIcon icon="burger" />
+				<TopBar bordered>
 					<TopBarHeading title="Мероприятия" />
-					<TopBarIcon icon="plus" onClick={this.goToNewEvent} />
+					<TopBarIcon icon="more-actions" />
 				</TopBar>
 				<PageContent>
-					{props.eventsLoaded ?
-						this.renderEvents(props.events, props.eventsById)
+					{props.isFetchingEvents ?
+						this.renderPreloader()
 						:
-						<FlexContainer alignItems="center" justifyContent="center">
-							<CircularProgress />
-						</FlexContainer>
+						this.renderEvents(props.events, props.eventsById)
 					}
+					<ActionButton text="Добавить мероприятие" onClick={this.goToNewEvent} />
 				</PageContent>
 			</Page>
 		);
@@ -110,7 +122,7 @@ function getEventData(eventsById) {
 
 const mapStateToProps = ({events}) => {
 	return {
-		eventsLoaded: events.loaded,
+		isFetchingEvents: events.isFetchingEvents,
 		events: events.events,
 		eventsById: events.eventsById,
 		localEvents: events.localEvents,

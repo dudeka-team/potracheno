@@ -15,5 +15,16 @@
 
 	<script src="moment.min.js"></script>
 	<script src="moment.ru.min.js"></script>
+	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+	<script>
+		var OneSignal = window.OneSignal || [];
+		OneSignal.push(["init", {
+			appId: "8d3bab85-ce6d-4821-8e34-2017e4b247cf",
+			autoRegister: true,
+			notifyButton: {
+				enable: false
+			}
+		}]);
+	</script>
 </body>
 </html>

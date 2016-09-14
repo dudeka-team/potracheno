@@ -22,6 +22,9 @@ import {
 	FETCH_UPDATE_PARTICIPANTS_SUCCESS,
 
 	CHANGE_PURCHASE,
+
+	REPAY_DEBT_SUCCESS,
+
 	FETCH_PURCHASE_DELETE,
 } from '../constants';
 
@@ -33,7 +36,7 @@ const initialState = {
 	currentEvent: null,
 	isCreatingEvent: false,
 	isFetchingEvent: false,
-	loaded: false,
+	isFetchingEvents: false,
 };
 
 export default handleActions({
@@ -65,7 +68,7 @@ export default handleActions({
 	[CREATE_EVENT_ERROR]: stopCreatingEvent,
 
 	[READ_EVENTS_LOADING]: (state) => assign({}, state, {
-		isReadingEvents: true,
+		isFetchingEvents: true,
 	}),
 
 	[READ_EVENTS_SUCCESS]: (state, {payload}) => {
@@ -80,12 +83,12 @@ export default handleActions({
 		return assign({}, state, {
 			events: Object.keys(filteredEvents),
 			eventsById: filteredEvents,
-			loaded: true,
+			isFetchingEvents: false,
 		});
 	},
 
 	[READ_EVENTS_ERROR]: (state) => assign({}, state, {
-		isReadingEvents: false,
+		isFetchingEvents: false,
 	}),
 	[CHANGE_CURRENT_EVENT]: (state, {payload}) => assign({}, state, {
 		currentEvent: state.eventsById[payload],
@@ -130,6 +133,19 @@ export default handleActions({
 		});
 	},
 
+	[REPAY_DEBT_SUCCESS]: (state, {payload}) => {
+		const {eventId, sum, name} = payload;
+
+		const updatedRepayedDebts =
+			Object.assign({}, state.eventsById[eventId].repayedDebts, {[name]: sum});
+		const updatedEvent =
+			Object.assign({}, state.eventsById[eventId], {repayedDebts: updatedRepayedDebts});
+
+		return Object.assign({}, state, {
+			eventsById: assign({}, state.eventsById, {[eventId]: updatedEvent}),
+		});
+	},
+
 	[FETCH_PURCHASE_DELETE]: (state, {payload}) => {
 		const {eventId, purchaseId} = payload;
 		const {eventsById} = state;
@@ -158,7 +174,6 @@ export default handleActions({
 			currentEvent: changedEvent,
 		});
 	},
-
 }, initialState);
 
 function stopCreatingEvent(state) {

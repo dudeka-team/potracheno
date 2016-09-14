@@ -75,6 +75,18 @@ Database.changePurchase = function changePurchase(eventId, purchaseId, purchase)
 		}));
 };
 
+Database.repayDebt = function repayDebt(eventId, sum, name) {
+	return firebase
+		.database()
+		.ref(`events/${eventId}/repayedDebts/${name}`)
+		.set(sum)
+		.then(() => ({
+			eventId,
+			sum,
+			name,
+		}));
+};
+
 Database.deletePurchase = function deletePurchase(eventId, purchaseId) {
 	return firebase
 		.database()
