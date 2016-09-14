@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 
-import {CircularProgress} from 'material-ui';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import {createPurchaseAsync} from '../actions/createPurchase';
 import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
