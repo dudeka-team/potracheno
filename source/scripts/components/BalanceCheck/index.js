@@ -34,8 +34,7 @@ const BalanceCheck = React.createClass({
 	},
 
 	render() {
-		//state.resultmessage
-		const {state, props} = this;
+		const {props} = this;
 		const {debts} = props;
 		return (
 			<div>
@@ -45,7 +44,7 @@ const BalanceCheck = React.createClass({
 						<div className="balance-check__title">Чек мероприятия</div>
 						<div className="balance-check__subtitle">Скопировать чек</div>
 					</div>
-					<div className="balance-check__copy-text"></div>
+					<div className="balance-check__copy-text" />
 				</div>
 			</div>
 		);

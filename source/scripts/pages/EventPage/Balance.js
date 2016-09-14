@@ -1,11 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import Portal from 'react-portal';
+
 import BalanceListItem from '../../components/BalanceListItem';
 import BalanceCheck from '../../components/BalanceCheck';
-import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
-import repayDebt from '../../actions/repayDebt';
 import BalanceItemPopup from '../../components/BalanceItemPopup';
 import BalanceStatus from '../../components/BalanceStatus';
+
+import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
+import repayDebt from '../../actions/repayDebt';
+
 
 const BalancePage = React.createClass({
 	getInitialState() {
@@ -101,12 +105,13 @@ const BalancePage = React.createClass({
 			<div className="balance-page">
 				<BalanceCheck debts={eventsParticipantsDebts} />
 				{this.state.showPopup &&
+				<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
 					<BalanceItemPopup
 						debt={this.state.currentDebt}
 						onSubmit={this.repayDebtHandler}
 						onClose={() => this.closeRepayPopup()}
 					/>
-				}
+				</Portal>
 				{(positiveSum !== 0) && <BalanceStatus text="Вам должны" sum={positiveSum} />}
 				{positiveDebts}
 				{(negativeSum !== 0) && <BalanceStatus text="Вы должны" sum={negativeSum} />}

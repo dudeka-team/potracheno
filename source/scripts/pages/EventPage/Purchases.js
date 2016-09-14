@@ -1,11 +1,13 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
+import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
+
+import Wrapper from '../../components/Wrapper';
 import Fab from '../../components/Fab';
 import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
 import Popup from '../../components/Popup';
-import Icon from '../../components/Icon';
 import FlexContainer from '../../components/FlexContainer';
 import Poster from '../../components/Poster';
 
@@ -49,63 +51,78 @@ const EventPurchasesPage = React.createClass({
 		const {props} = this;
 		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
 	},
-	render() {
+
+	renderPopup() {
 		const {state, props} = this;
-		const {localEvents} = props;
+		return (
+			<Popup
+				title={state.openedPurchase.name}
+				closeIcon
+				onClose={this.closePopup}
+			>
+				<PurchaseInfo
+					purchase={state.openedPurchase}
+					eventParticipants={props.eventParticipants}
+				/>
+			</Popup>
+		);
+	},
+
+	renderPurchases() {
+		const {props} = this;
+		const {localEvents, eventParticipants} = props;
 		const currentUser = localEvents[props.eventId];
-		const {eventParticipants} = props;
-		let result;
-		if (!props.purchases.length) {
-			result = (
-				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-					<Poster icon="purchase" text="У вас пока нет покупок" />
-					<Fab backgroundColor="#ffe151" onClick={this.goToNewPurchase}>
-						<Icon icon="purchase" />
-					</Fab>
-				</FlexContainer>
-			);
-		} else {
-			result = (
-				<div>
-					{state.popupOpened && (
-						<Popup
-							title={state.openedPurchase.name}
-							closeIcon
-							onClose={this.closePopup}
-						>
-							<PurchaseInfo
-								purchase={state.openedPurchase}
-								eventParticipants={eventParticipants}
-							/>
-						</Popup>
-					)}
-					{props.purchases
-						.slice()
-						.reverse()
-						.map(purchase => {
-							let payerName = purchase.payer;
-							if (currentUser === payerName) {
-								payerName += ' (Вы)';
-							}
-							const {participants} = purchase;
-							return (
-								<PurchaseListItem
-									key={purchase.id}
-									buyer={payerName}
-									title={purchase.name}
-									subtitle={getSubtitle(participants.length, eventParticipants.length)}
-									price={purchase.amount}
-									onClick={() => this.goToPurchase(purchase.id)}
-								/>
-							);
-						})}
-					<Fab backgroundColor="#ffe151" onClick={this.goToNewPurchase}>
-						<Icon icon="purchase" />
-					</Fab>
-				</div>
-			);
-		}
-		return result;
+
+		return props.purchases
+			.slice()
+			.reverse()
+			.map(purchase => {
+				let payerName = purchase.payer;
+				if (currentUser === payerName) {
+					payerName += ' (Вы)';
+				}
+				const {participants} = purchase;
+				return (
+					<PurchaseListItem
+						key={purchase.id}
+						buyer={payerName}
+						title={purchase.name}
+						subtitle={getSubtitle(participants.length, eventParticipants.length)}
+						price={purchase.amount}
+						onClick={() => this.goToPurchase(purchase.id)}
+					/>
+				);
+			});
+	},
+
+	renderPlaceholder() {
+		return (
+			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+				<Poster icon="purchase" text="У вас пока нет покупок" />
+			</FlexContainer>
+		);
+	},
+
+	render() {
+		const {props} = this;
+		return (
+			<Wrapper>
+				{this.state.popupOpened && this.renderPopup()}
+				{props.purchases.length ?
+					this.renderPurchases()
+					:
+					this.renderPlaceholder()
+				}
+
+				<Fab
+					backgroundColor="#ffe151"
+					iconStyle={{fill: '#333'}}
+					onClick={this.goToNewPurchase}
+				>
+					<AddShoppingCart />
+				</Fab>
+			</Wrapper>
+		);
 	},
 });
 
