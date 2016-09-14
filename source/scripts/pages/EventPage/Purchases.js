@@ -1,11 +1,13 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
+import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
+
 import Fab from '../../components/Fab';
 import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
 import Popup from '../../components/Popup';
-import Icon from '../../components/Icon';
+
 
 function getSubtitle(participantsCount, eventParticipantsCount) {
 	let result;
@@ -68,6 +70,13 @@ const EventPurchasesPage = React.createClass({
 						/>
 					</Popup>
 				)}
+				<Fab
+					backgroundColor="#ffe151"
+					iconStyle={{fill: '#333'}}
+					onClick={this.goToNewPurchase}
+				>
+					<AddShoppingCart />
+				</Fab>
 				{props.purchases
 					.slice()
 					.reverse()
@@ -87,10 +96,8 @@ const EventPurchasesPage = React.createClass({
 								onClick={() => this.goToPurchase(purchase.id)}
 							/>
 						);
-					})}
-				<Fab backgroundColor="#ffe151" onClick={this.goToNewPurchase}>
-					<Icon icon="purchase" />
-				</Fab>
+					})
+				}
 			</div>
 		);
 	},

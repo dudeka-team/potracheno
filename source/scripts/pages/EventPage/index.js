@@ -95,7 +95,7 @@ const EventPage = React.createClass({
 
 	onTabClick(index) {
 		this.setState({index});
-		this.refs.reactSwipe.swipe.slide(index, 200);
+		this.reactSwipe.swipe.slide(index, 200);
 	},
 
 	render() {
@@ -150,16 +150,16 @@ const EventPage = React.createClass({
 							callback: this.changedTab,
 							continuous: false,
 						}}
-						ref="reactSwipe"
+						ref={(reactSwipe) => (this.reactSwipe = reactSwipe)}
 					>
-						<div>
+						<TabsContent title="1">
 							<Purchases
 								eventId={props.id}
 								purchases={purchases}
 								eventParticipants={currentEvent.participants}
 								currentUser={currentUser}
 							/>
-						</div>
+						</TabsContent>
 						<TabsContent title="2">
 							<Balance
 								purchases={purchases}
@@ -175,7 +175,6 @@ const EventPage = React.createClass({
 							/>
 						</TabsContent>
 					</ReactSwipe>
-
 				</Page>
 			);
 		}
