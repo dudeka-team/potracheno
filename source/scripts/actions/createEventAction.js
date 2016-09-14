@@ -55,8 +55,8 @@ export const eventActionTypes = {
 		return {
 			text: `${bold}${currentUser}${space}удалил(-а)${space}${bold}${purchaseName}`,
 			icon: 'pen',
-			date
-		}
+			date,
+		};
 	},
 	addParticipantToPurchase(currentUser, payerName, purchaseName, date) {
 		let text;
