@@ -16,21 +16,17 @@ export default function EventsListItem(props) {
 			<div className="events-item__rightside">
 				<div className={debtStatusClasses.join(' ')}>
 					<div className="events-item__sum">
-						{
-							(props.sum !== 0)
-								&& (
-										(props.sum > 0)
-											?
-											`+${props.sum} Р`
-											:
-											`${props.sum} Р`
-									)
-						}
+						{formatSum(props.sum)}
 					</div>
 				</div>
 			</div>
 		</div>
 	);
+}
+
+function formatSum(sum) {
+	if (sum === 0) return null;
+	return `${sum > 0 ? '+' : '-'}${Math.abs(sum)} Р`;
 }
 
 EventsListItem.propTypes = {
