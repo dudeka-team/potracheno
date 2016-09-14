@@ -34,7 +34,8 @@ $topBarHeight = 56px
 
 	&__content
 		overflow-y scroll
-		height 100%
+		height "calc(100% - %s)" % ($tabsHeight + $topBarHeight)
+		padding-bottom 86px
 
 	&__item
 		display none
