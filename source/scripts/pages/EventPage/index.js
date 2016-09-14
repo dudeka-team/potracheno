@@ -8,6 +8,7 @@ import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
+import Menu from '../../components/Menu';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
@@ -17,7 +18,7 @@ import EventActions from './EventActions';
 import fetchEventData from '../../actions/fetchEventData';
 import relogin from '../../actions/relogin';
 
-import Menu from '../../components/Menu';
+import {DRAWER_SWIPE_AREA_WIDTH} from '../../constants';
 
 const EventPage = React.createClass({
 	getInitialState() {
@@ -72,6 +73,25 @@ const EventPage = React.createClass({
 		);
 	},
 
+	renderDrawer(currentEvent, subtitle) {
+		return (
+			<Drawer
+				onRequestChange={(menuOpen) => this.setState({menuOpen})}
+				docked={false}
+				swipeAreaWidth={DRAWER_SWIPE_AREA_WIDTH}
+				open={this.state.menuOpen}
+				openSecondary
+			>
+				<Menu
+					currentEvent={currentEvent}
+					subtitle={subtitle}
+					handleEdit={this.goToEdit}
+					handleRelogin={this.handleRelogin}
+				/>
+			</Drawer>
+		);
+	},
+
 	render() {
 		const {props} = this;
 		const {currentEvent, isFetchingEvent} = props;
@@ -93,19 +113,7 @@ const EventPage = React.createClass({
 
 			return (
 				<Page>
-					<Drawer
-						onRequestChange={(menuOpen) => this.setState({menuOpen})}
-						docked={false}
-						open={this.state.menuOpen}
-						openSecondary
-					>
-						<Menu
-							currentEvent={currentEvent}
-							subtitle={subtitle}
-							handleEdit={this.goToEdit}
-							handleRelogin={this.handleRelogin}
-						/>
-					</Drawer>
+					{this.renderDrawer(currentEvent, subtitle)}
 					<TopBar>
 						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
 						<TopBarHeading
@@ -117,7 +125,6 @@ const EventPage = React.createClass({
 					<Tabs
 						config={[
 							{
-								name: 'purchases',
 								labelContent: 'Покупки',
 								content: <Purchases
 									eventId={props.id}
@@ -127,7 +134,6 @@ const EventPage = React.createClass({
 								/>,
 							},
 							{
-								name: 'balance',
 								labelContent: 'Баланс',
 								content: <Balance
 									purchases={purchases}
@@ -138,7 +144,6 @@ const EventPage = React.createClass({
 								/>,
 							},
 							{
-								name: 'actions',
 								labelContent: 'Действия',
 								content: <EventActions
 									actions={actions}
