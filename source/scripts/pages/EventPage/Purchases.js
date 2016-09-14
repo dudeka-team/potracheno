@@ -50,26 +50,55 @@ const EventPurchasesPage = React.createClass({
 		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
 	},
 
-	render() {
+	renderPopup() {
 		const {state, props} = this;
-		const {localEvents} = props;
-		const currentUser = localEvents[props.eventId];
-		const {eventParticipants} = props;
+		return (
+			<Popup
+				title={state.openedPurchase.name}
+				closeIcon
+				onClose={this.closePopup}
+			>
+				<PurchaseInfo
+					purchase={state.openedPurchase}
+					eventParticipants={props.eventParticipants}
+				/>
+			</Popup>
+		);
+	},
 
+	renderPurchases() {
+		const {props} = this;
+		const {localEvents, eventParticipants} = props;
+		const currentUser = localEvents[props.eventId];
+
+		return props.purchases
+			.slice()
+			.reverse()
+			.map(purchase => {
+				let payerName = purchase.payer;
+				if (currentUser === payerName) {
+					payerName += ' (Вы)';
+				}
+				const {participants} = purchase;
+				return (
+					<PurchaseListItem
+						key={purchase.id}
+						buyer={payerName}
+						title={purchase.name}
+						subtitle={getSubtitle(participants.length, eventParticipants.length)}
+						price={purchase.amount}
+						onClick={() => this.goToPurchase(purchase.id)}
+					/>
+				);
+			});
+	},
+
+	render() {
 		return (
 			<div>
-				{state.popupOpened && (
-					<Popup
-						title={state.openedPurchase.name}
-						closeIcon
-						onClose={this.closePopup}
-					>
-						<PurchaseInfo
-							purchase={state.openedPurchase}
-							eventParticipants={eventParticipants}
-						/>
-					</Popup>
-				)}
+				{this.state.popupOpened && this.renderPopup()}
+				{this.renderPurchases()}
+
 				<Fab
 					backgroundColor="#ffe151"
 					iconStyle={{fill: '#333'}}
@@ -77,27 +106,6 @@ const EventPurchasesPage = React.createClass({
 				>
 					<AddShoppingCart />
 				</Fab>
-				{props.purchases
-					.slice()
-					.reverse()
-					.map(purchase => {
-						let payerName = purchase.payer;
-						if (currentUser === payerName) {
-							payerName += ' (Вы)';
-						}
-						const {participants} = purchase;
-						return (
-							<PurchaseListItem
-								key={purchase.id}
-								buyer={payerName}
-								title={purchase.name}
-								subtitle={getSubtitle(participants.length, eventParticipants.length)}
-								price={purchase.amount}
-								onClick={() => this.goToPurchase(purchase.id)}
-							/>
-						);
-					})
-				}
 			</div>
 		);
 	},
