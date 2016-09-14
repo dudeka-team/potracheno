@@ -36,6 +36,7 @@ const BalanceItemPopup = React.createClass({
 			<Popup
 				unBordered
 				largeHeader
+				withTabs
 				title="Отметить долг возвращенным"
 				okButton={{
 					text: 'ок',
