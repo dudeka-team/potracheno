@@ -38,7 +38,11 @@ const BalanceCheck = React.createClass({
 		const {debts} = props;
 		return (
 			<div>
-				<div className="balance-check" onClick={() => this.selectAndCopy(debts)}>
+				<div
+					className="balance-check"
+					onClick={() => { this.selectAndCopy(debts); props.onClick(); }
+					}
+				>
 					<div className="balance-check__icon" />
 					<div className="balance-check__content">
 						<div className="balance-check__title">Чек мероприятия</div>

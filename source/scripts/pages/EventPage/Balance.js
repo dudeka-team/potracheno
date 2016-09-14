@@ -6,6 +6,7 @@ import BalanceListItem from '../../components/BalanceListItem';
 import BalanceCheck from '../../components/BalanceCheck';
 import BalanceItemPopup from '../../components/BalanceItemPopup';
 import BalanceStatus from '../../components/BalanceStatus';
+import PopupPoster from '../../components/PopupPoster';
 
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
@@ -15,6 +16,7 @@ const BalancePage = React.createClass({
 	getInitialState() {
 		return {
 			showPopup: false,
+			showPopupPoster: false,
 		};
 	},
 
@@ -46,7 +48,16 @@ const BalancePage = React.createClass({
 			showPopup: false,
 		});
 	},
-
+	showPopupPoster() {
+		this.setState({
+			showPopupPoster: true,
+		});
+		setTimeout(() => {
+			this.setState({
+				showPopupPoster: false,
+			});
+		}, 1500);
+	},
 	showRepayPopup(debt) {
 		this.setState({
 			showPopup: true,
@@ -103,8 +114,11 @@ const BalancePage = React.createClass({
 
 		return (
 			<div className="balance-page">
-				<BalanceCheck debts={eventsParticipantsDebts} />
-				{this.state.showPopup &&
+				<PopupPoster
+					text="Чек скопирован в буфер обмена"
+					popupPosterOpen={this.state.showPopupPoster}
+				/>
+				<BalanceCheck debts={eventsParticipantsDebts} onClick={this.showPopupPoster} />
 				<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
 					<BalanceItemPopup
 						debt={this.state.currentDebt}
