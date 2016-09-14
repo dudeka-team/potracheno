@@ -26,16 +26,33 @@ const CREATE = 'CREATE';
 
 const {assign} = Object;
 
+function arraysDiff(a, b) {
+	if (a.length !== b.length) {
+		return true;
+	}
+	a.forEach((x, index) => {
+		if (x !== b[index]) return true;
+	});
+	return false;
+}
+
 const NewPurchasePage = React.createClass({
 	getInitialState() {
 		const {props} = this;
 		const {eventParticipants, purchase, myName} = props.data;
+		let purchaseCopy;
+		if (props.mode === EDIT) { 
+			purchaseCopy = Object.assign({}, purchase, {
+				participants: purchase.participants.slice(),
+			});
+		}
 		return {
 			mode: props.mode || CREATE,
 			isSavingData: false,
 			purchase,
 			eventParticipants,
 			myName,
+			purchaseCopy,
 		};
 	},
 
@@ -96,9 +113,7 @@ const NewPurchasePage = React.createClass({
 			eventId: this.props.params.id,
 			eventActionInfo: {
 				text: eventActionTypes
-					.changePurchaseInfo(state.purchase.payer,
-									state.purchase.name
-								),
+					.changePurchaseInfo(state.purchase.payer, state.purchase.name),
 			},
 		}));
 
@@ -108,12 +123,18 @@ const NewPurchasePage = React.createClass({
 	},
 
 	editPageTopBar() {
-		const {purchase} = this.state;
+		const {purchase, purchaseCopy} = this.state;
 		const {participants, name} = purchase;
+		let changed = purchase.name !== purchaseCopy.name || 
+			purchase.amount !== purchaseCopy.amount ||
+			purchase.payer !== purchaseCopy.payer ||
+			arraysDiff(purchase.participants.sort(), purchaseCopy.participants.sort());
+
 		const disabled = participants.length === 0 ||
 			isNaN(purchase.amount) ||
 			!purchase.amount ||
-			!(name || '').trim();
+			!(name || '').trim() ||
+			!changed;
 
 		return (
 			<TopBar bordered>
@@ -129,7 +150,7 @@ const NewPurchasePage = React.createClass({
 	},
 
 	createPageTopBar() {
-		const {purchase} = this.state;
+		const {purchase, purchaseCopy} = this.state;
 		const {participants, name} = purchase;
 		const disabled = participants.length === 0 ||
 			isNaN(purchase.amount) ||
