@@ -99,6 +99,7 @@ const BalancePage = React.createClass({
 
 		return (
 			<div className="balance-page">
+				<BalanceCheck debts={eventsParticipantsDebts} />
 				{this.state.showPopup &&
 					<BalanceItemPopup
 						debt={this.state.currentDebt}
@@ -110,7 +111,6 @@ const BalancePage = React.createClass({
 				{positiveDebts}
 				{(negativeSum !== 0) && <BalanceStatus text="Вы должны" sum={negativeSum} />}
 				{negativeDebts}
-				<BalanceCheck debts={eventsParticipantsDebts} />
 			</div>
 		);
 	},
