@@ -3,11 +3,13 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 
+import Wrapper from '../../components/Wrapper';
 import Fab from '../../components/Fab';
 import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
 import Popup from '../../components/Popup';
-
+import FlexContainer from '../../components/FlexContainer';
+import Poster from '../../components/Poster';
 
 function getSubtitle(participantsCount, eventParticipantsCount) {
 	let result;
@@ -93,11 +95,24 @@ const EventPurchasesPage = React.createClass({
 			});
 	},
 
-	render() {
+	renderPlaceholder() {
 		return (
-			<div>
+			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+				<Poster icon="purchase" text="У вас пока нет покупок" />
+			</FlexContainer>
+		);
+	},
+
+	render() {
+		const {props} = this;
+		return (
+			<Wrapper>
 				{this.state.popupOpened && this.renderPopup()}
-				{this.renderPurchases()}
+				{props.purchases.length ?
+					this.renderPurchases()
+					:
+					this.renderPlaceholder()
+				}
 
 				<Fab
 					backgroundColor="#ffe151"
@@ -106,7 +121,7 @@ const EventPurchasesPage = React.createClass({
 				>
 					<AddShoppingCart />
 				</Fab>
-			</div>
+			</Wrapper>
 		);
 	},
 });
