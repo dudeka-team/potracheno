@@ -144,7 +144,7 @@ const EditEventPage = React.createClass({
 	renderPreloader() {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<CircularProgress />
+				<CircularProgress color="#ffe151" />
 			</FlexContainer>
 		);
 	},

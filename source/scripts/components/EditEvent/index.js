@@ -184,7 +184,7 @@ const EditEvent = React.createClass({
 					<TopBarIcon icon="close" onClick={this.goBack} />
 					<TopBarHeading title={props.pageTitle} />
 					{props.isCreatingEvent ?
-						<CircularProgress size={0.3} />
+						<CircularProgress size={0.3} color="#ffe151" />
 						:
 						<TopBarIcon
 							icon="check-active"

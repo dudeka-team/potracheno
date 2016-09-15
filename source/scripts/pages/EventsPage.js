@@ -87,7 +87,7 @@ const EventsPage = React.createClass({
 	renderPreloader() {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<CircularProgress />
+				<CircularProgress color="#ffe151" />
 			</FlexContainer>
 		);
 	},
@@ -95,7 +95,7 @@ const EventsPage = React.createClass({
 	render() {
 		const {props} = this;
 		return (
-			<Page>
+			<Page style={{paddingBottom: '64px'}}>
 				<TopBar bordered>
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="more-actions" />
