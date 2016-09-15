@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
+import deepEqual from 'deep-equal';
 
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -25,16 +26,6 @@ const EDIT = 'EDIT';
 const CREATE = 'CREATE';
 
 const {assign} = Object;
-
-function arraysDiff(a, b) {
-	if (a.length !== b.length) {
-		return true;
-	}
-	a.forEach((x, index) => {
-		if (x !== b[index]) return true;
-	});
-	return false;
-}
 
 const NewPurchasePage = React.createClass({
 	getInitialState() {
@@ -128,7 +119,7 @@ const NewPurchasePage = React.createClass({
 		const changed = purchase.name !== purchaseCopy.name ||
 			purchase.amount !== purchaseCopy.amount ||
 			purchase.payer !== purchaseCopy.payer ||
-			arraysDiff(purchase.participants.sort(), purchaseCopy.participants.sort());
+			!deepEqual(purchase.participants.sort(), purchaseCopy.participants.sort());
 
 		const disabled = participants.length === 0 ||
 			isNaN(purchase.amount) ||

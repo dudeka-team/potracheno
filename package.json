@@ -44,6 +44,7 @@
     "webpack-dev-server": "^1.15.1"
   },
   "dependencies": {
+    "deep-equal": "^1.0.1",
     "es6-object-assign": "^1.0.3",
     "firebase": "^3.3.0",
     "material-ui": "^0.15.4",
