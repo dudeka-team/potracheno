@@ -26,51 +26,39 @@ const CREATE = 'CREATE';
 
 const {assign} = Object;
 
+function arraysDiff(a, b) {
+	if (a.length !== b.length) {
+		return true;
+	}
+	a.forEach((x, index) => {
+		if (x !== b[index]) return true;
+	});
+	return false;
+}
+
 const NewPurchasePage = React.createClass({
 	getInitialState() {
-		const {currentEvent, localEvents} = this.props;
-		const eventId = this.props.params.id;
-		const purchase = {
-			participants: (currentEvent && currentEvent.participants) || [],
-			payer: currentEvent && currentEvent.participants && currentEvent.participants[0],
-		};
+		const {props} = this;
+		const {eventParticipants, purchase, myName} = props.data;
+		let purchaseCopy;
+		if (props.mode === EDIT) {
+			purchaseCopy = Object.assign({}, purchase, {
+				participants: purchase.participants.slice(),
+			});
+		}
 		return {
-			mode: this.props.mode || CREATE,
+			mode: props.mode || CREATE,
 			isSavingData: false,
 			purchase,
-			eventParticipants: (currentEvent && currentEvent.participants) || [],
-			userName: localEvents[eventId],
+			eventParticipants,
+			myName,
+			purchaseCopy,
 		};
 	},
 
 	componentDidMount() {
 		const {params, dispatch} = this.props;
 		dispatch(fetchEventData(params.id));
-	},
-
-	componentWillReceiveProps(newProps) {
-		const {currentEvent} = newProps;
-		if (!currentEvent || !currentEvent.purchases) return;
-		if (this.props.mode !== EDIT) {
-			if (!this.props.currentEvent) {
-				this.setState({
-					eventParticipants: currentEvent.participants,
-					purchase: assign(this.state.purchase, {
-						payer: currentEvent.participants && currentEvent.participants[0],
-						participants: currentEvent.participants,
-					}),
-				});
-			}
-			return;
-		}
-		const purchase = currentEvent.purchases[this.props.params.purchase_id];
-		if (!purchase.payer) {
-			purchase.payer = purchase.participants[0];
-		}
-		this.setState({
-			purchase,
-			eventParticipants: currentEvent.participants,
-		});
 	},
 
 	getLoan(user) {
@@ -83,7 +71,7 @@ const NewPurchasePage = React.createClass({
 	},
 
 	getFullName(name) {
-		return this.state.userName === name ? `${name} (Вы)` : name;
+		return this.state.myName === name ? `${name} (Вы)` : name;
 	},
 
 	save() {
@@ -125,9 +113,7 @@ const NewPurchasePage = React.createClass({
 			eventId: this.props.params.id,
 			eventActionInfo: {
 				text: eventActionTypes
-					.changePurchaseInfo(state.purchase.payer,
-									state.purchase.name
-								),
+					.changePurchaseInfo(state.purchase.payer, state.purchase.name),
 			},
 		}));
 
@@ -137,12 +123,18 @@ const NewPurchasePage = React.createClass({
 	},
 
 	editPageTopBar() {
-		const {purchase} = this.state;
+		const {purchase, purchaseCopy} = this.state;
 		const {participants, name} = purchase;
+		const changed = purchase.name !== purchaseCopy.name ||
+			purchase.amount !== purchaseCopy.amount ||
+			purchase.payer !== purchaseCopy.payer ||
+			arraysDiff(purchase.participants.sort(), purchaseCopy.participants.sort());
+
 		const disabled = participants.length === 0 ||
 			isNaN(purchase.amount) ||
 			!purchase.amount ||
-			!(name || '').trim();
+			!(name || '').trim() ||
+			!changed;
 
 		return (
 			<TopBar bordered>
@@ -247,7 +239,7 @@ const NewPurchasePage = React.createClass({
 						/>
 					</div>
 					<Separator />
-					<div>
+					<div style={{paddingRight: '9px'}}>
 						<GreySubtitle text="Участники покупки" />
 						{state.eventParticipants
 							.map(user => {
