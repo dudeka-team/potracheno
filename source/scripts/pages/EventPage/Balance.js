@@ -6,6 +6,9 @@ import BalanceListItem from '../../components/BalanceListItem';
 import BalanceCheck from '../../components/BalanceCheck';
 import BalanceItemPopup from '../../components/BalanceItemPopup';
 import BalanceStatus from '../../components/BalanceStatus';
+import FlexContainer from '../../components/FlexContainer';
+import Poster from '../../components/Poster';
+import Wrapper from '../../components/Wrapper';
 
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
@@ -102,20 +105,29 @@ const BalancePage = React.createClass({
 
 
 		return (
-			<div className="balance-page">
-				<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
-					<BalanceItemPopup
-						debt={this.state.currentDebt}
-						onSubmit={this.repayDebtHandler}
-						onClose={() => this.closeRepayPopup()}
-					/>
-				</Portal>
-				{(positiveSum !== 0) && <BalanceStatus text="Вам должны" sum={positiveSum} />}
-				{positiveDebts}
-				{(negativeSum !== 0) && <BalanceStatus text="Вы должны" sum={negativeSum} />}
-				{negativeDebts}
-				<BalanceCheck debts={eventsParticipantsDebts} />
-			</div>
+			<Wrapper>
+				<div className="balance-page">
+					<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
+						<BalanceItemPopup
+							debt={this.state.currentDebt}
+							onSubmit={this.repayDebtHandler}
+							onClose={() => this.closeRepayPopup()}
+						/>
+					</Portal>
+					{(positiveSum !== 0) && <BalanceStatus text="Вам должны" sum={positiveSum} />}
+					{positiveDebts}
+					{(negativeSum !== 0) && <BalanceStatus text="Вы должны" sum={negativeSum} />}
+					{negativeDebts}
+					{(positiveSum !== 0 || negativeSum !== 0) &&
+						<BalanceCheck debts={eventsParticipantsDebts} />
+					}
+				</div>
+				{(positiveSum === 0 && negativeSum === 0) &&
+					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+						<Poster icon="purchase" text="Баланс появится, когда вы заведете покупки" />
+					</FlexContainer>
+				}
+			</Wrapper>
 		);
 	},
 });
