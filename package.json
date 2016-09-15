@@ -8,12 +8,7 @@
   },
   "author": "dudeka team",
   "license": "MIT",
-  "keywords": [
-    "ecosystem:phonegap",
-    "ecosystem:cordova",
-    "cordova:template",
-    "phonegap:template"
-  ],
+  "keywords": [],
   "scripts": {
     "test": "mocha -r babel-core/register ./tests/*.js",
     "lint": "eslint source/scripts",
