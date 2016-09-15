@@ -95,7 +95,7 @@ const EventsPage = React.createClass({
 	render() {
 		const {props} = this;
 		return (
-			<Page>
+			<Page style={{paddingBottom: '64px'}}>
 				<TopBar bordered>
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="more-actions" />
