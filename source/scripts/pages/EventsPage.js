@@ -7,7 +7,7 @@ import {Page, PageContent} from '../components/Page';
 import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import ActionButton from '../components/ActionButton';
-import {readEvents} from '../actions/readEvents';
+import readEvents from '../actions/readEvents';
 import FlexContainer from '../components/FlexContainer';
 import Poster from '../components/Poster';
 import changeCurrentEvent from '../actions/changeCurrentEvent';

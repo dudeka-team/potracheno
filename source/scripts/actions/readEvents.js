@@ -1,10 +1,9 @@
 import db from '../database';
-import {copyEventsToLocal} from './copyEventsToLocal';
 import {
 	READ_EVENTS,
 } from '../constants';
 
-export function readEvents() {
+export default function readEvents() {
 	return dispatch => {
 		dispatch({
 			type: READ_EVENTS,
