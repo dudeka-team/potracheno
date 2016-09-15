@@ -24,10 +24,10 @@ const BalancePage = React.createClass({
 
 		if (this.props.eventsById[this.props.eventId].repayedDebts) {
 			oldRepayedFrom =
-				Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.from])
+				this.props.eventsById[this.props.eventId].repayedDebts[debt.from]
 					|| 0;
 			oldRepayedTo =
-				Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.to])
+				this.props.eventsById[this.props.eventId].repayedDebts[debt.to]
 					|| 0;
 		}
 
