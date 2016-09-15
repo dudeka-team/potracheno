@@ -68,7 +68,8 @@ const EditEvent = React.createClass({
 			manager: state.manager,
 			start: state.start.valueOf(),
 			end: state.end.valueOf(),
-			participants: state.participants.map(({name}) => name).filter(Boolean).concat(state.manager),
+			participants: [state.manager]
+				.concat(state.participants.map(({name}) => name).filter(Boolean)),
 		});
 	},
 
@@ -174,25 +175,62 @@ const EditEvent = React.createClass({
 		});
 	},
 
+	renderTopBar() {
+		const {props} = this;
+
+		return (
+			<TopBar bordered>
+				<TopBarIcon icon="close" onClick={this.goBack} />
+				<TopBarHeading title={props.pageTitle} />
+				{props.isCreatingEvent ?
+					<CircularProgress size={0.3} color="#ffe151" />
+					:
+					<TopBarIcon
+						icon="check-active"
+						onClick={this.save}
+						disabled={!this.isSaveAvailable()}
+					/>
+				}
+			</TopBar>
+		);
+	},
+
+	renderDatesInputs() {
+		const {state} = this;
+
+		return (
+			<FlexContainer justifyContent="space-between">
+				<div className="data-picker-wrapper">
+					<DatePicker
+						fullWidth
+						floatingLabelText="Начало"
+						formatDate={formatDate}
+						onChange={this.handleStartDateChange}
+						minDate={state.start}
+						value={state.start}
+					/>
+				</div>
+				<div className="data-picker-wrapper">
+					<DatePicker
+						fullWidth
+						floatingLabelText="Завершение"
+						formatDate={formatDate}
+						onChange={this.handleEndDateChange}
+						minDate={state.start}
+						value={state.end}
+					/>
+				</div>
+			</FlexContainer>
+		);
+	},
+
 	render() {
-		const {state, props} = this;
+		const {state} = this;
 		const labelStyle = {color: '#939fa8'};
 		const underLineStyle = {borderColor: '#ffe151'};
 		return (
 			<Page>
-				<TopBar bordered>
-					<TopBarIcon icon="close" onClick={this.goBack} />
-					<TopBarHeading title={props.pageTitle} />
-					{props.isCreatingEvent ?
-						<CircularProgress size={0.3} color="#ffe151" />
-						:
-						<TopBarIcon
-							icon="check-active"
-							onClick={this.save}
-							disabled={!this.isSaveAvailable()}
-						/>
-					}
-				</TopBar>
+				{this.renderTopBar()}
 				<PageContent style={{padding: '0 1rem 5rem'}}>
 					<TextField
 						floatingLabelFocusStyle={labelStyle}
@@ -202,29 +240,7 @@ const EditEvent = React.createClass({
 						value={state.name}
 						onChange={this.handleEventNameChange}
 					/>
-
-					<FlexContainer justifyContent="space-between">
-						<div className="data-picker-wrapper">
-							<DatePicker
-								fullWidth
-								floatingLabelText="Начало"
-								formatDate={formatDate}
-								onChange={this.handleStartDateChange}
-								minDate={state.start}
-								value={state.start}
-							/>
-						</div>
-						<div className="data-picker-wrapper">
-							<DatePicker
-								fullWidth
-								floatingLabelText="Завершение"
-								formatDate={formatDate}
-								onChange={this.handleEndDateChange}
-								minDate={state.start}
-								value={state.end}
-							/>
-						</div>
-					</FlexContainer>
+					{this.renderDatesInputs()}
 					<Separator style={{margin: '0 -1rem', width: 'calc(100% + 32px)'}} />
 					<GreySubtitle
 						style={{margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0'}}
@@ -238,7 +254,6 @@ const EditEvent = React.createClass({
 						value={state.manager}
 						onChange={this.handleManagerChange}
 					/>
-
 					{this.renderParticipants()}
 				</PageContent>
 			</Page>

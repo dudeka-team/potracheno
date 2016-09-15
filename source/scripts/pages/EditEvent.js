@@ -20,45 +20,74 @@ const EditEventPage = React.createClass({
 		}
 	},
 
-	save(eventData) {
-		const {currentEvent, params, dispatch} = this.props;
+	save(updatedEvent) {
+		const {currentEvent, currentUserName, params, dispatch} = this.props;
 		const {
 			name,
 			manager,
 			start,
 			end,
 			participants,
-		} = eventData;
-		const isEventParticipant = (pName) => participants.indexOf(pName) !== -1;
+		} = updatedEvent;
 
-		let purchases = Object
-			.keys(currentEvent.purchases || [])
-			.map((purchaseId) => {
-				const originalPurchase = currentEvent.purchases[purchaseId];
-				const updatedPurchase = Object.assign({}, originalPurchase, {
-					participants: originalPurchase.participants.filter(isEventParticipant),
-				});
+		const deletedParticipants = currentEvent.participants
+			.filter((n, index) => !participants[index]);
+		const changedParticipants = currentEvent.participants
+			.map((n, index) => {
+				const changed = participants[index] && participants[index] !== n;
 
-				if (updatedPurchase.participants.indexOf(updatedPurchase.payer) === -1) {
-					return null;
-				}
-
-				if (updatedPurchase.participants.length < 2) {
-					return null;
-				}
+				if (!changed) return null;
 
 				return {
-					key: purchaseId,
-					value: updatedPurchase,
+					old: n,
+					updated: participants[index],
 				};
 			})
-			.filter(Boolean)
-			.reduce((result, {key, value}) => {
-				result[key] = value;
-				return result;
-			}, {});
+			.filter(Boolean);
 
-		if (!Object.keys(purchases).length) {
+		let purchases = Object
+			.keys(currentEvent.purchases || {})
+			.map((purchaseId) => {
+				const originalPurchase = currentEvent.purchases[purchaseId];
+
+				// если организатор покупки был удалён, покупку тоже удаляем
+				if (deletedParticipants.indexOf(originalPurchase.payer) !== -1) {
+					return null;
+				}
+
+				const updatedPurchaseParticipants = originalPurchase.participants
+					// убираем удалённых из мероприятия участников
+					.filter((pName) => deletedParticipants.indexOf(pName) === -1)
+					// заменяем старые имена на новые
+					.map((pName) => {
+						const changedData = changedParticipants.filter(({old}) => old === pName)[0];
+
+						if (changedData) {
+							return changedData.updated;
+						}
+
+						return pName;
+					});
+
+				if (updatedPurchaseParticipants.length < 2) {
+					return null;
+				}
+
+				let payer = originalPurchase.payer;
+				const changedPayerData = changedParticipants.filter(({old}) => old === payer)[0];
+
+				if (changedPayerData) {
+					payer = changedPayerData.updated;
+				}
+
+				return Object.assign({}, originalPurchase, {
+					payer,
+					participants: updatedPurchaseParticipants,
+				});
+			})
+			.filter(Boolean);
+
+		if (!purchases.length) {
 			purchases = [];
 		}
 
@@ -66,7 +95,7 @@ const EditEventPage = React.createClass({
 			.keys((currentEvent && currentEvent.actions) || [])
 			.map((config) => Object.assign({config}, currentEvent.actions[config]));
 
-		const updatedEvent = {
+		const finalEvent = {
 			name,
 			manager,
 			start,
@@ -76,9 +105,13 @@ const EditEventPage = React.createClass({
 			actions,
 		};
 
+		const currentUserNameChangeData = changedParticipants
+			.filter(({old}) => old === currentUserName)[0];
+
 		dispatch(updateEvent({
 			id: params.id,
-			data: updatedEvent,
+			data: finalEvent,
+			currentUserNameChangeData,
 		}));
 
 		const dispatchEventManipulation = (condition, actionType, parameters) => {
@@ -177,6 +210,7 @@ const EditEventPage = React.createClass({
 function mapStateToProps({events}) {
 	return {
 		currentEvent: events.currentEvent,
+		currentUserName: events.currentUserName,
 	};
 }
 
