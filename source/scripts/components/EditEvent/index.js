@@ -46,6 +46,16 @@ const EditEvent = React.createClass({
 
 		participants.push(createParticipant());
 
+		this.initialParticipants = {};
+
+		participants
+			.filter(({name}) => name)
+			.forEach(({id, name}) => {
+				this.initialParticipants[id] = name;
+			});
+
+		this.initialManagerName = props.managerName || '';
+
 		return {
 			name: props.name || '',
 			manager: props.managerName || '',
@@ -60,16 +70,71 @@ const EditEvent = React.createClass({
 		router.push(prevUrl);
 	},
 
+	isSaveAvailable() {
+		const {state} = this;
+
+		const hasName = state.name.trim().length > 2;
+		if (!hasName) return false;
+
+		const hasManager = state.manager.trim().length > 1;
+		if (!hasManager) return false;
+
+		const participants = state.participants
+			.filter(Boolean)
+			.filter(({name}) => name.trim())
+			.map(markDuplicateParticipants([state.manager]));
+
+		const participantsAreUnique = participants.length && !participants
+			.filter(({isDuplicate}) => isDuplicate)
+			.length;
+		if (!participantsAreUnique) return false;
+
+		return true;
+	},
+
 	save() {
 		const {props, state} = this;
+		const {initialParticipants} = this;
+		const participants = state.participants.filter(({name}) => name.trim() !== '');
+		const participantsByIds = {};
+
+		participants.forEach(({id, name}) => {
+			participantsByIds[id] = name;
+		});
+
+		const deletedParticipants = Object
+			.keys(initialParticipants)
+			.filter((pId) => !participantsByIds[pId])
+			.map((pId) => initialParticipants[pId]);
+
+		const updatedParticipants = Object
+			.keys(initialParticipants)
+			.map((id) => ({
+				id,
+				name: initialParticipants[id],
+			}))
+			.filter(({name}) => deletedParticipants.indexOf(name) === -1)
+			.filter(({id, name}) => participantsByIds[id] !== name)
+			.map(({id, name}) => ({
+				old: name,
+				updated: participantsByIds[id],
+			}));
+
+		if (this.initialManagerName !== state.manager) {
+			updatedParticipants.push({
+				old: this.initialManagerName,
+				updated: state.manager,
+			});
+		}
 
 		props.handleSave({
 			name: state.name,
 			manager: state.manager,
 			start: state.start.valueOf(),
 			end: state.end.valueOf(),
-			participants: [state.manager]
-				.concat(state.participants.map(({name}) => name).filter(Boolean)),
+			participants: [state.manager].concat(participants.map(({name}) => name.trim())),
+			deletedParticipants,
+			updatedParticipants,
 		});
 	},
 
@@ -133,27 +198,6 @@ const EditEvent = React.createClass({
 		this.setState({
 			participants: keepOneEmptyItem(filteredParticipants),
 		});
-	},
-
-	isSaveAvailable() {
-		const {state} = this;
-
-		const hasName = state.name.trim().length > 2;
-		if (!hasName) return false;
-
-		const hasManager = state.manager.trim().length > 1;
-		if (!hasManager) return false;
-
-		const participants = state.participants
-			.filter(({name}) => name.trim())
-			.map(markDuplicateParticipants([state.manager]));
-
-		const participantsAreUnique = participants.length && !participants
-			.filter(({isDuplicate}) => isDuplicate)
-			.length;
-		if (!participantsAreUnique) return false;
-
-		return true;
 	},
 
 	renderParticipants() {
