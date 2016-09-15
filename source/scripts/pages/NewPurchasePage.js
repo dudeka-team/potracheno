@@ -5,7 +5,7 @@ import {withRouter} from 'react-router';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import {createPurchaseAsync} from '../actions/createPurchase';
-import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
+import {createEventActionAsync, eventActionTypes, getDiff} from '../actions/createEventAction';
 import {loadEventDataAsync} from '../actions';
 
 import {Page, PageContent} from '../components/Page';
@@ -89,13 +89,13 @@ const NewPurchasePage = React.createClass({
 					),
 				},
 			}));
-			state.purchase.participants.forEach((item) => {
+			state.purchase.participants.forEach((participant) => {
 				props.dispatch(createEventActionAsync({
 					eventId: props.params.id,
 					eventActionInfo: {
 						config: eventActionTypes.addParticipantToPurchase(
 							props.localEvents[props.params.id],
-							item,
+							participant,
 							state.purchase.name,
 							(new Date()).getTime()
 						),
@@ -123,9 +123,41 @@ const NewPurchasePage = React.createClass({
 
 	saveChanges() {
 		const {props, state} = this;
-		const {dispatch} = props;
+		const {dispatch, localEvents} = props;
 		const {purchase_id, id} = props.params;
+
+		const participants = getDiff(state.purchaseCopy.participants, state.purchase.participants);
+
 		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
+
+		participants.added.forEach((participant) => {
+			props.dispatch(createEventActionAsync({
+				eventId: props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.addParticipantToPurchase(
+						localEvents[props.params.id],
+						participant,
+						state.purchase.name,
+						(new Date()).getTime()
+					),
+				},
+			}));
+		});
+
+		participants.removed.forEach((participant) => {
+			props.dispatch(createEventActionAsync({
+				eventId: props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.removeParticipantFromPurchase(
+						localEvents[props.params.id],
+						participant,
+						state.purchase.name,
+						(new Date()).getTime()
+					),
+				},
+			}));
+		});
+
 
 		this.setState({
 			isSavingData: true,

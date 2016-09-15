@@ -7,6 +7,23 @@ import {
 const space = '_s_';
 const bold = 'b_';
 
+export const getDiff = (oldPs, newPs) => {
+	let removed = [];
+	let added = [];
+	added = newPs.filter((newP) => {
+		return !oldPs.includes(newP);
+	});
+
+	removed = oldPs.filter((oldP) => {
+		return !newPs.includes(oldP);
+	});
+
+	return {
+		added,
+		removed,
+	};
+};
+
 export const eventActionTypes = {
 	changeEventName(currentUser, eventName, date) {
 		return {
@@ -74,7 +91,7 @@ export const eventActionTypes = {
 			date,
 		};
 	},
-	removeParticipantToPurchase(currentUser, payerName, purchaseName, date) {
+	removeParticipantFromPurchase(currentUser, payerName, purchaseName, date) {
 		let text;
 		if (currentUser === payerName) {
 			text = `${bold}${currentUser}${space}убрал(-а)${space}себя${space}из
