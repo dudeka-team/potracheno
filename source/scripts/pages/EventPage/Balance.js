@@ -10,6 +10,8 @@ import BalanceStatus from '../../components/BalanceStatus';
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
 
+import {createEventActionAsync, eventActionTypes} from '../../actions/createEventAction';
+
 
 const BalancePage = React.createClass({
 	getInitialState() {
@@ -19,21 +21,34 @@ const BalancePage = React.createClass({
 	},
 
 	repayDebtHandler(debt) {
+		const {props} = this;
 		let oldRepayedFrom = 0;
 		let oldRepayedTo = 0;
 
-		if (this.props.eventsById[this.props.eventId].repayedDebts) {
+		if (props.eventsById[props.eventId].repayedDebts) {
 			oldRepayedFrom =
-				Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.from])
+				Math.abs(props.eventsById[props.eventId].repayedDebts[debt.from])
 					|| 0;
 			oldRepayedTo =
-				Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.to])
+				Math.abs(props.eventsById[props.eventId].repayedDebts[debt.to])
 					|| 0;
 		}
 
-		this.props.dispatch(
+		props.dispatch(createEventActionAsync({
+			eventId: props.eventId,
+			eventActionInfo: {
+				config: eventActionTypes.giveBackPartially(
+					debt.from,
+					debt.to,
+					debt.sum,
+					(new Date()).getTime()
+				),
+			},
+		}));
+
+		props.dispatch(
 			repayDebt(
-				this.props.eventId,
+				props.eventId,
 				debt.sum,
 				debt.from,
 				debt.to,
@@ -123,6 +138,9 @@ const BalancePage = React.createClass({
 function mapStateToProps({events}) {
 	return {
 		eventsById: events.eventsById,
+		currentEvent: events.currentEvent,
+		isFetchingEvent: events.isFetchingEvent,
+		localEvents: events.localEvents,
 	};
 }
 

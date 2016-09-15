@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router';
 import TextField from 'material-ui/TextField';
 import SubHeader from '../SubHeader';
 
@@ -24,6 +26,7 @@ const BalanceItemPopup = React.createClass({
 
 	payDebt() {
 		const {state, props} = this;
+
 		if (!this.state.isAmountInvalid) {
 			props.onSubmit(Object.assign({}, props.debt, {sum: state.value}));
 		}
@@ -75,8 +78,14 @@ const BalanceItemPopup = React.createClass({
 	},
 });
 
-export default BalanceItemPopup;
+function mapStateToProps({events}) {
+	return {
+		currentEvent: events.currentEvent,
+		isFetchingEvent: events.isFetchingEvent,
+	};
+}
 
+export default withRouter(connect(mapStateToProps)(BalanceItemPopup));
 // Example of usage:
 // <BalanceItemPopup
 //		debt={debt} onClose={() => ...}

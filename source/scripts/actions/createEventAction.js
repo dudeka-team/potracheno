@@ -42,18 +42,19 @@ export const eventActionTypes = {
 			date,
 		};
 	},
-	addPurchase(currentUser, purchaseName, purchasePrice, date) {
+	addPurchase(currentUser, purchaseName, sum, date) {
 		return {
 			text: `${bold}${currentUser}${space}купил(-а)${space}${bold}${purchaseName}
 			${space}на${space}сумму`,
 			icon: 'purchase',
 			date,
-			purchasePrice,
+			sum,
 		};
 	},
 	deletePurchase(currentUser, purchaseName, date) {
 		return {
-			text: `${bold}${currentUser}${space}удалил(-а)${space}${bold}${purchaseName}`,
+			text: `${bold}${currentUser}${space}удалил(-а)
+			${space}покупку${space}${bold}${purchaseName}`,
 			icon: 'pen',
 			date,
 		};
@@ -86,6 +87,24 @@ export const eventActionTypes = {
 			text,
 			icon: 'pen',
 			date,
+		};
+	},
+	giveBackPartially(currentUser, payerName, debtSum, date) {
+		return {
+			text: `${bold}${currentUser}${space}отметил(-а)${space}долг
+			${space}${bold}${payerName}${space}частично${space}возвращенным`,
+			icon: 'check-active',
+			date,
+			debtSum,
+		};
+	},
+	giveBack(currentUser, payerName, debtSum, date) {
+		return {
+			text: `${bold}${currentUser}${space}отметил(-а)
+			${space}долг${space}${bold}${payerName}${space}возвращенным`,
+			icon: 'check-active',
+			date,
+			debtSum,
 		};
 	},
 };

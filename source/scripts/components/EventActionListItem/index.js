@@ -6,7 +6,8 @@ const EventActionItem = React.createClass({
 		const icon = props.icon;
 		const text = props.text;
 		const date = props.date;
-		const purchasePrice = props.purchasePrice;
+		const sum = props.sum;
+		const debtSum = props.debtSum;
 
 		return (
 			<div className="event-action">
@@ -32,7 +33,13 @@ const EventActionItem = React.createClass({
 								})
 							}
 						</div>
-						{purchasePrice && <div className="event-action__purchase-price">{purchasePrice} Р</div>}
+						{sum && <div className="event-action__sum">{sum} Р</div>}
+						{debtSum &&
+							<div className="event-action__debt-sum">
+								<div className="event-action__debt-icon" />
+								{debtSum} Р
+							</div>
+						}
 					</div>
 					{date && <div className="event-action__date">{moment(date).fromNow()}</div>}
 				</div>

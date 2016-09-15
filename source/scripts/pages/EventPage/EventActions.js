@@ -19,7 +19,8 @@ function EventActions(props) {
 						icon={item.config.icon}
 						text={item.config.text}
 						date={item.config.date}
-						purchasePrice={item.config.purchasePrice}
+						sum={item.config.sum}
+						debtSum={item.config.debtSum}
 					/>
 				);
 			})}
