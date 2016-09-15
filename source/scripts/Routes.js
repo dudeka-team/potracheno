@@ -10,7 +10,6 @@ import EditEventPage from './pages/EditEvent';
 
 import PurchasePage from './pages/PurchasePage';
 
-import DemoPage from './pages/DemoPage';
 
 export default function Routes(props) {
 	return (
@@ -23,7 +22,6 @@ export default function Routes(props) {
 				<Route path="events/:id/edit" component={EditEventPage} />
 				<Route path="events/:id/purchases/new" component={PurchasePage} />
 				<Route path="events/:id/purchases/:purchase_id" component={PurchasePage} />
-				<Route path="demo" component={DemoPage} />
 			</Route>
 		</Router>
 	);

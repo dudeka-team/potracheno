@@ -34,6 +34,7 @@ const initialState = {
 	eventsById: {},
 	localEvents: {},
 	currentEvent: null,
+	currentUserName: null,
 	isCreatingEvent: false,
 	isFetchingEvent: false,
 	isFetchingEvents: false,
@@ -53,9 +54,8 @@ export default handleActions({
 			eventsById: assign({}, state.eventsById, {
 				[payload.key]: payload.value,
 			}),
-			currentEvent: assign({}, payload.value, {
-				participantName: state.localEvents[payload.key],
-			}),
+			currentEvent: assign({}, payload.value),
+			currentUserName: state.localEvents[payload.key],
 			isFetchingEvent: false,
 		});
 	},
