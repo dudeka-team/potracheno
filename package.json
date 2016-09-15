@@ -8,12 +8,7 @@
   },
   "author": "dudeka team",
   "license": "MIT",
-  "keywords": [
-    "ecosystem:phonegap",
-    "ecosystem:cordova",
-    "cordova:template",
-    "phonegap:template"
-  ],
+  "keywords": [],
   "scripts": {
     "test": "mocha -r babel-core/register ./tests/*.js",
     "lint": "eslint source/scripts",
@@ -27,6 +22,7 @@
   },
   "homepage": "",
   "devDependencies": {
+    "appcache-webpack-plugin": "^1.3.0",
     "autoprefixer-loader": "^3.2.0",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.4",
@@ -48,6 +44,7 @@
     "webpack-dev-server": "^1.15.1"
   },
   "dependencies": {
+    "deep-equal": "^1.0.1",
     "es6-object-assign": "^1.0.3",
     "firebase": "^3.3.0",
     "material-ui": "^0.15.4",

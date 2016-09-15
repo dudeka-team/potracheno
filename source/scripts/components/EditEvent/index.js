@@ -46,6 +46,16 @@ const EditEvent = React.createClass({
 
 		participants.push(createParticipant());
 
+		this.initialParticipants = {};
+
+		participants
+			.filter(({name}) => name)
+			.forEach(({id, name}) => {
+				this.initialParticipants[id] = name;
+			});
+
+		this.initialManagerName = props.managerName || '';
+
 		return {
 			name: props.name || '',
 			manager: props.managerName || '',
@@ -60,15 +70,71 @@ const EditEvent = React.createClass({
 		router.push(prevUrl);
 	},
 
+	isSaveAvailable() {
+		const {state} = this;
+
+		const hasName = state.name.trim().length > 2;
+		if (!hasName) return false;
+
+		const hasManager = state.manager.trim().length > 1;
+		if (!hasManager) return false;
+
+		const participants = state.participants
+			.filter(Boolean)
+			.filter(({name}) => name.trim())
+			.map(markDuplicateParticipants([state.manager]));
+
+		const participantsAreUnique = participants.length && !participants
+			.filter(({isDuplicate}) => isDuplicate)
+			.length;
+		if (!participantsAreUnique) return false;
+
+		return true;
+	},
+
 	save() {
 		const {props, state} = this;
+		const {initialParticipants} = this;
+		const participants = state.participants.filter(({name}) => name.trim() !== '');
+		const participantsByIds = {};
+
+		participants.forEach(({id, name}) => {
+			participantsByIds[id] = name;
+		});
+
+		const deletedParticipants = Object
+			.keys(initialParticipants)
+			.filter((pId) => !participantsByIds[pId])
+			.map((pId) => initialParticipants[pId]);
+
+		const updatedParticipants = Object
+			.keys(initialParticipants)
+			.map((id) => ({
+				id,
+				name: initialParticipants[id],
+			}))
+			.filter(({name}) => deletedParticipants.indexOf(name) === -1)
+			.filter(({id, name}) => participantsByIds[id] !== name)
+			.map(({id, name}) => ({
+				old: name,
+				updated: participantsByIds[id],
+			}));
+
+		if (this.initialManagerName !== state.manager) {
+			updatedParticipants.push({
+				old: this.initialManagerName,
+				updated: state.manager,
+			});
+		}
 
 		props.handleSave({
 			name: state.name,
 			manager: state.manager,
 			start: state.start.valueOf(),
 			end: state.end.valueOf(),
-			participants: state.participants.map(({name}) => name).filter(Boolean).concat(state.manager),
+			participants: [state.manager].concat(participants.map(({name}) => name.trim())),
+			deletedParticipants,
+			updatedParticipants,
 		});
 	},
 
@@ -134,27 +200,6 @@ const EditEvent = React.createClass({
 		});
 	},
 
-	isSaveAvailable() {
-		const {state} = this;
-
-		const hasName = state.name.trim().length > 2;
-		if (!hasName) return false;
-
-		const hasManager = state.manager.trim().length > 1;
-		if (!hasManager) return false;
-
-		const participants = state.participants
-			.filter(({name}) => name.trim())
-			.map(markDuplicateParticipants([state.manager]));
-
-		const participantsAreUnique = participants.length && !participants
-			.filter(({isDuplicate}) => isDuplicate)
-			.length;
-		if (!participantsAreUnique) return false;
-
-		return true;
-	},
-
 	renderParticipants() {
 		return this.state.participants.map((participant) => {
 			const {id, name, isDuplicate} = participant;
@@ -174,25 +219,62 @@ const EditEvent = React.createClass({
 		});
 	},
 
+	renderTopBar() {
+		const {props} = this;
+
+		return (
+			<TopBar bordered>
+				<TopBarIcon icon="close" onClick={this.goBack} />
+				<TopBarHeading title={props.pageTitle} />
+				{props.isCreatingEvent ?
+					<CircularProgress size={0.3} color="#ffe151" />
+					:
+					<TopBarIcon
+						icon="check-active"
+						onClick={this.save}
+						disabled={!this.isSaveAvailable()}
+					/>
+				}
+			</TopBar>
+		);
+	},
+
+	renderDatesInputs() {
+		const {state} = this;
+
+		return (
+			<FlexContainer justifyContent="space-between">
+				<div className="data-picker-wrapper">
+					<DatePicker
+						fullWidth
+						floatingLabelText="Начало"
+						formatDate={formatDate}
+						onChange={this.handleStartDateChange}
+						minDate={state.start}
+						value={state.start}
+					/>
+				</div>
+				<div className="data-picker-wrapper">
+					<DatePicker
+						fullWidth
+						floatingLabelText="Завершение"
+						formatDate={formatDate}
+						onChange={this.handleEndDateChange}
+						minDate={state.start}
+						value={state.end}
+					/>
+				</div>
+			</FlexContainer>
+		);
+	},
+
 	render() {
-		const {state, props} = this;
+		const {state} = this;
 		const labelStyle = {color: '#939fa8'};
 		const underLineStyle = {borderColor: '#ffe151'};
 		return (
 			<Page>
-				<TopBar bordered>
-					<TopBarIcon icon="close" onClick={this.goBack} />
-					<TopBarHeading title={props.pageTitle} />
-					{props.isCreatingEvent ?
-						<CircularProgress size={0.3} color="#ffe151" />
-						:
-						<TopBarIcon
-							icon="check-active"
-							onClick={this.save}
-							disabled={!this.isSaveAvailable()}
-						/>
-					}
-				</TopBar>
+				{this.renderTopBar()}
 				<PageContent style={{padding: '0 1rem 5rem'}}>
 					<TextField
 						floatingLabelFocusStyle={labelStyle}
@@ -202,29 +284,7 @@ const EditEvent = React.createClass({
 						value={state.name}
 						onChange={this.handleEventNameChange}
 					/>
-
-					<FlexContainer justifyContent="space-between">
-						<div className="data-picker-wrapper">
-							<DatePicker
-								fullWidth
-								floatingLabelText="Начало"
-								formatDate={formatDate}
-								onChange={this.handleStartDateChange}
-								minDate={state.start}
-								value={state.start}
-							/>
-						</div>
-						<div className="data-picker-wrapper">
-							<DatePicker
-								fullWidth
-								floatingLabelText="Завершение"
-								formatDate={formatDate}
-								onChange={this.handleEndDateChange}
-								minDate={state.start}
-								value={state.end}
-							/>
-						</div>
-					</FlexContainer>
+					{this.renderDatesInputs()}
 					<Separator style={{margin: '0 -1rem', width: 'calc(100% + 32px)'}} />
 					<GreySubtitle
 						style={{margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0'}}
@@ -238,7 +298,6 @@ const EditEvent = React.createClass({
 						value={state.manager}
 						onChange={this.handleManagerChange}
 					/>
-
 					{this.renderParticipants()}
 				</PageContent>
 			</Page>
