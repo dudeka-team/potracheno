@@ -119,7 +119,7 @@ export const eventActionTypes = {
 		return {
 			text: `${bold}${currentUser}${space}отметил(-а)
 			${space}долг${space}${bold}${payerName}${space}возвращенным`,
-			icon: 'check-active',
+			icon: 'check-active-yellow',
 			date,
 			debtSum,
 		};

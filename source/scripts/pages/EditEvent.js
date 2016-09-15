@@ -102,17 +102,6 @@ const EditEventPage = React.createClass({
 			currentUserNameChangeData,
 		}));
 
-		const dispatchEventManipulation = (condition, actionType, parameters) => {
-			if (condition) {
-				dispatch(createEventActionAsync({
-					eventId: this.props.params.id,
-					eventActionInfo: {
-						config: eventActionTypes[actionType](...parameters),
-					},
-				}));
-			}
-		};
-
 		const getParticipants = (oldPs, newPs) => {
 			let removedParticipants = [];
 			let addedParticipants = [];
@@ -135,50 +124,64 @@ const EditEventPage = React.createClass({
 			updatedEvent.participants
 		);
 
-		dispatchEventManipulation(
-			(updatedEvent.name !== currentEvent.name),
-			'changeEventName',
-			[
-				currentUser,
-				updatedEvent.name,
-				(new Date()).getTime(),
-			]
-		);
 
-		dispatchEventManipulation(
-			(updatedEvent.start !== currentEvent.start
-			|| updatedEvent.end !== currentEvent.end),
-			'changeEventDate',
-			[
-				currentUser,
-				moment(updatedEvent.start).format('DD MMMM'),
-				moment(updatedEvent.end).format('DD MMMM'),
-				(new Date()).getTime(),
-			]
-		);
+		if (updatedEvent.name !== currentEvent.name) {
+			dispatch(createEventActionAsync({
+				eventId: this.props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.changeEventName(
+						currentUserName,
+						updatedEvent.name,
+						(new Date()).getTime()
+					),
+				},
+			}));
+		}
+
+		if (updatedEvent.start !== currentEvent.start
+			|| updatedEvent.end !== currentEvent.end) {
+			dispatch(createEventActionAsync({
+				eventId: this.props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.changeEventDate(
+						currentUserName,
+						moment(updatedEvent.start).format('DD MMMM'),
+						moment(updatedEvent.end).format('DD MMMM'),
+						(new Date()).getTime()
+					),
+				},
+			}));
+		}
+
 
 		filteredParticipants.addedParticipants.forEach((p) => {
-			dispatchEventManipulation(
-				(filteredParticipants.addedParticipants),
-				'addParticipantToEvent',
-				[
-					currentUser,
-					p,
-					(new Date()).getTime(),
-				]
-			);
+			if (filteredParticipants.addedParticipants) {
+				dispatch(createEventActionAsync({
+					eventId: this.props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.addParticipantToEvent(
+							currentUserName,
+							p,
+							(new Date()).getTime()
+						),
+					},
+				}));
+			}
 		});
 
 		filteredParticipants.removedParticipants.forEach((p) => {
-			dispatchEventManipulation(
-				(filteredParticipants.removedParticipants),
-				'removeParticipantFromEvent',
-				[
-					currentUser,
-					p,
-					(new Date()).getTime(),
-				]
-			);
+			if (filteredParticipants.removedParticipants) {
+				dispatch(createEventActionAsync({
+					eventId: this.props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.removeParticipantFromEvent(
+							currentUserName,
+							p,
+							(new Date()).getTime()
+						),
+					},
+				}));
+			}
 		});
 	},
 

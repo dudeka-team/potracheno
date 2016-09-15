@@ -11,24 +11,25 @@ const EventActionItem = React.createClass({
 
 		return (
 			<div className="event-action">
-				<div className="event-action__icon-wrapper">
+			{/* eslint-disable max-len */}
+				<div className={`event-action__icon-wrapper ${(icon === 'check-active-yellow') && 'event-action__icon-wrapper_yellow'}`}>
 					<div className={`event-action__icon event-action__icon_${icon}`} />
 				</div>
 				<div className="event-action__info">
 					<div className="event-action__content">
 						<div className="event-action__text-wrapper">
 							{
-								text.split('_s_').map((item) => {
+								text.split('_s_').map((item, i) => {
 									if (item.includes('b_')) {
 										return (
-											<span className="event-action__text event-action__text_bold">
+											<span key={i} className="event-action__text event-action__text_bold">
 												{`${item.slice(2)} `}
 											</span>
 										);
 									}
 
 									return (
-										<span className="event-action__text">{`${item} `}</span>
+										<span key={i} className="event-action__text">{`${item} `}</span>
 									);
 								})
 							}

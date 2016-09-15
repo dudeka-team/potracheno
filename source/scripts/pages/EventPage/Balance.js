@@ -34,10 +34,13 @@ const BalancePage = React.createClass({
 					|| 0;
 		}
 
+		const actionType = (Math.abs(this.state.currentDebt.sum) === debt.sum) ?
+			'giveBack' : 'giveBackPartially';
+
 		props.dispatch(createEventActionAsync({
 			eventId: props.eventId,
 			eventActionInfo: {
-				config: eventActionTypes.giveBackPartially(
+				config: eventActionTypes[actionType](
 					debt.from,
 					debt.to,
 					debt.sum,
