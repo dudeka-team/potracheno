@@ -15,9 +15,6 @@ export function readEvents() {
 						resolve(data);
 						return data;
 					})
-					.then(data => {
-						dispatch(copyEventsToLocal(data))
-					})
 					.catch(reject);
 			}),
 		});
