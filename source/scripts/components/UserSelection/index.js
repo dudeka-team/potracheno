@@ -2,6 +2,8 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
+
+import Wrapper from '../Wrapper';
 import EventStatus from '../EventStatus';
 import GreySubtitle from '../GreySubtitle';
 import UserSelectionListItem from '../UserSelectionListItem';
@@ -79,9 +81,33 @@ const UserSelection = React.createClass({
 
 	renderPreloader() {
 		return (
-			<FlexContainer alignItems="center" justifyContent="center">
-				<CircularProgress />
+			<FlexContainer fullHeight alignItems="center" justifyContent="center">
+				<CircularProgress color="#ffe151" />
 			</FlexContainer>
+		);
+	},
+
+	renderPopup() {
+		return (
+			<Popup
+				unBordered
+				largeHeader
+				title="Добавить себя"
+				okButton={{
+					text: 'Войти',
+					onClick: () => {
+						this.addNewParticipant();
+						this.changeEventName(this.state.name);
+					},
+				}}
+				cancelButton={{
+					text: 'Отмена',
+					onClick: this.closePopup,
+				}}
+				onClose={this.closePopup}
+			>
+				<UserSelectionPopup userNameChange={this.userNameChangeHandler} />
+			</Popup>
 		);
 	},
 
@@ -94,28 +120,8 @@ const UserSelection = React.createClass({
 		}
 
 		return (
-			<div>
-				{state.popupOpened &&
-					<Popup
-						unBordered
-						largeHeader
-						title="Добавить себя"
-						okButton={{
-							text: 'Войти',
-							onClick: () => {
-								this.addNewParticipant();
-								this.changeEventName(this.state.name);
-							},
-						}}
-						cancelButton={{
-							text: 'Отмена',
-							onClick: this.closePopup,
-						}}
-						onClose={this.closePopup}
-					>
-						<UserSelectionPopup userNameChange={this.userNameChangeHandler} />
-					</Popup>
-				}
+			<Wrapper>
+				{state.popupOpened && this.renderPopup()}
 				<div className="user-selection">
 					<div className="user-selection__top-bar">
 						<div className="user-selection__invite-text">
@@ -148,7 +154,7 @@ const UserSelection = React.createClass({
 						</div>
 					</div>
 				</div>
-			</div>
+			</Wrapper>
 		);
 	},
 });

@@ -8,12 +8,7 @@
   },
   "author": "dudeka team",
   "license": "MIT",
-  "keywords": [
-    "ecosystem:phonegap",
-    "ecosystem:cordova",
-    "cordova:template",
-    "phonegap:template"
-  ],
+  "keywords": [],
   "scripts": {
     "test": "mocha -r babel-core/register ./tests/*.js",
     "lint": "eslint source/scripts",
@@ -55,16 +50,16 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-fastclick": "^2.1.2",
+    "react-hammerjs": "^0.5.0",
+    "react-portal": "^2.2.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",
     "react-router-redux": "^4.0.5",
-    "react-swipe": "^5.0.3",
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.5.2",
     "redux-actions": "^0.12.0",
     "redux-promise-middleware": "^4.0.0",
     "redux-thunk": "^2.1.0",
-    "shortid": "^2.2.6",
-    "swipe-js-iso": "^2.0.3"
+    "shortid": "^2.2.6"
   }
 }

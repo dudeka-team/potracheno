@@ -34,9 +34,10 @@ const initialState = {
 	eventsById: {},
 	localEvents: {},
 	currentEvent: null,
+	currentUserName: null,
 	isCreatingEvent: false,
 	isFetchingEvent: false,
-	loaded: false,
+	isFetchingEvents: false,
 };
 
 export default handleActions({
@@ -53,9 +54,8 @@ export default handleActions({
 			eventsById: assign({}, state.eventsById, {
 				[payload.key]: payload.value,
 			}),
-			currentEvent: assign({}, payload.value, {
-				participantName: state.localEvents[payload.key],
-			}),
+			currentEvent: assign({}, payload.value),
+			currentUserName: state.localEvents[payload.key],
 			isFetchingEvent: false,
 		});
 	},
@@ -68,7 +68,7 @@ export default handleActions({
 	[CREATE_EVENT_ERROR]: stopCreatingEvent,
 
 	[READ_EVENTS_LOADING]: (state) => assign({}, state, {
-		isReadingEvents: true,
+		isFetchingEvents: true,
 	}),
 
 	[READ_EVENTS_SUCCESS]: (state, {payload}) => {
@@ -83,12 +83,12 @@ export default handleActions({
 		return assign({}, state, {
 			events: Object.keys(filteredEvents),
 			eventsById: filteredEvents,
-			loaded: true,
+			isFetchingEvents: false,
 		});
 	},
 
 	[READ_EVENTS_ERROR]: (state) => assign({}, state, {
-		isReadingEvents: false,
+		isFetchingEvents: false,
 	}),
 	[CHANGE_CURRENT_EVENT]: (state, {payload}) => assign({}, state, {
 		currentEvent: state.eventsById[payload],
@@ -174,7 +174,6 @@ export default handleActions({
 			currentEvent: changedEvent,
 		});
 	},
-
 }, initialState);
 
 function stopCreatingEvent(state) {

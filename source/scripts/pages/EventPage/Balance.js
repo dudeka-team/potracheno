@@ -1,11 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import GreySubtitle from '../../components/GreySubtitle';
+import Portal from 'react-portal';
+
 import BalanceListItem from '../../components/BalanceListItem';
 import BalanceCheck from '../../components/BalanceCheck';
+import BalanceItemPopup from '../../components/BalanceItemPopup';
+import BalanceStatus from '../../components/BalanceStatus';
+
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
-import BalanceItemPopup from '../../components/BalanceItemPopup';
+
 
 const BalancePage = React.createClass({
 	getInitialState() {
@@ -64,30 +68,52 @@ const BalancePage = React.createClass({
 				getEventBalance(this.props.eventsById[this.props.eventId]),
 				this.props.eventsById[this.props.eventId]
 			);
+		let positiveSum = 0;
+		let negativeSum = 0;
+		const positiveDebts = eventsParticipantsDebts.map((debt, i) => {
+			if (currentUser === debt.to) {
+				positiveSum += -Math.round(debt.sum);
+				return (
+					<BalanceListItem
+						key={i}
+						sum={-Math.round(debt.sum)}
+						participant={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
+						debtType="positive"
+						onClick={() => this.showRepayPopup(debt)}
+					/>
+				);
+			}
+		});
+
+		const negativeDebts = eventsParticipantsDebts.map((debt, i) => {
+			if (currentUser === debt.from) {
+				negativeSum += -Math.round(debt.sum);
+				return (
+					<BalanceListItem
+						key={i}
+						sum={-Math.round(debt.sum)}
+						participant={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
+						debtType="negative"
+						onClick={() => this.showRepayPopup(debt)}
+					/>
+				);
+			}
+		});
+
 
 		return (
 			<div className="balance-page">
-				<GreySubtitle text="Баланс участников" />
-				<div>{eventsParticipantsDebts.map((debt, i) => {
-					return (
-						<BalanceListItem
-							key={i}
-							sum={-Math.round(debt.sum)}
-							from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
-							to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
-							debtType="neutral"
-							onClick={() => this.showRepayPopup(debt)}
-						/>
-					);
-				})
-				}</div>
-				{this.state.showPopup &&
+				<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
 					<BalanceItemPopup
 						debt={this.state.currentDebt}
 						onSubmit={this.repayDebtHandler}
 						onClose={() => this.closeRepayPopup()}
 					/>
-				}
+				</Portal>
+				{(positiveSum !== 0) && <BalanceStatus text="Вам должны" sum={positiveSum} />}
+				{positiveDebts}
+				{(negativeSum !== 0) && <BalanceStatus text="Вы должны" sum={negativeSum} />}
+				{negativeDebts}
 				<BalanceCheck debts={eventsParticipantsDebts} />
 			</div>
 		);

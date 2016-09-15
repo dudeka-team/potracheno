@@ -7,7 +7,7 @@ import Popup from '../Popup';
 const BalanceItemPopup = React.createClass({
 	getInitialState() {
 		return {
-			value: 0,
+			value: Math.abs(this.props.debt.sum),
 			isAmountInvalid: false,
 		};
 	},
@@ -36,6 +36,7 @@ const BalanceItemPopup = React.createClass({
 			<Popup
 				unBordered
 				largeHeader
+				withTabs
 				title="Отметить долг возвращенным"
 				okButton={{
 					text: 'ок',
@@ -58,6 +59,7 @@ const BalanceItemPopup = React.createClass({
 					<div className="money-input-wrapper">
 						<div className="input-money-label"> руб. </div>
 						<TextField
+							value={state.value}
 							name="repay-debt-textfield"
 							underlineFocusStyle={{borderColor: '#ffe151'}}
 							style={{width: '100%'}}

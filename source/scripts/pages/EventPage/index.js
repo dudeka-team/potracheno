@@ -1,14 +1,14 @@
 import React from 'react';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
-import ReactSwipe from 'react-swipe';
 import CircularProgress from 'material-ui/CircularProgress';
 import Drawer from 'material-ui/Drawer';
 
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
-import {Tabs, TabsContent} from '../../components/Tabs';
+import Tabs from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
+import Menu from '../../components/Menu';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
@@ -18,13 +18,12 @@ import EventActions from './EventActions';
 import fetchEventData from '../../actions/fetchEventData';
 import relogin from '../../actions/relogin';
 
-import Menu from '../../components/Menu';
+import {DRAWER_SWIPE_AREA_WIDTH} from '../../constants';
 
 const EventPage = React.createClass({
 	getInitialState() {
 		return {
 			menuOpen: false,
-			index: 0,
 		};
 	},
 
@@ -33,22 +32,11 @@ const EventPage = React.createClass({
 		dispatch(fetchEventData(id));
 	},
 
-	openMenu() {
-		this.setState({
-			menuOpen: true,
-		});
+	goToEvents() {
+		this.props.router.push('/events');
 	},
 
-	closeMenu(e) {
-		const width = window.innerWidth;
-		if (e.pageX < width / 6) {
-			this.setState({
-				menuOpen: false,
-			});
-		}
-	},
-
-	handleToggle() {
+	toggleMenu() {
 		this.setState({menuOpen: !this.state.menuOpen});
 	},
 
@@ -77,30 +65,50 @@ const EventPage = React.createClass({
 		return `${participantsStatus} • ${formattedDate}`;
 	},
 
-	goToEvents() {
-		this.props.router.push('/events');
-	},
-
 	renderPreloader() {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<CircularProgress />
+				<CircularProgress color="#ffe151" />
 			</FlexContainer>
 		);
 	},
 
-	changedTab(index) {
-		this.setState({index});
+	renderDrawer(currentEvent, currentUserName, subtitle) {
+		return (
+			<Drawer
+				onRequestChange={(menuOpen) => this.setState({menuOpen})}
+				docked={false}
+				swipeAreaWidth={DRAWER_SWIPE_AREA_WIDTH}
+				open={this.state.menuOpen}
+				openSecondary
+			>
+				<Menu
+					currentEvent={currentEvent}
+					currentUserName={currentUserName}
+					subtitle={subtitle}
+					handleEdit={this.goToEdit}
+					handleRelogin={this.handleRelogin}
+				/>
+			</Drawer>
+		);
 	},
 
-	onTabClick(index) {
-		this.setState({index});
-		this.refs.reactSwipe.swipe.slide(index, 200);
+	renderTopBar(eventName) {
+		return (
+			<TopBar>
+				<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
+				<TopBarHeading
+					title={eventName}
+				/>
+				<TopBarIcon icon="share" />
+				<TopBarIcon icon="burger" onClick={this.toggleMenu} />
+			</TopBar>
+		);
 	},
 
 	render() {
-		const {props, state} = this;
-		const {currentEvent, isFetchingEvent} = props;
+		const {props} = this;
+		const {currentEvent, currentUserName, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
@@ -112,70 +120,42 @@ const EventPage = React.createClass({
 			return this.renderPreloader();
 		}
 
-		const currentUser = props.localEvents[props.id];
-
 		if (currentEvent) {
 			const subtitle = this.formatSubtitle(currentEvent);
 
 			return (
 				<Page>
-					<Drawer
-						onRequestChange={(menuOpen) => this.setState({menuOpen})}
-						docked={false}
-						open={this.state.menuOpen}
-						openSecondary
-					>
-						<Menu
-							currentEvent={currentEvent}
-							subtitle={subtitle}
-							handleEdit={this.goToEdit}
-							handleRelogin={this.handleRelogin}
-						/>
-					</Drawer>
-					<TopBar>
-						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
-						<TopBarHeading
-							title={currentEvent.name}
-						/>
-						<TopBarIcon icon="share" />
-						<TopBarIcon icon="burger" onClick={this.openMenu} />
-					</TopBar>
+					{this.renderDrawer(currentEvent, currentUserName, subtitle)}
+					{this.renderTopBar(currentEvent.name)}
 					<Tabs
-						titles={['покупки', 'баланс', 'действия']}
-						activeTab={state.index}
-						onTabClick={this.onTabClick}
+						config={[
+							{
+								labelContent: 'Покупки',
+								content: <Purchases
+									eventId={props.id}
+									purchases={purchases}
+									eventParticipants={currentEvent.participants}
+									currentUser={currentUserName}
+								/>,
+							},
+							{
+								labelContent: 'Баланс',
+								content: <Balance
+									purchases={purchases}
+									participants={currentEvent.participants}
+									currentUser={currentUserName}
+									currentEvent={currentEvent}
+									eventId={props.id}
+								/>,
+							},
+							{
+								labelContent: 'Действия',
+								content: <EventActions
+									actions={actions}
+								/>,
+							},
+						]}
 					/>
-					<ReactSwipe
-						swipeOptions={{
-							callback: this.changedTab,
-							continuous: false,
-						}}
-						ref="reactSwipe"
-					>
-						<div>
-							<Purchases
-								eventId={props.id}
-								purchases={purchases}
-								eventParticipants={currentEvent.participants}
-								currentUser={currentUser}
-							/>
-						</div>
-						<TabsContent title="2">
-							<Balance
-								purchases={purchases}
-								participants={currentEvent.participants}
-								currentUser={currentUser}
-								currentEvent={currentEvent}
-								eventId={props.id}
-							/>
-						</TabsContent>
-						<TabsContent title="3">
-							<EventActions
-								actions={actions}
-							/>
-						</TabsContent>
-					</ReactSwipe>
-
 				</Page>
 			);
 		}
@@ -187,8 +167,8 @@ const EventPage = React.createClass({
 function mapStateToProps({events}) {
 	return {
 		currentEvent: events.currentEvent,
+		currentUserName: events.currentUserName,
 		isFetchingEvent: events.isFetchingEvent,
-		localEvents: events.localEvents,
 	};
 }
 
