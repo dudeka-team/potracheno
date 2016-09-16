@@ -1,3 +1,5 @@
+$borderColor = #e1e4e7
+
 .universal-list-item
 	display flex
 	align-items center
@@ -6,7 +8,7 @@
 	background #fff
 
 	&_bordered
-		border-bottom 1px solid #e1e4e7
+		border-bottom 1px solid $borderColor
 		box-sizing content-box
 
 		&:last-child
@@ -33,6 +35,12 @@
 
 		&:hover
 			cursor pointer
+
+	&__delete
+		width 24px
+		height 24px
+		margin-right 18px
+		background-image url('img/close-inactive.svg')
 
 .unselectable
 	user-select none

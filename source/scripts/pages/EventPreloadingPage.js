@@ -9,12 +9,28 @@ import UserSelection from '../components/UserSelection';
 import fetchEventData from '../actions/fetchEventData';
 import getLocalEvents from '../actions/getLocalEvents';
 
-const EventPreloadingPage = React.createClass({
+import db from '../database';
 
-	componentWillMount() {
+import {
+	getUserType,
+	setUserType,
+	INVITED,
+} from '../modules/metrics';
+
+
+const EventPreloadingPage = React.createClass({
+	componentDidMount() {
 		const {params, dispatch} = this.props;
 		dispatch(fetchEventData(params.id));
 		dispatch(getLocalEvents());
+
+		const localEvents = db.getLocalEvents();
+		const localEventsCount = Object.keys(localEvents).length;
+		const userType = getUserType();
+
+		if (localEventsCount === 0 && !userType) {
+			setUserType(INVITED);
+		}
 	},
 
 	render() {

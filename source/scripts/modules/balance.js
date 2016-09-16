@@ -17,7 +17,7 @@ export function getEventBalance(currentEvent) {
 			participantsBalance[participant] =
 				(participantsBalance[participant] || 0)
 					+ (((participant === purchase.payer) && purchase.amount)
-						- (Math.round(purchase.amount / purchase.participants.length)));
+						- (purchase.amount / purchase.participants.length));
 		});
 		if (purchase.participants.indexOf(purchase.payer) === -1) {
 			participantsBalance[purchase.payer] =
@@ -26,9 +26,44 @@ export function getEventBalance(currentEvent) {
 		}
 	});
 
+	let positiveSum = 0;
+	let negativeSum = 0;
+
 	Object.keys(participantsBalance).forEach(participant => {
 		participantsBalance[participant] +=
 			((currentEvent.repayedDebts && (currentEvent.repayedDebts[participant] || 0)) || 0);
+
+		if (participantsBalance[participant] % 1 !== 0) {
+			const pointPosition =
+				participantsBalance[participant]
+					.toString()
+					.split('')
+					.indexOf('.');
+
+			participantsBalance[participant] =
+				parseFloat(
+					participantsBalance[participant]
+						.toString()
+						.split('')
+						.slice(0, pointPosition)
+						.join('')
+				);
+		}
+
+		if (participantsBalance[participant] < 0) {
+			negativeSum += participantsBalance[participant];
+		} else {
+			positiveSum += participantsBalance[participant];
+		}
+	});
+
+	let sumDiff = positiveSum + negativeSum;
+
+	Object.keys(participantsBalance).forEach(participant => {
+		if (participantsBalance[participant] < 0 && sumDiff > 0) {
+			participantsBalance[participant] -= 1;
+			sumDiff--;
+		}
 	});
 	return participantsBalance;
 }

@@ -22,6 +22,15 @@ import fetchEventData from '../actions/fetchEventData';
 import fetchPurchaseChange from '../actions/fetchPurchaseChange';
 import fetchPurchaseDelete from '../actions/fetchPurchaseDelete';
 
+import {
+	getUserType,
+	reachGoal,
+	hasCreatedPurchase,
+	markPurchaseCreation,
+	CREATE_FIRST_PURCHASE,
+	INDEPENDENT,
+} from '../modules/metrics';
+
 const EDIT = 'EDIT';
 const CREATE = 'CREATE';
 
@@ -67,6 +76,12 @@ const NewPurchasePage = React.createClass({
 
 	save() {
 		const {state, props} = this;
+
+		if (getUserType() === INDEPENDENT && !hasCreatedPurchase()) {
+			reachGoal(CREATE_FIRST_PURCHASE);
+			markPurchaseCreation();
+		}
+
 		props.dispatch(createPurchaseAsync({
 			eventId: this.props.params.id,
 			purchaseData: state.purchase,
@@ -168,8 +183,9 @@ const NewPurchasePage = React.createClass({
 
 	render() {
 		const {state, props} = this;
-		const {mode} = state;
-		const {purchase} = state;
+		const {mode, purchase} = state;
+		const {hasRepayedDebts} = props;
+
 		return (
 			<Page>
 				{mode === EDIT && this.editPageTopBar()}
@@ -199,11 +215,9 @@ const NewPurchasePage = React.createClass({
 							/>
 						</Popup>
 					}
-					<Separator />
-					<div style={{padding: '16px 16px 14px 16px'}}>
+					<div style={{padding: '0px 16px 14px 16px'}}>
 						<Input
 							type="number"
-							hint="0 руб."
 							size="large"
 							label="Сумма"
 							labelFixed
@@ -256,7 +270,35 @@ const NewPurchasePage = React.createClass({
 						}
 					</div>
 					{mode === EDIT &&
-						<button onClick={this.deletePurchase}> удалить покупку </button>
+						<div>
+							{state.popupDeleteOpened &&
+								<Popup
+									unBordered
+									largeHeader
+									title="Вы уверены?"
+									okButton={{
+										text: 'удалить',
+										onClick: () => { this.deletePurchase(); },
+									}}
+									cancelButton={{
+										text: 'отмена',
+										onClick: () => { this.setState({popupDeleteOpened: false}); },
+									}}
+								/>
+							}
+
+							{!hasRepayedDebts && [
+								<Separator key="first" />,
+								<UniversalListItem
+									isDelete
+									key="second"
+									text="Удалить покупку"
+									onClick={() => this.setState({popupDeleteOpened: true})}
+								/>,
+							]}
+
+							<Separator />
+						</div>
 					}
 				</PageContent>
 			</Page>
@@ -266,7 +308,7 @@ const NewPurchasePage = React.createClass({
 
 function mapStateToProps({events}) {
 	return {
-		currentEvent: events.currentEvent,
+		hasRepayedDebts: Boolean(events.currentEvent.repayedDebts),
 		isFetchingEvent: events.isFetchingEvent,
 		localEvents: events.localEvents,
 	};

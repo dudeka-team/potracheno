@@ -1,6 +1,7 @@
 import {
 	GET_LOCAL_EVENTS,
 } from '../constants';
+import db from '../database';
 
 function getOnesignalTags(localEvents) {
 	const localEventsIds = Object.keys(localEvents);
@@ -14,7 +15,7 @@ function getOnesignalTags(localEvents) {
 }
 
 export default function getLocalEvents() {
-	const localEvents = JSON.parse(localStorage.getItem('localEvents') || '{}');
+	const localEvents = db.getLocalEvents();
 	window.OneSignal.push(['sendTags', getOnesignalTags(localEvents)]);
 
 	return {

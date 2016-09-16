@@ -6,6 +6,13 @@ import BalanceListItem from '../../components/BalanceListItem';
 import BalanceCheck from '../../components/BalanceCheck';
 import BalanceItemPopup from '../../components/BalanceItemPopup';
 import BalanceStatus from '../../components/BalanceStatus';
+import PopupPoster from '../../components/PopupPoster';
+import Separator from '../../components/Separator';
+import GreySubtitle from '../../components/GreySubtitle';
+import FlexContainer from '../../components/FlexContainer';
+import Poster from '../../components/Poster';
+import Wrapper from '../../components/Wrapper';
+
 
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
@@ -15,6 +22,7 @@ const BalancePage = React.createClass({
 	getInitialState() {
 		return {
 			showPopup: false,
+			showPopupPoster: false,
 		};
 	},
 
@@ -24,10 +32,10 @@ const BalancePage = React.createClass({
 
 		if (this.props.eventsById[this.props.eventId].repayedDebts) {
 			oldRepayedFrom =
-				Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.from])
+				this.props.eventsById[this.props.eventId].repayedDebts[debt.from]
 					|| 0;
 			oldRepayedTo =
-				Math.abs(this.props.eventsById[this.props.eventId].repayedDebts[debt.to])
+				this.props.eventsById[this.props.eventId].repayedDebts[debt.to]
 					|| 0;
 		}
 
@@ -46,7 +54,16 @@ const BalancePage = React.createClass({
 			showPopup: false,
 		});
 	},
-
+	showPopupPoster() {
+		this.setState({
+			showPopupPoster: true,
+		});
+		setTimeout(() => {
+			this.setState({
+				showPopupPoster: false,
+			});
+		}, 1500);
+	},
 	showRepayPopup(debt) {
 		this.setState({
 			showPopup: true,
@@ -61,12 +78,12 @@ const BalancePage = React.createClass({
 	},
 
 	render() {
-		const {currentUser} = this.props;
+		const {currentUser, eventId} = this.props;
 
 		const eventsParticipantsDebts =
 			getEventsParticipantsDebts(
-				getEventBalance(this.props.eventsById[this.props.eventId]),
-				this.props.eventsById[this.props.eventId]
+				getEventBalance(this.props.eventsById[eventId]),
+				this.props.eventsById[eventId]
 			);
 		let positiveSum = 0;
 		let negativeSum = 0;
@@ -102,20 +119,47 @@ const BalancePage = React.createClass({
 
 
 		return (
-			<div className="balance-page">
-				<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
-					<BalanceItemPopup
-						debt={this.state.currentDebt}
-						onSubmit={this.repayDebtHandler}
-						onClose={() => this.closeRepayPopup()}
+			<Wrapper>
+				<div className="balance-page">
+					{(positiveSum !== 0 || negativeSum !== 0) &&
+						<BalanceCheck debts={eventsParticipantsDebts} onClick={this.showPopupPoster} />
+					}
+					<Separator />
+					<PopupPoster
+						text="Чек скопирован в буфер обмена"
+						popupPosterOpen={this.state.showPopupPoster}
 					/>
-				</Portal>
-				{(positiveSum !== 0) && <BalanceStatus text="Вам должны" sum={positiveSum} />}
-				{positiveDebts}
-				{(negativeSum !== 0) && <BalanceStatus text="Вы должны" sum={negativeSum} />}
-				{negativeDebts}
-				<BalanceCheck debts={eventsParticipantsDebts} />
-			</div>
+					<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
+						<BalanceItemPopup
+							debt={this.state.currentDebt}
+							onSubmit={this.repayDebtHandler}
+							onClose={() => this.closeRepayPopup()}
+						/>
+					</Portal>
+					<GreySubtitle text="Текущие долги" />
+					{positiveDebts}
+					{(positiveSum !== 0) &&
+						<BalanceStatus
+							text="Вам должны"
+							sum={positiveSum}
+							debtStatus="positive"
+						/>}
+					{negativeDebts}
+					{(negativeSum !== 0) &&
+						<BalanceStatus
+							text="Вы должны"
+							sum={negativeSum}
+							debtStatus="negative"
+						/>}
+					<Separator />
+					<GreySubtitle text="Возвращенные долги" />
+				</div>
+				{(positiveSum === 0 && negativeSum === 0) &&
+					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+						<Poster icon="purchase" text="Баланс появится, когда вы заведете покупки" />
+					</FlexContainer>
+				}
+			</Wrapper>
 		);
 	},
 });
