@@ -7,6 +7,8 @@ import BalanceCheck from '../../components/BalanceCheck';
 import BalanceItemPopup from '../../components/BalanceItemPopup';
 import BalanceStatus from '../../components/BalanceStatus';
 import PopupPoster from '../../components/PopupPoster';
+import Separator from '../../components/Separator';
+import GreySubtitle from '../../components/GreySubtitle';
 
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
@@ -119,6 +121,7 @@ const BalancePage = React.createClass({
 					popupPosterOpen={this.state.showPopupPoster}
 				/>
 				<BalanceCheck debts={eventsParticipantsDebts} onClick={this.showPopupPoster} />
+				<Separator />
 				<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
 					<BalanceItemPopup
 						debt={this.state.currentDebt}
@@ -126,10 +129,13 @@ const BalancePage = React.createClass({
 						onClose={() => this.closeRepayPopup()}
 					/>
 				</Portal>
-				{(positiveSum !== 0) && <BalanceStatus text="Вам должны" sum={positiveSum} />}
+				<GreySubtitle text="Текущие долги" />
 				{positiveDebts}
-				{(negativeSum !== 0) && <BalanceStatus text="Вы должны" sum={negativeSum} />}
+				{(positiveSum !== 0) && <BalanceStatus text="Вам должны" sum={positiveSum} />}
 				{negativeDebts}
+				{(negativeSum !== 0) && <BalanceStatus text="Вы должны" sum={negativeSum} />}
+				<Separator />
+				<GreySubtitle text="Возвращенные долги" />
 			</div>
 		);
 	},

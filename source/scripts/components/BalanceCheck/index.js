@@ -45,8 +45,8 @@ const BalanceCheck = React.createClass({
 				>
 					<div className="balance-check__icon" />
 					<div className="balance-check__content">
-						<div className="balance-check__title">Чек мероприятия</div>
-						<div className="balance-check__subtitle">Скопировать чек</div>
+						<div className="balance-check__title">Чек</div>
+						<div className="balance-check__subtitle">Баланс всего мероприятия</div>
 					</div>
 					<div className="balance-check__copy-text" />
 				</div>

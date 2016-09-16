@@ -4,7 +4,10 @@ import React, {PropTypes} from 'react';
 export default function BalanceStatus(props) {
 	return (
 		<div className="balance-status">
-			<div className="balance-status__text">{props.text}</div>
+			<div className="balance-status__content">
+				<div className="balance-status__label">Всего</div>
+				<div className="balance-status__text">{props.text}</div>
+			</div>
 			<div className="balance-status__sum">{props.sum} р</div>
 		</div>
 	);
