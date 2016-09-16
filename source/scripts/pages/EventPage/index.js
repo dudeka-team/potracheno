@@ -73,7 +73,7 @@ const EventPage = React.createClass({
 		);
 	},
 
-	renderDrawer(currentEvent, subtitle) {
+	renderDrawer(currentEvent, currentUserName, subtitle) {
 		return (
 			<Drawer
 				onRequestChange={(menuOpen) => this.setState({menuOpen})}
@@ -84,6 +84,7 @@ const EventPage = React.createClass({
 			>
 				<Menu
 					currentEvent={currentEvent}
+					currentUserName={currentUserName}
 					subtitle={subtitle}
 					handleEdit={this.goToEdit}
 					handleRelogin={this.handleRelogin}
@@ -92,9 +93,22 @@ const EventPage = React.createClass({
 		);
 	},
 
+	renderTopBar(eventName) {
+		return (
+			<TopBar>
+				<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
+				<TopBarHeading
+					title={eventName}
+				/>
+				<TopBarIcon icon="share" />
+				<TopBarIcon icon="burger" onClick={this.toggleMenu} />
+			</TopBar>
+		);
+	},
+
 	render() {
 		const {props} = this;
-		const {currentEvent, isFetchingEvent} = props;
+		const {currentEvent, currentUserName, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
@@ -106,22 +120,13 @@ const EventPage = React.createClass({
 			return this.renderPreloader();
 		}
 
-		const currentUser = props.localEvents[props.id];
-
 		if (currentEvent) {
 			const subtitle = this.formatSubtitle(currentEvent);
 
 			return (
 				<Page>
-					{this.renderDrawer(currentEvent, subtitle)}
-					<TopBar>
-						<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
-						<TopBarHeading
-							title={currentEvent.name}
-						/>
-						<TopBarIcon icon="share" />
-						<TopBarIcon icon="burger" onClick={this.toggleMenu} />
-					</TopBar>
+					{this.renderDrawer(currentEvent, currentUserName, subtitle)}
+					{this.renderTopBar(currentEvent.name)}
 					<Tabs
 						config={[
 							{
@@ -130,7 +135,7 @@ const EventPage = React.createClass({
 									eventId={props.id}
 									purchases={purchases}
 									eventParticipants={currentEvent.participants}
-									currentUser={currentUser}
+									currentUser={currentUserName}
 								/>,
 							},
 							{
@@ -138,7 +143,7 @@ const EventPage = React.createClass({
 								content: <Balance
 									purchases={purchases}
 									participants={currentEvent.participants}
-									currentUser={currentUser}
+									currentUser={currentUserName}
 									currentEvent={currentEvent}
 									eventId={props.id}
 								/>,
@@ -162,8 +167,8 @@ const EventPage = React.createClass({
 function mapStateToProps({events}) {
 	return {
 		currentEvent: events.currentEvent,
+		currentUserName: events.currentUserName,
 		isFetchingEvent: events.isFetchingEvent,
-		localEvents: events.localEvents,
 	};
 }
 

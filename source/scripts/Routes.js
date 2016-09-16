@@ -9,9 +9,7 @@ import NewEventPage from './pages/NewEvent';
 import EditEventPage from './pages/EditEvent';
 
 import PurchasePage from './pages/PurchasePage';
-import NewPurchasePage from './pages/NewPurchasePage';
 
-import DemoPage from './pages/DemoPage';
 
 export default function Routes(props) {
 	return (
@@ -22,9 +20,8 @@ export default function Routes(props) {
 				<Route path="events/new" component={NewEventPage} />
 				<Route path="events/:id" component={EventPreloadingPage} />
 				<Route path="events/:id/edit" component={EditEventPage} />
-				<Route path="events/:id/purchases/new" component={NewPurchasePage} />
+				<Route path="events/:id/purchases/new" component={PurchasePage} />
 				<Route path="events/:id/purchases/:purchase_id" component={PurchasePage} />
-				<Route path="demo" component={DemoPage} />
 			</Route>
 		</Router>
 	);

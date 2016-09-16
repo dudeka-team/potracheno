@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html manifest="index.appcache">
 <head>
 	<meta charset="utf-8" />
 	<meta name="format-detection" content="telephone=no" />
@@ -25,6 +25,15 @@
 				enable: false
 			}
 		}]);
+		
+		window.addEventListener('load', function(e) {
+			window.applicationCache.addEventListener('updateready', function(e) {
+				if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+					window.applicationCache.swapCache();
+					window.location.reload();
+				}
+		  }, false);
+		}, false);
 	</script>
 </body>
 </html>
