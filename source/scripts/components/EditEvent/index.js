@@ -294,7 +294,7 @@ const EditEvent = React.createClass({
 						floatingLabelFocusStyle={labelStyle}
 						underlineFocusStyle={underLineStyle}
 						fullWidth
-						floatingLabelText="Имя организатора"
+						hintText="Ваше имя"
 						value={state.manager}
 						onChange={this.handleManagerChange}
 					/>
