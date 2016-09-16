@@ -9,6 +9,10 @@ import BalanceStatus from '../../components/BalanceStatus';
 import PopupPoster from '../../components/PopupPoster';
 import Separator from '../../components/Separator';
 import GreySubtitle from '../../components/GreySubtitle';
+import FlexContainer from '../../components/FlexContainer';
+import Poster from '../../components/Poster';
+import Wrapper from '../../components/Wrapper';
+
 
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
@@ -115,28 +119,47 @@ const BalancePage = React.createClass({
 
 
 		return (
-			<div className="balance-page">
-				<PopupPoster
-					text="Чек скопирован в буфер обмена"
-					popupPosterOpen={this.state.showPopupPoster}
-				/>
-				<BalanceCheck debts={eventsParticipantsDebts} onClick={this.showPopupPoster} />
-				<Separator />
-				<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
-					<BalanceItemPopup
-						debt={this.state.currentDebt}
-						onSubmit={this.repayDebtHandler}
-						onClose={() => this.closeRepayPopup()}
+			<Wrapper>
+				<div className="balance-page">
+					{(positiveSum !== 0 || negativeSum !== 0) &&
+						<BalanceCheck debts={eventsParticipantsDebts} onClick={this.showPopupPoster} />
+					}
+					<Separator />
+					<PopupPoster
+						text="Чек скопирован в буфер обмена"
+						popupPosterOpen={this.state.showPopupPoster}
 					/>
-				</Portal>
-				<GreySubtitle text="Текущие долги" />
-				{positiveDebts}
-				{(positiveSum !== 0) && <BalanceStatus text="Вам должны" sum={positiveSum} />}
-				{negativeDebts}
-				{(negativeSum !== 0) && <BalanceStatus text="Вы должны" sum={negativeSum} />}
-				<Separator />
-				<GreySubtitle text="Возвращенные долги" />
-			</div>
+					<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
+						<BalanceItemPopup
+							debt={this.state.currentDebt}
+							onSubmit={this.repayDebtHandler}
+							onClose={() => this.closeRepayPopup()}
+						/>
+					</Portal>
+					<GreySubtitle text="Текущие долги" />
+					{positiveDebts}
+					{(positiveSum !== 0) &&
+						<BalanceStatus
+							text="Вам должны"
+							sum={positiveSum}
+							debtStatus="positive"
+						/>}
+					{negativeDebts}
+					{(negativeSum !== 0) &&
+						<BalanceStatus
+							text="Вы должны"
+							sum={negativeSum}
+							debtStatus="negative"
+						/>}
+					<Separator />
+					<GreySubtitle text="Возвращенные долги" />
+				</div>
+				{(positiveSum === 0 && negativeSum === 0) &&
+					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+						<Poster icon="purchase" text="Баланс появится, когда вы заведете покупки" />
+					</FlexContainer>
+				}
+			</Wrapper>
 		);
 	},
 });

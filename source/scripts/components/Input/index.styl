@@ -8,15 +8,25 @@
 
 	&_large
 		font-size 30px
+		margin-bottom 48px
+		&::after
+			content "руб."
+			position absolute
+			right 0
+			top 0
+			font-size 30px
+			font-weight normal
+			line-height 1.2
+			color rgba(46, 54, 62, 0.32)
 
 	&_margin-top-small
 		margin-top 20px
+	
 
 .input
 	width 100%
 	border none
 	outline 0px
-	color #2e363e
 	border-bottom 1px solid #e1e4e7
 	box-sizing border-box
 	padding 0px
@@ -34,18 +44,20 @@
 	top 0px
 	left 0px
 	line-height normal
-	color rgba(46, 54, 62, 0.32)
+	color #939fa8
+	font-size 16px
+	line-height 1.23
 	pointer-events none
-	transition transform 0.3s, color 0.3s
+	transition all 0.3s
 	will-change transform
 	transform-origin left top
 
 	&_transformed
-		transform scale(0.75) translateY(-24px)
-		color #818f99
+		transform translateY(-24px)
+		font-size 13px
 
 	&_small
-		font-size 16px
+		font-size 13px
 
 	&_fixed
 		top -25px

@@ -8,7 +8,9 @@ export default function BalanceStatus(props) {
 				<div className="balance-status__label">Всего</div>
 				<div className="balance-status__text">{props.text}</div>
 			</div>
-			<div className="balance-status__sum">{props.sum} р</div>
+			<div className={`balance-status__sum balance-status__sum_${props.debtStatus}`}>
+				{props.sum} р
+			</div>
 		</div>
 	);
 }
