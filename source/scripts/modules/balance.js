@@ -47,15 +47,14 @@ export function getEventBalance(currentEvent) {
 						.split('')
 						.slice(0, pointPosition)
 						.join('')
-				);	
+				);
 		}
 
-		(participantsBalance[participant] < 0)
-			?
-			negativeSum += participantsBalance[participant]
-			:
-			positiveSum += participantsBalance[participant]
-
+		if (participantsBalance[participant] < 0) {
+			negativeSum += participantsBalance[participant];
+		} else {
+			positiveSum += participantsBalance[participant];
+		}
 	});
 
 	let sumDiff = positiveSum + negativeSum;
@@ -66,9 +65,6 @@ export function getEventBalance(currentEvent) {
 			sumDiff--;
 		}
 	});
-
-	console.log(participantsBalance);
-
 	return participantsBalance;
 }
 
