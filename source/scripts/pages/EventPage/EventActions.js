@@ -26,7 +26,7 @@ function EventActions(props) {
 						actionType={item.config.actionType}
 						purchaseName={item.config.purchaseName}
 						currentUser={item.config.currentUser}
-						payer={item.config.payer}
+						payerName={item.config.payerName}
 						participantName={item.config.participantName}
 						eventName={item.config.eventName}
 						start={item.config.start}
