@@ -1,15 +1,18 @@
 import React, {PropTypes} from 'react';
 
 export default function BalanceListItem(props) {
-	const sumClass = 'balance-list-item__sum';
+	const baseClass = 'balance-list-item';
 
 	return (
-		<div className="balance-list-item" onClick={props.onClick}>
-			<div className="balance-list-item__icon" />
+		<div
+			className={[baseClass, `${baseClass}_${props.debtType}`].join(' ')}
+			onClick={props.onClick}
+		>
+			<div className={'balance-list-item__icon'} />
 			<div className="balance-list-item__direction">
 				{props.participant}
 			</div>
-			<div className={[sumClass, `${sumClass}_${props.debtType}`].join(' ')}>
+			<div className="balance-list-item__sum">
 				{props.sum} P
 			</div>
 		</div>

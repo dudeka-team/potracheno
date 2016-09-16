@@ -252,11 +252,9 @@ const NewPurchasePage = React.createClass({
 							/>
 						</Popup>
 					}
-					<Separator />
-					<div style={{padding: '16px 16px 14px 16px'}}>
+					<div style={{padding: '0px 16px 14px 16px'}}>
 						<Input
 							type="number"
-							hint="0 руб."
 							size="large"
 							label="Сумма"
 							labelFixed
@@ -309,7 +307,30 @@ const NewPurchasePage = React.createClass({
 						}
 					</div>
 					{mode === EDIT &&
-						<button onClick={this.deletePurchase}> удалить покупку </button>
+						<div>
+							{state.popupDeleteOpened &&
+								<Popup
+									unBordered
+									largeHeader
+									title="Вы уверены?"
+									okButton={{
+										text: 'удалить',
+										onClick: () => { this.deletePurchase(); },
+									}}
+									cancelButton={{
+										text: 'отмена',
+										onClick: () => { this.setState({popupDeleteOpened: false}); },
+									}}
+								/>
+							}
+							<Separator />
+							<UniversalListItem
+								isDelete
+								text="Удалить покупку"
+								onClick={() => this.setState({popupDeleteOpened: true})}
+							/>
+							<Separator />
+						</div>
 					}
 				</PageContent>
 			</Page>
