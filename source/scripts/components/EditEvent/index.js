@@ -171,7 +171,8 @@ const EditEvent = React.createClass({
 	},
 
 	handleParticipantChange(id, name) {
-		const {state} = this;
+		const {state, props, initialParticipants} = this;
+		const {hasRepayedDebts} = props;
 		const updatedParticipants = state.participants
 			.slice()
 			.map((participant) => {
@@ -179,6 +180,7 @@ const EditEvent = React.createClass({
 				return {
 					id,
 					name,
+					showRemovalWarning: hasRepayedDebts && initialParticipants[id] && !name.trim(),
 				};
 			})
 			.map(markDuplicateParticipants([this.state.manager]));
@@ -189,20 +191,46 @@ const EditEvent = React.createClass({
 	},
 
 	handleParticipantBlur() {
-		const filteredParticipants = this
-			.state
-			.participants
+		const {initialParticipants} = this;
+		let result;
+
+		if (this.props.hasRepayedDebts) {
+			result = this.state.participants.map((participant) => {
+				const participantCopy = Object.assign({}, participant);
+
+				if (!participantCopy.name.trim()) {
+					participantCopy.name = initialParticipants[participantCopy.id] || '';
+					participantCopy.showRemovalWarning = false;
+				}
+
+				return participantCopy;
+			});
+		} else {
+			result = this.state.participants.slice();
+		}
+
+		result = result
 			.filter(({name}) => name.trim())
 			.map(markDuplicateParticipants([this.state.manager]));
 
 		this.setState({
-			participants: keepOneEmptyItem(filteredParticipants),
+			participants: keepOneEmptyItem(result),
 		});
 	},
 
 	renderParticipants() {
 		return this.state.participants.map((participant) => {
-			const {id, name, isDuplicate} = participant;
+			const {id, name, isDuplicate, showRemovalWarning} = participant;
+			let errorText;
+
+			if (isDuplicate) {
+				errorText = 'Имена участников не должны повторяться';
+			}
+
+			if (showRemovalWarning) {
+				errorText = 'Нельзя удалять участников из мероприятия с возвращёнными долгами';
+			}
+
 			return (
 				<div key={id}>
 					<TextField
@@ -210,7 +238,7 @@ const EditEvent = React.createClass({
 						fullWidth
 						hintText={'Имя участника'}
 						value={name}
-						errorText={isDuplicate && 'Имена участников не должны повторяться'}
+						errorText={errorText}
 						onBlur={this.handleParticipantBlur}
 						onChange={(event) => this.handleParticipantChange(id, event.target.value)}
 					/>
@@ -250,7 +278,6 @@ const EditEvent = React.createClass({
 						floatingLabelText="Начало"
 						formatDate={formatDate}
 						onChange={this.handleStartDateChange}
-						minDate={state.start}
 						value={state.start}
 					/>
 				</div>

@@ -30,7 +30,10 @@ const NewEventPage = React.createClass({
 			reachGoal(CREATE_EVENT_INVITED);
 		}
 
-		dispatch(createEvent(eventData));
+		const finalEventData = Object.assign({}, eventData);
+		delete finalEventData.updatedParticipants;
+
+		dispatch(createEvent(finalEventData));
 	},
 
 	render() {
