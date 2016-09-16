@@ -87,11 +87,16 @@ const EditEventPage = React.createClass({
 			name: updatedEvent.name,
 			start: updatedEvent.start,
 			end: updatedEvent.end,
+			repayedDebts: currentEvent.repayedDebts,
 			manager,
 			participants,
 			purchases,
 			actions,
 		};
+
+		if (!currentEvent.repayedDebts) {
+			delete finalEvent.repayedDebts;
+		}
 
 		const currentUserNameChangeData = updatedParticipants
 			.filter(({old}) => old === currentUserName)[0];
@@ -190,6 +195,7 @@ const EditEventPage = React.createClass({
 					start={new Date(currentEvent.start)}
 					end={new Date(currentEvent.end)}
 					participants={currentEvent.participants.filter((name) => name !== currentEvent.manager)}
+					hasRepayedDebts={Boolean(currentEvent.repayedDebts)}
 					handleSave={this.save}
 				/>
 			);

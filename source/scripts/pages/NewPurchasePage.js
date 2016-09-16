@@ -22,6 +22,15 @@ import fetchEventData from '../actions/fetchEventData';
 import fetchPurchaseChange from '../actions/fetchPurchaseChange';
 import fetchPurchaseDelete from '../actions/fetchPurchaseDelete';
 
+import {
+	getUserType,
+	reachGoal,
+	hasCreatedPurchase,
+	markPurchaseCreation,
+	CREATE_FIRST_PURCHASE,
+	INDEPENDENT,
+} from '../modules/metrics';
+
 const EDIT = 'EDIT';
 const CREATE = 'CREATE';
 
@@ -95,6 +104,11 @@ const NewPurchasePage = React.createClass({
 			});
 		}
 
+
+		if (getUserType() === INDEPENDENT && !hasCreatedPurchase()) {
+			reachGoal(CREATE_FIRST_PURCHASE);
+			markPurchaseCreation();
+		}
 
 		props.dispatch(createPurchaseAsync({
 			eventId: props.params.id,
@@ -221,8 +235,9 @@ const NewPurchasePage = React.createClass({
 
 	render() {
 		const {state, props} = this;
-		const {mode} = state;
-		const {purchase} = state;
+		const {mode, purchase} = state;
+		const {hasRepayedDebts} = props;
+
 		return (
 			<Page>
 				{mode === EDIT && this.editPageTopBar()}
@@ -323,12 +338,17 @@ const NewPurchasePage = React.createClass({
 									}}
 								/>
 							}
-							<Separator />
-							<UniversalListItem
-								isDelete
-								text="Удалить покупку"
-								onClick={() => this.setState({popupDeleteOpened: true})}
-							/>
+
+							{!hasRepayedDebts && [
+								<Separator key="first" />,
+								<UniversalListItem
+									isDelete
+									key="second"
+									text="Удалить покупку"
+									onClick={() => this.setState({popupDeleteOpened: true})}
+								/>,
+							]}
+
 							<Separator />
 						</div>
 					}
@@ -340,7 +360,7 @@ const NewPurchasePage = React.createClass({
 
 function mapStateToProps({events}) {
 	return {
-		currentEvent: events.currentEvent,
+		hasRepayedDebts: Boolean(events.currentEvent.repayedDebts),
 		isFetchingEvent: events.isFetchingEvent,
 		localEvents: events.localEvents,
 	};
