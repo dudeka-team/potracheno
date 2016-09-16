@@ -5,7 +5,7 @@ import {
 
 export default function repayDebt(eventId, sum, fromUser, toUser, oldSumFrom, oldSumTo) {
 	const sumFrom = sum + (oldSumFrom || 0);
-	const sumTo = -(sum + (oldSumTo || 0));
+	const sumTo = -sum + (oldSumTo || 0);
 
 	return dispatch => {
 		dispatch({
