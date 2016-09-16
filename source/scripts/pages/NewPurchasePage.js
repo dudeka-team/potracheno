@@ -285,7 +285,7 @@ const NewPurchasePage = React.createClass({
 										text: 'отмена',
 										onClick: () => { this.setState({popupDeleteOpened: false}); },
 									}}
-        />
+								/>
 							}
 							<Separator />
 							<UniversalListItem
