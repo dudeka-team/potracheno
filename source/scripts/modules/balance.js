@@ -34,13 +34,19 @@ export function getEventBalance(currentEvent) {
 			((currentEvent.repayedDebts && (currentEvent.repayedDebts[participant] || 0)) || 0);
 
 		if (participantsBalance[participant] % 1 !== 0) {
-			const pointPosition = participantsBalance[participant].toString().split('').indexOf('.');
-			participantsBalance[participant] = parseFloat(
+			const pointPosition =
 				participantsBalance[participant]
 					.toString()
 					.split('')
-					.slice(0, pointPosition)
-					.join('')
+					.indexOf('.');
+
+			participantsBalance[participant] =
+				parseFloat(
+					participantsBalance[participant]
+						.toString()
+						.split('')
+						.slice(0, pointPosition)
+						.join('')
 				);	
 		}
 
