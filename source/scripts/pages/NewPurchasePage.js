@@ -183,8 +183,9 @@ const NewPurchasePage = React.createClass({
 
 	render() {
 		const {state, props} = this;
-		const {mode} = state;
-		const {purchase} = state;
+		const {mode, purchase} = state;
+		const {hasRepayedDebts} = props;
+
 		return (
 			<Page>
 				{mode === EDIT && this.editPageTopBar()}
@@ -285,12 +286,17 @@ const NewPurchasePage = React.createClass({
 									}}
 								/>
 							}
-							<Separator />
-							<UniversalListItem
-								isDelete
-								text="Удалить покупку"
-								onClick={() => this.setState({popupDeleteOpened: true})}
-							/>
+
+							{!hasRepayedDebts && [
+								<Separator key="first" />,
+								<UniversalListItem
+									isDelete
+									key="second"
+									text="Удалить покупку"
+									onClick={() => this.setState({popupDeleteOpened: true})}
+								/>,
+							]}
+
 							<Separator />
 						</div>
 					}
@@ -302,7 +308,7 @@ const NewPurchasePage = React.createClass({
 
 function mapStateToProps({events}) {
 	return {
-		currentEvent: events.currentEvent,
+		hasRepayedDebts: Boolean(events.currentEvent.repayedDebts),
 		isFetchingEvent: events.isFetchingEvent,
 		localEvents: events.localEvents,
 	};
