@@ -22,6 +22,15 @@ import fetchEventData from '../actions/fetchEventData';
 import fetchPurchaseChange from '../actions/fetchPurchaseChange';
 import fetchPurchaseDelete from '../actions/fetchPurchaseDelete';
 
+import {
+	getUserType,
+	reachGoal,
+	hasCreatedPurchase,
+	markPurchaseCreation,
+	CREATE_FIRST_PURCHASE,
+	INDEPENDENT,
+} from '../modules/metrics';
+
 const EDIT = 'EDIT';
 const CREATE = 'CREATE';
 
@@ -67,6 +76,12 @@ const NewPurchasePage = React.createClass({
 
 	save() {
 		const {state, props} = this;
+
+		if (getUserType() === INDEPENDENT && !hasCreatedPurchase()) {
+			reachGoal(CREATE_FIRST_PURCHASE);
+			markPurchaseCreation();
+		}
+
 		props.dispatch(createPurchaseAsync({
 			eventId: this.props.params.id,
 			purchaseData: state.purchase,

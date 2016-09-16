@@ -2,6 +2,19 @@ import firebase from 'firebase';
 
 const Database = {};
 
+Database.getLocalEvents = function getLocalEvents() {
+	let result;
+
+	try {
+		result = JSON.parse(localStorage.getItem('localEvents') || '{}');
+	} catch (e) {
+		console.error(e); // eslint-disable-line no-console
+		result = {};
+	}
+
+	return result;
+};
+
 Database.readEvents = function readEvents() {
 	return firebase
 		.database()
