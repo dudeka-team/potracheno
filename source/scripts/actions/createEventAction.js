@@ -4,9 +4,6 @@ import {
 	CREATE_EVENT_ACTION,
 } from '../constants';
 
-const space = '_s_';
-const bold = 'b_';
-
 export const getDiff = (oldPs, newPs) => {
 	let removed = [];
 	let added = [];
@@ -27,101 +24,98 @@ export const getDiff = (oldPs, newPs) => {
 export const eventActionTypes = {
 	changeEventName(currentUser, eventName, date) {
 		return {
-			text: `${bold}${currentUser}${space}
-			изменил(-а)${space}название${space}мероприятия
-			${space}на${space}${bold}${eventName}`,
+			currentUser,
+			eventName,
 			icon: 'pen',
 			date,
+			actionType: 'changeEventName',
 		};
 	},
 	changeEventDate(currentUser, start, end, date) {
 		return {
-			text: `${bold}${currentUser}${space}изменил(-а)
-			${space}время${space}мероприятия${space}
-			на${space}${bold}${start}-${end}`,
+			currentUser,
+			start,
+			end,
 			icon: 'pen',
 			date,
+			actionType: 'changeEventDate',
 		};
 	},
 	addParticipantToEvent(currentUser, participantName, date) {
 		return {
-			text: `${bold}${currentUser}${space}добавил(-а)${space}
-			в${space}мероприятие${space}${bold}${participantName}`,
+			currentUser,
+			participantName,
 			icon: 'person',
 			date,
+			actionType: 'addParticipantToEvent',
 		};
 	},
 	removeParticipantFromEvent(currentUser, participantName, date) {
 		return {
-			text: `${bold}${currentUser}${space}исключил(-а)${space}${bold}${participantName}
-			${space}из мероприятия`,
+			currentUser,
+			participantName,
 			icon: 'exit',
 			date,
+			actionType: 'removeParticipantFromEvent',
 		};
 	},
 	addPurchase(currentUser, purchaseName, sum, date) {
 		return {
-			text: `${bold}${currentUser}${space}купил(-а)${space}${bold}${purchaseName}
-			${space}на${space}сумму`,
+			currentUser,
+			purchaseName,
+			sum,
 			icon: 'purchase',
 			date,
-			sum,
+			actionType: 'addPurchase',
 		};
 	},
 	deletePurchase(currentUser, purchaseName, date) {
 		return {
-			text: `${bold}${currentUser}${space}удалил(-а)
-			${space}покупку${space}${bold}${purchaseName}`,
+			currentUser,
+			purchaseName,
 			icon: 'pen',
 			date,
+			actionType: 'deletePurchase',
 		};
 	},
 	addParticipantToPurchase(currentUser, payerName, purchaseName, date) {
-		let text;
-		if (currentUser === payerName) {
-			text = `${bold}${currentUser}${space}добавил(-а)
-			${space}себя${space}в${space}покупку${space}${bold}${purchaseName}`;
-		} else {
-			text = `${bold}${currentUser}${space}добавил(-а)${space}${bold}${payerName}
-			${space}в${space}покупку${space}${bold}${purchaseName}`;
-		}
 		return {
-			text,
+			currentUser,
+			payerName,
+			purchaseName,
 			icon: 'pen',
 			date,
+			actionType: 'addParticipantToPurchase',
 		};
 	},
 	removeParticipantFromPurchase(currentUser, payerName, purchaseName, date) {
-		let text;
-		if (currentUser === payerName) {
-			text = `${bold}${currentUser}${space}убрал(-а)${space}себя${space}из
-			${space}покупки${space}${bold}${purchaseName}`;
-		} else {
-			text = `${bold}${currentUser}${space}убрал(-а)${space}${bold}${payerName}${space}из
-			${space}покупки${space}${bold}${purchaseName}`;
-		}
 		return {
-			text,
+			currentUser,
+			payerName,
+			purchaseName,
 			icon: 'pen',
 			date,
+			actionType: 'removeParticipantFromPurchase',
 		};
 	},
 	giveBackPartially(currentUser, payerName, debtSum, date) {
 		return {
-			text: `${bold}${currentUser}${space}отметил(-а)${space}долг
-			${space}${bold}${payerName}${space}частично${space}возвращенным`,
+			currentUser,
+			payerName,
+			debtSum,
 			icon: 'check-active',
 			date,
-			debtSum,
+			actionType: 'giveBackPartially',
 		};
 	},
 	giveBack(currentUser, payerName, debtSum, date) {
 		return {
-			text: `${bold}${currentUser}${space}отметил(-а)
-			${space}долг${space}${bold}${payerName}${space}возвращенным`,
+			currentUser,
+			payerName,
+			debtSum,
 			icon: 'check-active-yellow',
 			date,
-			debtSum,
+			actionType: 'giveBack',
 		};
 	},
 };

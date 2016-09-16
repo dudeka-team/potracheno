@@ -6,10 +6,12 @@ import EventActionListItem from '../../components/EventActionListItem';
 function EventActions(props) {
 	const firstAction = {
 		config: {
-			text: `b_${props.currentEvent.manager}_s_создал_s_мероприятие`,
+			manager: props.currentEvent.manager,
 			icon: 'calendar',
+			actionType: 'createEvent',
 		},
 	};
+
 	return (
 		<div>
 			{[firstAction, ...props.actions].reverse().map((item, i) => {
@@ -21,6 +23,15 @@ function EventActions(props) {
 						date={item.config.date}
 						sum={item.config.sum}
 						debtSum={item.config.debtSum}
+						actionType={item.config.actionType}
+						purchaseName={item.config.purchaseName}
+						currentUser={item.config.currentUser}
+						payer={item.config.payer}
+						participantName={item.config.participantName}
+						eventName={item.config.eventName}
+						start={item.config.start}
+						end={item.config.end}
+						manager={props.currentEvent.manager}
 					/>
 				);
 			})}
