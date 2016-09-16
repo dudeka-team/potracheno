@@ -1,25 +1,40 @@
 .purchase-participants
-    width 100%
-    padding 16px 16px 14px 16px
-    background-color #ffffff
-    
-    &__title
-        font-size 13px
-        color #818f99
-        line-height 1.2
-        height 16px
-        margin-bottom 6px
+	width 100%
+	padding 24px 16px 14px 16px
+	background-color #ffffff
 
-    &__list
-        display flex
+	&__title
+		font-size 13px
+		color #818f99
+		line-height 1.2
+		height 16px
+		margin-bottom 6px
+
+	&__list
+		display flex
 
 .purchase-inputs
-    width: 100%
-    padding 16px
+	width: 100%
+	padding 16px
 
 .purchase-payer
-    font-size 16px
-    line-height 1.2
-    color #2e363e
-    padding-bottom 9px
-    border-bottom 1px solid #e1e4e7
+	font-size 16px
+	line-height 1.2
+	color #2e363e
+	padding-bottom 9px
+	border-bottom 1px solid #e1e4e7
+	position relative
+	
+	&::after
+		content ""
+		position absolute
+		background-image url('img/arrow-drop-down.svg')
+		background-repeat no-repeat
+		right -6px
+		bottom -3px
+		width 24px
+		height 24px
+		font-size 30px
+		font-weight normal
+		line-height 1.2
+		color rgba(46, 54, 62, 0.32)
