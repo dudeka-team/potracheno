@@ -9,7 +9,7 @@ import updateEvent from '../actions/updateEvent';
 import FlexContainer from '../components/FlexContainer';
 import EditEvent from '../components/EditEvent';
 
-import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
+import {createEventActionAsync, eventActionTypes, getDiff} from '../actions/createEventAction';
 
 const EditEventPage = React.createClass({
 	componentDidMount() {
@@ -102,24 +102,7 @@ const EditEventPage = React.createClass({
 			currentUserNameChangeData,
 		}));
 
-		const getParticipants = (oldPs, newPs) => {
-			let removedParticipants = [];
-			let addedParticipants = [];
-			addedParticipants = newPs.filter((newP) => {
-				return !oldPs.includes(newP);
-			});
-
-			removedParticipants = oldPs.filter((oldP) => {
-				return !newPs.includes(oldP);
-			});
-
-			return {
-				addedParticipants,
-				removedParticipants,
-			};
-		};
-
-		const filteredParticipants = getParticipants(
+		const filteredParticipants = getDiff(
 			currentEvent.participants,
 			updatedEvent.participants
 		);
@@ -154,8 +137,8 @@ const EditEventPage = React.createClass({
 		}
 
 
-		filteredParticipants.addedParticipants.forEach((p) => {
-			if (filteredParticipants.addedParticipants) {
+		filteredParticipants.added.forEach((p) => {
+			if (filteredParticipants.added) {
 				dispatch(createEventActionAsync({
 					eventId: this.props.params.id,
 					eventActionInfo: {
@@ -169,8 +152,8 @@ const EditEventPage = React.createClass({
 			}
 		});
 
-		filteredParticipants.removedParticipants.forEach((p) => {
-			if (filteredParticipants.removedParticipants) {
+		filteredParticipants.removed.forEach((p) => {
+			if (filteredParticipants.removed) {
 				dispatch(createEventActionAsync({
 					eventId: this.props.params.id,
 					eventActionInfo: {
