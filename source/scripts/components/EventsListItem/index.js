@@ -9,7 +9,7 @@ function getDate({start, end}) {
 			:
 			`${moment(start).format('DD')} - ${moment(end).format('DD MMMM')}`)
 		:
-		`${moment(start).format('DD MMMM')} - ${moment(end).format('DD MMMM')}`
+		`${moment(start).format('DD MMMM')} - ${moment(end).format('DD MMMM')}`;
 }
 
 export default function EventsListItem(props) {
