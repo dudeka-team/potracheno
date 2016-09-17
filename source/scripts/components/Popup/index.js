@@ -62,8 +62,8 @@ function PopupFooter(props) {
 
 	return (
 		<div className={`popup__footer ${unBordered && 'popup__footer_unbordered'}`}>
-			{cancelButton && <FlatButton label={cancelButton.text} onClick={cancelButton.onClick} />}
-			{okButton && <FlatButton label={okButton.text} onClick={okButton.onClick} />}
+			{cancelButton && <FlatButton label={cancelButton.text} onTouchTap={cancelButton.onClick} />}
+			{okButton && <FlatButton label={okButton.text} onTouchTap={okButton.onClick} />}
 		</div>
 	);
 }
