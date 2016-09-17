@@ -1,58 +1,96 @@
 import React from 'react';
+import ContentCopy from 'material-ui/svg-icons/content/content-copy';
+
 
 function getCheck(eventsParticipantsDebts) {
 	return eventsParticipantsDebts
-		.map((debt) => `${debt.from} → ${debt.to}   ${Math.abs(debt.sum)} руб.`)
-		.join('\n------------------------\n');
+		.map((debt) => `${debt.from} → ${debt.to}   ${Math.abs(debt.sum)} руб.`);
+		// .join('\n------------------------\n');
 }
 
 const BalanceCheck = React.createClass({
 	getInitialState() {
 		return {
-			copied: false,
-			resultMsg: '',
+			expanded: false,
 		};
 	},
 
-	selectAndCopy(eventsParticipantsDebts) {
-		const checkDiv = document.querySelector('.balance-check__copy-text');
-		checkDiv.textContent = getCheck(eventsParticipantsDebts);
+	handleCopy() {
+		const {props} = this;
 		const range = document.createRange();
-		range.selectNode(checkDiv);
-		getSelection().addRange(range);
+		const selection = window.getSelection();
+		selection.removeAllRanges();
+
+		range.selectNode(this.checkContent);
+		selection.addRange(range);
+
 		try {
 			document.execCommand('copy');
-			this.setState({
-				copied: true,
-				resultMsg: 'Чек скопирован в буфер обмена',
-			});
-		} catch (err) {
-			this.setState({
-				resultMsg: 'Копирование текста на данном девайсе невозможно',
-			});
+			props.onCopy('Чек скопирован в буфер обмена');
+		} catch (e) {
+			// eslint-disable-next-line max-len
+			props.onCopy('Устройство не поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами');
 		}
+
+		selection.removeAllRanges();
+	},
+
+	handleToggle() {
+		this.setState({
+			expanded: !this.state.expanded,
+		});
 	},
 
 	render() {
-		const {props} = this;
-		const {debts} = props;
+		const {props, state} = this;
+
 		return (
 			<div>
-				<div
-					className="balance-check"
-					onClick={() => { this.selectAndCopy(debts); props.onClick(); }
+				<div className="balance-check">
+					<BalanceCheckToggle isExpanded={state.expanded} onClick={this.handleToggle} />
+					{state.expanded &&
+						<div className="balance-check-content">
+							<div
+								className="balance-check-content__debts"
+								ref={(checkContent) => (this.checkContent = checkContent)}
+							>
+								{getCheck(props.debts).map((row, index) => <p key={index}>{row}</p>)}
+							</div>
+							<BalanceCheckCopy onCopy={this.handleCopy} />
+						</div>
 					}
-				>
-					<div className="balance-check__icon" />
-					<div className="balance-check__content">
-						<div className="balance-check__title">Чек</div>
-						<div className="balance-check__subtitle">Баланс всего мероприятия</div>
-					</div>
-					<div className="balance-check__copy-text" />
 				</div>
 			</div>
 		);
 	},
 });
+
+function BalanceCheckToggle(props) {
+	const indicatorClasses = ['balance-check-toggle__indicator'];
+
+	if (props.isExpanded) {
+		indicatorClasses.push('balance-check-toggle__indicator_active');
+	}
+
+	return (
+		<div className="balance-check-toggle" onClick={props.onClick}>
+			<div className="balance-check-toggle__icon" />
+			<div className="balance-check-toggle__text">
+				<div className="balance-check-toggle__title">Чек</div>
+				<div className="balance-check-toggle__subtitle">Баланс всего мероприятия</div>
+			</div>
+			<div className={indicatorClasses.join(' ')} />
+		</div>
+	);
+}
+
+function BalanceCheckCopy(props) {
+	return (
+		<div className="balance-check-copy" onClick={props.onCopy}>
+			<ContentCopy className="balance-check-copy__icon" />
+			<div className="balance-check-copy__annotation">Скопировать чек</div>
+		</div>
+	);
+}
 
 export default BalanceCheck;
