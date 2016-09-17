@@ -26,6 +26,8 @@ import {
 	REPAY_DEBT_SUCCESS,
 
 	FETCH_PURCHASE_DELETE,
+
+	CREATE_EVENT_ACTION,
 } from '../constants';
 
 const {assign} = Object;
@@ -95,30 +97,43 @@ export default handleActions({
 	}),
 
 	[CREATE_PURCHASE]: (state, {payload}) => {
-		const currentEvent = Object.assign({}, state.currentEvent);
-		currentEvent.purchases = Object.assign({}, currentEvent.purchases, {
+		const currentEvent = assign({}, state.currentEvent);
+		currentEvent.purchases = assign({}, currentEvent.purchases, {
 			[payload.key]: payload.purchaseData,
 		});
-		return Object.assign({}, state, {
+		return assign({}, state, {
 			currentEvent,
-			eventsById: Object.assign({}, state.eventsById, {
+			eventsById: assign({}, state.eventsById, {
 				[currentEvent.id]: currentEvent,
 			}),
 		});
 	},
 
+	[CREATE_EVENT_ACTION]: (state, {payload}) => {
+		const currentEvent = assign({}, state.currentEvent);
+		currentEvent.actions = assign({}, currentEvent.actions, {
+			[payload.key]: payload.eventActionInfo,
+		});
+		return assign({}, state, {
+			currentEvent,
+			eventsById: assign({}, state.eventsById, {
+				[payload.eventId]: currentEvent,
+			}),
+		});
+	},
+
+
 	[GET_LOCAL_EVENTS]: (state, {payload}) => {
-		return Object.assign({}, state, {localEvents: payload});
+		return assign({}, state, {localEvents: payload});
 	},
 
 	[SET_LOCAL_EVENTS]: (state, {payload}) => {
-		return Object.assign({}, state, {localEvents: payload});
+		return assign({}, state, {localEvents: payload});
 	},
 
 	[CHANGE_PURCHASE]: (state, {payload}) => {
 		const {eventId, purchase} = payload;
 		const {eventsById} = state;
-
 		const participants = purchase.participants.slice();
 		const changedPurchase = assign({}, purchase, {participants});
 
