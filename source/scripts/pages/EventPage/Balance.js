@@ -5,7 +5,6 @@ import Portal from 'react-portal';
 import BalanceListItem from '../../components/BalanceListItem';
 import BalanceCheck from '../../components/BalanceCheck';
 import BalanceItemPopup from '../../components/BalanceItemPopup';
-import BalanceStatus from '../../components/BalanceStatus';
 import PopupPoster from '../../components/PopupPoster';
 import Separator from '../../components/Separator';
 import GreySubtitle from '../../components/GreySubtitle';
@@ -49,15 +48,16 @@ const BalancePage = React.createClass({
 		const actionType = (Math.abs(this.state.currentDebt.sum) === debt.sum) ?
 			'giveBack' : 'giveBackPartially';
 
+		const newAction = {
+			config: eventActionTypes[actionType](
+				debt.from,
+				debt.to,
+				debt.sum,
+				(new Date()).getTime()
+			),
+		};
+
 		if (actionType === 'giveBack') {
-			const newAction = {
-				config: eventActionTypes[actionType](
-					debt.from,
-					debt.to,
-					debt.sum,
-					(new Date()).getTime()
-				),
-			};
 			const newActions = this.state.actions;
 			newActions.push(newAction);
 			this.setState({
@@ -68,14 +68,7 @@ const BalancePage = React.createClass({
 
 		props.dispatch(createEventActionAsync({
 			eventId: props.eventId,
-			eventActionInfo: {
-				config: eventActionTypes[actionType](
-					debt.from,
-					debt.to,
-					debt.sum,
-					(new Date()).getTime()
-				),
-			},
+			eventActionInfo: newAction,
 		}));
 
 		props.dispatch(
@@ -123,6 +116,7 @@ const BalancePage = React.createClass({
 				getEventBalance(this.props.eventsById[eventId]),
 				this.props.eventsById[eventId]
 			);
+
 		let positiveSum = 0;
 		let negativeSum = 0;
 		const positiveDebts = eventsParticipantsDebts.map((debt, i) => {
@@ -133,6 +127,8 @@ const BalancePage = React.createClass({
 						key={i}
 						sum={-Math.round(debt.sum)}
 						participant={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
+						from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
+						to={debt.to}
 						debtType="positive"
 						onClick={() => this.showRepayPopup(debt)}
 					/>
@@ -147,8 +143,24 @@ const BalancePage = React.createClass({
 					<BalanceListItem
 						key={i}
 						sum={-Math.round(debt.sum)}
-						participant={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
+						from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
+						to={debt.to}
 						debtType="negative"
+						onClick={() => this.showRepayPopup(debt)}
+					/>
+				);
+			}
+		});
+
+		const othersDebts = eventsParticipantsDebts.map((debt, i) => {
+			if (currentUser !== debt.from && currentUser !== debt.to) {
+				return (
+					<BalanceListItem
+						key={i}
+						sum={-Math.round(debt.sum)}
+						from={debt.from}
+						to={debt.to}
+						debtType="neutral"
 						onClick={() => this.showRepayPopup(debt)}
 					/>
 				);
@@ -161,13 +173,13 @@ const BalancePage = React.createClass({
 					<BalanceListItem
 						key={i}
 						sum={action.config.debtSum}
-						participant={action.config.currentUser}
-						debtType="neutral"
+						from={action.config.currentUser}
+						to={action.config.payerName}
+						debtType="returned"
 					/>
 				);
 			}
 		});
-
 
 		return (
 			<Wrapper>
@@ -186,25 +198,14 @@ const BalancePage = React.createClass({
 							onClose={() => this.closeRepayPopup()}
 						/>
 					</Portal>
-					{(positiveSum !== 0) &&
+					{(positiveSum !== 0 || negativeSum !== 0) &&
 						<div>
 							<Separator />
 							<GreySubtitle text="Текущие долги" />
 						</div>}
 					{positiveDebts}
-					{(positiveSum !== 0) &&
-						<BalanceStatus
-							text="Вам должны"
-							sum={positiveSum}
-							debtStatus="positive"
-						/>}
 					{negativeDebts}
-					{(negativeSum !== 0) &&
-						<BalanceStatus
-							text="Вы должны"
-							sum={negativeSum}
-							debtStatus="negative"
-						/>}
+					{othersDebts}
 					<div>
 						{(returnedDebts.length !== 0) &&
 							<div>
