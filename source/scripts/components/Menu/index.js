@@ -67,7 +67,6 @@ const Menu = React.createClass({
 
 Menu.propTypes = {
 	currentEvent: PropTypes.object.isRequired,
-	currentUserName: PropTypes.string.isRequired,
 	subtitle: PropTypes.string.isRequired,
 };
 

@@ -8,11 +8,11 @@ export const getDiff = (oldPs, newPs) => {
 	let removed = [];
 	let added = [];
 	added = newPs.filter((newP) => {
-		return !oldPs.includes(newP);
+		return oldPs.indexOf((newP) === -1);
 	});
 
 	removed = oldPs.filter((oldP) => {
-		return !newPs.includes(oldP);
+		return newPs.indexOf((oldP) === -1);
 	});
 
 	return {
@@ -128,6 +128,7 @@ export function createEventActionAsync(payload) {
 			dispatch(createEventAction({
 				key: result.key,
 				eventActionInfo: result.eventActionInfo,
+				eventId: payload.eventId,
 			}));
 		});
 	};
