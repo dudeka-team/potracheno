@@ -39,7 +39,7 @@ const EventsPage = React.createClass({
 
 	renderEventPreview(eventData) {
 		const {eventId, data} = eventData;
-
+		const {start, end} = data;
 		const currentBalance =
 			getEventBalance(data)[this.props.localEvents[eventId]];
 
@@ -48,7 +48,7 @@ const EventsPage = React.createClass({
 				<EventsListItem
 					title={data.name}
 					membersCount={data.participants.length}
-					date={data.start}
+					datePeriod={{start, end}}
 					sum={Math.round(currentBalance || 0)}
 					debtType={
 						((currentBalance > 0) && 'positive')
