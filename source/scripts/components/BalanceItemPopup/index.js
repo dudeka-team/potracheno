@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router';
+import withRouter from 'react-router/lib/withRouter';
+import assign from 'object-assign';
 import TextField from 'material-ui/TextField';
 import SubHeader from '../SubHeader';
 
@@ -28,7 +29,7 @@ const BalanceItemPopup = React.createClass({
 		const {state, props} = this;
 
 		if (!this.state.isAmountInvalid) {
-			props.onSubmit(Object.assign({}, props.debt, {sum: state.value}));
+			props.onSubmit(assign({}, props.debt, {sum: state.value}));
 		}
 	},
 

@@ -1,4 +1,4 @@
-import {hashHistory} from 'react-router';
+import browserHistory from 'react-router/lib/browserHistory';
 
 import {
 	RELOGIN,
@@ -12,7 +12,7 @@ export default function relogin(id) {
 			type: RELOGIN,
 			payload: new Promise((resolve) => {
 				dispatch(selLocalEvents(id)); // вместо name передаётся undefined и юзер разлогинивается
-				hashHistory.push(`/events/${id}`);
+				browserHistory.push(`/events/${id}`);
 				resolve(id);
 			}),
 		});

@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react';
 import shortid from 'shortid';
-import {withRouter} from 'react-router';
+import withRouter from 'react-router/lib/withRouter';
 import {connect} from 'react-redux';
+import assign from 'object-assign';
 import IntlPolyfill from 'intl';
 import 'intl/locale-data/jsonp/ru';
 
@@ -200,7 +201,7 @@ const EditEvent = React.createClass({
 
 		if (this.props.hasRepayedDebts) {
 			result = this.state.participants.map((participant) => {
-				const participantCopy = Object.assign({}, participant);
+				const participantCopy = assign({}, participant);
 
 				if (!participantCopy.name.trim()) {
 					participantCopy.name = initialParticipants[participantCopy.id] || '';
@@ -363,7 +364,6 @@ function markDuplicateParticipants(additionalNames) {
 	});
 
 	return (item) => {
-		const {assign} = Object;
 		const name = item.name.toLowerCase();
 		const isDuplicate = !!names[name];
 

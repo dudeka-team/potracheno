@@ -3,44 +3,34 @@
 	align-items center
 	padding 18px 18px
 	border-bottom 1px solid #f1f2f4
-	
+
 	&_negative
 		.balance-list-item__sum
 			color #f1353b
-		.balance-list-item__icon
-			width 24px
-			height 24px
-			background-image url("img/check-circle.svg")
-			position relative
-			top 1px
-			
+
 	&_positive
 		.balance-list-item__sum
 			color #34c082
-		
-		.balance-list-item__icon
-			width 24px
-			height 24px
-			background-image url("img/check-circle.svg")
-			position relative
-			top 1px
-			
-			
+
 	&_neutral
 		.balance-list-item__sum
 			color #2e363e
-			
-		.balance-list-item__icon
-			width 20px
-			height 20px
-			border-radius 50%
-			border solid 2px #cbcfd3
-		
+
 		.balance-list-item__direction
-			color #83888d
-			
+			color #2e363e
+
+		.balance-list-item__sum
+			color #2e363e
+
+	&_returned
 		.balance-list-item__sum
 			color #83888d
+
+		.balance-list-item__direction
+			color #83888d
+
+		.balance-list-item__sum
+			display none
 
 	&__direction
 		flex-grow 1
@@ -57,20 +47,18 @@
 		font-weight 500
 		line-height 1.22
 		color #2fb678
-		
+
 	&__icon
 		width 20px
 		height 20px
 		margin-right 26px
-			
-.balance-list-item__arrow
+
+.balance-list-item__icon
+	position relative
+	top 1px
 	width 24px
 	height 24px
 	margin 0 8px
-	display inline-block
-	background: url('img/arrow-forward-long.svg')
+	background: inline('arrow-forward-long.svg')
 	background-repeat no-repeat
 	background-position center
-
-
-

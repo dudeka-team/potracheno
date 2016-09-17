@@ -1,4 +1,4 @@
-import {hashHistory} from 'react-router';
+import browserHistory from 'react-router/lib/browserHistory';
 import db from '../database';
 import {
 	FETCH_PURCHASE_DELETE,
@@ -11,7 +11,7 @@ export default function fetchPurchaseDelete(eventId, purchaseId) {
 			db
 				.deletePurchase(eventId, purchaseId)
 				.then(resolve)
-				.then(() => hashHistory.push(`events/${eventId}`))
+				.then(() => browserHistory.push(`events/${eventId}`))
 				.catch(reject);
 		}),
 	};

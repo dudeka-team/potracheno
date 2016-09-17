@@ -1,4 +1,4 @@
-import {hashHistory} from 'react-router';
+import browserHistory from 'react-router/lib/browserHistory';
 import db from '../database';
 import {
 	CHANGE_PURCHASE,
@@ -11,7 +11,7 @@ export default function fetchPurchaseChange(eventId, purchaseId, purchase) {
 			db
 				.changePurchase(eventId, purchaseId, purchase)
 				.then(() => {
-					hashHistory.push(`events/${eventId}`);
+					browserHistory.push(`events/${eventId}`);
 				})
 				.then(resolve)
 				.catch(reject);

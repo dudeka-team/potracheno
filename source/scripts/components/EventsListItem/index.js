@@ -30,16 +30,24 @@ export default function EventsListItem(props) {
 					<div className="events-item__sum">
 						{formatSum(props.sum)}
 					</div>
+					<div className={`events-item__status events-item__status_${props.debtType}`}>
+						{formatStatus(props.sum)}
+					</div>
 				</div>
 			</div>
 		</div>
 	);
 }
 
-function formatSum(sum) {
+function formatStatus(sum) {
 	if (sum === 0) return null;
-	return `${sum > 0 ? '+' : '-'}${Math.abs(sum)} Р`;
+	return `${sum > 0 ? 'вам должны' : 'вы должны'}`;
 }
+
+function formatSum(sum) {
+	return (sum === 0) ? null : `${Math.abs(sum)} Р`;
+}
+
 
 EventsListItem.propTypes = {
 	title: PropTypes.string.isRequired,

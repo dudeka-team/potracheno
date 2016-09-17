@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import assign from 'object-assign';
 
 import EditEvent from '../components/EditEvent';
 
@@ -30,7 +31,7 @@ const NewEventPage = React.createClass({
 			reachGoal(CREATE_EVENT_INVITED);
 		}
 
-		const finalEventData = Object.assign({}, eventData);
+		const finalEventData = assign({}, eventData);
 		delete finalEventData.updatedParticipants;
 
 		dispatch(createEvent(finalEventData));

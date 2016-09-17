@@ -8,9 +8,10 @@ export default function BalanceListItem(props) {
 			className={[baseClass, `${baseClass}_${props.debtType}`].join(' ')}
 			onClick={props.onClick}
 		>
-			<div className={'balance-list-item__icon'} />
 			<div className="balance-list-item__direction">
-				{props.participant}
+				<div className="balance-list-item__from">{props.from}</div>
+				<div className={'balance-list-item__icon'} />
+				<div className="balance-list-item__to">{props.to}</div>
 			</div>
 			<div className="balance-list-item__sum">
 				{props.sum} P
@@ -21,8 +22,9 @@ export default function BalanceListItem(props) {
 
 BalanceListItem.propTypes = {
 	sum: PropTypes.number.isRequired,
-	participant: PropTypes.string.isRequired,
-	debtType: PropTypes.oneOf(['positive', 'negative', 'neutral']).isRequired,
+	from: PropTypes.string.isRequired,
+	to: PropTypes.string.isRequired,
+	debtType: PropTypes.oneOf(['positive', 'negative', 'neutral', 'returned']).isRequired,
 };
 
 

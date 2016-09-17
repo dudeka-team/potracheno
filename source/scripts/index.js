@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 
-import {hashHistory} from 'react-router';
+import browserHistory from 'react-router/lib/browserHistory';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
@@ -13,13 +13,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import assign from 'es6-object-assign';
 
 import 'react-fastclick';
 
 import reducers from './reducers';
 import Routes from './Routes';
-
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q',
@@ -43,7 +41,6 @@ const dudekaTheme = getMuiTheme({
 
 injectTapEventPlugin();
 moment.locale('ru');
-assign.polyfill();
 firebase.initializeApp(firebaseConfig);
 
 const store = createStore(
@@ -63,7 +60,7 @@ function AppRoot() {
 	return (
 		<MuiThemeProvider muiTheme={dudekaTheme}>
 			<Provider store={store}>
-				<Routes history={syncHistoryWithStore(hashHistory, store)} />
+				<Routes history={syncHistoryWithStore(browserHistory, store)} />
 			</Provider>
 		</MuiThemeProvider>
 	);
