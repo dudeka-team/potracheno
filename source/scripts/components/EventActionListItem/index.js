@@ -13,127 +13,123 @@ const EventActionItem = React.createClass({
 			end,
 			manager,
 		} = props;
-		const regularText = 'event-action__text';
-		const boldText = 'event-action__text event-action__text_bold';
 
 		if (actionType === 'createEvent') {
 			return (
-				<div>
-					<span className={boldText}>{manager} </span>
-					<span className={regularText}>создал мероприятие</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{manager} </b>
+					создал(-а) мероприятие
+				</p>
 			);
 		}
 
 		if (actionType === 'changeEventName') {
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>изменил(-а) название мероприятия на</span>
-					<span className={boldText}> {eventName}</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					изменил(-а) название мероприятия на
+					<b className="event-action__text_bold"> {eventName} </b>
+				</p>
 			);
 		}
 
 		if (actionType === 'changeEventDate') {
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>изменил(-а) время мероприятия на</span>
-					<span className={boldText}> {`${start} - ${end}`}</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					изменил(-а) дату проведения мероприятия на
+					<b className="event-action__text_bold"> {`${start} - ${end}`} </b>
+				</p>
 			);
 		}
 
 		if (actionType === 'addParticipantToEvent') {
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>добавил(-а) в мероприятие</span>
-					<span className={boldText}> {participantName}</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					добавил(-а) в мероприятие
+					<b className="event-action__text_bold"> {participantName} </b>
+				</p>
 			);
 		}
 
 		if (actionType === 'removeParticipantFromEvent') {
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>исключил(-а)</span>
-					<span className={boldText}> {participantName}</span>
-					<span className={regularText}> из мероприятия</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					исключил(-а)
+					<b className="event-action__text_bold"> {participantName} </b>
+					из мероприятия
+				</p>
 			);
 		}
 
 		if (actionType === 'addPurchase') {
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>добавил(-а) покупку на сумму</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					добавил(-а) покупку
+					<b className="event-action__text_bold"> {purchaseName} </b>
+					на сумму
+				</p>
 			);
 		}
 
 		if (actionType === 'deletePurchase') {
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>удалил(-а) покупку</span>
-					<span className={boldText}> {purchaseName}</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					удалил(-а) покупку
+					<b className="event-action__text_bold"> {purchaseName} </b>
+				</p>
 			);
 		}
 
 		if (actionType === 'addParticipantToPurchase') {
 			const payer = (payerName === currentUser) ?
-				<span className={regularText}> себя </span> :
-				<span className={boldText}> {payerName} </span>;
+				<span className="event-action__text"> себя </span> :
+				<span className="event-action__text_bold"> {payerName} </span>;
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>добавил(-а)</span>
-					{payer}
-					<span className={regularText}>в покупку</span>
-					<span className={boldText}> {purchaseName}</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					добавил(-а) {payer} в покупку
+					<b className="event-action__text_bold"> {purchaseName} </b>
+				</p>
 			);
 		}
 
 		if (actionType === 'removeParticipantFromPurchase') {
 			const payer = (payerName === currentUser) ?
-				<span className={regularText}> себя </span> :
-				<span className={boldText}> {payerName} </span>;
+				<span className="event-action__text"> себя </span> :
+				<span className="event-action__text_bold"> {payerName} </span>;
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>удалил(-а)</span>
-					{payer}
-					<span className={regularText}>из покупки</span>
-					<span className={boldText}> {purchaseName}</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					исключил(-а) {payer} из покупки
+					<b className="event-action__text_bold"> {purchaseName} </b>
+				</p>
 			);
 		}
 
 		if (actionType === 'giveBackPartially') {
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>отметил долг</span>
-					<span className={boldText}> {payerName} </span>
-					<span className={regularText}>частично возвращенным</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					отметил(-а) долг
+					<b className="event-action__text_bold"> {payerName} </b>
+					частично возращенным
+				</p>
 			);
 		}
 
 		if (actionType === 'giveBack') {
 			return (
-				<div>
-					<span className={boldText}>{currentUser} </span>
-					<span className={regularText}>отметил долг</span>
-					<span className={boldText}> {payerName} </span>
-					<span className={regularText}>возвращенным</span>
-				</div>
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					отметил(-а) долг
+					<b className="event-action__text_bold"> {payerName} </b>
+					возращенным
+				</p>
 			);
 		}
 	},
