@@ -1,6 +1,7 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import {connect} from 'react-redux';
+import assign from 'object-assign';
 import CircularProgress from 'material-ui/CircularProgress';
 import Drawer from 'material-ui/Drawer';
 
@@ -111,10 +112,10 @@ const EventPage = React.createClass({
 		const {currentEvent, currentUserName, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
-			.map((purchaseId) => Object.assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
+			.map((purchaseId) => assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => Object.assign({config}, currentEvent.actions[config]));
+			.map((config) => assign({config}, currentEvent.actions[config]));
 
 		if (isFetchingEvent) {
 			return this.renderPreloader();

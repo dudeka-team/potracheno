@@ -46,10 +46,10 @@
   },
   "dependencies": {
     "deep-equal": "^1.0.1",
-    "es6-object-assign": "^1.0.3",
     "firebase": "^3.3.0",
     "intl": "^1.2.4",
     "material-ui": "^0.15.4",
+    "object-assign": "^4.1.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-fastclick": "^2.1.2",

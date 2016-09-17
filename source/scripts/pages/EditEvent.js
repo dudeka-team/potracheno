@@ -1,6 +1,7 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import {connect} from 'react-redux';
+import assign from 'object-assign';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import fetchEventData from '../actions/fetchEventData';
@@ -68,7 +69,7 @@ const EditEventPage = React.createClass({
 					return null;
 				}
 
-				return Object.assign({}, originalPurchase, {
+				return assign({}, originalPurchase, {
 					payer,
 					participants: updatedPurchaseParticipants,
 				});
@@ -81,7 +82,7 @@ const EditEventPage = React.createClass({
 
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => Object.assign({config}, currentEvent.actions[config]));
+			.map((config) => assign({config}, currentEvent.actions[config]));
 
 		const finalEvent = {
 			name: updatedEvent.name,

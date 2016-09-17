@@ -13,7 +13,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import assign from 'es6-object-assign';
 
 import 'react-fastclick';
 
@@ -42,7 +41,6 @@ const dudekaTheme = getMuiTheme({
 
 injectTapEventPlugin();
 moment.locale('ru');
-assign.polyfill();
 firebase.initializeApp(firebaseConfig);
 
 const store = createStore(
