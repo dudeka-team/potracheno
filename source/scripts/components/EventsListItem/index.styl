@@ -9,8 +9,9 @@
 		flex-grow 1
 		flex-shrink 1
 
-
 	&__rightside
+		display flex
+		flex-direction column-reverse
 		flex-grow 0
 		flex-shrink 0
 
@@ -21,6 +22,17 @@
 		color #1e2224
 		margin 0 0 8px 0
 	
+	&__status
+		font-size 13px
+		font-weight normal
+		line-height 1.23
+		
+		&_positive
+			color #2fb678
+		
+		&_negative
+			color #e94f33
+	
 	&__date
 		margin-bottom 4px
 
@@ -30,6 +42,7 @@
 		color #7f8c95
 
 	&__debt-status
+		text-align right
 		&_negative
 			color #f1353b
 
@@ -41,8 +54,8 @@
 
 	&__sum
 		font-size 20px
-        font-weight 500
-        line-height 1.1
+		font-weight 500
+		line-height 1.1
 
 	&__debtType
 		font-size 12px

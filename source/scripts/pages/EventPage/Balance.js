@@ -128,9 +128,8 @@ const BalancePage = React.createClass({
 					<BalanceListItem
 						key={i}
 						sum={-Math.round(debt.sum)}
-						participant={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
-						from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
-						to={debt.to}
+						from={debt.from}
+						to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
 						debtType="positive"
 						onClick={() => this.showRepayPopup(debt)}
 					/>
@@ -163,7 +162,6 @@ const BalancePage = React.createClass({
 						from={debt.from}
 						to={debt.to}
 						debtType="neutral"
-						onClick={() => this.showRepayPopup(debt)}
 					/>
 				);
 			}
