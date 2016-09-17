@@ -1,7 +1,7 @@
 $topBarBorderColor = #e1e4e7
 $topBarTitleColor = #2e363e
 $topBarSubtitleColor = #9fafba
-$icons = burger close plus add-person arrow-back check-active info arrow-forward-gray arrow-forward-blue arrow-share more-actions pen share
+$icons = burger close plus arrow-back check-active info arrow-forward-gray arrow-forward-blue arrow-share more-actions pen share
 
 .top-bar
 	width 100%
@@ -12,7 +12,7 @@ $icons = burger close plus add-person arrow-back check-active info arrow-forward
 	padding 0 4px
 	background #fff
 	z-index 1
-	
+
 	&_bordered
 		border-bottom 1px solid $topBarBorderColor
 		box-shadow 0 0 4px rgba(0, 0, 0, .1)
@@ -68,4 +68,4 @@ $icons = burger close plus add-person arrow-back check-active info arrow-forward
 
 		for $icon in $icons
 			&--{$icon}
-				background-image url('img/' + $icon + '.svg')
+				background-image inline('' + $icon + '.svg')

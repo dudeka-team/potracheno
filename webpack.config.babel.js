@@ -5,7 +5,6 @@ import webpack from 'webpack';
 
 // extra plugins
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import AppCachePlugin from 'appcache-webpack-plugin';
 import assets from 'postcss-assets';
 
 const SOURCE = './source';
@@ -28,35 +27,6 @@ const plugins = [
 		hash: false,
 	}),
 	new webpack.HotModuleReplacementPlugin(),
-	new AppCachePlugin({
-		cache: [
-			'index.html',
-			'bundle.js',
-			'moment.min.js',
-			'moment.ru.min.js',
-			'img/more-actions.svg',
-			'img/arrow-back.svg',
-			'img/share.svg',
-			'img/burger.svg',
-			'img/check-active.svg',
-			'img/check-inactive.svg',
-			'img/purchase.svg',
-			'img/actionIcons/calendar.svg',
-			'img/actionIcons/pen.svg',
-			'img/actionIcons/person.svg',
-			'img/actionIcons/purchase.svg',
-			'img/actionIcons/exit.svg',
-			'img/person-add.svg',
-			'img/close.svg',
-			'img/info.svg',
-			'img/pen.svg',
-			'img/purchase.svg',
-			'img/exit.svg',
-		],
-		network: ['*'],
-		settings: ['prefer-online'],
-		output: 'index.appcache',
-	}),
 ];
 
 if (ENVIRONMENT === 'production') {
@@ -103,9 +73,11 @@ const config = {
 		],
 	},
 	postcss() {
-		return [assets({
-			loadPaths: ['img'],
-		})];
+		return [
+			assets({
+				loadPaths: ['static/img/'],
+			}),
+		];
 	},
 };
 
