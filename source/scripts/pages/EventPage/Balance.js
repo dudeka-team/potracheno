@@ -93,15 +93,17 @@ const BalancePage = React.createClass({
 			showPopup: false,
 		});
 	},
-	showPopupPoster() {
+	showPopupPoster(content) {
 		this.setState({
 			showPopupPoster: true,
+			popupPosterContent: content,
 		});
+
 		setTimeout(() => {
 			this.setState({
 				showPopupPoster: false,
 			});
-		}, 1500);
+		}, 2000);
 	},
 	showRepayPopup(debt) {
 		this.setState({
@@ -173,10 +175,10 @@ const BalancePage = React.createClass({
 			<Wrapper>
 				<div className="balance-page">
 					{(positiveSum !== 0 || negativeSum !== 0) &&
-						<BalanceCheck debts={eventsParticipantsDebts} onClick={this.showPopupPoster} />
+						<BalanceCheck debts={eventsParticipantsDebts} onCopy={this.showPopupPoster} />
 					}
 					<PopupPoster
-						text="Чек скопирован в буфер обмена"
+						text={this.state.popupPosterContent}
 						popupPosterOpen={this.state.showPopupPoster}
 					/>
 					<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
