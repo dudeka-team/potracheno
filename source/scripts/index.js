@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 
-import {hashHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
@@ -63,7 +63,7 @@ function AppRoot() {
 	return (
 		<MuiThemeProvider muiTheme={dudekaTheme}>
 			<Provider store={store}>
-				<Routes history={syncHistoryWithStore(hashHistory, store)} />
+				<Routes history={syncHistoryWithStore(browserHistory, store)} />
 			</Provider>
 		</MuiThemeProvider>
 	);
