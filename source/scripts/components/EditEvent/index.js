@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import shortid from 'shortid';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
+import IntlPolyfill from 'intl';
+import 'intl/locale-data/jsonp/ru';
 
 import CircularProgress from 'material-ui/CircularProgress';
 import DatePicker from 'material-ui/DatePicker';
@@ -13,6 +15,8 @@ import FlexContainer from '../FlexContainer';
 import Separator from '../Separator';
 import GreySubtitle from '../GreySubtitle';
 
+
+const DateTimeFormat = IntlPolyfill.DateTimeFormat;
 
 function createParticipant(name = '') {
 	return {
@@ -275,6 +279,8 @@ const EditEvent = React.createClass({
 				<div className="data-picker-wrapper">
 					<DatePicker
 						fullWidth
+						DateTimeFormat={DateTimeFormat}
+						locale="ru"
 						floatingLabelText="Начало"
 						formatDate={formatDate}
 						onChange={this.handleStartDateChange}
@@ -284,6 +290,8 @@ const EditEvent = React.createClass({
 				<div className="data-picker-wrapper">
 					<DatePicker
 						fullWidth
+						DateTimeFormat={DateTimeFormat}
+						locale="ru"
 						floatingLabelText="Завершение"
 						formatDate={formatDate}
 						onChange={this.handleEndDateChange}

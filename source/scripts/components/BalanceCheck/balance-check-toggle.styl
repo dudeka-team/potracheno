@@ -1,0 +1,38 @@
+.balance-check-toggle
+	display flex
+	align-items center
+	padding 18px 19px 17px
+	cursor pointer
+
+	&__text
+		flex-grow 1
+		flex-shrink 1
+
+	&__title
+		font-weight 500
+		font-size 16px
+		line-height 20px
+		color #1d1e1f
+		margin-bottom 2px
+
+	&__subtitle
+		font-size 14px
+		line-height 16px
+		color #818f99
+
+	&__icon
+		width 24px
+		height 24px
+		margin-right 27px
+		background-image url('img/balance-check.svg')
+
+	&__indicator
+		width 24px
+		height 24px
+		background-repeat no-repeat
+		background-position center
+		background-image url('img/dropdown-top.svg')
+		transform rotate(180deg)
+
+		&_active
+			transform rotate(0deg)

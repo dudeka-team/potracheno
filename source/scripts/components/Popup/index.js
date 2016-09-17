@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import SquareButton from '../SquareButton';
+import FlatButton from 'material-ui/FlatButton';
 
 const Popup = React.createClass({
 	propTypes: {
@@ -62,8 +62,8 @@ function PopupFooter(props) {
 
 	return (
 		<div className={`popup__footer ${unBordered && 'popup__footer_unbordered'}`}>
-			{cancelButton && <SquareButton text={cancelButton.text} onClick={cancelButton.onClick} />}
-			{okButton && <SquareButton text={okButton.text} onClick={okButton.onClick} />}
+			{cancelButton && <FlatButton label={cancelButton.text} onTouchTap={cancelButton.onClick} />}
+			{okButton && <FlatButton label={okButton.text} onTouchTap={okButton.onClick} />}
 		</div>
 	);
 }

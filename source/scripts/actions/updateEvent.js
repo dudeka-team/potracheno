@@ -1,4 +1,4 @@
-import {hashHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 
 import {
 	UPDATE_EVENT,
@@ -23,7 +23,7 @@ export default function updateEvent(payload) {
 						dispatch(setLocalEvents(payload.id, currentUserNameChangeData.updated));
 					}
 				})
-				.then(() => hashHistory.push(`/events/${payload.id}`))
+				.then(() => browserHistory.push(`/events/${payload.id}`))
 				.catch(reject);
 		}),
 	});

@@ -1,4 +1,4 @@
-import {hashHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 
 import {
 	CREATE_EVENT,
@@ -22,7 +22,7 @@ export default function createEvent(payload) {
 					})
 					.then(data => {
 						dispatch(setLocalEvents(data.key, data.eventInfo.manager));
-						hashHistory.push('/events');
+						browserHistory.push('/events');
 					})
 					.catch(reject);
 			}),

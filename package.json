@@ -47,6 +47,7 @@
     "deep-equal": "^1.0.1",
     "es6-object-assign": "^1.0.3",
     "firebase": "^3.3.0",
+    "intl": "^1.2.4",
     "material-ui": "^0.15.4",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
