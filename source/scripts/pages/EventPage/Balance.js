@@ -17,31 +17,70 @@ import Wrapper from '../../components/Wrapper';
 import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
 
+import {createEventActionAsync, eventActionTypes} from '../../actions/createEventAction';
+
 
 const BalancePage = React.createClass({
 	getInitialState() {
+		const {currentEvent} = this.props;
+		const actions = Object
+			.keys((currentEvent && currentEvent.actions) || [])
+			.map((config) => Object.assign({config}, currentEvent.actions[config]));
 		return {
+			actions,
 			showPopup: false,
 			showPopupPoster: false,
 		};
 	},
 
 	repayDebtHandler(debt) {
+		const {props} = this;
 		let oldRepayedFrom = 0;
 		let oldRepayedTo = 0;
 
-		if (this.props.eventsById[this.props.eventId].repayedDebts) {
+		if (props.eventsById[props.eventId].repayedDebts) {
 			oldRepayedFrom =
 				this.props.eventsById[this.props.eventId].repayedDebts[debt.from]
 					|| 0;
 			oldRepayedTo =
-				this.props.eventsById[this.props.eventId].repayedDebts[debt.to]
-					|| 0;
+				this.props.eventsById[this.props.eventId].repayedDebts[debt.to];
 		}
 
-		this.props.dispatch(
+		const actionType = (Math.abs(this.state.currentDebt.sum) === debt.sum) ?
+			'giveBack' : 'giveBackPartially';
+
+		if (actionType === 'giveBack') {
+			const newAction = {
+				config: eventActionTypes[actionType](
+					debt.from,
+					debt.to,
+					debt.sum,
+					(new Date()).getTime()
+				),
+			};
+			const newActions = this.state.actions;
+			newActions.push(newAction);
+			this.setState({
+				actions: newActions,
+			});
+		}
+
+
+		props.dispatch(createEventActionAsync({
+			eventId: props.eventId,
+			eventActionInfo: {
+				config: eventActionTypes[actionType](
+					debt.from,
+					debt.to,
+					debt.sum,
+					(new Date()).getTime()
+				),
+			},
+		}));
+
+		props.dispatch(
 			repayDebt(
-				this.props.eventId,
+				props.eventId,
 				debt.sum,
 				debt.from,
 				debt.to,
@@ -79,7 +118,6 @@ const BalancePage = React.createClass({
 
 	render() {
 		const {currentUser, eventId} = this.props;
-
 		const eventsParticipantsDebts =
 			getEventsParticipantsDebts(
 				getEventBalance(this.props.eventsById[eventId]),
@@ -117,6 +155,19 @@ const BalancePage = React.createClass({
 			}
 		});
 
+		const returnedDebts = this.state.actions.reverse().map((action, i) => {
+			if (action.config.actionType === 'giveBack') {
+				return (
+					<BalanceListItem
+						key={i}
+						sum={action.config.debtSum}
+						participant={action.config.currentUser}
+						debtType="neutral"
+					/>
+				);
+			}
+		});
+
 
 		return (
 			<Wrapper>
@@ -124,7 +175,6 @@ const BalancePage = React.createClass({
 					{(positiveSum !== 0 || negativeSum !== 0) &&
 						<BalanceCheck debts={eventsParticipantsDebts} onClick={this.showPopupPoster} />
 					}
-					<Separator />
 					<PopupPoster
 						text="Чек скопирован в буфер обмена"
 						popupPosterOpen={this.state.showPopupPoster}
@@ -136,7 +186,11 @@ const BalancePage = React.createClass({
 							onClose={() => this.closeRepayPopup()}
 						/>
 					</Portal>
-					<GreySubtitle text="Текущие долги" />
+					{(positiveSum !== 0) &&
+						<div>
+							<Separator />
+							<GreySubtitle text="Текущие долги" />
+						</div>}
 					{positiveDebts}
 					{(positiveSum !== 0) &&
 						<BalanceStatus
@@ -151,10 +205,19 @@ const BalancePage = React.createClass({
 							sum={negativeSum}
 							debtStatus="negative"
 						/>}
-					<Separator />
-					<GreySubtitle text="Возвращенные долги" />
+					<div>
+						{(returnedDebts.length !== 0) &&
+							<div>
+								{(negativeDebts.length !== 0 || positiveDebts.length !== 0) &&
+									<Separator />
+								}
+								<GreySubtitle text="Возвращенные долги" />
+								{returnedDebts}
+							</div>
+						}
+					</div>
 				</div>
-				{(positiveSum === 0 && negativeSum === 0) &&
+				{(positiveSum === 0 && negativeSum === 0 && returnedDebts.length === 0) &&
 					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 						<Poster icon="purchase" text="Баланс появится, когда вы заведете покупки" />
 					</FlexContainer>
@@ -167,6 +230,9 @@ const BalancePage = React.createClass({
 function mapStateToProps({events}) {
 	return {
 		eventsById: events.eventsById,
+		currentEvent: events.currentEvent,
+		isFetchingEvent: events.isFetchingEvent,
+		localEvents: events.localEvents,
 	};
 }
 

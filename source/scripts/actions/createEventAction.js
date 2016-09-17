@@ -4,62 +4,119 @@ import {
 	CREATE_EVENT_ACTION,
 } from '../constants';
 
+export const getDiff = (oldPs, newPs) => {
+	let removed = [];
+	let added = [];
+	added = newPs.filter((newP) => {
+		return !oldPs.includes(newP);
+	});
+
+	removed = oldPs.filter((oldP) => {
+		return !newPs.includes(oldP);
+	});
+
+	return {
+		added,
+		removed,
+	};
+};
+
 export const eventActionTypes = {
-	createEvent(managerName) {
-		return `${managerName} создал мероприятие`;
-	},
-	joinToEvent(participantName) {
-		return `К мероприятию присоединился ${participantName}`;
-	},
-	changeEventName(managerName, eventName, date) {
+	changeEventName(currentUser, eventName, date) {
 		return {
-			text: `${managerName} изменил название мероприятия на ${eventName}`,
+			currentUser,
+			eventName,
 			icon: 'pen',
 			date,
+			actionType: 'changeEventName',
 		};
 	},
-	changeEventDate(managerName, start, end, date) {
+	changeEventDate(currentUser, start, end, date) {
 		return {
-			text: `${managerName} изменил время мероприятия на ${start}-${end}`,
+			currentUser,
+			start,
+			end,
 			icon: 'pen',
 			date,
+			actionType: 'changeEventDate',
 		};
 	},
-	addParticipantToEvent(participantName, date) {
+	addParticipantToEvent(currentUser, participantName, date) {
 		return {
-			text: `${participantName} добавлен в мероприятие`,
+			currentUser,
+			participantName,
 			icon: 'person',
 			date,
+			actionType: 'addParticipantToEvent',
 		};
 	},
-	participantGoOut(participantName, date) {
+	removeParticipantFromEvent(currentUser, participantName, date) {
 		return {
-			text: `${participantName} вышел из мероприятия`,
+			currentUser,
+			participantName,
 			icon: 'exit',
 			date,
+			actionType: 'removeParticipantFromEvent',
 		};
 	},
-	addPurchase(participantName, purchaseName, purchasePrice, date) {
+	addPurchase(currentUser, purchaseName, sum, date) {
 		return {
-			text: `${participantName} купил "${purchaseName}" на сумму ${purchasePrice} руб.`,
+			currentUser,
+			purchaseName,
+			sum,
 			icon: 'purchase',
 			date,
+			actionType: 'addPurchase',
 		};
 	},
-	changePurchaseInfo(participantName, purchaseName) {
-		return `${participantName} изменил покупку "${purchaseName}"`;
+	deletePurchase(currentUser, purchaseName, date) {
+		return {
+			currentUser,
+			purchaseName,
+			icon: 'pen',
+			date,
+			actionType: 'deletePurchase',
+		};
 	},
-	noParticipateInPurchase(participantName, purchaseName) {
-		return `${participantName} не участвует в покупке "${purchaseName}"`;
+	addParticipantToPurchase(currentUser, payerName, purchaseName, date) {
+		return {
+			currentUser,
+			payerName,
+			purchaseName,
+			icon: 'pen',
+			date,
+			actionType: 'addParticipantToPurchase',
+		};
 	},
-	joinToPurchase(participantName, purchaseName) {
-		return `${participantName} присоединился к покупке "${purchaseName}"`;
+	removeParticipantFromPurchase(currentUser, payerName, purchaseName, date) {
+		return {
+			currentUser,
+			payerName,
+			purchaseName,
+			icon: 'pen',
+			date,
+			actionType: 'removeParticipantFromPurchase',
+		};
 	},
-	giveBackDebt(creditorName, debtorName) {
-		return `${creditorName} вернул долг ${debtorName}`;
+	giveBackPartially(currentUser, payerName, debtSum, date) {
+		return {
+			currentUser,
+			payerName,
+			debtSum,
+			icon: 'check-active',
+			date,
+			actionType: 'giveBackPartially',
+		};
 	},
-	eventClosing(eventName) {
-		return `Мероприятие ${eventName} подошло к концу`;
+	giveBack(currentUser, payerName, debtSum, date) {
+		return {
+			currentUser,
+			payerName,
+			debtSum,
+			icon: 'check-active-yellow',
+			date,
+			actionType: 'giveBack',
+		};
 	},
 };
 

@@ -6,7 +6,7 @@ import deepEqual from 'deep-equal';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import {createPurchaseAsync} from '../actions/createPurchase';
-import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
+import {createEventActionAsync, eventActionTypes, getDiff} from '../actions/createEventAction';
 import {loadEventDataAsync} from '../actions';
 
 import {Page, PageContent} from '../components/Page';
@@ -77,27 +77,44 @@ const NewPurchasePage = React.createClass({
 	save() {
 		const {state, props} = this;
 
+		if (state.mode === CREATE) {
+			props.dispatch(createEventActionAsync({
+				eventId: props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.addPurchase(
+						state.purchase.payer,
+						state.purchase.name,
+						state.purchase.amount,
+						(new Date()).getTime()
+					),
+				},
+			}));
+			state.purchase.participants.forEach((participant) => {
+				props.dispatch(createEventActionAsync({
+					eventId: props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.addParticipantToPurchase(
+							props.localEvents[props.params.id],
+							participant,
+							state.purchase.name,
+							(new Date()).getTime()
+						),
+					},
+				}));
+			});
+		}
+
+
 		if (getUserType() === INDEPENDENT && !hasCreatedPurchase()) {
 			reachGoal(CREATE_FIRST_PURCHASE);
 			markPurchaseCreation();
 		}
 
 		props.dispatch(createPurchaseAsync({
-			eventId: this.props.params.id,
+			eventId: props.params.id,
 			purchaseData: state.purchase,
 		}));
 
-		props.dispatch(createEventActionAsync({
-			eventId: this.props.params.id,
-			eventActionInfo: {
-				config: eventActionTypes.addPurchase(
-					state.purchase.payer,
-					state.purchase.name,
-					state.purchase.amount,
-					moment(new Date()).startOf('hour').fromNow()
-				),
-			},
-		}));
 
 		this.setState({
 			isSavingData: true,
@@ -111,17 +128,41 @@ const NewPurchasePage = React.createClass({
 
 	saveChanges() {
 		const {props, state} = this;
-		const {dispatch} = props;
+		const {dispatch, localEvents} = props;
 		const {purchase_id, id} = props.params;
+
+		const participants = getDiff(state.purchaseCopy.participants, state.purchase.participants);
+
 		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
 
-		props.dispatch(createEventActionAsync({
-			eventId: this.props.params.id,
-			eventActionInfo: {
-				text: eventActionTypes
-					.changePurchaseInfo(state.purchase.payer, state.purchase.name),
-			},
-		}));
+		participants.added.forEach((participant) => {
+			props.dispatch(createEventActionAsync({
+				eventId: props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.addParticipantToPurchase(
+						localEvents[props.params.id],
+						participant,
+						state.purchase.name,
+						(new Date()).getTime()
+					),
+				},
+			}));
+		});
+
+		participants.removed.forEach((participant) => {
+			props.dispatch(createEventActionAsync({
+				eventId: props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.removeParticipantFromPurchase(
+						localEvents[props.params.id],
+						participant,
+						state.purchase.name,
+						(new Date()).getTime()
+					),
+				},
+			}));
+		});
+
 
 		this.setState({
 			isSavingData: true,
@@ -176,8 +217,19 @@ const NewPurchasePage = React.createClass({
 	},
 
 	deletePurchase() {
+		const {state, props} = this;
 		const {id, purchase_id} = this.props.params;
 		const {dispatch} = this.props;
+		props.dispatch(createEventActionAsync({
+			eventId: props.params.id,
+			eventActionInfo: {
+				config: eventActionTypes.deletePurchase(
+					props.localEvents[props.params.id],
+					state.purchase.name,
+					(new Date()).getTime()
+				),
+			},
+		}));
 		dispatch(fetchPurchaseDelete(id, purchase_id));
 	},
 

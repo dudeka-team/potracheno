@@ -9,7 +9,7 @@ import updateEvent from '../actions/updateEvent';
 import FlexContainer from '../components/FlexContainer';
 import EditEvent from '../components/EditEvent';
 
-import {createEventActionAsync, eventActionTypes} from '../actions/createEventAction';
+import {createEventActionAsync, eventActionTypes, getDiff} from '../actions/createEventAction';
 
 const EditEventPage = React.createClass({
 	componentDidMount() {
@@ -107,63 +107,69 @@ const EditEventPage = React.createClass({
 			currentUserNameChangeData,
 		}));
 
-		const dispatchEventManipulation = (condition, actionType, parameters) => {
-			if (condition) {
+		const filteredParticipants = getDiff(
+			currentEvent.participants,
+			updatedEvent.participants
+		);
+
+
+		if (updatedEvent.name !== currentEvent.name) {
+			dispatch(createEventActionAsync({
+				eventId: this.props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.changeEventName(
+						currentUserName,
+						updatedEvent.name,
+						(new Date()).getTime()
+					),
+				},
+			}));
+		}
+
+		if (updatedEvent.start !== currentEvent.start
+			|| updatedEvent.end !== currentEvent.end) {
+			dispatch(createEventActionAsync({
+				eventId: this.props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.changeEventDate(
+						currentUserName,
+						moment(updatedEvent.start).format('DD MMMM'),
+						moment(updatedEvent.end).format('DD MMMM'),
+						(new Date()).getTime()
+					),
+				},
+			}));
+		}
+
+
+		filteredParticipants.added.forEach((p) => {
+			if (filteredParticipants.added) {
 				dispatch(createEventActionAsync({
 					eventId: this.props.params.id,
 					eventActionInfo: {
-						config: eventActionTypes[actionType](...parameters),
+						config: eventActionTypes.addParticipantToEvent(
+							currentUserName,
+							p,
+							(new Date()).getTime()
+						),
 					},
 				}));
 			}
-		};
+		});
 
-		const getParticipants = (oldPs, newPs) => {
-			const addedParticipants = newPs;
-			oldPs.forEach((oldP) => {
-				newPs.forEach((newP, newPIndex) => {
-					if (oldP === newP) {
-						addedParticipants.splice(newPIndex, 1);
-					}
-				});
-			});
-
-			return {
-				addedParticipants,
-			};
-		};
-
-		const filteredParticipants =
-			getParticipants(
-				currentEvent.participants,
-				updatedEvent.participants
-			);
-
-		dispatchEventManipulation(
-			(updatedEvent.name !== currentEvent.name),
-			'changeEventName',
-			[updatedEvent.manager, updatedEvent.name,
-			moment(new Date()).startOf('hour').fromNow()]
-		);
-
-		dispatchEventManipulation(
-			(updatedEvent.start !== currentEvent.start
-			|| updatedEvent.end !== currentEvent.end),
-			'changeEventDate',
-			[
-				updatedEvent.manager,
-				updatedEvent.start,
-				updatedEvent.end,
-				moment(new Date()).startOf('hour').fromNow(),
-			]
-		);
-
-		filteredParticipants.addedParticipants.forEach((p) => {
-			dispatchEventManipulation(
-				(filteredParticipants.addedParticipants),
-				'addParticipantToEvent',
-				[p, moment(new Date()).startOf('hour').fromNow()]
-			);
+		filteredParticipants.removed.forEach((p) => {
+			if (filteredParticipants.removed) {
+				dispatch(createEventActionAsync({
+					eventId: this.props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.removeParticipantFromEvent(
+							currentUserName,
+							p,
+							(new Date()).getTime()
+						),
+					},
+				}));
+			}
 		});
 	},
 
