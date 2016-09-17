@@ -1,5 +1,17 @@
 import React, {PropTypes} from 'react';
 
+function getDate({start, end}) {
+	start = new Date(start);
+	end = new Date(end);
+	return start.getMonth() === end.getMonth() ?
+		(start.getDate() === end.getDate() ?
+			`${moment(end).format('DD MMMM')}, ${moment(end).format('dddd')}`
+			:
+			`${moment(start).format('DD')} — ${moment(end).format('DD MMMM')}`)
+		:
+		`${moment(start).format('DD MMMM')} — ${moment(end).format('DD MMMM')}`;
+}
+
 export default function EventsListItem(props) {
 	const debtStatus = 'events-item__debt-status';
 	const debtStatusClasses = [debtStatus, `${debtStatus}_${props.debtType}`];
@@ -9,7 +21,7 @@ export default function EventsListItem(props) {
 			<div className="events-item__leftside">
 				<div className="events-item__title">{props.title}</div>
 				<div className="events-item__subtitle">
-					<div className="events-item__date">{moment(props.date).format('DD MMMM')}</div>
+					<div className="events-item__date">{getDate(props.datePeriod)}</div>
 					<div className="events-item__members-count">{props.membersCount} участников</div>
 				</div>
 			</div>
@@ -39,7 +51,7 @@ function formatSum(sum) {
 
 EventsListItem.propTypes = {
 	title: PropTypes.string.isRequired,
-	date: PropTypes.number.isRequired,
+	datePeriod: PropTypes.object.isRequired,
 	debtType: PropTypes.oneOf(['positive', 'negative', 'neutural']).isRequired,
 	membersCount: PropTypes.number.isRequired,
 	sum: PropTypes.number.isRequired,
