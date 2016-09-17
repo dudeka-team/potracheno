@@ -1,5 +1,7 @@
 import React from 'react';
-import {Router, Route, IndexRedirect} from 'react-router';
+import Router from 'react-router/lib/Router';
+import Route from 'react-router/lib/Route';
+import IndexRedirect from 'react-router/lib/IndexRedirect';
 
 import App from './App';
 import EventsPage from './pages/EventsPage';

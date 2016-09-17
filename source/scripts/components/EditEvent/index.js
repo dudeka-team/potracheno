@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import shortid from 'shortid';
-import {withRouter} from 'react-router';
+import withRouter from 'react-router/lib/withRouter';
 import {connect} from 'react-redux';
 import IntlPolyfill from 'intl';
 import 'intl/locale-data/jsonp/ru';

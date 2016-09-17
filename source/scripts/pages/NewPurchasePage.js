@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router';
+import withRouter from 'react-router/lib/withRouter';
 import deepEqual from 'deep-equal';
 
 import CircularProgress from 'material-ui/CircularProgress';

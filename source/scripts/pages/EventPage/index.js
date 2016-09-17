@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import withRouter from 'react-router/lib/withRouter';
 import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 import Drawer from 'material-ui/Drawer';

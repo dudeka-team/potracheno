@@ -6,6 +6,7 @@ import webpack from 'webpack';
 // extra plugins
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import AppCachePlugin from 'appcache-webpack-plugin';
+import assets from 'postcss-assets';
 
 const SOURCE = './source';
 const OUT = './static';
@@ -54,7 +55,7 @@ const plugins = [
 		],
 		network: ['*'],
 		settings: ['prefer-online'],
-		output: 'index.appcache'
+		output: 'index.appcache',
 	}),
 ];
 
@@ -81,6 +82,7 @@ const config = {
 	entry,
 	output: {
 		path: path.resolve(__dirname, OUT),
+		publicPath: '/',
 		filename: 'bundle.js',
 	},
 	resolve: {
@@ -96,9 +98,14 @@ const config = {
 			},
 			{
 				test: /\.styl$/,
-				loader: 'style!raw!autoprefixer!stylus',
+				loader: 'style!raw!postcss!autoprefixer!stylus',
 			},
 		],
+	},
+	postcss() {
+		return [assets({
+			loadPaths: ['img'],
+		})];
 	},
 };
 

@@ -1,4 +1,4 @@
-import {browserHistory} from 'react-router';
+import browserHistory from 'react-router/lib/browserHistory';
 import db from '../database';
 import {
 	CHANGE_PURCHASE,

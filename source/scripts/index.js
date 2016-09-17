@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 
-import {browserHistory} from 'react-router';
+import browserHistory from 'react-router/lib/browserHistory';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
@@ -19,7 +19,6 @@ import 'react-fastclick';
 
 import reducers from './reducers';
 import Routes from './Routes';
-
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q',
