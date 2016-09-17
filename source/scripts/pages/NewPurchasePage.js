@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router';
+import withRouter from 'react-router/lib/withRouter';
 import deepEqual from 'deep-equal';
+import assign from 'object-assign';
 
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -34,15 +35,13 @@ import {
 const EDIT = 'EDIT';
 const CREATE = 'CREATE';
 
-const {assign} = Object;
-
 const NewPurchasePage = React.createClass({
 	getInitialState() {
 		const {props} = this;
 		const {eventParticipants, purchase, myName} = props.data;
 		let purchaseCopy;
 		if (props.mode === EDIT) {
-			purchaseCopy = Object.assign({}, purchase, {
+			purchaseCopy = assign({}, purchase, {
 				participants: purchase.participants.slice(),
 			});
 		}

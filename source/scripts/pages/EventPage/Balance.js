@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Portal from 'react-portal';
+import assign from 'object-assign';
 
 import BalanceListItem from '../../components/BalanceListItem';
 import BalanceCheck from '../../components/BalanceCheck';
@@ -24,7 +25,7 @@ const BalancePage = React.createClass({
 		const {currentEvent} = this.props;
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => Object.assign({config}, currentEvent.actions[config]));
+			.map((config) => assign({config}, currentEvent.actions[config]));
 		return {
 			actions,
 			showPopup: false,

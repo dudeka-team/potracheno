@@ -1,4 +1,5 @@
 import {handleActions} from 'redux-actions';
+import assign from 'object-assign';
 
 import {
 	CREATE_EVENT_LOADING,
@@ -30,7 +31,7 @@ import {
 	CREATE_EVENT_ACTION,
 } from '../constants';
 
-const {assign} = Object;
+
 const initialState = {
 	events: [],
 	eventsById: {},

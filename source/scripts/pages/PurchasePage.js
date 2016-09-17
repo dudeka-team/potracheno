@@ -1,7 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router';
+import withRouter from 'react-router/lib/withRouter';
+import assign from 'object-assign';
 import CircularProgress from 'material-ui/CircularProgress';
+
 import NewPurchasePage from './NewPurchasePage';
 import fetchEventData from '../actions/fetchEventData';
 import FlexContainer from '../components/FlexContainer';
@@ -55,7 +57,7 @@ const PurchasePage = React.createClass({
 				participants: eventParticipants,
 			};
 			if (mode === EDIT) {
-				purchase = Object.assign({}, currentEvent.purchases[purchase_id]);
+				purchase = assign({}, currentEvent.purchases[purchase_id]);
 			}
 
 			const data = {
