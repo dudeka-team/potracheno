@@ -2,14 +2,14 @@ import React, {PropTypes} from 'react';
 
 function getDate({start, end}) {
 	start = new Date(start);
-	end = new Date(start);
+	end = new Date(end);
 	return start.getMonth() === end.getMonth() ?
 		(start.getDate() === end.getDate() ?
 			`${moment(end).format('DD MMMM')}, ${moment(end).format('dddd')}`
 			:
-			`${moment(start).format('DD')} - ${moment(end).format('DD MMMM')}`)
+			`${moment(start).format('DD')} — ${moment(end).format('DD MMMM')}`)
 		:
-		`${moment(start).format('DD MMMM')} - ${moment(end).format('DD MMMM')}`;
+		`${moment(start).format('DD MMMM')} — ${moment(end).format('DD MMMM')}`;
 }
 
 export default function EventsListItem(props) {
