@@ -5,7 +5,7 @@ function getDate({start, end}) {
 	end = new Date(start);
 	return start.getMonth() === end.getMonth() ?
 		(start.getDate() === end.getDate() ?
-			moment(end).format('DD MMMM')
+			`${moment(end).format('DD MMMM')}, ${moment(end).format('dddd')}`
 			:
 			`${moment(start).format('DD')} - ${moment(end).format('DD MMMM')}`)
 		:
