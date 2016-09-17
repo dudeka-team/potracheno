@@ -5,7 +5,6 @@ import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 function getCheck(eventsParticipantsDebts) {
 	return eventsParticipantsDebts
 		.map((debt) => `${debt.from} → ${debt.to}   ${Math.abs(debt.sum)} руб.`);
-		// .join('\n------------------------\n');
 }
 
 const BalanceCheck = React.createClass({
