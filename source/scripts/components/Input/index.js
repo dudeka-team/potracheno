@@ -19,6 +19,12 @@ const Input = React.createClass({
 		this.props.onChange(event);
 	},
 
+	onClick(event) {
+		if (this.props.disabled) {
+			alert('Нельзя менять сумму покупки после начала возвращания долгов.');
+		}
+	},
+
 	render() {
 		const {props, state} = this;
 		const classList = ['Input'];
@@ -31,7 +37,7 @@ const Input = React.createClass({
 		if (props.labelSize) labelClassList.push(`floating-label_${props.labelSize}`);
 		if (props.labelFixed) labelClassList.push('floating-label_fixed');
 		return (
-			<div className={classList.join(' ')}>
+			<div className={classList.join(' ')} onClick={this.onClick}>
 				{props.label &&
 					<div className={labelClassList.join(' ')}>{props.label}</div>
 				}
@@ -44,6 +50,7 @@ const Input = React.createClass({
 					onBlur={() => this.setState({focused: false})}
 					disabled={props.disabled}
 					placeholder={props.hint}
+					disabled={props.disabled}
 				/>
 			</div>
 		);

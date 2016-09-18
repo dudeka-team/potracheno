@@ -8,6 +8,10 @@ export default function CheckBox(props) {
 		classes.push(`${baseClass}_checked`);
 	}
 
+	if (props.disabled) {
+		classes.push(`${baseClass}_disabled`);
+	}
+
 	return (
 		<div className={classes.join(' ')} {...props} />
 	);
