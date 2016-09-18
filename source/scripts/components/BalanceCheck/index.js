@@ -23,12 +23,11 @@ const BalanceCheck = React.createClass({
 		range.selectNode(this.checkContent);
 		selection.addRange(range);
 
-		try {
-			document.execCommand('copy');
-			props.onCopy('Чек скопирован в буфер обмена');
-		} catch (e) {
+		if (!document.execCommand('copy')) {
 			// eslint-disable-next-line max-len
 			props.onCopy('Устройство не поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами');
+		} else {
+			props.onCopy('Чек скопирован в буфер обмена');
 		}
 
 		selection.removeAllRanges();
