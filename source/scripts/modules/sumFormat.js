@@ -1,17 +1,15 @@
 export default function sumFormat(sum) {
-	const arr = [];
-	sum
+	return sum
 		.toString()
 		.split('')
 		.reverse()
-		.forEach((item, i) => {
-			if ((i !== 0) && (i % 3 === 0)) {
-				arr.push(`${item} `);
-			} else {
-				arr.push(item);
+		.map((char, index) => {
+			let result = char;
+			if (index !== 0 && index % 3 === 0) {
+				result += ' ';
 			}
-		});
-	return arr
-			.reverse()
-			.join('');
+			return result;
+		})
+		.reverse()
+		.join('');
 }
