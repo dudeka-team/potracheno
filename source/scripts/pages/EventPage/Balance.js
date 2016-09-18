@@ -232,7 +232,7 @@ const BalancePage = React.createClass({
 				</div>
 				{(positiveSum === 0 && negativeSum === 0 && returnedDebts.length === 0) &&
 					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-						<Poster icon="purchase" text="Баланс появится, когда вы заведете покупки" />
+						<Poster icon="purchase" text="Баланс появится, когда вы заведёте покупки" />
 					</FlexContainer>
 				}
 			</Wrapper>
