@@ -168,7 +168,14 @@ const BalancePage = React.createClass({
 			}
 		});
 
-		const returnedDebts = this.state.actions.reverse().map((action, i) => {
+		const returnedDebtsActions = [];
+		this.state.actions.reverse().forEach((action) => {
+			if (action.config.actionType === 'giveBack') {
+				returnedDebtsActions.push(action);
+			}
+		});
+
+		const returnedDebts = returnedDebtsActions.map((action, i) => {
 			if (action.config.actionType === 'giveBack') {
 				return (
 					<BalanceListItem
@@ -185,7 +192,7 @@ const BalancePage = React.createClass({
 		return (
 			<Wrapper>
 				<div className="balance-page">
-					{(positiveSum !== 0 || negativeSum !== 0) &&
+					{(positiveSum !== 0 || negativeSum !== 0 || othersDebts.length !== 0) &&
 						<BalanceCheck debts={eventsParticipantsDebts} onCopy={this.showPopupPoster} />
 					}
 					<PopupPoster

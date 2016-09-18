@@ -128,7 +128,7 @@ const EventActionItem = React.createClass({
 					<b className="event-action__text_bold">{currentUser} </b>
 					отметил(-а) долг
 					<b className="event-action__text_bold"> {payerName} </b>
-					возращенным
+					полностью возращенным
 				</p>
 			);
 		}
