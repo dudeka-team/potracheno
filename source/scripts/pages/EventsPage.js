@@ -102,7 +102,6 @@ const EventsPage = React.createClass({
 			<Page style={{paddingBottom: '64px'}}>
 				<TopBar bordered>
 					<TopBarHeading title="Мероприятия" />
-					<TopBarIcon icon="bordered-plus" />
 					<TopBarIcon icon="mail" onClick={this.goToFeedback} />
 				</TopBar>
 				<PageContent>
