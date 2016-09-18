@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import {Page, PageContent} from '../components/Page';
-import {TopBar, TopBarHeading} from '../components/TopBar';
+import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import ActionButton from '../components/ActionButton';
 import readEvents from '../actions/readEvents';
@@ -98,6 +98,8 @@ const EventsPage = React.createClass({
 			<Page style={{paddingBottom: '64px'}}>
 				<TopBar bordered>
 					<TopBarHeading title="Мероприятия" />
+					<TopBarIcon icon="bordered-plus" />
+					<TopBarIcon icon="mail" />
 				</TopBar>
 				<PageContent>
 					{props.isFetchingEvents ?
