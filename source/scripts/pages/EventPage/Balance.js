@@ -197,7 +197,7 @@ const BalancePage = React.createClass({
 					}
 					<PopupPoster
 						text={this.state.popupPosterContent}
-						popupPosterOpen={this.state.showPopupPoster}
+						isOpened={this.state.showPopupPoster}
 					/>
 					<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
 						<BalanceItemPopup

@@ -1,0 +1,36 @@
+.share-link
+	padding 8px 16px
+
+	&__annotation
+		padding 8px 0
+		font-size 16px
+		line-height 1.25
+		color #83888d
+
+	&__link-wrapper
+		position relative
+		margin 8px 0
+
+		&::after
+			content ''
+			position absolute
+			top 0
+			bottom 0
+			right 0
+			width 20px
+			background-image linear-gradient(to right, rgba(248, 248, 249, 0) 0%, rgba(248, 248, 249, .5) 20%, rgba(248, 248, 249, .8) 60%, #f8f8f9 100%)
+
+	&__link
+		padding 14px 16px
+		font-family monospace
+		line-height 1.4
+		background #f0f3f5
+		user-select all
+		white-space nowrap
+		overflow-x auto
+
+	&__copy
+		padding 17px 20px
+		text-align center
+		color #222
+		background $accent

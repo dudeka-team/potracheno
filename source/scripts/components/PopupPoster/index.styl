@@ -1,23 +1,24 @@
 .popup-poster
+	position fixed
+	bottom 64px
+	left 50%
+	z-index 9999
+	transform translateX(-50%)
+	display table
+	width auto
+	max-width calc(100% - 30px)
+	padding 13px 24px 11px 24px
+	font-size 16px
+	font-weight normal
+	line-height 1.25
+	color #ffffff
+	text-align center
 	border-radius 100px
 	background-color rgba(4, 3, 3, .5)
-	padding 13px 24px 11px 24px
-	justify-content center
-	display flex
-	position absolute
-	bottom 64px
-	width 296px
-	left calc(150% - 148px)
+	visibility hidden
 	opacity 0
-	transition opacity .6s
-	z-index 1000
-	
+	transition opacity .6s, visibility .6s
+
 	&__open
 		opacity 1
-	
-	&__text
-		width 250px
-		font-size 16px
-		font-weight normal
-		line-height 1.25
-		color #ffffff
+		visibility visible

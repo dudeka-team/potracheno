@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import sumFormat from '../../modules/sumFormat';
 
 function getDate({start, end}) {
 	start = new Date(start);
@@ -28,7 +29,7 @@ export default function EventsListItem(props) {
 			<div className="events-item__rightside">
 				<div className={debtStatusClasses.join(' ')}>
 					<div className="events-item__sum">
-						{formatSum(props.sum)}
+						{(props.sum === 0) ? null : `${sumFormat(Math.abs(props.sum))} Р`}
 					</div>
 					<div className={`events-item__status events-item__status_${props.debtType}`}>
 						{formatStatus(props.sum)}
@@ -43,11 +44,6 @@ function formatStatus(sum) {
 	if (sum === 0) return null;
 	return `${sum > 0 ? 'вам должны' : 'вы должны'}`;
 }
-
-function formatSum(sum) {
-	return (sum === 0) ? null : `${Math.abs(sum)} Р`;
-}
-
 
 EventsListItem.propTypes = {
 	title: PropTypes.string.isRequired,

@@ -74,6 +74,7 @@ export default Popup;
 // <Popup
 // 	title="Шашлык"
 // 	closeIcon
+// 	onClose={() => {}}
 // 	okButton={{
 // 		text: 'Добавить',
 // 		onClick: () => {},

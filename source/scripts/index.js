@@ -35,7 +35,8 @@ const dudekaTheme = getMuiTheme({
 		selectTextColor: '#fff',
 	},
 	flatButton: {
-		primaryTextColor: '#333',
+		textColor: '#3f95ff',
+		primaryTextColor: '#3f95ff',
 	},
 });
 

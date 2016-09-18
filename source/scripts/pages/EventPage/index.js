@@ -4,12 +4,15 @@ import {connect} from 'react-redux';
 import assign from 'object-assign';
 import CircularProgress from 'material-ui/CircularProgress';
 import Drawer from 'material-ui/Drawer';
+import Portal from 'react-portal';
 
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 import Menu from '../../components/Menu';
+import Popup from '../../components/Popup';
+import PopupPoster from '../../components/PopupPoster';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
@@ -25,6 +28,9 @@ const EventPage = React.createClass({
 	getInitialState() {
 		return {
 			menuOpen: false,
+			sharePopupOpened: false,
+			showShareResult: false,
+			shareResultMessage: '',
 		};
 	},
 
@@ -39,6 +45,18 @@ const EventPage = React.createClass({
 
 	toggleMenu() {
 		this.setState({menuOpen: !this.state.menuOpen});
+	},
+
+	openSharePopup() {
+		this.setState({
+			sharePopupOpened: true,
+		});
+	},
+
+	closeSharePopup() {
+		this.setState({
+			sharePopupOpened: false,
+		});
 	},
 
 	goToEdit() {
@@ -64,6 +82,40 @@ const EventPage = React.createClass({
 		}
 
 		return `${participantsStatus} • ${formattedDate}`;
+	},
+
+	handleCopy() {
+		const range = document.createRange();
+		const selection = window.getSelection();
+		selection.removeAllRanges();
+
+		range.selectNode(this.linkNode);
+		selection.addRange(range);
+
+		let copiedSuccessfully;
+		let message;
+
+		if (document.execCommand('copy')) {
+			selection.removeAllRanges();
+			message = 'Ссылка&nbsp;скопирована в&nbsp;буфер обмена';
+			copiedSuccessfully = true;
+		} else {
+			// eslint-disable-next-line max-len
+			message = 'Устройство не&nbsp;поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами';
+			copiedSuccessfully = false;
+		}
+
+		this.setState({
+			sharePopupOpened: !copiedSuccessfully,
+			showShareResult: true,
+			shareResultMessage: message,
+		});
+
+		setTimeout(() => {
+			this.setState({
+				showShareResult: false,
+			});
+		}, 2000);
 	},
 
 	renderPreloader() {
@@ -101,14 +153,47 @@ const EventPage = React.createClass({
 				<TopBarHeading
 					title={eventName}
 				/>
-				<TopBarIcon icon="share" />
+				<TopBarIcon icon="share" onClick={this.openSharePopup} />
 				<TopBarIcon icon="burger" onClick={this.toggleMenu} />
 			</TopBar>
 		);
 	},
 
+	renderSharePopup() {
+		const {state} = this;
+		// eslint-disable-next-line max-len
+		const annotation = 'Поделитесь ссылкой на мероприятие со своими друзьями, чтобы они могли присоединиться и вести учёт покупок вместе с вами:';
+
+		return (
+			<Portal isOpened={state.sharePopupOpened}>
+				<Popup
+					title="Поделиться ссылкой"
+					onClose={this.closeSharePopup}
+					okButton={{
+						text: 'Скопировать',
+						onClick: this.handleCopy,
+					}}
+					cancelButton={{
+						text: 'Отмена',
+						onClick: this.closeSharePopup,
+					}}
+				>
+					<div className="share-link">
+						<p className="share-link__annotation">{annotation}</p>
+						<div className="share-link__link-wrapper">
+							<div
+								className="share-link__link"
+								ref={(linkNode) => (this.linkNode = linkNode)}
+							>{window.location.href}</div>
+						</div>
+					</div>
+				</Popup>
+			</Portal>
+		);
+	},
+
 	render() {
-		const {props} = this;
+		const {props, state} = this;
 		const {currentEvent, currentUserName, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
@@ -128,6 +213,11 @@ const EventPage = React.createClass({
 				<Page>
 					{this.renderDrawer(currentEvent, currentUserName, subtitle)}
 					{this.renderTopBar(currentEvent.name)}
+					{this.renderSharePopup()}
+					<PopupPoster
+						text={state.shareResultMessage}
+						isOpened={state.showShareResult}
+					/>
 					<Tabs
 						config={[
 							{
