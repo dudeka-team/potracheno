@@ -2,6 +2,9 @@ import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
+
+import {saveFeedbackAsync} from '../../actions/saveFeedback';
+
 import {TopBar, TopBarHeading, TopBarIcon} from '../TopBar';
 import {Page, PageContent} from '../Page';
 import InputSubtitle from '../InputSubtitle';
@@ -15,6 +18,14 @@ const FeedBack = React.createClass({
 		};
 	},
 	goToEvents() {
+		const {state, props} = this;
+		props.dispatch(saveFeedbackAsync({
+			feedBackData: {
+				mail: state.mail,
+				problem: state.problem,
+			},
+		}));
+
 		this.props.router.push('/events');
 	},
 
