@@ -11,22 +11,24 @@ import InputSubtitle from '../InputSubtitle';
 
 
 const FeedBack = React.createClass({
-	getInitialState() {
+	getInitialState(mail = '', problem = '') {
 		return {
-			mail: '',
-			problem: '',
+			mail,
+			problem,
 		};
 	},
+
 	goToEvents() {
+		this.saveFeedback();
+		this.props.router.push('/events');
+	},
+
+	saveFeedback() {
 		const {state, props} = this;
 		props.dispatch(saveFeedbackAsync({
-			feedBackData: {
-				mail: state.mail,
-				problem: state.problem,
-			},
+			mail: state.mail,
+			problem: state.problem,
 		}));
-
-		this.props.router.push('/events');
 	},
 
 	handleProblemChange(event) {

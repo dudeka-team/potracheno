@@ -10,7 +10,8 @@ export function saveFeedbackAsync(data) {
 	return dispatch => {
 		db.saveFeedback(data).then(result => {
 			dispatch(saveFeedback({
-				feedbackData: result,
+				mail: result.mail,
+				problem: result.problem,
 			}));
 		});
 	};

@@ -145,7 +145,7 @@ Database.saveFeedback = function saveFeedback(data) {
 		.ref('feedbacks')
 		.push(data)
 		.then(() => ({
-			feedbackData: data,
+			data,
 		}));
 };
 
