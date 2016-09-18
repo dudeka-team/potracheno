@@ -4,12 +4,16 @@ import {connect} from 'react-redux';
 import assign from 'object-assign';
 import CircularProgress from 'material-ui/CircularProgress';
 import Drawer from 'material-ui/Drawer';
+import Portal from 'react-portal';
 
 import {Page} from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
 import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 import Menu from '../../components/Menu';
+import Popup from '../../components/Popup';
+import PopupPoster from '../../components/PopupPoster';
+import ShareLink from '../../components/ShareLink';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
@@ -25,6 +29,9 @@ const EventPage = React.createClass({
 	getInitialState() {
 		return {
 			menuOpen: false,
+			sharePopupOpened: false,
+			showShareResult: false,
+			shareResultMessage: '',
 		};
 	},
 
@@ -39,6 +46,18 @@ const EventPage = React.createClass({
 
 	toggleMenu() {
 		this.setState({menuOpen: !this.state.menuOpen});
+	},
+
+	openSharePopup() {
+		this.setState({
+			sharePopupOpened: true,
+		});
+	},
+
+	closeSharePopup() {
+		this.setState({
+			sharePopupOpened: false,
+		});
 	},
 
 	goToEdit() {
@@ -64,6 +83,26 @@ const EventPage = React.createClass({
 		}
 
 		return `${participantsStatus} • ${formattedDate}`;
+	},
+
+	handleShareLinkCopy(copiedSuccessfully) {
+		const message = copiedSuccessfully ?
+			'Ссылка&nbsp;скопирована в&nbsp;буфер обмена'
+			:
+			// eslint-disable-next-line max-len
+			'Устройство не&nbsp;поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами';
+
+		this.setState({
+			sharePopupOpened: !copiedSuccessfully,
+			showShareResult: true,
+			shareResultMessage: message,
+		});
+
+		setTimeout(() => {
+			this.setState({
+				showShareResult: false,
+			});
+		}, 2000);
 	},
 
 	renderPreloader() {
@@ -101,14 +140,33 @@ const EventPage = React.createClass({
 				<TopBarHeading
 					title={eventName}
 				/>
-				<TopBarIcon icon="share" />
+				<TopBarIcon icon="share" onClick={this.openSharePopup} />
 				<TopBarIcon icon="burger" onClick={this.toggleMenu} />
 			</TopBar>
 		);
 	},
 
+	renderSharePopup() {
+		const {state} = this;
+
+		return (
+			<Portal isOpened={state.sharePopupOpened}>
+				<Popup
+					closeIcon
+					title="Поделиться ссылкой"
+					onClose={this.closeSharePopup}
+				>
+					<ShareLink
+						link={window.location.href}
+						onCopy={this.handleShareLinkCopy}
+					/>
+				</Popup>
+			</Portal>
+		);
+	},
+
 	render() {
-		const {props} = this;
+		const {props, state} = this;
 		const {currentEvent, currentUserName, isFetchingEvent} = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
@@ -128,6 +186,11 @@ const EventPage = React.createClass({
 				<Page>
 					{this.renderDrawer(currentEvent, currentUserName, subtitle)}
 					{this.renderTopBar(currentEvent.name)}
+					{this.renderSharePopup()}
+					<PopupPoster
+						text={state.shareResultMessage}
+						isOpened={state.showShareResult}
+					/>
 					<Tabs
 						config={[
 							{
