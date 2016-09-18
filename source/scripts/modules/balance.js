@@ -61,8 +61,6 @@ export function getEventBalance(currentEvent) {
 		}
 	});
 
-	sumDiff = 0;
-
 	return participantsBalance;
 }
 
