@@ -245,6 +245,7 @@ const EditEvent = React.createClass({
 						value={name}
 						errorText={errorText}
 						onBlur={this.handleParticipantBlur}
+						hintStyle={{color: '#949A9E'}}
 						onChange={(event) => this.handleParticipantChange(id, event.target.value)}
 					/>
 				</div>
@@ -312,18 +313,20 @@ const EditEvent = React.createClass({
 
 	render() {
 		const {state} = this;
-		const labelStyle = {color: '#939fa8'};
+		const labelStyle = {color: '#949A9E'};
 		const underLineStyle = {borderColor: '#ffe151'};
 		return (
 			<Page>
 				{this.renderTopBar()}
-				<PageContent style={{padding: '0 1rem 5rem'}}>
+				<PageContent style={{padding: '8px 1rem 5rem'}}>
 					<TextField
 						floatingLabelFocusStyle={labelStyle}
 						underlineFocusStyle={underLineStyle}
 						fullWidth
+						floatingLabelStyle={{color: '#949A9E'}}
 						floatingLabelText="Название мероприятия"
 						value={state.name}
+						hintStyle={{color: '#949A9E'}}
 						onChange={this.handleEventNameChange}
 					/>
 					{this.renderDatesInputs()}
@@ -336,8 +339,10 @@ const EditEvent = React.createClass({
 						floatingLabelFocusStyle={labelStyle}
 						underlineFocusStyle={underLineStyle}
 						fullWidth
+						style={{marginTop: '12px'}}
 						hintText="Ваше имя"
 						value={state.manager}
+						hintStyle={{color: '#949A9E'}}
 						onChange={this.handleManagerChange}
 					/>
 					{this.renderParticipants()}

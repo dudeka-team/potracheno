@@ -1,6 +1,6 @@
 $tabsHeight = 48px
 
-$tabsLinksColor = #99a4ac
+$tabsLinksColor = #83888D
 $tabsAccent = #ffe151
 $tabsBorderColor = #dedede
 
@@ -16,7 +16,8 @@ $topBarHeight = 56px
 		height $tabsHeight
 		line-height $tabsHeight
 		white-space nowrap
-		border-bottom 1px solid $tabsBorderColor
+		box-shadow 0 1px 1px rgba(0, 0, 0, .05)
+		border-bottom 1px solid #e1e4e7
 
 	&__link
 		font-size 14px
@@ -29,7 +30,7 @@ $topBarHeight = 56px
 		cursor pointer
 
 		&.is-active
-			color #2e363e
+			color #1D1E1F
 			border-bottom-color $tabsAccent
 
 	&__content

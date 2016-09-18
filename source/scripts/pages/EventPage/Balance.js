@@ -171,7 +171,7 @@ const BalancePage = React.createClass({
 		});
 
 		const returnedDebtsActions = [];
-		this.state.actions.reverse().forEach((action) => {
+		this.state.actions.slice().reverse().forEach((action) => {
 			if (action.config.actionType === 'giveBack') {
 				returnedDebtsActions.push(action);
 			}
