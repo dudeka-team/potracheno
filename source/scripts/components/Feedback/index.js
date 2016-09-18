@@ -55,7 +55,7 @@ const FeedBack = React.createClass({
 					<TopBarHeading title="Написать разработчикам" />
 					<TopBarIcon
 						icon="check-active"
-						disabled={state.problem === ''}
+						disabled={state.problem.trim() === ''}
 						onClick={this.goToEvents}
 					/>
 				</TopBar>
