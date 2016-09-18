@@ -21,6 +21,8 @@ import EventActions from './EventActions';
 
 import fetchEventData from '../../actions/fetchEventData';
 import relogin from '../../actions/relogin';
+import closeShareLinkPopup from '../../actions/closeShareLinkPopup';
+import openShareLinkPopup from '../../actions/openShareLinkPopup';
 
 import {DRAWER_SWIPE_AREA_WIDTH} from '../../constants';
 
@@ -28,7 +30,6 @@ const EventPage = React.createClass({
 	getInitialState() {
 		return {
 			menuOpen: false,
-			sharePopupOpened: false,
 			showShareResult: false,
 			shareResultMessage: '',
 		};
@@ -48,15 +49,11 @@ const EventPage = React.createClass({
 	},
 
 	openSharePopup() {
-		this.setState({
-			sharePopupOpened: true,
-		});
+		this.props.dispatch(openShareLinkPopup());
 	},
 
 	closeSharePopup() {
-		this.setState({
-			sharePopupOpened: false,
-		});
+		this.props.dispatch(closeShareLinkPopup());
 	},
 
 	goToEdit() {
@@ -85,6 +82,7 @@ const EventPage = React.createClass({
 	},
 
 	handleCopy() {
+		const {props} = this;
 		const range = document.createRange();
 		const selection = window.getSelection();
 		selection.removeAllRanges();
@@ -92,21 +90,18 @@ const EventPage = React.createClass({
 		range.selectNode(this.linkNode);
 		selection.addRange(range);
 
-		let copiedSuccessfully;
 		let message;
 
 		if (document.execCommand('copy')) {
 			selection.removeAllRanges();
 			message = 'Ссылка&nbsp;скопирована в&nbsp;буфер обмена';
-			copiedSuccessfully = true;
+			props.dispatch(closeShareLinkPopup());
 		} else {
 			// eslint-disable-next-line max-len
 			message = 'Устройство не&nbsp;поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами';
-			copiedSuccessfully = false;
 		}
 
 		this.setState({
-			sharePopupOpened: !copiedSuccessfully,
 			showShareResult: true,
 			shareResultMessage: message,
 		});
@@ -160,12 +155,12 @@ const EventPage = React.createClass({
 	},
 
 	renderSharePopup() {
-		const {state} = this;
+		const {props} = this;
 		// eslint-disable-next-line max-len
 		const annotation = 'Поделитесь ссылкой на мероприятие со своими друзьями, чтобы они могли присоединиться и вести учёт покупок вместе с вами:';
 
 		return (
-			<Portal isOpened={state.sharePopupOpened}>
+			<Portal isOpened={props.shareLinkPopupOpened}>
 				<Popup
 					title="Поделиться ссылкой"
 					onClose={this.closeSharePopup}
@@ -260,6 +255,7 @@ function mapStateToProps({events}) {
 		currentEvent: events.currentEvent,
 		currentUserName: events.currentUserName,
 		isFetchingEvent: events.isFetchingEvent,
+		shareLinkPopupOpened: events.shareLinkPopupOpened,
 	};
 }
 

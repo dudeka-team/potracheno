@@ -6,7 +6,7 @@ import browserHistory from 'react-router/lib/browserHistory';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
-import {syncHistoryWithStore} from 'react-router-redux';
+import {syncHistoryWithStore, routerMiddleware} from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -50,6 +50,7 @@ const store = createStore(
 	compose(
 		applyMiddleware(
 			thunk,
+			routerMiddleware(browserHistory),
 			promiseMiddleware({
 				promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR'],
 			})

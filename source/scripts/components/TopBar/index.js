@@ -64,7 +64,7 @@ TopBarIcon.propTypes = {
 		'share',
 		'close',
 		'mail',
-		'border-plus',
+		'bordered-plus',
 	]).isRequired,
 	onClick: PropTypes.func,
 	disabled: PropTypes.bool,
