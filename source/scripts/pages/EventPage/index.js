@@ -157,19 +157,19 @@ const EventPage = React.createClass({
 	renderSharePopup() {
 		const {props} = this;
 		// eslint-disable-next-line max-len
-		const annotation = 'Поделитесь ссылкой на мероприятие со своими друзьями, чтобы они могли присоединиться и вести учёт покупок вместе с вами:';
+		const annotation = 'Поделитесь ссылкой на мероприятие с друзьями, чтобы они могли вести учёт покупок вместе с вами:';
 
 		return (
 			<Portal isOpened={props.shareLinkPopupOpened}>
 				<Popup
-					title="Поделиться ссылкой"
+					title="Пригласить друзей"
 					onClose={this.closeSharePopup}
 					okButton={{
 						text: 'Скопировать',
 						onClick: this.handleCopy,
 					}}
 					cancelButton={{
-						text: 'Отмена',
+						text: 'Позднее',
 						onClick: this.closeSharePopup,
 					}}
 				>
