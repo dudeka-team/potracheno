@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import sumFormat from '../../modules/sumFormat';
 
 export default function BalanceListItem(props) {
 	const baseClass = 'balance-list-item';
@@ -14,7 +15,7 @@ export default function BalanceListItem(props) {
 				<div className="balance-list-item__to">{props.to}</div>
 			</div>
 			<div className="balance-list-item__sum">
-				{props.sum} P
+				{sumFormat(props.sum)} P
 			</div>
 		</div>
 	);

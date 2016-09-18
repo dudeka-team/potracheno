@@ -1,4 +1,5 @@
 import React from 'react';
+import sumFormat from '../../modules/sumFormat';
 
 export default function PurchaseListItem(props) {
 	return (
@@ -8,7 +9,7 @@ export default function PurchaseListItem(props) {
 				<div className="purchase-list-item__buyer">{ props.buyer }</div>
 				<div className="purchase-list-item__subtitle">{ props.subtitle }</div>
 			</div>
-			<div className="purchase-list-item__price">{ props.price } р</div>
+			<div className="purchase-list-item__price">{ sumFormat(props.price) } р</div>
 		</div>
 	);
 }
