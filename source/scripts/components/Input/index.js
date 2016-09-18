@@ -14,13 +14,6 @@ const Input = React.createClass({
 		}
 	},
 
-	onClick() {
-		if (this.props.disabled) {
-			// eslint-disable-next-line no-alert
-			alert('Нельзя менять сумму покупки после начала возвращания долгов.');
-		}
-	},
-
 	handleChange(event) {
 		this.setState({value: event.target.value});
 		this.props.onChange(event);
@@ -38,7 +31,7 @@ const Input = React.createClass({
 		if (props.labelSize) labelClassList.push(`floating-label_${props.labelSize}`);
 		if (props.labelFixed) labelClassList.push('floating-label_fixed');
 		return (
-			<div className={classList.join(' ')} onClick={this.onClick}>
+			<div className={classList.join(' ')}>
 				{props.label &&
 					<div className={labelClassList.join(' ')}>{props.label}</div>
 				}
