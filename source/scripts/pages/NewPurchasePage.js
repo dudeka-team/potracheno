@@ -246,7 +246,7 @@ const NewPurchasePage = React.createClass({
 						payer={this.getFullName(purchase.payer) || ''}
 						disabled={hasRepayedDebts}
 						onClick={() => {
-							if (hasRepayedDebts) {
+							if (mode === EDIT && hasRepayedDebts) {
 								return alert('Нельзя менять плательщика покупки после начала возвращания долгов.')
 							}
 							this.setState({popupOpened: true})
@@ -278,7 +278,7 @@ const NewPurchasePage = React.createClass({
 							size="large"
 							label="Сумма"
 							labelFixed
-							disabled={hasRepayedDebts}
+							disabled={mode === EDIT && hasRepayedDebts}
 							labelSize="small"
 							value={(mode === EDIT && purchase) ? purchase.amount || '' : ''}
 							onChange={
@@ -312,11 +312,11 @@ const NewPurchasePage = React.createClass({
 									text={this.getFullName(user)}
 									price={this.getLoan(user)}
 									isCheckBox
-									checkBoxDisabled={hasRepayedDebts}
+									checkBoxDisabled={mode === EDIT && hasRepayedDebts}
 									checkBoxChecked={purchase.participants.indexOf(user) !== -1}
 									isBordered
 									onClick={() => {
-										if (hasRepayedDebts) {
+										if (mode === EDIT && hasRepayedDebts) {
 											return alert('Нельзя менять участников покупки после начала возвращания долгов.');
 										}
 										const {participants} = purchase;
