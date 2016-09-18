@@ -247,9 +247,11 @@ const NewPurchasePage = React.createClass({
 						disabled={hasRepayedDebts}
 						onClick={() => {
 							if (mode === EDIT && hasRepayedDebts) {
-								return alert('Нельзя менять плательщика покупки после начала возвращания долгов.')
+								// eslint-disable-next-line no-alert
+								return alert('Нельзя менять плательщика покупки после начала возвращания долгов.');
 							}
-							this.setState({popupOpened: true})
+
+							this.setState({popupOpened: true});
 						}}
 					/>
 					{state.popupOpened &&
@@ -317,6 +319,7 @@ const NewPurchasePage = React.createClass({
 									isBordered
 									onClick={() => {
 										if (mode === EDIT && hasRepayedDebts) {
+											// eslint-disable-next-line no-alert, max-len
 											return alert('Нельзя менять участников покупки после начала возвращания долгов.');
 										}
 										const {participants} = purchase;

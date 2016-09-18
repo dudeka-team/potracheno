@@ -14,15 +14,16 @@ const Input = React.createClass({
 		}
 	},
 
+	onClick() {
+		if (this.props.disabled) {
+			// eslint-disable-next-line no-alert
+			alert('Нельзя менять сумму покупки после начала возвращания долгов.');
+		}
+	},
+
 	handleChange(event) {
 		this.setState({value: event.target.value});
 		this.props.onChange(event);
-	},
-
-	onClick(event) {
-		if (this.props.disabled) {
-			alert('Нельзя менять сумму покупки после начала возвращания долгов.');
-		}
 	},
 
 	render() {
