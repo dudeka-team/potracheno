@@ -13,7 +13,6 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 import Menu from '../../components/Menu';
 import Popup from '../../components/Popup';
 import PopupPoster from '../../components/PopupPoster';
-import ShareLink from '../../components/ShareLink';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
@@ -85,12 +84,26 @@ const EventPage = React.createClass({
 		return `${participantsStatus} • ${formattedDate}`;
 	},
 
-	handleShareLinkCopy(copiedSuccessfully) {
-		const message = copiedSuccessfully ?
-			'Ссылка&nbsp;скопирована в&nbsp;буфер обмена'
-			:
+	handleCopy() {
+		const range = document.createRange();
+		const selection = window.getSelection();
+		selection.removeAllRanges();
+
+		range.selectNode(this.linkNode);
+		selection.addRange(range);
+
+		let copiedSuccessfully;
+		let message;
+
+		if (document.execCommand('copy')) {
+			selection.removeAllRanges();
+			message = 'Ссылка&nbsp;скопирована в&nbsp;буфер обмена';
+			copiedSuccessfully = true;
+		} else {
 			// eslint-disable-next-line max-len
-			'Устройство не&nbsp;поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами';
+			message = 'Устройство не&nbsp;поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами';
+			copiedSuccessfully = false;
+		}
 
 		this.setState({
 			sharePopupOpened: !copiedSuccessfully,
@@ -148,18 +161,32 @@ const EventPage = React.createClass({
 
 	renderSharePopup() {
 		const {state} = this;
+		// eslint-disable-next-line max-len
+		const annotation = 'Поделитесь ссылкой на мероприятие со своими друзьями, чтобы они могли присоединиться и вести учёт покупок вместе с вами:';
 
 		return (
 			<Portal isOpened={state.sharePopupOpened}>
 				<Popup
-					closeIcon
 					title="Поделиться ссылкой"
 					onClose={this.closeSharePopup}
+					okButton={{
+						text: 'Скопировать',
+						onClick: this.handleCopy,
+					}}
+					cancelButton={{
+						text: 'Отмена',
+						onClick: this.closeSharePopup,
+					}}
 				>
-					<ShareLink
-						link={window.location.href}
-						onCopy={this.handleShareLinkCopy}
-					/>
+					<div className="share-link">
+						<p className="share-link__annotation">{annotation}</p>
+						<div className="share-link__link-wrapper">
+							<div
+								className="share-link__link"
+								ref={(linkNode) => (this.linkNode = linkNode)}
+							>{window.location.href}</div>
+						</div>
+					</div>
 				</Popup>
 			</Portal>
 		);
