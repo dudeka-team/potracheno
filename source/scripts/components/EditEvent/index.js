@@ -280,6 +280,9 @@ const EditEvent = React.createClass({
 				<div className="data-picker-wrapper">
 					<DatePicker
 						fullWidth
+						container="inline"
+						cancelLabel="Отмена"
+						okLabel="Сохранить"
 						DateTimeFormat={DateTimeFormat}
 						locale="ru"
 						floatingLabelText="Начало"
@@ -291,6 +294,9 @@ const EditEvent = React.createClass({
 				<div className="data-picker-wrapper">
 					<DatePicker
 						fullWidth
+						container="inline"
+						cancelLabel="Отмена"
+						okLabel="Сохранить"
 						DateTimeFormat={DateTimeFormat}
 						locale="ru"
 						floatingLabelText="Завершение"

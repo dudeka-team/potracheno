@@ -31,6 +31,7 @@ const accentDarkColor = '#f7cc00';
 const dudekaTheme = getMuiTheme({
 	datePicker: {
 		color: accentDarkColor,
+		textColor: '#333',
 		selectColor: accentColor,
 		selectTextColor: '#fff',
 	},
