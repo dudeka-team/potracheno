@@ -243,7 +243,7 @@ const NewPurchasePage = React.createClass({
 				{mode === CREATE && this.createPageTopBar()}
 				<PageContent>
 					{mode === EDIT && hasRepayedDebts &&
-						<div style={{paddingLeft: '16px',paddingTop: '24px', paddingRight: '16px', color: 'red',}}>
+						<div style={{padding: '24px 16px 0', color: 'red'}}>
 							После начала возвращения долгов можно редактировать только название покупки.
 						</div>
 					}
