@@ -242,15 +242,16 @@ const NewPurchasePage = React.createClass({
 				{mode === EDIT && this.editPageTopBar()}
 				{mode === CREATE && this.createPageTopBar()}
 				<PageContent>
+					{mode === EDIT && hasRepayedDebts &&
+						<div style={{paddingLeft: '16px',paddingTop: '24px', paddingRight: '16px', color: 'red',}}>
+							После начала возвращения долгов можно редактировать только название покупки.
+						</div>
+					}
 					<NewPurchasePayer
 						payer={this.getFullName(purchase.payer) || ''}
 						disabled={hasRepayedDebts}
 						onClick={() => {
-							if (mode === EDIT && hasRepayedDebts) {
-								// eslint-disable-next-line no-alert
-								return alert('Нельзя менять плательщика покупки после начала возвращания долгов.');
-							}
-
+							if (mode === EDIT && hasRepayedDebts) return;
 							this.setState({popupOpened: true});
 						}}
 					/>
@@ -318,10 +319,7 @@ const NewPurchasePage = React.createClass({
 									checkBoxChecked={purchase.participants.indexOf(user) !== -1}
 									isBordered
 									onClick={() => {
-										if (mode === EDIT && hasRepayedDebts) {
-											// eslint-disable-next-line no-alert, max-len
-											return alert('Нельзя менять участников покупки после начала возвращания долгов.');
-										}
+										if (mode === EDIT && hasRepayedDebts) return;
 										const {participants} = purchase;
 										if (participants.indexOf(user) !== -1) {
 											purchase.participants = participants.filter(x => x !== user);
