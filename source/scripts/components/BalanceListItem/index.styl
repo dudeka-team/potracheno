@@ -3,43 +3,99 @@
 	align-items center
 	padding 18px 18px
 	border-bottom 1px solid #e1e4e7
+	
+	&__wrapper
+		position relative
+		flex-shrink 1
+		flex-grow 1
+		overflow hidden
+		
+		&::after
+			content ''
+			position absolute
+			right 12px
+			top 0
+			bottom 0
+			width 20px
+			background-image -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, #fff 100%)
+			background-image linear-gradient(to right, rgba(255,255,255,0) 0%, #fff 100%)
 
 	&_negative
 		.balance-list-item__sum
 			color #f1353b
+			flex-shrink 0
+			flex-grow 0
+			overflow hidden
+		
+		.balance-list-item__direction
+			color #1D1E1F
+			flex-shrink 1
+			flex-grow 1
+			overflow scroll
+			margin 0 15px 0 0
 
 	&_positive
 		.balance-list-item__sum
 			color #34c082
+			flex-shrink 0
+			flex-grow 0
+			overflow hidden
+		
+		.balance-list-item__direction
+			color #1D1E1F
+			overflow scroll
+			margin 0 15px 0 0
 
 	&_neutral
 		.balance-list-item__sum
 			color #1D1E1F
+			flex-shrink 0
+			flex-grow 0
+			overflow hidden
 
 		.balance-list-item__direction
 			color #1D1E1F
-
-		.balance-list-item__sum
-			color #1D1E1F
+			flex-shrink 1
+			flex-grow 1
+			overflow scroll
+			margin 0 15px 0 0
 
 	&_returned
 		.balance-list-item__sum
 			color #83888d
+			flex-shrink 0
+			flex-grow 0
+			overflow hidden
 
 		.balance-list-item__direction
 			color #83888d
+			flex-shrink 1
+			flex-grow 1
+			overflow scroll
+			margin 0 15px 0 0
 
 		.balance-list-item__sum
 			display none
+			flex-shrink 0
+			flex-grow 0
+			overflow hidden
+	
+	&__from
+		white-space nowrap
+
+	&__to
+		white-space nowrap
 
 	&__direction
 		flex-grow 1
 		display flex
+		display -webkit-box
 		align-items center
 		font-size 18px
 		font-weight normal
 		line-height 1.11
 		color #1D1E1F
+		position relative
 
 	&__sum
 		display inline-block
@@ -52,6 +108,8 @@
 		width 20px
 		height 20px
 		margin-right 26px
+		flex-grow 0
+		flex-shrink 0
 
 .balance-list-item__icon
 	position relative
