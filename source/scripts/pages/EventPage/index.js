@@ -206,7 +206,7 @@ const EventPage = React.createClass({
 	renderHintPopup() {
 		const {state} = this;
 		// eslint-disable-next-line max-len
-		const annotation = 'Для установки приложения добавьте «Вскладчину» на экран «Домой» через настройки вашего браузера';
+		const annotation = 'Для установки приложения нажмите «Добавить на&nbsp;главный экран» или «На&nbsp;экран домой» в&nbsp;меню браузера';
 		return (
 			<Portal isOpened={state.hintPopupOpen}>
 				<HintPopup
