@@ -55,8 +55,12 @@ const Tabs = React.createClass({
 
 	computeTabsTransform() {
 		const {activeTabIndex} = this.state;
+		const transform = `translateX(-${100 * activeTabIndex}%)`;
 		return {
-			transform: `translateX(-${100 * activeTabIndex}%)`,
+			transform,
+			webkitTransform: transform,
+			mozTransform: transform,
+			msTransform: transform,
 		};
 	},
 

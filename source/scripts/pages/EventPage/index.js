@@ -187,7 +187,7 @@ const EventPage = React.createClass({
 						onClick: this.handleCopy,
 					}}
 					cancelButton={{
-						text: 'Позднее',
+						text: 'Позже',
 						onClick: this.closeSharePopup,
 					}}
 				>
