@@ -13,6 +13,7 @@ import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
 import Menu from '../../components/Menu';
 import Popup from '../../components/Popup';
 import PopupPoster from '../../components/PopupPoster';
+import HintPopup from '../../components/HintPopup';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
@@ -24,7 +25,9 @@ import relogin from '../../actions/relogin';
 import closeShareLinkPopup from '../../actions/closeShareLinkPopup';
 import openShareLinkPopup from '../../actions/openShareLinkPopup';
 
-import {DRAWER_SWIPE_AREA_WIDTH} from '../../constants';
+import {
+	DRAWER_SWIPE_AREA_WIDTH,
+} from '../../constants';
 
 const EventPage = React.createClass({
 	getInitialState() {
@@ -32,6 +35,7 @@ const EventPage = React.createClass({
 			menuOpen: false,
 			showShareResult: false,
 			shareResultMessage: '',
+			hintPopupOpen: false,
 		};
 	},
 
@@ -54,6 +58,18 @@ const EventPage = React.createClass({
 
 	closeSharePopup() {
 		this.props.dispatch(closeShareLinkPopup());
+	},
+
+	openHintPopup() {
+		this.setState({
+			hintPopupOpen: true,
+		});
+	},
+
+	closeHintPopup() {
+		this.setState({
+			hintPopupOpen: false,
+		});
 	},
 
 	goToEdit() {
@@ -131,10 +147,12 @@ const EventPage = React.createClass({
 				openSecondary
 			>
 				<Menu
+					icon="bordered-plus"
 					currentEvent={currentEvent}
 					currentUserName={currentUserName}
 					subtitle={subtitle}
 					handleEdit={this.goToEdit}
+					handleHint={this.openHintPopup}
 					handleRelogin={this.handleRelogin}
 				/>
 			</Drawer>
@@ -179,10 +197,25 @@ const EventPage = React.createClass({
 							<div
 								className="share-link__link"
 								ref={(linkNode) => (this.linkNode = linkNode)}
-							>{window.location.href}</div>
+							>{`${window.location.origin}/events/${props.id}`}</div>
 						</div>
 					</div>
 				</Popup>
+			</Portal>
+		);
+	},
+
+	renderHintPopup() {
+		const {state} = this;
+		// eslint-disable-next-line max-len
+		const annotation = 'Для установки приложения нажмите «Добавить на&nbsp;главный экран» или «На&nbsp;экран домой» в&nbsp;меню браузера';
+		return (
+			<Portal isOpened={state.hintPopupOpen}>
+				<HintPopup
+					text={annotation}
+					bottomText="Не сейчас"
+					closeHintPopup={this.closeHintPopup}
+				/>
 			</Portal>
 		);
 	},
@@ -209,6 +242,7 @@ const EventPage = React.createClass({
 					{this.renderDrawer(currentEvent, currentUserName, subtitle)}
 					{this.renderTopBar(currentEvent.name)}
 					{this.renderSharePopup()}
+					{this.renderHintPopup()}
 					<PopupPoster
 						text={state.shareResultMessage}
 						isOpened={state.showShareResult}
