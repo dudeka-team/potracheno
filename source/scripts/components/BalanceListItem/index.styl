@@ -2,12 +2,15 @@
 	display flex
 	align-items center
 	padding 18px 18px
+	border-bottom 1px solid #e1e4e7
 
 	&_negative
 		.balance-list-item__sum
 			color #f1353b
 
 	&_positive
+		&:last-child
+			border-bottom 1px solid red
 		.balance-list-item__sum
 			color #34c082
 
