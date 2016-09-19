@@ -76,10 +76,11 @@ function onDOMContentLoaded() {
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
 
 if (typeof localStorage === 'object') {
-    try {
-        localStorage.setItem('localStorage', 1);
-        localStorage.removeItem('localStorage');
-    } catch (e) {
-        alert('Выйдите из приватного режима, иначе приложение не будет работать');
-    }
+	try {
+		localStorage.setItem('localStorage', 1);
+		localStorage.removeItem('localStorage');
+	} catch (e) {
+		// eslint-disable-next-line no-alert
+		alert('Выйдите из приватного режима, иначе приложение не будет работать');
+	}
 }
