@@ -2,6 +2,7 @@ import React from 'react';
 import Router from 'react-router/lib/Router';
 import Route from 'react-router/lib/Route';
 import IndexRedirect from 'react-router/lib/IndexRedirect';
+import Redirect from 'react-router/lib/Redirect';
 
 import App from './App';
 import EventsPage from './pages/EventsPage';
@@ -27,6 +28,7 @@ export default function Routes(props) {
 				<Route path="events/:id/purchases/new" component={PurchasePage} />
 				<Route path="events/:id/purchases/:purchase_id" component={PurchasePage} />
 				<Route path="feedback" component={FeedbackPage} />
+				<Redirect path="*" to="events" />
 			</Route>
 		</Router>
 	);
