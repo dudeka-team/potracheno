@@ -25,7 +25,9 @@ import relogin from '../../actions/relogin';
 import closeShareLinkPopup from '../../actions/closeShareLinkPopup';
 import openShareLinkPopup from '../../actions/openShareLinkPopup';
 
-import {DRAWER_SWIPE_AREA_WIDTH} from '../../constants';
+import {
+	DRAWER_SWIPE_AREA_WIDTH,
+} from '../../constants';
 
 const EventPage = React.createClass({
 	getInitialState() {
@@ -195,7 +197,7 @@ const EventPage = React.createClass({
 							<div
 								className="share-link__link"
 								ref={(linkNode) => (this.linkNode = linkNode)}
-							>{window.location.href}</div>
+							>{`${window.location.origin}/events/${props.id}`}</div>
 						</div>
 					</div>
 				</Popup>
