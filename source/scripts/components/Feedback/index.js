@@ -7,7 +7,6 @@ import {saveFeedbackAsync} from '../../actions/saveFeedback';
 
 import {TopBar, TopBarHeading, TopBarIcon} from '../TopBar';
 import {Page, PageContent} from '../Page';
-import InputSubtitle from '../InputSubtitle';
 
 
 const FeedBack = React.createClass({
@@ -77,9 +76,6 @@ const FeedBack = React.createClass({
 						floatingLabelText="Электронная почта (необязательно)"
 						hintStyle={{color: '#949A9E'}}
 						onChange={this.handleMailChange}
-					/>
-					<InputSubtitle
-						text="Дадим обратную связь, если оставите контакт"
 					/>
 				</PageContent>
 			</Page>
