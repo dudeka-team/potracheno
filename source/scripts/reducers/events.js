@@ -29,6 +29,9 @@ import {
 	FETCH_PURCHASE_DELETE,
 
 	CREATE_EVENT_ACTION,
+
+	OPEN_SHARE_LINK_POPUP,
+	CLOSE_SHARE_LINK_POPUP,
 } from '../constants';
 
 
@@ -38,6 +41,7 @@ const initialState = {
 	localEvents: {},
 	currentEvent: null,
 	currentUserName: null,
+	showShareLinkPopup: false,
 	isCreatingEvent: false,
 	isFetchingEvent: false,
 	isFetchingEvents: false,
@@ -75,17 +79,9 @@ export default handleActions({
 	}),
 
 	[READ_EVENTS_SUCCESS]: (state, {payload}) => {
-		const filteredEvents = {};
-		const eventsKeys = Object.keys(payload);
-		Object.keys(state.localEvents).map(id => {
-			if (eventsKeys.indexOf(id) !== -1) {
-				filteredEvents[id] = payload[id];
-			}
-		});
-
 		return assign({}, state, {
-			events: Object.keys(filteredEvents),
-			eventsById: filteredEvents,
+			events: Object.keys(payload),
+			eventsById: payload,
 			isFetchingEvents: false,
 		});
 	},
@@ -194,10 +190,18 @@ export default handleActions({
 			currentEvent: changedEvent,
 		});
 	},
+
+	[OPEN_SHARE_LINK_POPUP]: (state) => assign({}, state, {
+		shareLinkPopupOpened: true,
+	}),
+	[CLOSE_SHARE_LINK_POPUP]: (state) => assign({}, state, {
+		shareLinkPopupOpened: false,
+	}),
 }, initialState);
 
 function stopCreatingEvent(state) {
 	return assign({}, state, {
 		isCreatingEvent: false,
+		currentEvent: null,
 	});
 }

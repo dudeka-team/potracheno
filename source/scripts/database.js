@@ -16,11 +16,28 @@ Database.getLocalEvents = function getLocalEvents() {
 };
 
 Database.readEvents = function readEvents() {
-	return firebase
-		.database()
-		.ref('events')
-		.once('value')
-		.then((snapshot) => (snapshot.val() || {}));
+	const localEvents = Database.getLocalEvents();
+	const result = {};
+	return new
+		Promise((resolve, reject) => {
+			Promise.all(
+				Object
+					.keys(localEvents)
+					.map(eventId => {
+						return firebase
+							.database()
+							.ref(`events/${eventId}`)
+							.once('value')
+							.then((snapshot) => {
+								if (snapshot.val()) {
+									result[eventId] = snapshot.val() || {};
+								}
+							});
+					})
+			)
+			.then(() => resolve(result))
+			.catch(reject);
+		});
 };
 
 Database.saveEvent = function saveEvent(data) {
@@ -119,6 +136,16 @@ Database.fetchUpdateParticipants = function fetchUpdateParticipants(eventId, par
 		.then(() => ({
 			eventId,
 			participantsList,
+		}));
+};
+
+Database.saveFeedback = function saveFeedback(data) {
+	return firebase
+		.database()
+		.ref('feedbacks')
+		.push(data)
+		.then(() => ({
+			data,
 		}));
 };
 

@@ -4,15 +4,23 @@ import GreySubtitle from '../GreySubtitle';
 import UniversalListItem from '../UniversalListItem';
 
 const Menu = React.createClass({
-	renderManagerControls() {
+	renderControls() {
+		const {props} = this;
+		const {currentEvent, currentUserName} = props;
+		const isManager = currentUserName === currentEvent.manager;
 		return (
 			<div className="menu__top-bar">
 				<div className="menu__icons icons-section">
+					{isManager &&
+						<div
+							onClick={props.handleEdit}
+							className="icons-section__icon icons-section__icon_event-edit"
+						/>
+					}
 					<div
-						onClick={this.props.handleEdit}
-						className="icons-section__icon icons-section__icon_event-edit"
+						onClick={props.handleHint}
+						className="icons-section__icon icons-section__icon_show-hint"
 					/>
-					{false && <div className="icons-section__icon icons-section__icon_add-person" />}
 				</div>
 			</div>
 		);
@@ -41,14 +49,13 @@ const Menu = React.createClass({
 
 	render() {
 		const {props} = this;
-		const {currentEvent, currentUserName} = props;
+		const {currentEvent} = props;
 		const classes = ['menu', `menu_${props.menuOpen ? 'open' : 'closed'}`];
-		const isManager = currentUserName === currentEvent.manager;
 
 		return (
 			<div className={classes.join(' ')}>
 				<div className="menu__inner">
-					{isManager && this.renderManagerControls()}
+					{this.renderControls()}
 					<EventStatus name={currentEvent.name} subtitle={props.subtitle} />
 					<GreySubtitle text="Участники" />
 					<div className="menu__list">

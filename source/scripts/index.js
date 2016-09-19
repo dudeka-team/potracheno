@@ -6,7 +6,7 @@ import browserHistory from 'react-router/lib/browserHistory';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
-import {syncHistoryWithStore} from 'react-router-redux';
+import {syncHistoryWithStore, routerMiddleware} from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -31,6 +31,7 @@ const accentDarkColor = '#f7cc00';
 const dudekaTheme = getMuiTheme({
 	datePicker: {
 		color: accentDarkColor,
+		textColor: '#333',
 		selectColor: accentColor,
 		selectTextColor: '#fff',
 	},
@@ -49,6 +50,7 @@ const store = createStore(
 	compose(
 		applyMiddleware(
 			thunk,
+			routerMiddleware(browserHistory),
 			promiseMiddleware({
 				promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR'],
 			})
@@ -72,3 +74,13 @@ function onDOMContentLoaded() {
 }
 
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
+
+if (typeof localStorage === 'object') {
+	try {
+		localStorage.setItem('localStorage', 1);
+		localStorage.removeItem('localStorage');
+	} catch (e) {
+		// eslint-disable-next-line no-alert
+		alert('Выйдите из приватного режима, иначе приложение не будет работать');
+	}
+}

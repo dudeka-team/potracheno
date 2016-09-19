@@ -44,6 +44,7 @@ const Input = React.createClass({
 					onBlur={() => this.setState({focused: false})}
 					disabled={props.disabled}
 					placeholder={props.hint}
+					disabled={props.disabled}
 				/>
 			</div>
 		);

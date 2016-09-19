@@ -2,15 +2,33 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<meta name="format-detection" content="telephone=no" />
-	<meta name="msapplication-tap-highlight" content="no" />
-	<meta name="viewport" content="initial-scale=1, width=device-width, user-scalable=no" />
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="viewport" content="initial-scale=1, width=device-width, user-scalable=no">
 	<meta name="theme-color" content="#ffe151" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<link rel="apple-touch-icon" href="/icon_ios.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
 
+	<title>Потрачено</title>
+	<meta name="description" content="Приложение, позволяющее друзьям вести совместный учёт расходов. Сохраняет дружбу и радость от мероприятий" />
+
+	<!-- Twitter Card markup-->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Потрачено">
+	<meta name="twitter:description" content="Приложение, позволяющее друзьям вести совместный учёт расходов. Сохраняет дружбу и радость от мероприятий">
+	<!-- Twitter summary card with large image must be at least 280x150px -->
+	<meta name="twitter:image" content="https://wastd.ru/social.png">
+
+	<!-- Open Graph markup (Facebook, Pinterest) -->
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Потрачено" />
+	<meta property="og:description" content="Приложение, позволяющее друзьям вести совместный учёт расходов. Сохраняет дружбу и радость от мероприятий" />
+	<meta property="og:image" content="https://wastd.ru/social.png" />
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="650">
+
+	<link rel="apple-touch-icon" href="/icon_ios.png">
+	<link rel="shortcut icon" type="image/png" href="/icon_96.png">
 	<link rel="manifest" href="/manifest.json">
-	<title>dudeka</title>
 </head>
 <body>
 	<div id="app" style="height: 100%;"></div>
@@ -21,7 +39,7 @@
 	<script>
 		var OneSignal = window.OneSignal || [];
 		OneSignal.push(["init", {
-			appId: "8d3bab85-ce6d-4821-8e34-2017e4b247cf",
+			appId: "ff8ea40b-8587-48ef-a95a-91c47a32153f",
 			autoRegister: true,
 			notifyButton: {
 				enable: false
@@ -34,36 +52,36 @@
 					window.applicationCache.swapCache();
 					window.location.reload();
 				}
-		  }, false);
+			}, false);
 		}, false);
 	</script>
 	<!-- Yandex.Metrika counter -->
 	<script type="text/javascript">
-	   (function (d, w, c) {
-	       (w[c] = w[c] || []).push(function() {
-	           try {
-	               w.yaCounter = new Ya.Metrika({
-	                   id:39645305,
-	                   clickmap:true,
-	                   trackLinks:true,
-	                   accurateTrackBounce:true,
-	                   webvisor:true,
-	                   trackHash:true
-	               });
-	           } catch(e) { }
-	       });
+		(function (d, w, c) {
+			(w[c] = w[c] || []).push(function() {
+				try {
+					w.yaCounter = new Ya.Metrika({
+						id:39645305,
+						clickmap:true,
+						trackLinks:true,
+						accurateTrackBounce:true,
+						webvisor:true,
+						trackHash:true
+					});
+				} catch(e) { }
+			});
 
-	       var n = d.getElementsByTagName("script")[0],
-	           s = d.createElement("script"),
-	           f = function () { n.parentNode.insertBefore(s, n); };
-	       s.type = "text/javascript";
-	       s.async = true;
-	       s.src = "https://mc.yandex.ru/metrika/watch.js";
+			var n = d.getElementsByTagName("script")[0],
+				s = d.createElement("script"),
+				f = function () { n.parentNode.insertBefore(s, n); };
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "https://mc.yandex.ru/metrika/watch.js";
 
-	       if (w.opera == "[object Opera]") {
-	           d.addEventListener("DOMContentLoaded", f, false);
-	       } else { f(); }
-	   })(document, window, "yandex_metrika_callbacks");
+			if (w.opera == "[object Opera]") {
+				d.addEventListener("DOMContentLoaded", f, false);
+			} else { f(); }
+		})(document, window, "yandex_metrika_callbacks");
 	</script>
 	<noscript><div><img src="https://mc.yandex.ru/watch/39645305" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 	<!-- /Yandex.Metrika counter -->

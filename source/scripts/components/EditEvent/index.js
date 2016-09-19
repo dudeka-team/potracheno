@@ -3,11 +3,8 @@ import shortid from 'shortid';
 import withRouter from 'react-router/lib/withRouter';
 import {connect} from 'react-redux';
 import assign from 'object-assign';
-import IntlPolyfill from 'intl';
-import 'intl/locale-data/jsonp/ru';
 
 import CircularProgress from 'material-ui/CircularProgress';
-import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 
 import {TopBar, TopBarHeading, TopBarIcon} from '../TopBar';
@@ -15,9 +12,8 @@ import {Page, PageContent} from '../Page';
 import FlexContainer from '../FlexContainer';
 import Separator from '../Separator';
 import GreySubtitle from '../GreySubtitle';
+import DatePicker from '../DatePicker';
 
-
-const DateTimeFormat = IntlPolyfill.DateTimeFormat;
 
 function createParticipant(name = '') {
 	return {
@@ -149,17 +145,34 @@ const EditEvent = React.createClass({
 		});
 	},
 
-	handleStartDateChange(event, date) {
+	handleStartDateChange(event) {
 		const {state} = this;
+		const start = new Date(event.target.value).valueOf();
+
 		this.setState({
-			start: date,
-			end: date > state.end ? date : state.end,
+			start,
+			end: start > state.end ? start : state.end,
 		});
 	},
 
-	handleEndDateChange(event, date) {
+	handleEndDateChange(event) {
 		this.setState({
-			end: date,
+			end: new Date(event.target.value).valueOf(),
+		});
+	},
+
+	handleStartDateBlur(event) {
+		this.setState({
+			start: new Date(event.target.value).valueOf() || new Date().valueOf(),
+		});
+	},
+
+	handleEndDateBlur(event) {
+		const {state} = this;
+		const end = new Date(event.target.value).valueOf() || new Date(state.start).valueOf();
+
+		this.setState({
+			end: end < state.start ? state.start : end,
 		});
 	},
 
@@ -280,25 +293,18 @@ const EditEvent = React.createClass({
 			<FlexContainer justifyContent="space-between">
 				<div className="data-picker-wrapper">
 					<DatePicker
-						fullWidth
-						DateTimeFormat={DateTimeFormat}
-						locale="ru"
-						floatingLabelText="Начало"
-						formatDate={formatDate}
+						label="Начало"
+						value={moment(state.start).format('YYYY-MM-DD')}
 						onChange={this.handleStartDateChange}
-						value={state.start}
+						onBlur={this.handleStartDateBlur}
 					/>
 				</div>
 				<div className="data-picker-wrapper">
 					<DatePicker
-						fullWidth
-						DateTimeFormat={DateTimeFormat}
-						locale="ru"
-						floatingLabelText="Завершение"
-						formatDate={formatDate}
+						label="Завершение"
+						value={moment(state.end).format('YYYY-MM-DD')}
 						onChange={this.handleEndDateChange}
-						minDate={state.start}
-						value={state.end}
+						onBlur={this.handleEndDateBlur}
 					/>
 				</div>
 			</FlexContainer>
@@ -345,11 +351,6 @@ const EditEvent = React.createClass({
 		);
 	},
 });
-
-function formatDate(date) {
-	const formattedDate = moment(date).format('dd, DD MMM YYYY');
-	return formattedDate[0].toUpperCase() + formattedDate.slice(1);
-}
 
 function keepOneEmptyItem(participants) {
 	const result = participants.slice();

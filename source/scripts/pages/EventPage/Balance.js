@@ -87,6 +87,7 @@ const BalancePage = React.createClass({
 			showPopup: false,
 		});
 	},
+
 	showPopupPoster(content) {
 		this.setState({
 			showPopupPoster: true,
@@ -99,6 +100,7 @@ const BalancePage = React.createClass({
 			});
 		}, 2000);
 	},
+
 	showRepayPopup(debt) {
 		this.setState({
 			showPopup: true,
@@ -195,10 +197,12 @@ const BalancePage = React.createClass({
 					{(positiveSum !== 0 || negativeSum !== 0 || othersDebts.length !== 0) &&
 						<BalanceCheck debts={eventsParticipantsDebts} onCopy={this.showPopupPoster} />
 					}
-					<PopupPoster
-						text={this.state.popupPosterContent}
-						isOpened={this.state.showPopupPoster}
-					/>
+					<Portal isOpened>
+						<PopupPoster
+							text={this.state.popupPosterContent}
+							isOpened={this.state.showPopupPoster}
+						/>
+					</Portal>
 					<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
 						<BalanceItemPopup
 							debt={this.state.currentDebt}
@@ -208,7 +212,7 @@ const BalancePage = React.createClass({
 					</Portal>
 					{(positiveSum !== 0 || negativeSum !== 0) &&
 						<div>
-							<Separator />
+							<Separator withShadow />
 							<GreySubtitle text="Текущие долги" />
 						</div>}
 					{positiveDebts}
@@ -228,7 +232,7 @@ const BalancePage = React.createClass({
 				</div>
 				{(positiveSum === 0 && negativeSum === 0 && returnedDebts.length === 0) &&
 					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-						<Poster icon="purchase" text="Баланс появится, когда вы заведете покупки" />
+						<Poster icon="purchase" text="Баланс появится, когда вы заведёте покупки" />
 					</FlexContainer>
 				}
 			</Wrapper>

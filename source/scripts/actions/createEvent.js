@@ -1,10 +1,12 @@
-import browserHistory from 'react-router/lib/browserHistory';
+// import browserHistory from 'react-router/lib/browserHistory';
+import {push} from 'react-router-redux/lib/actions';
 
 import {
 	CREATE_EVENT,
 } from '../constants';
 
 import setLocalEvents from './setLocalEvents';
+import openShareLinkPopup from './openShareLinkPopup';
 
 import db from '../database';
 
@@ -22,7 +24,8 @@ export default function createEvent(payload) {
 					})
 					.then(data => {
 						dispatch(setLocalEvents(data.key, data.eventInfo.manager));
-						browserHistory.push('/events');
+						dispatch(push(`/events/${data.key}`));
+						dispatch(openShareLinkPopup());
 					})
 					.catch(reject);
 			}),

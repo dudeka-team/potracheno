@@ -24,7 +24,7 @@ const plugins = [
 	}),
 	new HtmlWebpackPlugin({
 		template: `${SOURCE}/index.html`,
-		hash: false,
+		hash: true,
 	}),
 	new webpack.HotModuleReplacementPlugin(),
 ];

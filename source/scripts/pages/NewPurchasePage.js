@@ -242,9 +242,25 @@ const NewPurchasePage = React.createClass({
 				{mode === EDIT && this.editPageTopBar()}
 				{mode === CREATE && this.createPageTopBar()}
 				<PageContent>
+					{mode === EDIT && hasRepayedDebts &&
+						<div
+							style={{
+								paddingLeft: '16px',
+								paddingTop: '24px',
+								paddingRight: '16px',
+								color: 'red',
+							}}
+						>
+							После начала возвращения долгов можно редактировать только название покупки.
+						</div>
+					}
 					<NewPurchasePayer
 						payer={this.getFullName(purchase.payer) || ''}
-						onClick={() => this.setState({popupOpened: true})}
+						disabled={hasRepayedDebts}
+						onClick={() => {
+							if (mode === EDIT && hasRepayedDebts) return;
+							this.setState({popupOpened: true});
+						}}
 					/>
 					{state.popupOpened &&
 						<Popup
@@ -272,6 +288,7 @@ const NewPurchasePage = React.createClass({
 							size="large"
 							label="Сумма"
 							labelFixed
+							disabled={mode === EDIT && hasRepayedDebts}
 							labelSize="small"
 							value={(mode === EDIT && purchase) ? purchase.amount || '' : ''}
 							onChange={
@@ -305,9 +322,11 @@ const NewPurchasePage = React.createClass({
 									text={this.getFullName(user)}
 									price={this.getLoan(user)}
 									isCheckBox
+									checkBoxDisabled={mode === EDIT && hasRepayedDebts}
 									checkBoxChecked={purchase.participants.indexOf(user) !== -1}
 									isBordered
 									onClick={() => {
+										if (mode === EDIT && hasRepayedDebts) return;
 										const {participants} = purchase;
 										if (participants.indexOf(user) !== -1) {
 											purchase.participants = participants.filter(x => x !== user);
