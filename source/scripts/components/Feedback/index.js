@@ -65,21 +65,21 @@ const FeedBack = React.createClass({
 						underlineFocusStyle={underLineStyle}
 						fullWidth
 						floatingLabelStyle={{color: '#949A9E'}}
-						floatingLabelText="Электронная почта"
+						floatingLabelText="Ваш отзыв"
 						hintStyle={{color: '#949A9E'}}
-						onChange={this.handleMailChange}
-					/>
-					<InputSubtitle
-						text="Необязательно, но оставив почту мы сможем дать Вам обратную связь"
+						onChange={this.handleProblemChange}
 					/>
 					<TextField
 						floatingLabelFocusStyle={labelStyle}
 						underlineFocusStyle={underLineStyle}
 						fullWidth
 						floatingLabelStyle={{color: '#949A9E'}}
-						floatingLabelText="Опишите свою проблему"
+						floatingLabelText="Электронная почта (необязательно)"
 						hintStyle={{color: '#949A9E'}}
-						onChange={this.handleProblemChange}
+						onChange={this.handleMailChange}
+					/>
+					<InputSubtitle
+						text="Дадим обратную связь, если оставите контакт"
 					/>
 				</PageContent>
 			</Page>
