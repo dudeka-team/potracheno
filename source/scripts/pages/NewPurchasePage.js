@@ -75,6 +75,7 @@ const NewPurchasePage = React.createClass({
 
 	save() {
 		const {state, props} = this;
+		const {localEvents} = props;
 
 		if (state.mode === CREATE) {
 			props.dispatch(createEventActionAsync({
@@ -88,19 +89,18 @@ const NewPurchasePage = React.createClass({
 					),
 				},
 			}));
-			state.purchase.participants.forEach((participant) => {
-				props.dispatch(createEventActionAsync({
-					eventId: props.params.id,
-					eventActionInfo: {
-						config: eventActionTypes.addParticipantToPurchase(
-							props.localEvents[props.params.id],
-							participant,
-							state.purchase.name,
-							(new Date()).getTime()
-						),
-					},
-				}));
-			});
+
+			props.dispatch(createEventActionAsync({
+				eventId: props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.addParticipantsToPurchase(
+						localEvents[props.params.id],
+						state.purchase.participants.length,
+						state.purchase.name,
+						(new Date()).getTime()
+					),
+				},
+			}));
 		}
 
 

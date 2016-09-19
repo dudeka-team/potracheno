@@ -88,6 +88,16 @@ export const eventActionTypes = {
 			actionType: 'addParticipantToPurchase',
 		};
 	},
+	addParticipantsToPurchase(currentUser, purchaseParticipantsNumber, purchaseName, date) {
+		return {
+			currentUser,
+			purchaseParticipantsNumber,
+			purchaseName,
+			icon: 'pen',
+			date,
+			actionType: 'addParticipantsToPurchase',
+		};
+	},
 	removeParticipantFromPurchase(currentUser, payerName, purchaseName, date) {
 		return {
 			currentUser,

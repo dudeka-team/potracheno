@@ -212,7 +212,7 @@ const BalancePage = React.createClass({
 					</Portal>
 					{(positiveSum !== 0 || negativeSum !== 0) &&
 						<div>
-							<Separator withShadow />
+							<Separator />
 							<GreySubtitle text="Текущие долги" />
 						</div>}
 					{positiveDebts}

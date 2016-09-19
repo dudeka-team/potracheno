@@ -12,6 +12,8 @@ const EventActionItem = React.createClass({
 			start,
 			end,
 			manager,
+			purchaseParticipantsNumber,
+			eventParticipantsNumber,
 		} = props;
 
 		if (actionType === 'createEvent') {
@@ -53,6 +55,17 @@ const EventActionItem = React.createClass({
 			);
 		}
 
+		if (actionType === 'addParticipantsToEvent') {
+			return (
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{manager} </b>
+					добавил(-а)
+					<b className="event-action__text_bold"> {eventParticipantsNumber} </b>
+					человека в мероприятие
+				</p>
+			);
+		}
+
 		if (actionType === 'removeParticipantFromEvent') {
 			return (
 				<p className="event-action__text">
@@ -81,6 +94,18 @@ const EventActionItem = React.createClass({
 					<b className="event-action__text_bold">{currentUser} </b>
 					удалил(-а) покупку
 					<b className="event-action__text_bold"> {purchaseName} </b>
+				</p>
+			);
+		}
+
+		if (actionType === 'addParticipantsToPurchase') {
+			return (
+				<p className="event-action__text">
+					<b className="event-action__text_bold">{currentUser} </b>
+					добавил(-а)
+					<b className="event-action__text_bold"> {purchaseParticipantsNumber} </b>
+					человек в покупку
+					<b className="event-action__text_bold"> {purchaseName}</b>
 				</p>
 			);
 		}
