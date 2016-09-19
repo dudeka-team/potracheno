@@ -12,6 +12,8 @@ import EditEventPage from './pages/EditEvent';
 
 import PurchasePage from './pages/PurchasePage';
 
+import FeedbackPage from './pages/FeedbackPage';
+
 
 export default function Routes(props) {
 	return (
@@ -24,6 +26,7 @@ export default function Routes(props) {
 				<Route path="events/:id/edit" component={EditEventPage} />
 				<Route path="events/:id/purchases/new" component={PurchasePage} />
 				<Route path="events/:id/purchases/:purchase_id" component={PurchasePage} />
+				<Route path="feedback" component={FeedbackPage} />
 			</Route>
 		</Router>
 	);

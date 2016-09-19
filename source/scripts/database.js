@@ -139,4 +139,14 @@ Database.fetchUpdateParticipants = function fetchUpdateParticipants(eventId, par
 		}));
 };
 
+Database.saveFeedback = function saveFeedback(data) {
+	return firebase
+		.database()
+		.ref('feedbacks')
+		.push(data)
+		.then(() => ({
+			data,
+		}));
+};
+
 export default Database;
