@@ -305,6 +305,7 @@ const EditEvent = React.createClass({
 						value={moment(state.end).format('YYYY-MM-DD')}
 						onChange={this.handleEndDateChange}
 						onBlur={this.handleEndDateBlur}
+						min={moment(state.start).format('YYYY-MM-DD')}
 					/>
 				</div>
 			</FlexContainer>
