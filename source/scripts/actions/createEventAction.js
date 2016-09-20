@@ -8,11 +8,11 @@ export const getDiff = (oldPs, newPs) => {
 	let removed = [];
 	let added = [];
 	added = newPs.filter((newP) => {
-		return oldPs.indexOf((newP) === -1);
+		return (oldPs.indexOf(newP) === -1);
 	});
 
 	removed = oldPs.filter((oldP) => {
-		return newPs.indexOf((oldP) === -1);
+		return (newPs.indexOf(oldP) === -1);
 	});
 
 	return {
@@ -86,6 +86,16 @@ export const eventActionTypes = {
 			icon: 'pen',
 			date,
 			actionType: 'addParticipantToPurchase',
+		};
+	},
+	addParticipantsToPurchase(currentUser, purchaseParticipantsNumber, purchaseName, date) {
+		return {
+			currentUser,
+			purchaseParticipantsNumber,
+			purchaseName,
+			icon: 'pen',
+			date,
+			actionType: 'addParticipantsToPurchase',
 		};
 	},
 	removeParticipantFromPurchase(currentUser, payerName, purchaseName, date) {

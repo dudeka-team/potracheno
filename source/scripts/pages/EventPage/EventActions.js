@@ -12,9 +12,17 @@ const EventActions = React.createClass({
 				actionType: 'createEvent',
 			},
 		};
+		const secondAction = {
+			config: {
+				manager: this.props.currentEvent.manager,
+				eventParticipantsNumber: this.props.currentEvent.participants.length,
+				icon: 'person',
+				actionType: 'addParticipantsToEvent',
+			},
+		};
 		return (
 			<div>
-				{[firstAction, ...this.props.actions].reverse().map((item, i) => {
+				{[firstAction, secondAction, ...this.props.actions].reverse().map((item, i) => {
 					return (
 						<EventActionListItem
 							key={i}
@@ -28,6 +36,8 @@ const EventActions = React.createClass({
 							currentUser={item.config.currentUser}
 							payerName={item.config.payerName}
 							participantName={item.config.participantName}
+							purchaseParticipantsNumber={item.config.purchaseParticipantsNumber}
+							eventParticipantsNumber={item.config.eventParticipantsNumber}
 							eventName={item.config.eventName}
 							start={item.config.start}
 							end={item.config.end}
