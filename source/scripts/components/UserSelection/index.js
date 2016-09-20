@@ -128,7 +128,6 @@ const UserSelection = React.createClass({
 							<span className="user-selection__invite-author">{currentEvent.manager}</span>
 							{' прислал(-а) вам приглашение на мероприятие'}
 						</div>
-						<div className="user-selection__icon" />
 					</div>
 					<EventStatus
 						name={currentEvent.name}
