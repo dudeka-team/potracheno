@@ -131,7 +131,6 @@ const NewPurchasePage = React.createClass({
 		const {purchase_id, id} = props.params;
 
 		const participants = getDiff(state.purchaseCopy.participants, state.purchase.participants);
-
 		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
 
 		participants.added.forEach((participant) => {

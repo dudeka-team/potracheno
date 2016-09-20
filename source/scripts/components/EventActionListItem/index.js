@@ -61,7 +61,7 @@ const EventActionItem = React.createClass({
 					<b className="event-action__text_bold">{manager} </b>
 					добавил(-а)
 					<b className="event-action__text_bold"> {eventParticipantsNumber} </b>
-					человека в мероприятие
+					человек в мероприятие
 				</p>
 			);
 		}

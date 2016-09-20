@@ -49,10 +49,19 @@ const BalancePage = React.createClass({
 		const actionType = (Math.abs(this.state.currentDebt.sum) === debt.sum) ?
 			'giveBack' : 'giveBackPartially';
 
+		const currentUser = props.localEvents[props.eventId];
+
+		// Создаю копию для логики действий
+		let debtTo = debt.to;
+
+		if (currentUser === debtTo) {
+			debtTo = debt.from;
+		}
+
 		const newAction = {
 			config: eventActionTypes[actionType](
-				debt.from,
-				debt.to,
+				currentUser,
+				debtTo,
 				debt.sum,
 				(new Date()).getTime()
 			),
