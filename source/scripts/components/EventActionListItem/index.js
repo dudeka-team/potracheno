@@ -162,10 +162,8 @@ const EventActionItem = React.createClass({
 		const {props} = this;
 		const {icon, date, sum, debtSum, actionType} = props;
 
-
 		return (
 			<div className="event-action">
-			{/* eslint-disable max-len */}
 				<div className={`event-action__icon-wrapper ${(icon === 'check-active-yellow') && 'event-action__icon-wrapper_yellow'}`}>
 					<div className={`event-action__icon event-action__icon_${icon}`} />
 				</div>

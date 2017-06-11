@@ -16,6 +16,7 @@
       "beforeColon": false,
       "afterColon": true
     }],
+    "max-len":"warn",
     "array-callback-return": "off",
     "consistent-return": "off",
     "object-curly-spacing": ["error", "never"],
@@ -30,6 +31,6 @@
     "react/prefer-es6-class": ["error", "never"],
     "react/prop-types": "off",
     "react/prefer-stateless-function": "off",
-    "react/jsx-filename-extension": "off",
+    "react/jsx-filename-extension": "off"
   }
 }
