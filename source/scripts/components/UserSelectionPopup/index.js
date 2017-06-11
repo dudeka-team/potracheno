@@ -8,8 +8,17 @@ const UserSelectionPopup = React.createClass({
 			isEmpty: false,
 		};
 	},
+
 	render() {
 		const {props, state} = this;
+		let errorText;
+
+		if (state.isDuplicate) {
+			errorText = 'Имена участников не должны повторяться';
+		} else if (state.isEmpty) {
+			errorText = 'Имя не должно быть пустым';
+		}
+
 		return (
 			<div className="user-selection-popup">
 				<TextField
@@ -18,8 +27,7 @@ const UserSelectionPopup = React.createClass({
 					underlineFocusStyle={{borderColor: '#ffe151'}}
 					style={{width: '100%'}}
 					onChange={props.userNameChange}
-					errorText={state.isDuplicate && 'Имена участников не должны повторяться'
-						|| state.isEmpty && 'Имя не должно быть пустым'}
+					errorText={errorText}
 				/>
 			</div>
 		);
