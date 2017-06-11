@@ -1,16 +1,22 @@
 import React, {PropTypes} from 'react';
 import sumFormat from '../../modules/sumFormat';
 
-function getDate({start, end}) {
-	start = new Date(start);
-	end = new Date(end);
-	return start.getMonth() === end.getMonth() ?
-		(start.getDate() === end.getDate() ?
-			`${moment(end).format('DD MMMM')}, ${moment(end).format('dddd')}`
-			:
-			`${moment(start).format('DD')} — ${moment(end).format('DD MMMM')}`)
-		:
-		`${moment(start).format('DD MMMM')} — ${moment(end).format('DD MMMM')}`;
+function getDate(options) {
+	const start = new Date(options.start);
+	const end = new Date(options.end);
+	let result;
+
+	if (start.getMonth() === end.getMonth()) {
+		if (start.getDate() === end.getDate()) {
+			result = `${moment(end).format('DD MMMM')}, ${moment(end).format('dddd')}`;
+		} else {
+			result = `${moment(start).format('DD')} — ${moment(end).format('DD MMMM')}`;
+		}
+	} else {
+		result = `${moment(start).format('DD MMMM')} — ${moment(end).format('DD MMMM')}`;
+	}
+
+	return result;
 }
 
 export default function EventsListItem(props) {

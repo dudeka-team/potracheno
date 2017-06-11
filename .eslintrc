@@ -7,7 +7,6 @@
     "moment": true
   },
   "rules": {
-    "no-nested-ternary": "off",
     "no-mixed-operators": "off",
     "indent": ["error", "tab", {
       "SwitchCase": 1
