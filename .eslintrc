@@ -17,7 +17,6 @@
     "max-len":"warn",
     "object-curly-spacing": ["error", "never"],
     "no-use-before-define": ["error", "nofunc"],
-    "linebreak-style": "off",
     "react/require-extension": "off",
     "react/jsx-indent": [2, "tab"],
     "react/jsx-indent-props": [2, "tab"],
