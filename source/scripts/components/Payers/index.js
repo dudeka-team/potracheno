@@ -6,18 +6,16 @@ const Payers = React.createClass({
 		const {props} = this;
 		return (
 			<div className="payers">
-				{props.participants.map((user) => {
-					return (
-						<UniversalListItem
-							onClick={() => this.props.changePayer(user)}
-							id={user}
-							text={props.getFullName(user)}
-							key={user}
-							iconId={7}
-							checkMark={props.payer === user}
-						/>
-					);
-				})}
+				{props.participants.map((user) => (
+					<UniversalListItem
+						onClick={() => this.props.changePayer(user)}
+						id={user}
+						text={props.getFullName(user)}
+						key={user}
+						iconId={7}
+						checkMark={props.payer === user}
+					/>
+				))}
 			</div>
 		);
 	},

@@ -4,22 +4,10 @@ import {
 	CREATE_EVENT_ACTION,
 } from '../constants';
 
-export const getDiff = (oldPs, newPs) => {
-	let removed = [];
-	let added = [];
-	added = newPs.filter((newP) => {
-		return (oldPs.indexOf(newP) === -1);
-	});
-
-	removed = oldPs.filter((oldP) => {
-		return (newPs.indexOf(oldP) === -1);
-	});
-
-	return {
-		added,
-		removed,
-	};
-};
+export const getDiff = (oldPs, newPs) => ({
+	added: newPs.filter((newP) => oldPs.indexOf(newP) === -1),
+	removed: oldPs.filter((oldP) => newPs.indexOf(oldP) === -1),
+});
 
 export const eventActionTypes = {
 	changeEventName(currentUser, eventName, date) {

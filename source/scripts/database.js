@@ -21,19 +21,15 @@ Database.readEvents = function readEvents() {
 	return new
 		Promise((resolve, reject) => {
 			Promise.all(
-				Object
-					.keys(localEvents)
-					.map(eventId => {
-						return firebase
-							.database()
-							.ref(`events/${eventId}`)
-							.once('value')
-							.then((snapshot) => {
-								if (snapshot.val()) {
-									result[eventId] = snapshot.val() || {};
-								}
-							});
-					})
+				Object.keys(localEvents).map(eventId => firebase
+					.database()
+					.ref(`events/${eventId}`)
+					.once('value')
+					.then((snapshot) => {
+						if (snapshot.val()) {
+							result[eventId] = snapshot.val() || {};
+						}
+					}))
 			)
 			.then(() => resolve(result))
 			.catch(reject);

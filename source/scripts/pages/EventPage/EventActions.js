@@ -22,29 +22,27 @@ const EventActions = React.createClass({
 		};
 		return (
 			<div>
-				{[firstAction, secondAction, ...this.props.actions].reverse().map((item, i) => {
-					return (
-						<EventActionListItem
-							key={i}
-							icon={item.config.icon}
-							text={item.config.text}
-							date={item.config.date}
-							sum={item.config.sum}
-							debtSum={item.config.debtSum}
-							actionType={item.config.actionType}
-							purchaseName={item.config.purchaseName}
-							currentUser={item.config.currentUser}
-							payerName={item.config.payerName}
-							participantName={item.config.participantName}
-							purchaseParticipantsNumber={item.config.purchaseParticipantsNumber}
-							eventParticipantsNumber={item.config.eventParticipantsNumber}
-							eventName={item.config.eventName}
-							start={item.config.start}
-							end={item.config.end}
-							manager={this.props.currentEvent.manager}
-						/>
-					);
-				})}
+				{[firstAction, secondAction, ...this.props.actions].reverse().map((item, i) => (
+					<EventActionListItem
+						key={i}
+						icon={item.config.icon}
+						text={item.config.text}
+						date={item.config.date}
+						sum={item.config.sum}
+						debtSum={item.config.debtSum}
+						actionType={item.config.actionType}
+						purchaseName={item.config.purchaseName}
+						currentUser={item.config.currentUser}
+						payerName={item.config.payerName}
+						participantName={item.config.participantName}
+						purchaseParticipantsNumber={item.config.purchaseParticipantsNumber}
+						eventParticipantsNumber={item.config.eventParticipantsNumber}
+						eventName={item.config.eventName}
+						start={item.config.start}
+						end={item.config.end}
+						manager={this.props.currentEvent.manager}
+					/>
+				))}
 			</div>
 		);
 	},

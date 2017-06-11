@@ -169,17 +169,15 @@ const BalancePage = React.createClass({
 
 		const othersDebts = eventsParticipantsDebts
 			.filter((debt) => currentUser !== debt.from && currentUser !== debt.to)
-			.map((debt) => {
-				return (
-					<BalanceListItem
-						key={`${debt.to}${debt.from}${debt.sum}`}
-						sum={-Math.round(debt.sum)}
-						from={debt.from}
-						to={debt.to}
-						debtType="neutral"
-					/>
-				);
-			});
+			.map((debt) => (
+				<BalanceListItem
+					key={`${debt.to}${debt.from}${debt.sum}`}
+					sum={-Math.round(debt.sum)}
+					from={debt.from}
+					to={debt.to}
+					debtType="neutral"
+				/>
+			));
 
 		const returnedDebtsActions = [];
 		this.state.actions.slice().reverse().forEach((action) => {
@@ -190,17 +188,15 @@ const BalancePage = React.createClass({
 
 		const returnedDebts = returnedDebtsActions
 			.filter((action) => action.config.actionType === 'giveBack')
-			.map((action) => {
-				return (
-					<BalanceListItem
-						key={`${action.config.debtSum}${action.config.currentUser}${action.config.payerName}`}
-						sum={action.config.debtSum}
-						from={action.config.currentUser}
-						to={action.config.payerName}
-						debtType="returned"
-					/>
-				);
-			});
+			.map((action) => (
+				<BalanceListItem
+					key={`${action.config.debtSum}${action.config.currentUser}${action.config.payerName}`}
+					sum={action.config.debtSum}
+					from={action.config.currentUser}
+					to={action.config.payerName}
+					debtType="returned"
+				/>
+			));
 
 		return (
 			<Wrapper>

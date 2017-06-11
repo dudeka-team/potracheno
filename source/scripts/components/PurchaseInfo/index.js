@@ -19,17 +19,16 @@ const PurchaseInfo = React.createClass({
 			<div>
 				<UniversalListItem text={purchase.payer} price={purchase.amount} isBordered />
 				<GreySubtitle text="Участвуют в покупке" />
-				{this.state.participants.map(user => {
-					return (
-						<UniversalListItem id={user} text={user} key={user} />
-					);
-				})}
+
+				{this.state.participants.map(user => (
+					<UniversalListItem id={user} text={user} key={user} />
+				))}
+
 				<GreySubtitle text="Не участвуют в покупке" />
-				{this.state.nonParticipants.map(user => {
-					return (
-						<UniversalListItem id={user} text={user} key={user} />
-					);
-				})}
+
+				{this.state.nonParticipants.map(user => (
+					<UniversalListItem id={user} text={user} key={user} />
+				))}
 			</div>
 		);
 	},

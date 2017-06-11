@@ -141,15 +141,13 @@ const UserSelection = React.createClass({
 					/>
 					<GreySubtitle text="Выберите себя среди участников" userSelection />
 					<div className="user-selection__list">
-						{currentEvent.participants.sort().map(participant => {
-							return (
-								<UserSelectionListItem
-									key={participant}
-									onClick={() => this.changeEventName(participant)}
-									text={participant}
-								/>
-							);
-						})}
+						{currentEvent.participants.sort().map(participant => (
+							<UserSelectionListItem
+								key={participant}
+								onClick={() => this.changeEventName(participant)}
+								text={participant}
+							/>
+						))}
 						<div
 							className="user-selection__add-participant-button"
 							onClick={this.openPopup}

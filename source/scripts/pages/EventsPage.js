@@ -124,13 +124,11 @@ function getEventData(eventsById) {
 	});
 }
 
-const mapStateToProps = ({events}) => {
-	return {
-		isFetchingEvents: events.isFetchingEvents,
-		events: events.events,
-		eventsById: events.eventsById,
-		localEvents: events.localEvents,
-	};
-};
+const mapStateToProps = ({events}) => ({
+	isFetchingEvents: events.isFetchingEvents,
+	events: events.events,
+	eventsById: events.eventsById,
+	localEvents: events.localEvents,
+});
 
 export default connect(mapStateToProps)(withRouter(EventsPage));

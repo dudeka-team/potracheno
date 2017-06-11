@@ -56,16 +56,14 @@ export default handleActions({
 		isFetchingEvent: false,
 	}),
 
-	[FETCH_EVENT_DATA_SUCCESS]: (state, {payload}) => {
-		return assign({}, state, {
-			eventsById: assign({}, state.eventsById, {
-				[payload.key]: payload.value,
-			}),
-			currentEvent: assign({}, payload.value),
-			currentUserName: state.localEvents[payload.key],
-			isFetchingEvent: false,
-		});
-	},
+	[FETCH_EVENT_DATA_SUCCESS]: (state, {payload}) => assign({}, state, {
+		eventsById: assign({}, state.eventsById, {
+			[payload.key]: payload.value,
+		}),
+		currentEvent: assign({}, payload.value),
+		currentUserName: state.localEvents[payload.key],
+		isFetchingEvent: false,
+	}),
 
 	[CREATE_EVENT_LOADING]: (state) => assign({}, state, {
 		isCreatingEvent: true,
@@ -78,13 +76,11 @@ export default handleActions({
 		isFetchingEvents: true,
 	}),
 
-	[READ_EVENTS_SUCCESS]: (state, {payload}) => {
-		return assign({}, state, {
-			events: Object.keys(payload),
-			eventsById: payload,
-			isFetchingEvents: false,
-		});
-	},
+	[READ_EVENTS_SUCCESS]: (state, {payload}) => assign({}, state, {
+		events: Object.keys(payload),
+		eventsById: payload,
+		isFetchingEvents: false,
+	}),
 
 	[READ_EVENTS_ERROR]: (state) => assign({}, state, {
 		isFetchingEvents: false,
@@ -120,13 +116,9 @@ export default handleActions({
 	},
 
 
-	[GET_LOCAL_EVENTS]: (state, {payload}) => {
-		return assign({}, state, {localEvents: payload});
-	},
+	[GET_LOCAL_EVENTS]: (state, {payload}) => assign({}, state, {localEvents: payload}),
 
-	[SET_LOCAL_EVENTS]: (state, {payload}) => {
-		return assign({}, state, {localEvents: payload});
-	},
+	[SET_LOCAL_EVENTS]: (state, {payload}) => assign({}, state, {localEvents: payload}),
 
 	[CHANGE_PURCHASE]: (state, {payload}) => {
 		const {eventId, purchase} = payload;

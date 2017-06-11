@@ -313,30 +313,28 @@ const NewPurchasePage = React.createClass({
 					<Separator />
 					<div style={{paddingRight: '9px'}}>
 						<GreySubtitle text="Участники покупки" />
-						{state.eventParticipants
-							.map(user => {
-								return (<UniversalListItem
-									id={user}
-									key={user}
-									text={this.getFullName(user)}
-									price={this.getLoan(user)}
-									isCheckBox
-									checkBoxDisabled={mode === EDIT && hasRepayedDebts}
-									checkBoxChecked={purchase.participants.indexOf(user) !== -1}
-									isBordered
-									onClick={() => {
-										if (mode === EDIT && hasRepayedDebts) return;
-										const {participants} = purchase;
-										if (participants.indexOf(user) !== -1) {
-											purchase.participants = participants.filter(x => x !== user);
-										} else {
-											participants.push(user);
-										}
-										this.setState({purchase});
-									}}
-								/>);
-							})
-						}
+						{state.eventParticipants.map(user => (
+							<UniversalListItem
+								id={user}
+								key={user}
+								text={this.getFullName(user)}
+								price={this.getLoan(user)}
+								isCheckBox
+								checkBoxDisabled={mode === EDIT && hasRepayedDebts}
+								checkBoxChecked={purchase.participants.indexOf(user) !== -1}
+								isBordered
+								onClick={() => {
+									if (mode === EDIT && hasRepayedDebts) return;
+									const {participants} = purchase;
+									if (participants.indexOf(user) !== -1) {
+										purchase.participants = participants.filter(x => x !== user);
+									} else {
+										participants.push(user);
+									}
+									this.setState({purchase});
+								}}
+							/>
+						))}
 					</div>
 					{mode === EDIT &&
 						<div>
