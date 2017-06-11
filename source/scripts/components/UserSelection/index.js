@@ -57,11 +57,16 @@ const UserSelection = React.createClass({
 
 	addNewParticipant() {
 		const {name} = this.state;
-		if (name === '') return this.setState({isEmpty: true});
-		const {id, currentEvent} = this.props;
-		const newParticipantsList = currentEvent.participants.slice();
-		newParticipantsList.push(name);
-		this.props.dispatch(fetchUpdateParticipants(id, newParticipantsList));
+
+		if (name === '') {
+			this.setState({isEmpty: true});
+		} else {
+			const {id, currentEvent} = this.props;
+			const newParticipantsList = currentEvent.participants.slice();
+
+			newParticipantsList.push(name);
+			this.props.dispatch(fetchUpdateParticipants(id, newParticipantsList));
+		}
 	},
 
 	formatSubtitle(currentEvent) {
