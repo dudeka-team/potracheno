@@ -1,4 +1,4 @@
-import {routerReducer} from 'react-router-redux';
+import { routerReducer } from 'react-router-redux';
 import app from './app';
 import events from './events';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import withRouter from 'react-router/lib/withRouter';
 import EventActionListItem from '../../components/EventActionListItem';
 
@@ -48,7 +48,7 @@ const EventActions = React.createClass({
 	},
 });
 
-function mapStateToProps({events}) {
+function mapStateToProps({ events }) {
 	return {
 		currentEvent: events.currentEvent,
 	};

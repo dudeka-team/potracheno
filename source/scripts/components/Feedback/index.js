@@ -1,12 +1,12 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 
-import {saveFeedbackAsync} from '../../actions/saveFeedback';
+import { saveFeedbackAsync } from '../../actions/saveFeedback';
 
-import {TopBar, TopBarHeading, TopBarIcon} from '../TopBar';
-import {Page, PageContent} from '../Page';
+import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
+import { Page, PageContent } from '../Page';
 
 
 const FeedBack = React.createClass({
@@ -23,7 +23,7 @@ const FeedBack = React.createClass({
 	},
 
 	saveFeedback() {
-		const {state, props} = this;
+		const { state, props } = this;
 		props.dispatch(saveFeedbackAsync({
 			mail: state.mail,
 			problem: state.problem,
@@ -43,9 +43,9 @@ const FeedBack = React.createClass({
 	},
 
 	render() {
-		const {state} = this;
-		const labelStyle = {color: '#949A9E'};
-		const underLineStyle = {borderColor: '#ffe151'};
+		const { state } = this;
+		const labelStyle = { color: '#949A9E' };
+		const underLineStyle = { borderColor: '#ffe151' };
 
 		return (
 			<Page>
@@ -58,23 +58,23 @@ const FeedBack = React.createClass({
 						onClick={this.goToEvents}
 					/>
 				</TopBar>
-				<PageContent style={{padding: '8px 1rem 5rem'}}>
+				<PageContent style={{ padding: '8px 1rem 5rem' }}>
 					<TextField
 						floatingLabelFocusStyle={labelStyle}
 						underlineFocusStyle={underLineStyle}
 						fullWidth
-						floatingLabelStyle={{color: '#949A9E'}}
+						floatingLabelStyle={{ color: '#949A9E' }}
 						floatingLabelText="Ваш отзыв"
-						hintStyle={{color: '#949A9E'}}
+						hintStyle={{ color: '#949A9E' }}
 						onChange={this.handleProblemChange}
 					/>
 					<TextField
 						floatingLabelFocusStyle={labelStyle}
 						underlineFocusStyle={underLineStyle}
 						fullWidth
-						floatingLabelStyle={{color: '#949A9E'}}
+						floatingLabelStyle={{ color: '#949A9E' }}
 						floatingLabelText="Электронная почта (необязательно)"
-						hintStyle={{color: '#949A9E'}}
+						hintStyle={{ color: '#949A9E' }}
 						onChange={this.handleMailChange}
 					/>
 				</PageContent>

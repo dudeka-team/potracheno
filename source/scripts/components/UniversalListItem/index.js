@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import CheckBox from '../CheckBox';
 import CheckMark from '../CheckMark';
 
@@ -16,7 +16,7 @@ const UniversalListItem = React.createClass({
 	render() {
 		const baseClass = 'universal-list-item';
 		const rootClasses = [baseClass, 'unselectable'];
-		const {props} = this;
+		const { props } = this;
 
 		if (props.isBordered) {
 			rootClasses.push(`${baseClass}_bordered`);

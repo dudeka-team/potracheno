@@ -1,4 +1,4 @@
-import {createAction} from 'redux-actions';
+import { createAction } from 'redux-actions';
 import db from '../database';
 import {
 	SAVE_FEEDBACK,

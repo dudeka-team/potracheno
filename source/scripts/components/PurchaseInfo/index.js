@@ -4,8 +4,8 @@ import GreySubtitle from '../GreySubtitle';
 
 const PurchaseInfo = React.createClass({
 	getInitialState() {
-		const {props} = this;
-		const {participants} = props.purchase;
+		const { props } = this;
+		const { participants } = props.purchase;
 		const nonParticipants = props.eventParticipants
 			.filter(user => participants.indexOf(user) === -1);
 		return {
@@ -14,7 +14,7 @@ const PurchaseInfo = React.createClass({
 		};
 	},
 	render() {
-		const {purchase} = this.props;
+		const { purchase } = this.props;
 		return (
 			<div>
 				<UniversalListItem text={purchase.payer} price={purchase.amount} isBordered />

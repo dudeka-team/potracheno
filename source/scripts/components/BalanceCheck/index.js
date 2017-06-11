@@ -15,7 +15,7 @@ const BalanceCheck = React.createClass({
 	},
 
 	handleCopy() {
-		const {props} = this;
+		const { props } = this;
 		const range = document.createRange();
 		const selection = window.getSelection();
 		selection.removeAllRanges();
@@ -40,7 +40,7 @@ const BalanceCheck = React.createClass({
 	},
 
 	render() {
-		const {props, state} = this;
+		const { props, state } = this;
 
 		return (
 			<div>

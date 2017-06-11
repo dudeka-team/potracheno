@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import assign from 'object-assign';
 
 import EditEvent from '../components/EditEvent';
@@ -18,7 +18,7 @@ import {
 
 const NewEventPage = React.createClass({
 	save(eventData) {
-		const {dispatch} = this.props;
+		const { dispatch } = this.props;
 		const localEvents = db.getLocalEvents();
 		const localEventsCount = Object.keys(localEvents).length;
 		const userType = getUserType() || setUserType(INDEPENDENT);

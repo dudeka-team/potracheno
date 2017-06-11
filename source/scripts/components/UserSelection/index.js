@@ -1,6 +1,6 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import Wrapper from '../Wrapper';
@@ -45,7 +45,7 @@ const UserSelection = React.createClass({
 	},
 
 	userNameChangeHandler(event) {
-		const {currentEvent} = this.props;
+		const { currentEvent } = this.props;
 		const newUserName = event.target.value;
 		const names = currentEvent.participants.map(name => name.toLowerCase());
 		this.setState({
@@ -56,12 +56,12 @@ const UserSelection = React.createClass({
 	},
 
 	addNewParticipant() {
-		const {name} = this.state;
+		const { name } = this.state;
 
 		if (name === '') {
-			this.setState({isEmpty: true});
+			this.setState({ isEmpty: true });
 		} else {
-			const {id, currentEvent} = this.props;
+			const { id, currentEvent } = this.props;
 			const newParticipantsList = currentEvent.participants.slice();
 
 			newParticipantsList.push(name);
@@ -117,8 +117,8 @@ const UserSelection = React.createClass({
 	},
 
 	render() {
-		const {props, state} = this;
-		const {currentEvent} = props;
+		const { props, state } = this;
+		const { currentEvent } = props;
 
 		if (!currentEvent) {
 			return this.renderPreloader();
@@ -162,7 +162,7 @@ const UserSelection = React.createClass({
 });
 
 
-function mapStateToProps({events}) {
+function mapStateToProps({ events }) {
 	return {
 		currentEvent: events.currentEvent,
 		isFetchingEvent: events.isFetchingEvent,

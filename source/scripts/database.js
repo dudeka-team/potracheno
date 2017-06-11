@@ -48,7 +48,7 @@ Database.saveEvent = function saveEvent(data) {
 };
 
 Database.updateEvent = function updateEvent(payload) {
-	const {id, data} = payload;
+	const { id, data } = payload;
 	return firebase
 		.database()
 		.ref(`events/${id}`)

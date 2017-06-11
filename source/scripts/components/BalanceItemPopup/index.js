@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import withRouter from 'react-router/lib/withRouter';
 import assign from 'object-assign';
 import TextField from 'material-ui/TextField';
@@ -16,8 +16,8 @@ const BalanceItemPopup = React.createClass({
 	},
 
 	amountChange(e) {
-		const {debt} = this.props;
-		let {value} = e.target;
+		const { debt } = this.props;
+		let { value } = e.target;
 		value = Number(value);
 		this.setState({
 			value,
@@ -26,16 +26,16 @@ const BalanceItemPopup = React.createClass({
 	},
 
 	payDebt() {
-		const {state, props} = this;
+		const { state, props } = this;
 
 		if (!this.state.isAmountInvalid) {
-			props.onSubmit(assign({}, props.debt, {sum: state.value}));
+			props.onSubmit(assign({}, props.debt, { sum: state.value }));
 		}
 	},
 
 	render() {
-		const {props, state} = this;
-		const {debt} = props;
+		const { props, state } = this;
+		const { debt } = props;
 		return (
 			<Popup
 				unBordered
@@ -65,8 +65,8 @@ const BalanceItemPopup = React.createClass({
 						<TextField
 							value={state.value}
 							name="repay-debt-textfield"
-							underlineFocusStyle={{borderColor: '#ffe151'}}
-							style={{width: '100%'}}
+							underlineFocusStyle={{ borderColor: '#ffe151' }}
+							style={{ width: '100%' }}
 							type="number"
 							onChange={this.amountChange}
 							errorText={state.isAmountInvalid &&
@@ -79,7 +79,7 @@ const BalanceItemPopup = React.createClass({
 	},
 });
 
-function mapStateToProps({events}) {
+function mapStateToProps({ events }) {
 	return {
 		currentEvent: events.currentEvent,
 		isFetchingEvent: events.isFetchingEvent,

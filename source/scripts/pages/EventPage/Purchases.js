@@ -1,6 +1,6 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 
 import Wrapper from '../../components/Wrapper';
@@ -43,17 +43,17 @@ const EventPurchasesPage = React.createClass({
 	},
 
 	goToNewPurchase() {
-		const {props} = this;
+		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/new`);
 	},
 
 	goToPurchase(purchaseId) {
-		const {props} = this;
+		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
 	},
 
 	renderPopup() {
-		const {state, props} = this;
+		const { state, props } = this;
 		return (
 			<Popup
 				title={state.openedPurchase.name}
@@ -69,8 +69,8 @@ const EventPurchasesPage = React.createClass({
 	},
 
 	renderPurchases() {
-		const {props} = this;
-		const {localEvents, eventParticipants} = props;
+		const { props } = this;
+		const { localEvents, eventParticipants } = props;
 		const currentUser = localEvents[props.eventId];
 
 		return props.purchases
@@ -81,7 +81,7 @@ const EventPurchasesPage = React.createClass({
 				if (currentUser === payerName) {
 					payerName += ' (Вы)';
 				}
-				const {participants} = purchase;
+				const { participants } = purchase;
 				return (
 					<PurchaseListItem
 						key={purchase.id}
@@ -104,7 +104,7 @@ const EventPurchasesPage = React.createClass({
 	},
 
 	render() {
-		const {props} = this;
+		const { props } = this;
 		return (
 			<Wrapper>
 				{this.state.popupOpened && this.renderPopup()}
@@ -116,7 +116,7 @@ const EventPurchasesPage = React.createClass({
 
 				<Fab
 					backgroundColor="#ffe151"
-					iconStyle={{fill: '#333'}}
+					iconStyle={{ fill: '#333' }}
 					onClick={this.goToNewPurchase}
 				>
 					<AddShoppingCart />
@@ -126,7 +126,7 @@ const EventPurchasesPage = React.createClass({
 	},
 });
 
-function mapStateToProps({events}) {
+function mapStateToProps({ events }) {
 	return {
 		currentEvent: events.currentEvent,
 		localEvents: events.localEvents,

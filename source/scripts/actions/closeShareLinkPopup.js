@@ -1,4 +1,4 @@
-import {CLOSE_SHARE_LINK_POPUP} from '../constants';
+import { CLOSE_SHARE_LINK_POPUP } from '../constants';
 
 export default function showShareLinkPopup() {
 	return {

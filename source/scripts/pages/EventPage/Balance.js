@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Portal from 'react-portal';
 import assign from 'object-assign';
 
@@ -14,18 +14,18 @@ import Poster from '../../components/Poster';
 import Wrapper from '../../components/Wrapper';
 
 
-import {getEventBalance, getEventsParticipantsDebts} from '../../modules/balance';
+import { getEventBalance, getEventsParticipantsDebts } from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
 
-import {createEventActionAsync, eventActionTypes} from '../../actions/createEventAction';
+import { createEventActionAsync, eventActionTypes } from '../../actions/createEventAction';
 
 
 const BalancePage = React.createClass({
 	getInitialState() {
-		const {currentEvent} = this.props;
+		const { currentEvent } = this.props;
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => assign({config}, currentEvent.actions[config]));
+			.map((config) => assign({ config }, currentEvent.actions[config]));
 		return {
 			actions,
 			showPopup: false,
@@ -34,7 +34,7 @@ const BalancePage = React.createClass({
 	},
 
 	repayDebtHandler(debt) {
-		const {props} = this;
+		const { props } = this;
 		let oldRepayedFrom = 0;
 		let oldRepayedTo = 0;
 
@@ -124,7 +124,7 @@ const BalancePage = React.createClass({
 	},
 
 	render() {
-		const {currentUser, eventId} = this.props;
+		const { currentUser, eventId } = this.props;
 		const eventsParticipantsDebts =
 			getEventsParticipantsDebts(
 				getEventBalance(this.props.eventsById[eventId]),
@@ -247,7 +247,7 @@ const BalancePage = React.createClass({
 	},
 });
 
-function mapStateToProps({events}) {
+function mapStateToProps({ events }) {
 	return {
 		eventsById: events.eventsById,
 		currentEvent: events.currentEvent,

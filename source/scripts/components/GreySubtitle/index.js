@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
 export default function GreySubtitle(props) {
 	const classes = ['grey-subtitle'];

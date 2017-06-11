@@ -1,11 +1,11 @@
 import React from 'react';
 import Hammer from 'react-hammerjs';
 
-import {DRAWER_SWIPE_AREA_WIDTH} from '../../constants';
+import { DRAWER_SWIPE_AREA_WIDTH } from '../../constants';
 
 const Tabs = React.createClass({
 	getInitialState() {
-		const {defaultTabIndex, config} = this.props;
+		const { defaultTabIndex, config } = this.props;
 		let activeTabIndex = 0;
 
 		if (
@@ -22,7 +22,7 @@ const Tabs = React.createClass({
 	},
 
 	handleTabChange(event) {
-		const {target} = event;
+		const { target } = event;
 		const targetTabIndex = parseInt(target.getAttribute('data-tab'), 10);
 
 		if (typeof targetTabIndex === 'number') {
@@ -36,8 +36,8 @@ const Tabs = React.createClass({
 		const swipeStartX = event.center.x - event.deltaX;
 		if ((window.innerWidth - swipeStartX) < DRAWER_SWIPE_AREA_WIDTH) return;
 
-		const {activeTabIndex} = this.state;
-		const {config} = this.props;
+		const { activeTabIndex } = this.state;
+		const { config } = this.props;
 		let newActiveTabIndex = activeTabIndex;
 
 		if (event.direction === 4 && activeTabIndex > 0) {
@@ -54,7 +54,7 @@ const Tabs = React.createClass({
 	},
 
 	computeTabsTransform() {
-		const {activeTabIndex} = this.state;
+		const { activeTabIndex } = this.state;
 		const transform = `translateX(-${100 * activeTabIndex}%)`;
 		return {
 			transform,
@@ -65,8 +65,8 @@ const Tabs = React.createClass({
 	},
 
 	render() {
-		const {config} = this.props;
-		const {activeTabIndex} = this.state;
+		const { config } = this.props;
+		const { activeTabIndex } = this.state;
 
 		return (
 			<div className="tabs">

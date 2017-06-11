@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 
 const Popup = React.createClass({
@@ -17,8 +17,8 @@ const Popup = React.createClass({
 	},
 
 	render() {
-		const {props} = this;
-		const {okButton, cancelButton, unBordered, largeHeader} = props;
+		const { props } = this;
+		const { okButton, cancelButton, unBordered, largeHeader } = props;
 		const rootClasses = ['popup'];
 		const headerClasses = ['popup__header'];
 		if (largeHeader) headerClasses.push('popup__header_large');
@@ -58,7 +58,7 @@ const Popup = React.createClass({
 });
 
 function PopupFooter(props) {
-	const {okButton, cancelButton, unBordered} = props;
+	const { okButton, cancelButton, unBordered } = props;
 
 	return (
 		<div className={`popup__footer ${unBordered && 'popup__footer_unbordered'}`}>

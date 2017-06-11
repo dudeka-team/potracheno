@@ -10,7 +10,7 @@ export default function HintPopup(props) {
 					<div className="hint-popup__icon-wrapper">
 						<div className="hint-popup__icon" />
 					</div>
-					<div className="hint-popup__text" dangerouslySetInnerHTML={{__html: props.text}} />
+					<div className="hint-popup__text" dangerouslySetInnerHTML={{ __html: props.text }} />
 					<div
 						className="hint-popup__bottom-text"
 						onClick={props.closeHintPopup}

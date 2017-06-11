@@ -1,9 +1,9 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
 export default function FlexContainer(props) {
 	const baseClass = 'flex';
 	const classes = [baseClass];
-	const {alignItems, justifyContent, flexDirection, fullHeight} = props;
+	const { alignItems, justifyContent, flexDirection, fullHeight } = props;
 
 	if (fullHeight) {
 		classes.push('flex_full-height');

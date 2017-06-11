@@ -1,15 +1,15 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import assign from 'object-assign';
 import CircularProgress from 'material-ui/CircularProgress';
 import Drawer from 'material-ui/Drawer';
 import Portal from 'react-portal';
 
-import {Page} from '../../components/Page';
+import { Page } from '../../components/Page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
-import {TopBar, TopBarHeading, TopBarIcon} from '../../components/TopBar';
+import { TopBar, TopBarHeading, TopBarIcon } from '../../components/TopBar';
 import Menu from '../../components/Menu';
 import Popup from '../../components/Popup';
 import PopupPoster from '../../components/PopupPoster';
@@ -40,7 +40,7 @@ const EventPage = React.createClass({
 	},
 
 	componentDidMount() {
-		const {id, dispatch} = this.props;
+		const { id, dispatch } = this.props;
 		dispatch(fetchEventData(id));
 	},
 
@@ -49,7 +49,7 @@ const EventPage = React.createClass({
 	},
 
 	toggleMenu() {
-		this.setState({menuOpen: !this.state.menuOpen});
+		this.setState({ menuOpen: !this.state.menuOpen });
 	},
 
 	openSharePopup() {
@@ -73,12 +73,12 @@ const EventPage = React.createClass({
 	},
 
 	goToEdit() {
-		const {router} = this.props;
+		const { router } = this.props;
 		router.push(`/events/${this.props.id}/edit`);
 	},
 
 	handleRelogin() {
-		const {id, dispatch} = this.props;
+		const { id, dispatch } = this.props;
 		dispatch(relogin(id));
 	},
 
@@ -98,7 +98,7 @@ const EventPage = React.createClass({
 	},
 
 	handleCopy() {
-		const {props} = this;
+		const { props } = this;
 		const range = document.createRange();
 		const selection = window.getSelection();
 		selection.removeAllRanges();
@@ -140,7 +140,7 @@ const EventPage = React.createClass({
 	renderDrawer(currentEvent, currentUserName, subtitle) {
 		return (
 			<Drawer
-				onRequestChange={(menuOpen) => this.setState({menuOpen})}
+				onRequestChange={(menuOpen) => this.setState({ menuOpen })}
 				docked={false}
 				swipeAreaWidth={DRAWER_SWIPE_AREA_WIDTH}
 				open={this.state.menuOpen}
@@ -173,7 +173,7 @@ const EventPage = React.createClass({
 	},
 
 	renderSharePopup() {
-		const {props} = this;
+		const { props } = this;
 		// eslint-disable-next-line max-len
 		const annotation = 'Поделитесь ссылкой на мероприятие с друзьями, чтобы они могли вести учёт покупок вместе с вами:';
 
@@ -206,7 +206,7 @@ const EventPage = React.createClass({
 	},
 
 	renderHintPopup() {
-		const {state} = this;
+		const { state } = this;
 		// eslint-disable-next-line max-len
 		const annotation = 'Для установки приложения нажмите «Добавить на&nbsp;главный экран» или «На&nbsp;экран домой» в&nbsp;меню браузера';
 		return (
@@ -221,14 +221,14 @@ const EventPage = React.createClass({
 	},
 
 	render() {
-		const {props, state} = this;
-		const {currentEvent, currentUserName, isFetchingEvent} = props;
+		const { props, state } = this;
+		const { currentEvent, currentUserName, isFetchingEvent } = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
-			.map((purchaseId) => assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
+			.map((purchaseId) => assign({ id: purchaseId }, currentEvent.purchases[purchaseId]));
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => assign({config}, currentEvent.actions[config]));
+			.map((config) => assign({ config }, currentEvent.actions[config]));
 
 		if (isFetchingEvent) {
 			return this.renderPreloader();
@@ -284,7 +284,7 @@ const EventPage = React.createClass({
 	},
 });
 
-function mapStateToProps({events}) {
+function mapStateToProps({ events }) {
 	return {
 		currentEvent: events.currentEvent,
 		currentUserName: events.currentUserName,

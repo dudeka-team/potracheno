@@ -10,7 +10,7 @@ const UserSelectionPopup = React.createClass({
 	},
 
 	render() {
-		const {props, state} = this;
+		const { props, state } = this;
 		let errorText;
 
 		if (state.isDuplicate) {
@@ -24,8 +24,8 @@ const UserSelectionPopup = React.createClass({
 				<TextField
 					className="new-participant-name"
 					type="text"
-					underlineFocusStyle={{borderColor: '#ffe151'}}
-					style={{width: '100%'}}
+					underlineFocusStyle={{ borderColor: '#ffe151' }}
+					style={{ width: '100%' }}
 					onChange={props.userNameChange}
 					errorText={errorText}
 				/>

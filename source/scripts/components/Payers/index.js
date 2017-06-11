@@ -3,7 +3,7 @@ import UniversalListItem from '../UniversalListItem';
 
 const Payers = React.createClass({
 	render() {
-		const {props} = this;
+		const { props } = this;
 		return (
 			<div className="payers">
 				{props.participants.map((user) => (

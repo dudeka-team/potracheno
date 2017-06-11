@@ -11,7 +11,6 @@
       "SwitchCase": 1
     }],
     "max-len":"warn",
-    "object-curly-spacing": ["error", "never"],
     "no-use-before-define": ["error", "nofunc"],
     "react/require-extension": "off",
     "react/jsx-indent": [2, "tab"],

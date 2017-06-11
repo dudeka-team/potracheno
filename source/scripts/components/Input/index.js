@@ -10,17 +10,17 @@ const Input = React.createClass({
 
 	componentWillReceiveProps(newProps) {
 		if (newProps.value) {
-			this.setState({value: newProps.value});
+			this.setState({ value: newProps.value });
 		}
 	},
 
 	handleChange(event) {
-		this.setState({value: event.target.value});
+		this.setState({ value: event.target.value });
 		this.props.onChange(event);
 	},
 
 	render() {
-		const {props, state} = this;
+		const { props, state } = this;
 		const classList = ['Input'];
 		if (props.size) classList.push(`Input_${props.size}`);
 		if (props.marginTopSmall) classList.push('Input_margin-top-small');
@@ -40,8 +40,8 @@ const Input = React.createClass({
 					type={props.type ? props.type : 'text'}
 					value={this.state.value}
 					onChange={this.handleChange}
-					onFocus={() => this.setState({focused: true})}
-					onBlur={() => this.setState({focused: false})}
+					onFocus={() => this.setState({ focused: true })}
+					onBlur={() => this.setState({ focused: false })}
 					disabled={props.disabled}
 					placeholder={props.hint}
 					disabled={props.disabled}

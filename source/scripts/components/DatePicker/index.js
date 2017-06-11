@@ -12,7 +12,7 @@ export default React.createClass({
 	},
 
 	render() {
-		const {props} = this;
+		const { props } = this;
 		const id = shortid.generate();
 
 		return (

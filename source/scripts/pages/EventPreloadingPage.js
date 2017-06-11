@@ -1,6 +1,6 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import Wrapper from '../components/Wrapper';
 import EventPage from './EventPage';
@@ -20,7 +20,7 @@ import {
 
 const EventPreloadingPage = React.createClass({
 	componentDidMount() {
-		const {params, dispatch} = this.props;
+		const { params, dispatch } = this.props;
 		dispatch(fetchEventData(params.id));
 		dispatch(getLocalEvents());
 
@@ -34,8 +34,8 @@ const EventPreloadingPage = React.createClass({
 	},
 
 	render() {
-		const {props} = this;
-		const {id} = props.params;
+		const { props } = this;
+		const { id } = props.params;
 		return (
 			<Wrapper>
 				{
@@ -49,7 +49,7 @@ const EventPreloadingPage = React.createClass({
 	},
 });
 
-function mapStateToProps({events}) {
+function mapStateToProps({ events }) {
 	return {
 		currentEvent: events.currentEvent,
 		isFetchingEvent: events.isFetchingEvent,

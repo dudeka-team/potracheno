@@ -17,7 +17,7 @@ export default function updateEvent(payload) {
 				.updateEvent(payload)
 				.then(resolve)
 				.then(() => {
-					const {currentUserNameChangeData} = payload;
+					const { currentUserNameChangeData } = payload;
 
 					if (currentUserNameChangeData) {
 						dispatch(setLocalEvents(payload.id, currentUserNameChangeData.updated));

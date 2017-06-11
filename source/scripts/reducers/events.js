@@ -1,4 +1,4 @@
-import {handleActions} from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import assign from 'object-assign';
 
 import {
@@ -56,7 +56,7 @@ export default handleActions({
 		isFetchingEvent: false,
 	}),
 
-	[FETCH_EVENT_DATA_SUCCESS]: (state, {payload}) => assign({}, state, {
+	[FETCH_EVENT_DATA_SUCCESS]: (state, { payload }) => assign({}, state, {
 		eventsById: assign({}, state.eventsById, {
 			[payload.key]: payload.value,
 		}),
@@ -76,7 +76,7 @@ export default handleActions({
 		isFetchingEvents: true,
 	}),
 
-	[READ_EVENTS_SUCCESS]: (state, {payload}) => assign({}, state, {
+	[READ_EVENTS_SUCCESS]: (state, { payload }) => assign({}, state, {
 		events: Object.keys(payload),
 		eventsById: payload,
 		isFetchingEvents: false,
@@ -85,11 +85,11 @@ export default handleActions({
 	[READ_EVENTS_ERROR]: (state) => assign({}, state, {
 		isFetchingEvents: false,
 	}),
-	[CHANGE_CURRENT_EVENT]: (state, {payload}) => assign({}, state, {
+	[CHANGE_CURRENT_EVENT]: (state, { payload }) => assign({}, state, {
 		currentEvent: state.eventsById[payload],
 	}),
 
-	[CREATE_PURCHASE]: (state, {payload}) => {
+	[CREATE_PURCHASE]: (state, { payload }) => {
 		const currentEvent = assign({}, state.currentEvent);
 		currentEvent.purchases = assign({}, currentEvent.purchases, {
 			[payload.key]: payload.purchaseData,
@@ -102,7 +102,7 @@ export default handleActions({
 		});
 	},
 
-	[CREATE_EVENT_ACTION]: (state, {payload}) => {
+	[CREATE_EVENT_ACTION]: (state, { payload }) => {
 		const currentEvent = assign({}, state.currentEvent);
 		currentEvent.actions = assign({}, currentEvent.actions, {
 			[payload.key]: payload.eventActionInfo,
@@ -116,19 +116,19 @@ export default handleActions({
 	},
 
 
-	[GET_LOCAL_EVENTS]: (state, {payload}) => assign({}, state, {localEvents: payload}),
+	[GET_LOCAL_EVENTS]: (state, { payload }) => assign({}, state, { localEvents: payload }),
 
-	[SET_LOCAL_EVENTS]: (state, {payload}) => assign({}, state, {localEvents: payload}),
+	[SET_LOCAL_EVENTS]: (state, { payload }) => assign({}, state, { localEvents: payload }),
 
-	[CHANGE_PURCHASE]: (state, {payload}) => {
-		const {eventId, purchase} = payload;
-		const {eventsById} = state;
+	[CHANGE_PURCHASE]: (state, { payload }) => {
+		const { eventId, purchase } = payload;
+		const { eventsById } = state;
 		const participants = purchase.participants.slice();
-		const changedPurchase = assign({}, purchase, {participants});
+		const changedPurchase = assign({}, purchase, { participants });
 
 		const changedEvents = assign({}, eventsById, {
 			[eventId]: assign({}, eventsById[eventId], {
-				purchases: assign({}, eventsById[eventId].purchases, {changedPurchase}),
+				purchases: assign({}, eventsById[eventId].purchases, { changedPurchase }),
 			}),
 		});
 
@@ -137,8 +137,8 @@ export default handleActions({
 		});
 	},
 
-	[REPAY_DEBT_SUCCESS]: (state, {payload}) => {
-		const {eventId, sum, name} = payload;
+	[REPAY_DEBT_SUCCESS]: (state, { payload }) => {
+		const { eventId, sum, name } = payload;
 
 		const updatedEvent = assign({}, state.eventsById[eventId], {
 			repayedDebts: assign({}, state.eventsById[eventId].repayedDebts, {
@@ -154,24 +154,24 @@ export default handleActions({
 		});
 	},
 
-	[FETCH_PURCHASE_DELETE]: (state, {payload}) => {
-		const {eventId, purchaseId} = payload;
-		const {eventsById} = state;
+	[FETCH_PURCHASE_DELETE]: (state, { payload }) => {
+		const { eventId, purchaseId } = payload;
+		const { eventsById } = state;
 
 		const purchases = assign({}, eventsById[eventId].purchases);
 		delete purchases[purchaseId];
 
-		const changedEvent = assign({}, eventsById[eventId], {purchases});
-		const changedEvents = assign({}, eventsById, {[eventId]: changedEvent});
+		const changedEvent = assign({}, eventsById[eventId], { purchases });
+		const changedEvents = assign({}, eventsById, { [eventId]: changedEvent });
 
 		return assign({}, state, {
 			eventsById: assign({}, changedEvents),
 		});
 	},
 
-	[FETCH_UPDATE_PARTICIPANTS_SUCCESS]: (state, {payload}) => {
-		const {eventId, participantsList} = payload;
-		const {eventsById} = state;
+	[FETCH_UPDATE_PARTICIPANTS_SUCCESS]: (state, { payload }) => {
+		const { eventId, participantsList } = payload;
+		const { eventsById } = state;
 		const changedEvent = assign({}, eventsById[eventId], {
 			participants: participantsList,
 		});

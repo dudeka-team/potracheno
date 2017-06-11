@@ -1,12 +1,12 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import EventStatus from '../EventStatus';
 import GreySubtitle from '../GreySubtitle';
 import UniversalListItem from '../UniversalListItem';
 
 const Menu = React.createClass({
 	renderControls() {
-		const {props} = this;
-		const {currentEvent, currentUserName} = props;
+		const { props } = this;
+		const { currentEvent, currentUserName } = props;
 		const isManager = currentUserName === currentEvent.manager;
 		return (
 			<div className="menu__top-bar">
@@ -27,8 +27,8 @@ const Menu = React.createClass({
 	},
 
 	renderParticipant(name) {
-		const {currentEvent, currentUserName} = this.props;
-		const {manager} = currentEvent;
+		const { currentEvent, currentUserName } = this.props;
+		const { manager } = currentEvent;
 		let displayName = name;
 
 		if (name === currentUserName) {
@@ -48,8 +48,8 @@ const Menu = React.createClass({
 	},
 
 	render() {
-		const {props} = this;
-		const {currentEvent} = props;
+		const { props } = this;
+		const { currentEvent } = props;
 		const classes = ['menu', `menu_${props.menuOpen ? 'open' : 'closed'}`];
 
 		return (

@@ -1,5 +1,4 @@
-// import browserHistory from 'react-router/lib/browserHistory';
-import {push} from 'react-router-redux/lib/actions';
+import { push } from 'react-router-redux/lib/actions';
 
 import {
 	CREATE_EVENT,

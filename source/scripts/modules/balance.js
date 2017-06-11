@@ -3,7 +3,7 @@ import assign from 'object-assign';
 export function getEventBalance(currentEvent) {
 	const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
-			.map((purchaseId) => assign({id: purchaseId}, currentEvent.purchases[purchaseId]));
+			.map((purchaseId) => assign({ id: purchaseId }, currentEvent.purchases[purchaseId]));
 
 	const participantsBalance = {};
 	//	вычисление баланса мероприятия для каждого учасника

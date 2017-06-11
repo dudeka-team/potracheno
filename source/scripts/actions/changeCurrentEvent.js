@@ -1,4 +1,4 @@
-import {CHANGE_CURRENT_EVENT} from '../constants';
+import { CHANGE_CURRENT_EVENT } from '../constants';
 
 export default function changeCurrentEvent(payload) {
 	return {

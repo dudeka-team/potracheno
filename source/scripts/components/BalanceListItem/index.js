@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import sumFormat from '../../modules/sumFormat';
 
 export default function BalanceListItem(props) {

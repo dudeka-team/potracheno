@@ -1,17 +1,17 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import {Page, PageContent} from '../components/Page';
-import {TopBar, TopBarHeading, TopBarIcon} from '../components/TopBar';
+import { Page, PageContent } from '../components/Page';
+import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import ActionButton from '../components/ActionButton';
 import readEvents from '../actions/readEvents';
 import FlexContainer from '../components/FlexContainer';
 import Poster from '../components/Poster';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
-import {getEventBalance} from '../modules/balance';
+import { getEventBalance } from '../modules/balance';
 import getLocalEvents from '../actions/getLocalEvents';
 
 
@@ -23,7 +23,7 @@ const EventsPage = React.createClass({
 	},
 
 	componentDidMount() {
-		const {props} = this;
+		const { props } = this;
 		props.dispatch(getLocalEvents());
 		props.dispatch(readEvents());
 	},
@@ -42,8 +42,8 @@ const EventsPage = React.createClass({
 	},
 
 	renderEventPreview(eventData) {
-		const {eventId, data} = eventData;
-		const {start, end} = data;
+		const { eventId, data } = eventData;
+		const { start, end } = data;
 		const currentBalance =
 			getEventBalance(data)[this.props.localEvents[eventId]];
 
@@ -52,7 +52,7 @@ const EventsPage = React.createClass({
 				<EventsListItem
 					title={data.name}
 					membersCount={data.participants.length}
-					datePeriod={{start, end}}
+					datePeriod={{ start, end }}
 					sum={Math.round(currentBalance || 0)}
 					debtType={
 						((currentBalance > 0) && 'positive')
@@ -97,9 +97,9 @@ const EventsPage = React.createClass({
 	},
 
 	render() {
-		const {props} = this;
+		const { props } = this;
 		return (
-			<Page style={{paddingBottom: '64px'}}>
+			<Page style={{ paddingBottom: '64px' }}>
 				<TopBar bordered>
 					<TopBarHeading title="Мероприятия" />
 					<TopBarIcon icon="mail" onClick={this.goToFeedback} />
@@ -124,7 +124,7 @@ function getEventData(eventsById) {
 	});
 }
 
-const mapStateToProps = ({events}) => ({
+const mapStateToProps = ({ events }) => ({
 	isFetchingEvents: events.isFetchingEvents,
 	events: events.events,
 	eventsById: events.eventsById,

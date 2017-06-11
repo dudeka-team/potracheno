@@ -2,7 +2,7 @@ import React from 'react';
 
 const EventActionItem = React.createClass({
 	renderAction(actionType) {
-		const {props} = this;
+		const { props } = this;
 		const {
 			purchaseName,
 			currentUser,
@@ -184,8 +184,8 @@ const EventActionItem = React.createClass({
 	},
 
 	render() {
-		const {props} = this;
-		const {icon, date, sum, debtSum, actionType} = props;
+		const { props } = this;
+		const { icon, date, sum, debtSum, actionType } = props;
 
 		return (
 			<div className="event-action">

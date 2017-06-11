@@ -1,14 +1,14 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import shortid from 'shortid';
 import withRouter from 'react-router/lib/withRouter';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import assign from 'object-assign';
 
 import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
 
-import {TopBar, TopBarHeading, TopBarIcon} from '../TopBar';
-import {Page, PageContent} from '../Page';
+import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
+import { Page, PageContent } from '../Page';
 import FlexContainer from '../FlexContainer';
 import Separator from '../Separator';
 import GreySubtitle from '../GreySubtitle';
@@ -35,7 +35,7 @@ const EditEvent = React.createClass({
 	},
 
 	getInitialState() {
-		const {props} = this;
+		const { props } = this;
 		const now = new Date();
 		const participants = [];
 
@@ -50,8 +50,8 @@ const EditEvent = React.createClass({
 		this.initialParticipants = {};
 
 		participants
-			.filter(({name}) => name)
-			.forEach(({id, name}) => {
+			.filter(({ name }) => name)
+			.forEach(({ id, name }) => {
 				this.initialParticipants[id] = name;
 			});
 
@@ -67,12 +67,12 @@ const EditEvent = React.createClass({
 	},
 
 	goBack() {
-		const {prevUrl, router} = this.props;
+		const { prevUrl, router } = this.props;
 		router.push(prevUrl);
 	},
 
 	isSaveAvailable() {
-		const {state} = this;
+		const { state } = this;
 
 		const hasName = state.name.trim().length > 2;
 		if (!hasName) return false;
@@ -82,11 +82,11 @@ const EditEvent = React.createClass({
 
 		const participants = state.participants
 			.filter(Boolean)
-			.filter(({name}) => name.trim())
+			.filter(({ name }) => name.trim())
 			.map(markDuplicateParticipants([state.manager]));
 
 		const participantsAreUnique = participants.length && !participants
-			.filter(({isDuplicate}) => isDuplicate)
+			.filter(({ isDuplicate }) => isDuplicate)
 			.length;
 		if (!participantsAreUnique) return false;
 
@@ -94,12 +94,12 @@ const EditEvent = React.createClass({
 	},
 
 	save() {
-		const {props, state} = this;
-		const {initialParticipants} = this;
-		const participants = state.participants.filter(({name}) => name.trim() !== '');
+		const { props, state } = this;
+		const { initialParticipants } = this;
+		const participants = state.participants.filter(({ name }) => name.trim() !== '');
 		const participantsByIds = {};
 
-		participants.forEach(({id, name}) => {
+		participants.forEach(({ id, name }) => {
 			participantsByIds[id] = name;
 		});
 
@@ -114,9 +114,9 @@ const EditEvent = React.createClass({
 				id,
 				name: initialParticipants[id],
 			}))
-			.filter(({name}) => deletedParticipants.indexOf(name) === -1)
-			.filter(({id, name}) => participantsByIds[id] !== name)
-			.map(({id, name}) => ({
+			.filter(({ name }) => deletedParticipants.indexOf(name) === -1)
+			.filter(({ id, name }) => participantsByIds[id] !== name)
+			.map(({ id, name }) => ({
 				old: name,
 				updated: participantsByIds[id],
 			}));
@@ -133,7 +133,7 @@ const EditEvent = React.createClass({
 			manager: state.manager,
 			start: state.start.valueOf(),
 			end: state.end.valueOf(),
-			participants: [state.manager].concat(participants.map(({name}) => name.trim())),
+			participants: [state.manager].concat(participants.map(({ name }) => name.trim())),
 			deletedParticipants,
 			updatedParticipants,
 		});
@@ -146,7 +146,7 @@ const EditEvent = React.createClass({
 	},
 
 	handleStartDateChange(event) {
-		const {state} = this;
+		const { state } = this;
 		const start = new Date(event.target.value).valueOf();
 
 		this.setState({
@@ -168,7 +168,7 @@ const EditEvent = React.createClass({
 	},
 
 	handleEndDateBlur(event) {
-		const {state} = this;
+		const { state } = this;
 		const end = new Date(event.target.value).valueOf() || new Date(state.start).valueOf();
 
 		this.setState({
@@ -189,8 +189,8 @@ const EditEvent = React.createClass({
 	},
 
 	handleParticipantChange(id, name) {
-		const {state, props, initialParticipants} = this;
-		const {hasRepayedDebts} = props;
+		const { state, props, initialParticipants } = this;
+		const { hasRepayedDebts } = props;
 		const updatedParticipants = state.participants
 			.slice()
 			.map((participant) => {
@@ -209,7 +209,7 @@ const EditEvent = React.createClass({
 	},
 
 	handleParticipantBlur() {
-		const {initialParticipants} = this;
+		const { initialParticipants } = this;
 		let result;
 
 		if (this.props.hasRepayedDebts) {
@@ -228,7 +228,7 @@ const EditEvent = React.createClass({
 		}
 
 		result = result
-			.filter(({name}) => name.trim())
+			.filter(({ name }) => name.trim())
 			.map(markDuplicateParticipants([this.state.manager]));
 
 		this.setState({
@@ -238,7 +238,7 @@ const EditEvent = React.createClass({
 
 	renderParticipants() {
 		return this.state.participants.map((participant) => {
-			const {id, name, isDuplicate, showRemovalWarning} = participant;
+			const { id, name, isDuplicate, showRemovalWarning } = participant;
 			let errorText;
 
 			if (isDuplicate) {
@@ -252,13 +252,13 @@ const EditEvent = React.createClass({
 			return (
 				<div key={id}>
 					<TextField
-						underlineFocusStyle={{borderColor: '#ffe151'}}
+						underlineFocusStyle={{ borderColor: '#ffe151' }}
 						fullWidth
 						hintText={'Имя участника'}
 						value={name}
 						errorText={errorText}
 						onBlur={this.handleParticipantBlur}
-						hintStyle={{color: '#949A9E'}}
+						hintStyle={{ color: '#949A9E' }}
 						onChange={(event) => this.handleParticipantChange(id, event.target.value)}
 					/>
 				</div>
@@ -267,7 +267,7 @@ const EditEvent = React.createClass({
 	},
 
 	renderTopBar() {
-		const {props} = this;
+		const { props } = this;
 
 		return (
 			<TopBar bordered>
@@ -287,7 +287,7 @@ const EditEvent = React.createClass({
 	},
 
 	renderDatesInputs() {
-		const {state} = this;
+		const { state } = this;
 
 		return (
 			<FlexContainer justifyContent="space-between">
@@ -313,37 +313,37 @@ const EditEvent = React.createClass({
 	},
 
 	render() {
-		const {state} = this;
-		const labelStyle = {color: '#949A9E'};
-		const underLineStyle = {borderColor: '#ffe151'};
+		const { state } = this;
+		const labelStyle = { color: '#949A9E' };
+		const underLineStyle = { borderColor: '#ffe151' };
 		return (
 			<Page>
 				{this.renderTopBar()}
-				<PageContent style={{padding: '8px 1rem 5rem'}}>
+				<PageContent style={{ padding: '8px 1rem 5rem' }}>
 					<TextField
 						floatingLabelFocusStyle={labelStyle}
 						underlineFocusStyle={underLineStyle}
 						fullWidth
-						floatingLabelStyle={{color: '#949A9E'}}
+						floatingLabelStyle={{ color: '#949A9E' }}
 						floatingLabelText="Название мероприятия"
 						value={state.name}
-						hintStyle={{color: '#949A9E'}}
+						hintStyle={{ color: '#949A9E' }}
 						onChange={this.handleEventNameChange}
 					/>
 					{this.renderDatesInputs()}
-					<Separator style={{margin: '0 -1rem', width: 'calc(100% + 32px)'}} />
+					<Separator style={{ margin: '0 -1rem', width: 'calc(100% + 32px)' }} />
 					<GreySubtitle
-						style={{margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0'}}
+						style={{ margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0' }}
 						text="Добавить участников"
 					/>
 					<TextField
 						floatingLabelFocusStyle={labelStyle}
 						underlineFocusStyle={underLineStyle}
 						fullWidth
-						style={{marginTop: '12px'}}
+						style={{ marginTop: '12px' }}
 						hintText="Ваше имя"
 						value={state.manager}
-						hintStyle={{color: '#949A9E'}}
+						hintStyle={{ color: '#949A9E' }}
 						onChange={this.handleManagerChange}
 					/>
 					{this.renderParticipants()}
@@ -356,7 +356,7 @@ const EditEvent = React.createClass({
 function keepOneEmptyItem(participants) {
 	const result = participants.slice();
 
-	if (result.filter(({name}) => !name).length === 0) {
+	if (result.filter(({ name }) => !name).length === 0) {
 		result.push(createParticipant());
 	}
 
@@ -388,7 +388,7 @@ function markDuplicateParticipants(additionalNames) {
 	};
 }
 
-function mapStateToProps({events}) {
+function mapStateToProps({ events }) {
 	return {
 		isCreatingEvent: events.isCreatingEvent,
 	};

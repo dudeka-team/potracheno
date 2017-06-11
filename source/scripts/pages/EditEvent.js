@@ -1,6 +1,6 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import assign from 'object-assign';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -10,11 +10,11 @@ import updateEvent from '../actions/updateEvent';
 import FlexContainer from '../components/FlexContainer';
 import EditEvent from '../components/EditEvent';
 
-import {createEventActionAsync, eventActionTypes, getDiff} from '../actions/createEventAction';
+import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/createEventAction';
 
 const EditEventPage = React.createClass({
 	componentDidMount() {
-		const {props} = this;
+		const { props } = this;
 
 		if (!props.currentEvent) {
 			props.dispatch(fetchEventData(props.params.id));
@@ -22,7 +22,7 @@ const EditEventPage = React.createClass({
 	},
 
 	save(updatedEvent) {
-		const {currentEvent, currentUserName, params, dispatch} = this.props;
+		const { currentEvent, currentUserName, params, dispatch } = this.props;
 		const {
 			manager,
 			participants,
@@ -45,7 +45,7 @@ const EditEventPage = React.createClass({
 					.filter((name) => deletedParticipants.indexOf(name) === -1)
 					// заменяем старые имена на новые
 					.map((name) => {
-						const changedData = updatedParticipants.filter(({old}) => old === name)[0];
+						const changedData = updatedParticipants.filter(({ old }) => old === name)[0];
 
 						if (changedData) {
 							return changedData.updated;
@@ -55,7 +55,7 @@ const EditEventPage = React.createClass({
 					});
 
 				let payer = originalPurchase.payer;
-				const changedPayerData = updatedParticipants.filter(({old}) => old === payer)[0];
+				const changedPayerData = updatedParticipants.filter(({ old }) => old === payer)[0];
 
 				if (changedPayerData) {
 					payer = changedPayerData.updated;
@@ -82,7 +82,7 @@ const EditEventPage = React.createClass({
 
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => assign({config}, currentEvent.actions[config]));
+			.map((config) => assign({ config }, currentEvent.actions[config]));
 
 		const finalEvent = {
 			name: updatedEvent.name,
@@ -100,7 +100,7 @@ const EditEventPage = React.createClass({
 		}
 
 		const currentUserNameChangeData = updatedParticipants
-			.filter(({old}) => old === currentUserName)[0];
+			.filter(({ old }) => old === currentUserName)[0];
 
 		dispatch(updateEvent({
 			id: params.id,
@@ -183,7 +183,7 @@ const EditEventPage = React.createClass({
 	},
 
 	render() {
-		const {currentEvent, params} = this.props;
+		const { currentEvent, params } = this.props;
 		let result;
 
 		if (currentEvent) {
@@ -208,7 +208,7 @@ const EditEventPage = React.createClass({
 	},
 });
 
-function mapStateToProps({events}) {
+function mapStateToProps({ events }) {
 	return {
 		currentEvent: events.currentEvent,
 		currentUserName: events.currentUserName,
