@@ -133,12 +133,14 @@ const BalancePage = React.createClass({
 
 		let positiveSum = 0;
 		let negativeSum = 0;
-		const positiveDebts = eventsParticipantsDebts.map((debt, i) => {
-			if (currentUser === debt.to) {
+		const positiveDebts = eventsParticipantsDebts
+			.filter((debt) => currentUser === debt.to)
+			.map((debt) => {
 				positiveSum += -Math.round(debt.sum);
+
 				return (
 					<BalanceListItem
-						key={i}
+						key={`${debt.from}${debt.to}${debt.sum}`}
 						sum={-Math.round(debt.sum)}
 						from={debt.from}
 						to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
@@ -146,15 +148,16 @@ const BalancePage = React.createClass({
 						onClick={() => this.showRepayPopup(debt)}
 					/>
 				);
-			}
-		});
+			});
 
-		const negativeDebts = eventsParticipantsDebts.map((debt, i) => {
-			if (currentUser === debt.from) {
+		const negativeDebts = eventsParticipantsDebts
+			.filter((debt) => currentUser === debt.from)
+			.map((debt) => {
 				negativeSum += -Math.round(debt.sum);
+
 				return (
 					<BalanceListItem
-						key={i}
+						key={`${debt.from}${debt.to}${debt.sum}`}
 						sum={-Math.round(debt.sum)}
 						from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
 						to={debt.to}
@@ -162,22 +165,21 @@ const BalancePage = React.createClass({
 						onClick={() => this.showRepayPopup(debt)}
 					/>
 				);
-			}
-		});
+			});
 
-		const othersDebts = eventsParticipantsDebts.map((debt, i) => {
-			if (currentUser !== debt.from && currentUser !== debt.to) {
+		const othersDebts = eventsParticipantsDebts
+			.filter((debt) => currentUser !== debt.from && currentUser !== debt.to)
+			.map((debt) => {
 				return (
 					<BalanceListItem
-						key={i}
+						key={`${debt.to}${debt.from}${debt.sum}`}
 						sum={-Math.round(debt.sum)}
 						from={debt.from}
 						to={debt.to}
 						debtType="neutral"
 					/>
 				);
-			}
-		});
+			});
 
 		const returnedDebtsActions = [];
 		this.state.actions.slice().reverse().forEach((action) => {
@@ -186,19 +188,19 @@ const BalancePage = React.createClass({
 			}
 		});
 
-		const returnedDebts = returnedDebtsActions.map((action, i) => {
-			if (action.config.actionType === 'giveBack') {
+		const returnedDebts = returnedDebtsActions
+			.filter((action) => action.config.actionType === 'giveBack')
+			.map((action) => {
 				return (
 					<BalanceListItem
-						key={i}
+						key={`${action.config.debtSum}${action.config.currentUser}${action.config.payerName}`}
 						sum={action.config.debtSum}
 						from={action.config.currentUser}
 						to={action.config.payerName}
 						debtType="returned"
 					/>
 				);
-			}
-		});
+			});
 
 		return (
 			<Wrapper>

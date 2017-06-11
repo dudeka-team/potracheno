@@ -15,7 +15,6 @@
       "afterColon": true
     }],
     "max-len":"warn",
-    "array-callback-return": "off",
     "consistent-return": "off",
     "object-curly-spacing": ["error", "never"],
     "no-use-before-define": ["error", "nofunc"],
