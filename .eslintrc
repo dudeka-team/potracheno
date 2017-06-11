@@ -18,7 +18,6 @@
     "object-curly-spacing": ["error", "never"],
     "no-use-before-define": ["error", "nofunc"],
     "comma-dangle": ["error", "always-multiline"],
-    "no-param-reassign": "off",
     "arrow-body-style": "off",
     "linebreak-style": "off",
     "react/require-extension": "off",
