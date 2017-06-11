@@ -12,10 +12,13 @@
   "scripts": {
     "test": "mocha -r babel-core/register ./tests/*.js",
     "lint": "eslint source/scripts",
-    "install": "bash ./install-hooks.sh",
     "start": "node ./server.js",
     "build": "cross-env NODE_ENV=production webpack --progress --colors",
-    "start-prod": "cross-env NODE_ENV=production node ./server.js"
+    "start-prod": "cross-env NODE_ENV=production node ./server.js",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*": "lint"
   },
   "bugs": {
     "url": "https://github.com/yandexdataschool/prj-c-dudeka/issues"
@@ -34,6 +37,8 @@
     "eslint-plugin-jsx-a11y": "^2.1.0",
     "eslint-plugin-react": "^6.1.1",
     "html-webpack-plugin": "^2.22.0",
+    "husky": "^0.13.4",
+    "lint-staged": "^3.6.1",
     "mocha": "^3.0.2",
     "postcss-assets": "^4.1.0",
     "postcss-loader": "^0.13.0",
