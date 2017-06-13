@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
+	<meta charset="utf-8">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="msapplication-tap-highlight" content="no">
 	<meta name="viewport" content="initial-scale=1, width=device-width, user-scalable=no">
-	<meta name="theme-color" content="#ffe151" />
+	<meta name="theme-color" content="#ffe151">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 
 	<title>Потрачено</title>
-	<meta name="description" content="Приложение, позволяющее друзьям вести совместный учёт расходов. Сохраняет дружбу и радость от мероприятий" />
+	<meta name="description" content="Приложение, позволяющее друзьям вести совместный учёт расходов. Сохраняет дружбу и радость от мероприятий">
 
 	<!-- Twitter Card markup-->
 	<meta name="twitter:card" content="summary_large_image">
@@ -19,10 +19,10 @@
 	<meta name="twitter:image" content="https://wastd.ru/social.png">
 
 	<!-- Open Graph markup (Facebook, Pinterest) -->
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="Потрачено" />
-	<meta property="og:description" content="Приложение, позволяющее друзьям вести совместный учёт расходов. Сохраняет дружбу и радость от мероприятий" />
-	<meta property="og:image" content="https://wastd.ru/social.png" />
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Потрачено">
+	<meta property="og:description" content="Приложение, позволяющее друзьям вести совместный учёт расходов. Сохраняет дружбу и радость от мероприятий">
+	<meta property="og:image" content="https://wastd.ru/social.png">
 	<meta property="og:image:width" content="1200">
 	<meta property="og:image:height" content="650">
 
@@ -35,26 +35,7 @@
 
 	<script src="/moment.min.js"></script>
 	<script src="/moment.ru.min.js"></script>
-	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
-	<script>
-		var OneSignal = window.OneSignal || [];
-		OneSignal.push(["init", {
-			appId: "ff8ea40b-8587-48ef-a95a-91c47a32153f",
-			autoRegister: true,
-			notifyButton: {
-				enable: false
-			}
-		}]);
 
-		window.addEventListener('load', function(e) {
-			window.applicationCache.addEventListener('updateready', function(e) {
-				if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-					window.applicationCache.swapCache();
-					window.location.reload();
-				}
-			}, false);
-		}, false);
-	</script>
 	<!-- Yandex.Metrika counter -->
 	<script type="text/javascript">
 		(function (d, w, c) {
@@ -82,7 +63,11 @@
 			} else { f(); }
 		})(document, window, "yandex_metrika_callbacks");
 	</script>
-	<noscript><div><img src="https://mc.yandex.ru/watch/39720760" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+	<noscript>
+		<div>
+			<img src="https://mc.yandex.ru/watch/39720760" style="position:absolute; left:-9999px;" alt="" />
+		</div>
+	</noscript>
 	<!-- /Yandex.Metrika counter -->
 </body>
 </html>
