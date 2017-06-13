@@ -11,14 +11,15 @@
   "keywords": [],
   "scripts": {
     "test": "",
-    "lint": "eslint source/scripts",
+    "lint": "npm run lint:scripts",
+    "lint:scripts": "eslint source/scripts --ext .js",
     "start": "node ./server.js",
     "build": "cross-env NODE_ENV=production webpack --progress --colors",
     "start-prod": "cross-env NODE_ENV=production node ./server.js",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*": "lint"
+    "*.js": "lint:scripts"
   },
   "bugs": {
     "url": "https://github.com/yandexdataschool/prj-c-dudeka/issues"
