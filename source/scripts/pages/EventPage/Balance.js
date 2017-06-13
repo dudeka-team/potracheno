@@ -13,12 +13,10 @@ import FlexContainer from '../../components/FlexContainer';
 import Poster from '../../components/Poster';
 import Wrapper from '../../components/Wrapper';
 
-
 import { getEventBalance, getEventsParticipantsDebts } from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
 
 import { createEventActionAsync, eventActionTypes } from '../../actions/createEventAction';
-
 
 const BalancePage = React.createClass({
 	getInitialState() {
@@ -74,7 +72,6 @@ const BalancePage = React.createClass({
 				actions: newActions,
 			});
 		}
-
 
 		props.dispatch(createEventActionAsync({
 			eventId: props.eventId,

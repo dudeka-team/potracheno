@@ -30,6 +30,5 @@ BalanceListItem.propTypes = {
 	debtType: PropTypes.oneOf(['positive', 'negative', 'neutral', 'returned']).isRequired,
 };
 
-
 // Usage example
 // <BalanceListItem sum={2000} from="Вы" to="Дамир" debtType="positive" />

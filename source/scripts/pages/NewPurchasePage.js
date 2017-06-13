@@ -103,7 +103,6 @@ const NewPurchasePage = React.createClass({
 			}));
 		}
 
-
 		if (getUserType() === INDEPENDENT && !hasCreatedPurchase()) {
 			reachGoal(CREATE_FIRST_PURCHASE);
 			markPurchaseCreation();
@@ -113,7 +112,6 @@ const NewPurchasePage = React.createClass({
 			eventId: props.params.id,
 			purchaseData: state.purchase,
 		}));
-
 
 		this.setState({
 			isSavingData: true,
@@ -160,7 +158,6 @@ const NewPurchasePage = React.createClass({
 				},
 			}));
 		});
-
 
 		this.setState({
 			isSavingData: true,

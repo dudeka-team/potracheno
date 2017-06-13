@@ -113,7 +113,6 @@ const EditEventPage = React.createClass({
 			updatedEvent.participants
 		);
 
-
 		if (updatedEvent.name !== currentEvent.name) {
 			dispatch(createEventActionAsync({
 				eventId: this.props.params.id,
@@ -141,7 +140,6 @@ const EditEventPage = React.createClass({
 				},
 			}));
 		}
-
 
 		filteredParticipants.added.forEach((p) => {
 			if (filteredParticipants.added) {

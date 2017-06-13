@@ -1,7 +1,6 @@
 import React from 'react';
 import shortid from 'shortid';
 
-
 export default React.createClass({
 	componentDidMount() {
 		this.inputEl.value = this.props.value;

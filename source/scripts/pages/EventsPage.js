@@ -14,7 +14,6 @@ import changeCurrentEvent from '../actions/changeCurrentEvent';
 import { getEventBalance } from '../modules/balance';
 import getLocalEvents from '../actions/getLocalEvents';
 
-
 const EventsPage = React.createClass({
 	getInitialState() {
 		return {

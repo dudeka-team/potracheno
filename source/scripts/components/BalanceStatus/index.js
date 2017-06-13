@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 
-
 export default function BalanceStatus(props) {
 	return (
 		<div className="balance-status">

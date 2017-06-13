@@ -17,7 +17,6 @@ import {
 	INVITED,
 } from '../modules/metrics';
 
-
 const EventPreloadingPage = React.createClass({
 	componentDidMount() {
 		const { params, dispatch } = this.props;

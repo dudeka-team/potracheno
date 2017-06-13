@@ -64,7 +64,6 @@ export function getEventBalance(currentEvent) {
 	return participantsBalance;
 }
 
-
 export function getEventsParticipantsDebts(participantsBalance, currentEvent) {
 	const reducedBalance = assign({}, participantsBalance);
 

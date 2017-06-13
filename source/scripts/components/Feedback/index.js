@@ -8,7 +8,6 @@ import { saveFeedbackAsync } from '../../actions/saveFeedback';
 import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
 import { Page, PageContent } from '../Page';
 
-
 const FeedBack = React.createClass({
 	getInitialState(mail = '', problem = '') {
 		return {

@@ -18,6 +18,5 @@ GreySubtitle.propTypes = {
 	text: PropTypes.string.isRequired,
 };
 
-
 // Usage example
 // <GreySubtitle text="Ваш баланс" userSelection/>

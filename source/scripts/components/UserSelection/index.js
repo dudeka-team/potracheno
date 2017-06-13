@@ -161,7 +161,6 @@ const UserSelection = React.createClass({
 	},
 });
 
-
 function mapStateToProps({ events }) {
 	return {
 		currentEvent: events.currentEvent,

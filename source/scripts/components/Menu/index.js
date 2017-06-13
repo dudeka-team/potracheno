@@ -79,7 +79,6 @@ Menu.propTypes = {
 
 export default Menu;
 
-
 // Example
 // <Menu participants={currentEvent.participants}
 // 		name={currentEvent.name}

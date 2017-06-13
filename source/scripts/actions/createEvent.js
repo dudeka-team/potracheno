@@ -9,7 +9,6 @@ import openShareLinkPopup from './openShareLinkPopup';
 
 import db from '../database';
 
-
 export default function createEvent(payload) {
 	return dispatch => {
 		dispatch({

@@ -7,7 +7,6 @@ export const INVITED = 'INVITED';
 
 const validTypes = [INDEPENDENT, INVITED];
 
-
 export function getUserType() {
 	return localStorage.getItem('userType');
 }

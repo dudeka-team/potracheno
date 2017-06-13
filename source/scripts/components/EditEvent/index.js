@@ -14,7 +14,6 @@ import Separator from '../Separator';
 import GreySubtitle from '../GreySubtitle';
 import DatePicker from '../DatePicker';
 
-
 function createParticipant(name = '') {
 	return {
 		name,

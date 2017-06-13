@@ -10,11 +10,8 @@ import EventsPage from './pages/EventsPage';
 import EventPreloadingPage from './pages/EventPreloadingPage';
 import NewEventPage from './pages/NewEvent';
 import EditEventPage from './pages/EditEvent';
-
 import PurchasePage from './pages/PurchasePage';
-
 import FeedbackPage from './pages/FeedbackPage';
-
 
 export default function Routes(props) {
 	return (

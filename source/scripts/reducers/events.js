@@ -34,7 +34,6 @@ import {
 	CLOSE_SHARE_LINK_POPUP,
 } from '../constants';
 
-
 const initialState = {
 	events: [],
 	eventsById: {},
@@ -114,7 +113,6 @@ export default handleActions({
 			}),
 		});
 	},
-
 
 	[GET_LOCAL_EVENTS]: (state, { payload }) => assign({}, state, { localEvents: payload }),
 

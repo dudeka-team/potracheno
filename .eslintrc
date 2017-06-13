@@ -12,9 +12,12 @@
     }],
     "max-len":"warn",
     "no-use-before-define": ["error", "nofunc"],
+    "no-multiple-empty-lines": ["error", {
+      "max": 1
+    }],
     "react/require-extension": "off",
-    "react/jsx-indent": [2, "tab"],
-    "react/jsx-indent-props": [2, "tab"],
+    "react/jsx-indent": ["error", "tab"],
+    "react/jsx-indent-props": ["error", "tab"],
     "react/prefer-es6-class": ["error", "never"],
     "react/prop-types": "off",
     "react/prefer-stateless-function": "off",

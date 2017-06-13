@@ -8,7 +8,6 @@ import setLocalEvents from './setLocalEvents';
 
 import db from '../database';
 
-
 export default function updateEvent(payload) {
 	return (dispatch) => ({
 		type: UPDATE_EVENT,

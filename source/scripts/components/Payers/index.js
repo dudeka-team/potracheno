@@ -21,5 +21,4 @@ const Payers = React.createClass({
 	},
 });
 
-
 export default Payers;
