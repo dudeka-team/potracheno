@@ -3,11 +3,8 @@ import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 
 import browserHistory from 'react-router/lib/browserHistory';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
-import promiseMiddleware from 'redux-promise-middleware';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -16,7 +13,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import 'react-fastclick';
 
-import reducers from './reducers';
+import store from './store';
 import Routes from './Routes';
 
 const firebaseConfig = {
@@ -44,20 +41,6 @@ const dudekaTheme = getMuiTheme({
 injectTapEventPlugin();
 moment.locale('ru');
 firebase.initializeApp(firebaseConfig);
-
-const store = createStore(
-	combineReducers(reducers),
-	compose(
-		applyMiddleware(
-			thunk,
-			routerMiddleware(browserHistory),
-			promiseMiddleware({
-				promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR'],
-			})
-		),
-		window.devToolsExtension ? window.devToolsExtension() : f => f
-	)
-);
 
 function AppRoot() {
 	return (
