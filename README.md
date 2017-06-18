@@ -4,7 +4,7 @@
 
 ```bash
 $ npm i # install dependencies
-$ npm start # start dev server
-$ npm run start-prod # start server in production mode
-$ npm run build # build project for production
+$ npm start # start server in development mode
+$ npm run start:production # start server in production mode
+$ npm run build # build project
 ```

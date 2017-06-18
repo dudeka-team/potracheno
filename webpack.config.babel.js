@@ -2,83 +2,76 @@
 
 import path from 'path';
 import webpack from 'webpack';
-
-// extra plugins
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import assets from 'postcss-assets';
 
 const SOURCE = './source';
 const OUT = './static';
 
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
-
-let entry = [
-	`${SOURCE}/scripts/index.js`,
-	`${SOURCE}/styles/main.styl`,
-];
-let devtool = 'source-map';
-
-const plugins = [
-	new webpack.DefinePlugin({
-		'process.env.NODE_ENV': JSON.stringify(ENVIRONMENT),
-	}),
-	new HtmlWebpackPlugin({
-		template: `${SOURCE}/index.html`,
-		hash: true,
-	}),
-	new webpack.HotModuleReplacementPlugin(),
-];
-
-if (ENVIRONMENT === 'production') {
-	devtool = null;
-	plugins.push(
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false,
-				screw_ie8: true,
-			},
-		})
-	);
-} else {
-	entry = [
-		'webpack-dev-server/client?http://localhost:8080',
-		'webpack/hot/dev-server',
-	].concat(entry);
-}
-
 const config = {
-	devtool,
-	plugins,
-	entry,
+	entry: [
+		`${SOURCE}/scripts/index.js`,
+		`${SOURCE}/styles/main.styl`,
+	],
 	output: {
 		path: path.resolve(__dirname, OUT),
 		publicPath: '/',
 		filename: 'bundle.js',
 	},
 	resolve: {
-		root: path.resolve(`${SOURCE}/scripts`),
-		extensions: ['', '.js', '.jsx'],
+		extensions: ['.js', '.jsx'],
+		modules: [
+			path.join(__dirname, `${SOURCE}/scripts`),
+			'node_modules',
+		],
 	},
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.jsx?$/,
 				exclude: /(node_modules)/,
-				loader: 'babel-loader',
+				use: ['babel-loader'],
 			},
 			{
 				test: /\.styl$/,
-				loader: 'style!raw!postcss!autoprefixer!stylus',
+				use: [
+					'style-loader',
+					'raw-loader',
+					'postcss-loader',
+					'stylus-loader',
+				],
 			},
 		],
 	},
-	postcss() {
-		return [
-			assets({
-				loadPaths: ['static/img/'],
-			}),
-		];
-	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify(ENVIRONMENT),
+		}),
+		new HtmlWebpackPlugin({
+			template: `${SOURCE}/index.html`,
+			hash: true,
+		}),
+		new webpack.HotModuleReplacementPlugin(),
+	],
 };
+
+if (ENVIRONMENT === 'production') {
+	config.plugins.push(
+		new UglifyJsPlugin({
+			compress: {
+				warnings: false,
+				screw_ie8: true,
+			},
+			comments: false,
+		})
+	);
+} else {
+	config.devtool = 'source-map';
+	config.entry = [
+		'webpack-dev-server/client?http://localhost:8080',
+		'webpack/hot/dev-server',
+	].concat(config.entry);
+}
 
 module.exports = config;
