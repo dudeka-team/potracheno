@@ -13,9 +13,11 @@
     "test": "",
     "lint": "npm run lint:scripts",
     "lint:scripts": "eslint source/scripts --ext .js",
+    "clean": "rm -rf build/",
+    "copy-static": "cp -R static build",
     "start": "node ./server.js",
-    "start:production": "cross-env NODE_ENV=production node ./server.js",
-    "build": "cross-env NODE_ENV=production webpack --progress --colors",
+    "start:production": "npm run clean && npm run copy-static && cross-env NODE_ENV=production node ./server.js",
+    "build": "npm run clean && npm run copy-static && cross-env NODE_ENV=production webpack --progress --colors",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -37,6 +39,7 @@
     "eslint-plugin-import": "^1.13.0",
     "eslint-plugin-jsx-a11y": "^2.1.0",
     "eslint-plugin-react": "^6.1.1",
+    "extract-text-webpack-plugin": "^2.1.2",
     "html-webpack-plugin": "^2.22.0",
     "husky": "^0.13.4",
     "lint-staged": "^3.6.1",

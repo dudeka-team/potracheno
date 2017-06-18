@@ -5,7 +5,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.config.babel');
 
 new WebpackDevServer(webpack(config), {
-	contentBase: './static',
+	contentBase: './build',
 	publicPath: '',
 	hot: true,
 	historyApiFallback: true,
