@@ -2,83 +2,81 @@
 
 import path from 'path';
 import webpack from 'webpack';
-
-// extra plugins
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import assets from 'postcss-assets';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-const SOURCE = './source';
-const OUT = './static';
-
+const SOURCE_DIR = './source';
+const BUILD_DIR = './build';
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
-
-let entry = [
-	`${SOURCE}/scripts/index.js`,
-	`${SOURCE}/styles/main.styl`,
-];
-let devtool = 'source-map';
-
-const plugins = [
-	new webpack.DefinePlugin({
-		'process.env.NODE_ENV': JSON.stringify(ENVIRONMENT),
-	}),
-	new HtmlWebpackPlugin({
-		template: `${SOURCE}/index.html`,
-		hash: true,
-	}),
-	new webpack.HotModuleReplacementPlugin(),
-];
-
-if (ENVIRONMENT === 'production') {
-	devtool = null;
-	plugins.push(
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false,
-				screw_ie8: true,
-			},
-		})
-	);
-} else {
-	entry = [
-		'webpack-dev-server/client?http://localhost:8080',
-		'webpack/hot/dev-server',
-	].concat(entry);
-}
-
 const config = {
-	devtool,
-	plugins,
-	entry,
+	entry: [
+		`${SOURCE_DIR}/scripts/index.js`,
+		`${SOURCE_DIR}/styles/main.styl`,
+	],
 	output: {
-		path: path.resolve(__dirname, OUT),
+		path: path.resolve(__dirname, BUILD_DIR),
 		publicPath: '/',
 		filename: 'bundle.js',
 	},
 	resolve: {
-		root: path.resolve(`${SOURCE}/scripts`),
-		extensions: ['', '.js', '.jsx'],
+		extensions: ['.js', '.jsx'],
+		modules: [
+			path.join(__dirname, `${SOURCE_DIR}/scripts`),
+			'node_modules',
+		],
 	},
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.jsx?$/,
 				exclude: /(node_modules)/,
-				loader: 'babel-loader',
+				use: ['babel-loader'],
 			},
 			{
 				test: /\.styl$/,
-				loader: 'style!raw!postcss!autoprefixer!stylus',
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: [
+						'postcss-loader',
+						'stylus-loader',
+					],
+				}),
 			},
 		],
 	},
-	postcss() {
-		return [
-			assets({
-				loadPaths: ['static/img/'],
-			}),
-		];
-	},
+	plugins: [
+		new ExtractTextPlugin('app.css'),
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify(ENVIRONMENT),
+		}),
+		new HtmlWebpackPlugin({
+			template: `${SOURCE_DIR}/index.html`,
+			hash: true,
+			minify: {
+				collapseWhitespace: true,
+			},
+		}),
+		new webpack.HotModuleReplacementPlugin(),
+	],
 };
+
+if (ENVIRONMENT === 'production') {
+	config.plugins.push(
+		new UglifyJsPlugin({
+			compress: {
+				warnings: false,
+				screw_ie8: true,
+			},
+			comments: false,
+		})
+	);
+} else {
+	config.devtool = 'source-map';
+	config.entry = [
+		'webpack-dev-server/client?http://localhost:8080',
+		'webpack/hot/dev-server',
+	].concat(config.entry);
+}
 
 module.exports = config;

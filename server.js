@@ -1,17 +1,17 @@
+/* eslint-disable import/no-extraneous-dependencies */
 require('babel-core/register');
-
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config.babel');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const config = require('./webpack.config.babel');
 
 new WebpackDevServer(webpack(config), {
-	contentBase: './static',
+	contentBase: './build',
 	publicPath: '',
 	hot: true,
 	historyApiFallback: true,
-}).listen(8080, 'localhost', (err) => {
-	if (err) {
-		console.error(err);
+}).listen(8080, 'localhost', (error) => {
+	if (error) {
+		console.error(error);
 	}
 
 	console.log('Listening at localhost:8080');
