@@ -43,6 +43,22 @@ const config = {
 					],
 				}),
 			},
+			{
+				test: /\.css$/,
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: [
+						{
+							loader: 'css-loader',
+							options: {
+								modules: true,
+								importLoaders: 1,
+							},
+						},
+						'postcss-loader',
+					],
+				}),
+			},
 		],
 	},
 	plugins: [

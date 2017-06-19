@@ -1,7 +1,8 @@
 import React from 'react';
+import styles from './separator.css';
 
-export default function Separator(props) {
+export default function Separator() {
 	return (
-		<div className="separator" {...props} />
+		<div className={styles.root} />
 	);
 }
