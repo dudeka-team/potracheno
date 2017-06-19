@@ -15,6 +15,9 @@
     "no-multiple-empty-lines": ["error", {
       "max": 1
     }],
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["**/*.story.js"],
+    }],
     "react/require-extension": "off",
     "react/jsx-indent": ["error", "tab"],
     "react/jsx-indent-props": ["error", "tab"],
