@@ -1,10 +1,10 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
-import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 
 import Wrapper from '../../components/Wrapper';
 import Fab from '../../components/Fab';
+import IconShoppingCart from '../../components/icons/shopping-cart';
 import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
 import Popup from '../../components/Popup';
@@ -119,7 +119,7 @@ const EventPurchasesPage = React.createClass({
 					iconStyle={{ fill: '#333' }}
 					onClick={this.goToNewPurchase}
 				>
-					<AddShoppingCart />
+					<IconShoppingCart />
 				</Fab>
 			</Wrapper>
 		);
