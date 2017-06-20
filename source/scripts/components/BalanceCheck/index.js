@@ -1,5 +1,5 @@
 import React from 'react';
-import ContentCopy from 'material-ui/svg-icons/content/content-copy';
+import IconContentCopy from '../icons/content-copy';
 
 function getCheck(eventsParticipantsDebts) {
 	return eventsParticipantsDebts
@@ -84,7 +84,7 @@ function BalanceCheckToggle(props) {
 function BalanceCheckCopy(props) {
 	return (
 		<div className="balance-check-copy" onClick={props.onCopy}>
-			<ContentCopy className="balance-check-copy__icon" />
+			<IconContentCopy className="balance-check-copy__icon" />
 			<div className="balance-check-copy__annotation">Скопировать чек</div>
 		</div>
 	);
