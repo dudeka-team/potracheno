@@ -11,8 +11,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import 'react-fastclick';
-
 import store from './store';
 import Routes from './Routes';
 
