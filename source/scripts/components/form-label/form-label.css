@@ -1,0 +1,9 @@
+.root {
+	--font-size: 13px;
+	--color: ;
+
+	display: block;
+	font-size: var(--font-size);
+	color: #949a9e;
+	cursor: pointer;
+}
