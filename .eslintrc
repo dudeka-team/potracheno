@@ -4,7 +4,9 @@
     "browser": true
   },
   "globals": {
-    "moment": true
+    "moment": true,
+    "test": true,
+    "expect": true,
   },
   "rules": {
     "indent": ["error", "tab", {
