@@ -1,0 +1,36 @@
+.root {
+	--font-size: 16px;
+	--line-height: 1.25;
+	--input-padding: 8px;
+	--border-size: 1px;
+
+	appearance: none;
+	position: relative;
+	width: 100%;
+	padding-top: var(--input-padding);
+	padding-bottom: var(--input-padding);
+	font-size: var(--font-size);
+	line-height: var(--line-height);
+	border: 0;
+	border-bottom: var(--border-size) solid rgba(0, 0, 0, .1);
+}
+
+.root_size_large {
+	--font-size: 30px;
+}
+
+.root:focus {
+	padding-bottom: calc(var(--input-padding) - var(--border-size));
+	outline: none;
+	border-bottom-width: calc(var(--border-size) * 2);
+	border-bottom-color: #ffe151;
+}
+
+.root::placeholder {
+	color: rgba(0, 0, 0, .4);
+}
+
+.root[disabled] {
+	filter: grayscale(1);
+	cursor: not-allowed;
+}
