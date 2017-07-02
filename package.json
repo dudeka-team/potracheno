@@ -10,7 +10,9 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "test": "",
+    "test": "npm run lint && npm run test:scripts",
+    "test:scripts": "jest",
+    "test:coverage": "jest --coverage",
     "lint": "npm run lint:scripts",
     "lint:scripts": "eslint source/scripts --ext .js",
     "clean": "rm -rf build/",
@@ -45,6 +47,7 @@
     "extract-text-webpack-plugin": "^2.1.2",
     "html-webpack-plugin": "^2.22.0",
     "husky": "^0.13.4",
+    "jest": "^20.0.4",
     "lint-staged": "4.0.0",
     "postcss-assets": "^4.1.0",
     "postcss-loader": "2.0.6",
