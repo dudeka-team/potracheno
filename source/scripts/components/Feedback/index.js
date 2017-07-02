@@ -68,9 +68,9 @@ const FeedBack = React.createClass({
 						onChange={this.handleProblemChange}
 					/>
 					<TextField
+						fullWidth
 						floatingLabelFocusStyle={labelStyle}
 						underlineFocusStyle={underLineStyle}
-						fullWidth
 						floatingLabelStyle={{ color: '#949A9E' }}
 						floatingLabelText="Электронная почта (необязательно)"
 						hintStyle={{ color: '#949A9E' }}
