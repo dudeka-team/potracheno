@@ -17,8 +17,11 @@ import Popup from '../components/Popup';
 import Payers from '../components/Payers';
 import GreySubtitle from '../components/GreySubtitle';
 import UniversalListItem from '../components/UniversalListItem';
-import Input from '../components/Input';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
+import FormRow from '../components/form-row/form-row';
+import FormLabel from '../components/form-label/form-label';
+import FormInput from '../components/form-input/form-input';
+
 import fetchEventData from '../actions/fetchEventData';
 import fetchPurchaseChange from '../actions/fetchPurchaseChange';
 import fetchPurchaseDelete from '../actions/fetchPurchaseDelete';
@@ -228,6 +231,22 @@ const NewPurchasePage = React.createClass({
 		dispatch(fetchPurchaseDelete(id, purchase_id));
 	},
 
+	handleChangePurchasePrice(event) {
+		const amount = Number(event.target.value);
+
+		this.setState((state) => ({
+			purchase: Object.assign({}, state.purchase, { amount }),
+		}));
+	},
+
+	handleChangePurchaseName(event) {
+		const name = event.target.value;
+
+		this.setState((state) => ({
+			purchase: Object.assign({}, state.purchase, { name }),
+		}));
+	},
+
 	render() {
 		const { state, props } = this;
 		const { mode, purchase } = state;
@@ -278,36 +297,32 @@ const NewPurchasePage = React.createClass({
 							/>
 						</Popup>
 					}
-					<div style={{ padding: '0px 16px 14px 16px' }}>
-						<Input
-							type="number"
-							size="large"
-							label="Сумма"
-							labelFixed
-							disabled={mode === EDIT && hasRepayedDebts}
-							labelSize="small"
-							value={(mode === EDIT && purchase) ? purchase.amount || '' : ''}
-							onChange={
-								event => {
-									const amount = Number(event.target.value);
-									if (isNaN(amount)) {
-										return;
-									}
-									purchase.amount = amount;
-									this.setState({ purchase });
-								}
-							}
-						/>
-						<Input
-							label="Название покупки"
-							value={(mode === EDIT && purchase) ? purchase.name : ''}
-							onChange={event => {
-								purchase.name = event.target.value;
-								this.setState({ purchase });
-							}}
-						/>
+
+					<div style={{ paddingLeft: '16px', paddingRight: '16px' }}>
+						<FormRow>
+							<FormLabel htmlFor="purchase-price">Сумма, ₽</FormLabel>
+							<FormInput
+								id="purchase-price"
+								type="number"
+								size={FormInput.sizes.large}
+								disabled={mode === EDIT && hasRepayedDebts}
+								value={purchase.amount || 0}
+								onChange={this.handleChangePurchasePrice}
+							/>
+						</FormRow>
+
+						<FormRow>
+							<FormLabel htmlFor="purchase-name">Название покупки</FormLabel>
+							<FormInput
+								id="purchase-name"
+								value={(mode === EDIT && purchase) ? purchase.name : ''}
+								onChange={this.handleChangePurchaseName}
+							/>
+						</FormRow>
 					</div>
+
 					<Separator />
+
 					<div style={{ paddingRight: '9px' }}>
 						<GreySubtitle text="Участники покупки" />
 						{state.eventParticipants.map(user => (
