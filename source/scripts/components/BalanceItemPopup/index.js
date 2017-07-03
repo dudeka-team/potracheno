@@ -1,43 +1,40 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import withRouter from 'react-router/lib/withRouter';
-import TextField from 'material-ui/TextField';
-import SubHeader from '../SubHeader';
-
+import FormRow from '../form-row/form-row';
+import FormLabel from '../form-label/form-label';
+import FormInput from '../form-input/form-input';
 import Popup from '../Popup';
 
 const BalanceItemPopup = React.createClass({
 	getInitialState() {
 		return {
 			value: Math.abs(this.props.debt.sum),
-			isAmountInvalid: false,
 		};
 	},
 
-	amountChange(e) {
-		const { debt } = this.props;
-		let { value } = e.target;
-		value = Number(value);
+	handleChangeRepayedDebtAmount(event) {
+		const debt = Math.abs(this.props.debt.sum);
+		const value = Number(event.target.value);
+
 		this.setState({
-			value,
-			isAmountInvalid: isNaN(value) || value < 0 || value > Math.abs(debt.sum),
+			value: Math.max(0, Math.min(debt, value)),
 		});
 	},
 
 	payDebt() {
 		const { state, props } = this;
 
-		if (!this.state.isAmountInvalid) {
-			props.onSubmit({
-				...props.debt,
-				sum: state.value,
-			});
-		}
+		props.onSubmit({
+			...props.debt,
+			sum: state.value,
+		});
 	},
 
 	render() {
-		const { props, state } = this;
-		const { debt } = props;
+		const { debt, onClose } = this.props;
+		const { value } = this.state;
+
 		return (
 			<Popup
 				unBordered
@@ -50,7 +47,7 @@ const BalanceItemPopup = React.createClass({
 				}}
 				cancelButton={{
 					text: 'отмена',
-					onClick: props.onClose,
+					onClick: onClose,
 				}}
 			>
 				<div className="balance-item-popup-wrapper">
@@ -59,22 +56,18 @@ const BalanceItemPopup = React.createClass({
 						<span className="balance-list-item__arrow" />
 						{debt.to}
 					</div>
-					<div className="sub-header-wrapper">
-						<SubHeader text="Сколько" />
-					</div>
-					<div className="money-input-wrapper">
-						<div className="input-money-label"> руб. </div>
-						<TextField
-							value={state.value}
-							name="repay-debt-textfield"
-							underlineFocusStyle={{ borderColor: '#ffe151' }}
-							style={{ width: '100%' }}
+
+					<FormRow>
+						<FormLabel htmlFor="repayed-debt-amount">
+							Сколько, ₽
+						</FormLabel>
+						<FormInput
+							id="repayed-debt-amount"
 							type="number"
-							onChange={this.amountChange}
-							errorText={state.isAmountInvalid &&
-								'Сумма должна быть неотрицательной и не превосходить сумму долга'}
+							value={value}
+							onChange={this.handleChangeRepayedDebtAmount}
 						/>
-					</div>
+					</FormRow>
 				</div>
 			</Popup>
 		);
@@ -89,8 +82,3 @@ function mapStateToProps({ events }) {
 }
 
 export default withRouter(connect(mapStateToProps)(BalanceItemPopup));
-// Example of usage:
-// <BalanceItemPopup
-//		debt={debt} onClose={() => ...}
-//		onSubmit={({sum, to, from, sum}) => ...}
-// />
