@@ -1,37 +1,22 @@
-import React from 'react';
-import TextField from 'material-ui/TextField';
+import React, { PropTypes } from 'react';
+import FormRow from '../form-row/form-row';
+import FormInput from '../form-input/form-input';
 
-const UserSelectionPopup = React.createClass({
-	getInitialState() {
-		return {
-			isDuplicate: false,
-			isEmpty: false,
-		};
-	},
+import styles from './index.css';
 
-	render() {
-		const { props, state } = this;
-		let errorText;
+export default function UserSelectionPopup(props) {
+	return (
+		<FormRow className={styles.root}>
+			<FormInput
+				placeholder="Ваше имя"
+				value={props.name}
+				onChange={props.onChangeName}
+			/>
+		</FormRow>
+	);
+}
 
-		if (state.isDuplicate) {
-			errorText = 'Имена участников не должны повторяться';
-		} else if (state.isEmpty) {
-			errorText = 'Имя не должно быть пустым';
-		}
-
-		return (
-			<div className="user-selection-popup">
-				<TextField
-					className="new-participant-name"
-					type="text"
-					underlineFocusStyle={{ borderColor: '#ffe151' }}
-					style={{ width: '100%' }}
-					onChange={props.userNameChange}
-					errorText={errorText}
-				/>
-			</div>
-		);
-	},
-});
-
-export default UserSelectionPopup;
+UserSelectionPopup.propTypes = {
+	name: PropTypes.string.isRequired,
+	onChangeName: PropTypes.func.isRequired,
+};

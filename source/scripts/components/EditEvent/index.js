@@ -5,14 +5,18 @@ import { connect } from 'react-redux';
 import assign from 'object-assign';
 
 import CircularProgress from 'material-ui/CircularProgress';
-import TextField from 'material-ui/TextField';
 
 import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
 import { Page, PageContent } from '../Page';
 import FlexContainer from '../FlexContainer';
 import Separator from '../Separator';
 import GreySubtitle from '../GreySubtitle';
-import DatePicker from '../DatePicker';
+import FormRow from '../form-row/form-row';
+import FormLabel from '../form-label/form-label';
+import FormInput from '../form-input/form-input';
+import FormError from '../form-error/form-error';
+
+import styles from './index.css';
 
 function createParticipant(name = '') {
 	return {
@@ -175,7 +179,7 @@ const EditEvent = React.createClass({
 		});
 	},
 
-	handleManagerChange(event) {
+	handleChangeOrganizerName(event) {
 		const managerName = event.target.value;
 		const updatedParticipants = this.state.participants
 			.slice()
@@ -239,6 +243,7 @@ const EditEvent = React.createClass({
 		return this.state.participants.map((participant) => {
 			const { id, name, isDuplicate, showRemovalWarning } = participant;
 			let errorText;
+			const isInvalid = isDuplicate || showRemovalWarning;
 
 			if (isDuplicate) {
 				errorText = 'Имена участников не должны повторяться';
@@ -249,18 +254,18 @@ const EditEvent = React.createClass({
 			}
 
 			return (
-				<div key={id}>
-					<TextField
-						underlineFocusStyle={{ borderColor: '#ffe151' }}
-						fullWidth
-						hintText={'Имя участника'}
+				<FormRow key={id}>
+					<FormInput
+						placeholder="Имя участника"
+						invalid={isInvalid}
 						value={name}
-						errorText={errorText}
-						onBlur={this.handleParticipantBlur}
-						hintStyle={{ color: '#949A9E' }}
 						onChange={(event) => this.handleParticipantChange(id, event.target.value)}
+						onBlur={this.handleParticipantBlur}
 					/>
-				</div>
+					<FormError visible={isInvalid}>
+						{errorText}
+					</FormError>
+				</FormRow>
 			);
 		});
 	},
@@ -290,61 +295,64 @@ const EditEvent = React.createClass({
 
 		return (
 			<FlexContainer justifyContent="space-between">
-				<div className="data-picker-wrapper">
-					<DatePicker
-						label="Начало"
+				<FormRow className={styles['date-picker']}>
+					<FormLabel htmlFor="event-date-start">Начало</FormLabel>
+					<FormInput
+						id="event-date-start"
+						type="date"
 						value={moment(state.start).format('YYYY-MM-DD')}
 						onChange={this.handleStartDateChange}
 						onBlur={this.handleStartDateBlur}
 					/>
-				</div>
-				<div className="data-picker-wrapper">
-					<DatePicker
-						label="Завершение"
+				</FormRow>
+
+				<FormRow className={styles['date-picker']}>
+					<FormLabel htmlFor="event-date-end">Завершение</FormLabel>
+					<FormInput
+						id="event-date-end"
+						type="date"
 						value={moment(state.end).format('YYYY-MM-DD')}
+						min={moment(state.start).format('YYYY-MM-DD')}
 						onChange={this.handleEndDateChange}
 						onBlur={this.handleEndDateBlur}
-						min={moment(state.start).format('YYYY-MM-DD')}
 					/>
-				</div>
+				</FormRow>
 			</FlexContainer>
 		);
 	},
 
 	render() {
 		const { state } = this;
-		const labelStyle = { color: '#949A9E' };
-		const underLineStyle = { borderColor: '#ffe151' };
 		return (
 			<Page>
 				{this.renderTopBar()}
 				<PageContent style={{ padding: '8px 1rem 5rem' }}>
-					<TextField
-						floatingLabelFocusStyle={labelStyle}
-						underlineFocusStyle={underLineStyle}
-						fullWidth
-						floatingLabelStyle={{ color: '#949A9E' }}
-						floatingLabelText="Название мероприятия"
-						value={state.name}
-						hintStyle={{ color: '#949A9E' }}
-						onChange={this.handleEventNameChange}
-					/>
+					<FormRow>
+						<FormLabel htmlFor="event-name">Название мероприятия</FormLabel>
+						<FormInput
+							id="event-name"
+							value={state.name}
+							onChange={this.handleEventNameChange}
+						/>
+					</FormRow>
+
 					{this.renderDatesInputs()}
-					<Separator style={{ margin: '0 -1rem', width: 'calc(100% + 32px)' }} />
+
+					<Separator />
+
 					<GreySubtitle
 						style={{ margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0' }}
 						text="Добавить участников"
 					/>
-					<TextField
-						floatingLabelFocusStyle={labelStyle}
-						underlineFocusStyle={underLineStyle}
-						fullWidth
-						style={{ marginTop: '12px' }}
-						hintText="Ваше имя"
-						value={state.manager}
-						hintStyle={{ color: '#949A9E' }}
-						onChange={this.handleManagerChange}
-					/>
+
+					<FormRow>
+						<FormInput
+							placeholder="Ваше имя"
+							value={state.manager}
+							onChange={this.handleChangeOrganizerName}
+						/>
+					</FormRow>
+
 					{this.renderParticipants()}
 				</PageContent>
 			</Page>
