@@ -21,10 +21,15 @@ storiesOf('FormInput', module)
 			value="Hello, world!"
 		/>
 	))
+	.add('invalid', () => (
+		<FormInput
+			invalid
+			value="Hello, world!"
+		/>
+	))
 	.add('large', () => (
 		<FormInput
 			size={FormInput.sizes.large}
 			value="Hello, world!"
 		/>
 	));
-

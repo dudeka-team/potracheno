@@ -9,28 +9,40 @@
 	width: 100%;
 	padding-top: var(--input-padding);
 	padding-bottom: var(--input-padding);
+	font-family: inherit;
 	font-size: var(--font-size);
 	line-height: var(--line-height);
+	outline: none;
 	border: 0;
 	border-bottom: var(--border-size) solid rgba(0, 0, 0, .1);
+	transition: border-color .2s ease;
 }
 
 .root_size_large {
 	--font-size: 30px;
 }
 
-.root:focus {
+.root:focus,
+.root_invalid {
 	padding-bottom: calc(var(--input-padding) - var(--border-size));
-	outline: none;
 	border-bottom-width: calc(var(--border-size) * 2);
+}
+
+.root:focus {
 	border-bottom-color: #ffe151;
+}
+
+.root_invalid,
+.root_invalid:focus {
+	border-bottom-color: red;
 }
 
 .root::placeholder {
 	color: rgba(0, 0, 0, .4);
 }
 
-.root[disabled] {
+.root[disabled],
+.root_disabled {
 	filter: grayscale(1);
 	cursor: not-allowed;
 }

@@ -111,7 +111,7 @@ const UserSelection = React.createClass({
 				}}
 				onClose={this.closePopup}
 			>
-				<UserSelectionPopup userNameChange={this.userNameChangeHandler} />
+				<UserSelectionPopup name={this.state.name} onChangeName={this.userNameChangeHandler} />
 			</Popup>
 		);
 	},
