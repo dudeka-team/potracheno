@@ -4,8 +4,6 @@ import withRouter from 'react-router/lib/withRouter';
 import deepEqual from 'deep-equal';
 import assign from 'object-assign';
 
-import CircularProgress from 'material-ui/CircularProgress';
-
 import { createPurchaseAsync } from '../actions/createPurchase';
 import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/createEventAction';
 import { loadEventDataAsync } from '../actions';
@@ -21,6 +19,7 @@ import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
 import FormRow from '../components/form-row/form-row';
 import FormLabel from '../components/form-label/form-label';
 import FormInput from '../components/form-input/form-input';
+import Spinner from '../components/spinner/spinner';
 
 import fetchEventData from '../actions/fetchEventData';
 import fetchPurchaseChange from '../actions/fetchPurchaseChange';
@@ -34,6 +33,8 @@ import {
 	CREATE_FIRST_PURCHASE,
 	INDEPENDENT,
 } from '../modules/metrics';
+
+import styles from './new-purchase-page.css';
 
 const EDIT = 'EDIT';
 const CREATE = 'CREATE';
@@ -186,7 +187,7 @@ const NewPurchasePage = React.createClass({
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Редактирование покупки" />
 				{this.state.isSavingData ?
-					<CircularProgress size={0.3} color="#ffe151" />
+					<Spinner className={styles.spinner} />
 					:
 					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.saveChanges} />
 				}
@@ -206,7 +207,7 @@ const NewPurchasePage = React.createClass({
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Новая покупка" />
 				{this.state.isSavingData ?
-					<CircularProgress size={0.3} color="#ffe151" />
+					<Spinner className={styles.spinner} />
 					:
 					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.save} />
 				}
@@ -243,7 +244,10 @@ const NewPurchasePage = React.createClass({
 		const name = event.target.value;
 
 		this.setState((state) => ({
-			purchase: Object.assign({}, state.purchase, { name }),
+			purchase: {
+				...state.purchase,
+				name,
+			},
 		}));
 	},
 
@@ -315,7 +319,7 @@ const NewPurchasePage = React.createClass({
 							<FormLabel htmlFor="purchase-name">Название покупки</FormLabel>
 							<FormInput
 								id="purchase-name"
-								value={(mode === EDIT && purchase) ? purchase.name : ''}
+								value={purchase ? purchase.name : ''}
 								onChange={this.handleChangePurchaseName}
 							/>
 						</FormRow>

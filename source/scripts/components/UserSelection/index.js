@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
-import CircularProgress from 'material-ui/CircularProgress';
 
 import Wrapper from '../Wrapper';
 import EventStatus from '../EventStatus';
@@ -12,50 +11,40 @@ import fetchUpdateParticipants from '../../actions/fetchUpdateParticipants';
 import FlexContainer from '../FlexContainer';
 import Popup from '../Popup';
 import UserSelectionPopup from '../UserSelectionPopup';
+import Spinner from '../spinner/spinner';
 
-const UserSelection = React.createClass({
-	getInitialState() {
-		return {
-			name: '',
-		};
-	},
+class UserSelection extends PureComponent {
+	state = {
+		name: '',
+	}
 
-	openPopup() {
-		this.setState({
-			popupOpened: true,
-		});
-	},
+	openPopup = () => this.setState({ popupOpened: true });
+	closePopup = () => this.setState({ popupOpened: false });
 
-	closePopup() {
-		this.setState({
-			popupOpened: false,
-		});
-	},
-
-	changeEventName(name) {
+	changeEventName = (name) => {
 		this.props.dispatch(
 			setLocalEvents(
 				this.props.id,
 				name
 			)
 		);
-		this.setState({
-			currentName: name,
-		});
-	},
 
-	userNameChangeHandler(event) {
+		this.setState({ currentName: name });
+	};
+
+	userNameChangeHandler = (event) => {
 		const { currentEvent } = this.props;
 		const newUserName = event.target.value;
 		const names = currentEvent.participants.map(name => name.toLowerCase());
+
 		this.setState({
 			isEmpty: false,
 			name: newUserName,
 			isDuplicate: names.indexOf(newUserName.toLowerCase()) !== -1,
 		});
-	},
+	};
 
-	addNewParticipant() {
+	addNewParticipant = () => {
 		const { name } = this.state;
 
 		if (name === '') {
@@ -67,9 +56,9 @@ const UserSelection = React.createClass({
 			newParticipantsList.push(name);
 			this.props.dispatch(fetchUpdateParticipants(id, newParticipantsList));
 		}
-	},
+	};
 
-	formatSubtitle(currentEvent) {
+	formatSubtitle = (currentEvent) => {
 		const participantsStatus = `${currentEvent.participants.length} участников`;
 		const formattedStart = moment(currentEvent.start).format('DD MMMM');
 		const formattedEnd = moment(currentEvent.end).format('DD MMMM');
@@ -82,39 +71,35 @@ const UserSelection = React.createClass({
 		}
 
 		return `${participantsStatus} • ${formattedDate}`;
-	},
+	};
 
-	renderPreloader() {
-		return (
-			<FlexContainer fullHeight alignItems="center" justifyContent="center">
-				<CircularProgress color="#ffe151" />
-			</FlexContainer>
-		);
-	},
+	renderPreloader = () => (
+		<FlexContainer fullHeight alignItems="center" justifyContent="center">
+			<Spinner />
+		</FlexContainer>
+	);
 
-	renderPopup() {
-		return (
-			<Popup
-				unBordered
-				largeHeader
-				title="Добавить себя"
-				okButton={{
-					text: 'Войти',
-					onClick: () => {
-						this.addNewParticipant();
-						this.changeEventName(this.state.name);
-					},
-				}}
-				cancelButton={{
-					text: 'Отмена',
-					onClick: this.closePopup,
-				}}
-				onClose={this.closePopup}
-			>
-				<UserSelectionPopup name={this.state.name} onChangeName={this.userNameChangeHandler} />
-			</Popup>
-		);
-	},
+	renderPopup = () => (
+		<Popup
+			unBordered
+			largeHeader
+			title="Добавить себя"
+			okButton={{
+				text: 'Войти',
+				onClick: () => {
+					this.addNewParticipant();
+					this.changeEventName(this.state.name);
+				},
+			}}
+			cancelButton={{
+				text: 'Отмена',
+				onClick: this.closePopup,
+			}}
+			onClose={this.closePopup}
+		>
+			<UserSelectionPopup name={this.state.name} onChangeName={this.userNameChangeHandler} />
+		</Popup>
+	);
 
 	render() {
 		const { props, state } = this;
@@ -158,8 +143,8 @@ const UserSelection = React.createClass({
 				</div>
 			</Wrapper>
 		);
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

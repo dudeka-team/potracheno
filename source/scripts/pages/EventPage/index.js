@@ -2,7 +2,6 @@ import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
-import CircularProgress from 'material-ui/CircularProgress';
 import Drawer from 'material-ui/Drawer';
 import Portal from 'react-portal';
 
@@ -14,6 +13,7 @@ import Menu from '../../components/Menu';
 import Popup from '../../components/Popup';
 import PopupPoster from '../../components/PopupPoster';
 import HintPopup from '../../components/HintPopup';
+import Spinner from '../../components/spinner/spinner';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
@@ -131,8 +131,8 @@ const EventPage = React.createClass({
 
 	renderPreloader() {
 		return (
-			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<CircularProgress color="#ffe151" />
+			<FlexContainer fullHeight alignItems="center" justifyContent="center">
+				<Spinner />
 			</FlexContainer>
 		);
 	},

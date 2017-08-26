@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
-import CircularProgress from 'material-ui/CircularProgress';
 
 import { Page, PageContent } from '../components/Page';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
@@ -10,37 +9,36 @@ import ActionButton from '../components/ActionButton';
 import readEvents from '../actions/readEvents';
 import FlexContainer from '../components/FlexContainer';
 import Poster from '../components/Poster';
+import Spinner from '../components/spinner/spinner';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
 import { getEventBalance } from '../modules/balance';
 import getLocalEvents from '../actions/getLocalEvents';
 
-const EventsPage = React.createClass({
-	getInitialState() {
-		return {
-			balance: {},
-		};
-	},
+class EventsPage extends PureComponent {
+	state = {
+		balance: {},
+	};
 
 	componentDidMount() {
 		const { props } = this;
 		props.dispatch(getLocalEvents());
 		props.dispatch(readEvents());
-	},
+	}
 
-	goToNewEvent() {
+	goToNewEvent = () => {
 		this.props.router.push('/events/new');
-	},
+	}
 
-	goToFeedback() {
+	goToFeedback = () => {
 		this.props.router.push('/feedback');
-	},
+	}
 
-	goToEvent(eventId) {
+	goToEvent = (eventId) => {
 		this.props.dispatch(changeCurrentEvent(eventId));
 		this.props.router.push(`events/${eventId}`);
-	},
+	}
 
-	renderEventPreview(eventData) {
+	renderEventPreview = (eventData) => {
 		const { eventId, data } = eventData;
 		const { start, end } = data;
 		const currentBalance =
@@ -63,40 +61,35 @@ const EventsPage = React.createClass({
 				/>
 			</div>
 		);
-	},
+	}
 
-	renderEvents(events, eventsById) {
-		let result = events
-			.slice()
-			.reverse()
-			.map(getEventData(eventsById))
-			.map(this.renderEventPreview);
-
-		if (!result.length) {
-			result = (
+	renderEvents = (events, eventsById) => {
+		if (!events.length) {
+			return (
 				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 					<Poster
 						icon="calendar"
-						// eslint-disable-next-line max-len
 						text="У вас пока нет мероприятий, создайте первым свое мероприятие и добавьте участников"
 					/>
 				</FlexContainer>
 			);
 		}
 
-		return result;
-	},
+		return [...events]
+			.reverse()
+			.map(getEventData(eventsById))
+			.map(this.renderEventPreview);
+	}
 
-	renderPreloader() {
-		return (
-			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<CircularProgress color="#ffe151" />
-			</FlexContainer>
-		);
-	},
+	renderPreloader = () => (
+		<FlexContainer fullHeight alignItems="center" justifyContent="center">
+			<Spinner size={Spinner.sizes.large} />
+		</FlexContainer>
+	)
 
 	render() {
 		const { props } = this;
+
 		return (
 			<Page style={{ paddingBottom: '64px' }}>
 				<TopBar bordered>
@@ -113,8 +106,8 @@ const EventsPage = React.createClass({
 				</PageContent>
 			</Page>
 		);
-	},
-});
+	}
+}
 
 function getEventData(eventsById) {
 	return (eventId) => ({

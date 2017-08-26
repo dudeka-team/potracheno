@@ -4,8 +4,6 @@ import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
 
-import CircularProgress from 'material-ui/CircularProgress';
-
 import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
 import { Page, PageContent } from '../Page';
 import FlexContainer from '../FlexContainer';
@@ -15,6 +13,7 @@ import FormRow from '../form-row/form-row';
 import FormLabel from '../form-label/form-label';
 import FormInput from '../form-input/form-input';
 import FormError from '../form-error/form-error';
+import Spinner from '../spinner/spinner';
 
 import styles from './index.css';
 
@@ -278,7 +277,7 @@ const EditEvent = React.createClass({
 				<TopBarIcon icon="close" onClick={this.goBack} />
 				<TopBarHeading title={props.pageTitle} />
 				{props.isCreatingEvent ?
-					<CircularProgress size={0.3} color="#ffe151" />
+					<Spinner className={styles.spinner} />
 					:
 					<TopBarIcon
 						icon="check-active"

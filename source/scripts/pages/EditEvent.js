@@ -2,13 +2,13 @@ import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
-import CircularProgress from 'material-ui/CircularProgress';
 
 import fetchEventData from '../actions/fetchEventData';
 import updateEvent from '../actions/updateEvent';
 
 import FlexContainer from '../components/FlexContainer';
 import EditEvent from '../components/EditEvent';
+import Spinner from '../components/spinner/spinner';
 
 import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/createEventAction';
 
@@ -174,8 +174,8 @@ const EditEventPage = React.createClass({
 
 	renderPreloader() {
 		return (
-			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<CircularProgress color="#ffe151" />
+			<FlexContainer fullHeight alignItems="center" justifyContent="center">
+				<Spinner />
 			</FlexContainer>
 		);
 	},
