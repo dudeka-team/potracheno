@@ -24,7 +24,3 @@ export default function Fab(props) {
 Fab.propTypes = {
 	onClick: PropTypes.func,
 };
-
-// Example usage
-// import PersonAdd from 'material-ui/svg-icons/social/person-add';
-// <Fab><PersonAdd /></Fab>
