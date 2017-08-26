@@ -29,5 +29,7 @@ export function markPurchaseCreation() {
 }
 
 export function reachGoal(type) {
-	window.yaCounter.reachGoal(type);
+	if (window.yaCounter && typeof window.yaCounter.reachGoal === 'function') {
+		window.yaCounter.reachGoal(type);
+	}
 }

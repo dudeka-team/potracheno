@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import withRouter from 'react-router/lib/withRouter';
 import assign from 'object-assign';
-import CircularProgress from 'material-ui/CircularProgress';
 
-import NewPurchasePage from './NewPurchasePage';
-import fetchEventData from '../actions/fetchEventData';
+import NewPurchasePage from './new-purchase-page';
 import FlexContainer from '../components/FlexContainer';
+import Spinner from '../components/spinner/spinner';
+import fetchEventData from '../actions/fetchEventData';
 import getLocalEvents from '../actions/getLocalEvents';
 
 const EDIT = 'EDIT';
@@ -15,7 +15,7 @@ const CREATE = 'CREATE';
 function renderPreloader() {
 	return (
 		<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-			<CircularProgress />
+			<Spinner />
 		</FlexContainer>
 	);
 }
