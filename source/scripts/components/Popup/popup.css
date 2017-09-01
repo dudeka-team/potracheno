@@ -74,7 +74,7 @@
 	margin: 0 8px;
 	color: #1D1E1F;
 	font-size: 1rem;
-	font-weight: bold;
+	font-weight: 700;
 }
 
 .title_large {
@@ -124,4 +124,25 @@
 
 .footer_unbordered {
 	box-shadow: none;
+}
+
+.button {
+	height: 36px;
+	padding: 0 16px;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 36px;
+	text-transform: uppercase;
+	white-space: nowrap;
+	border: 0;
+	border-radius: 3px;
+	background: none;
+	color: #3f95ff;
+	cursor: pointer;
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+	background-color: rgba(153, 153, 153, .2);
 }
