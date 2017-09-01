@@ -9,9 +9,9 @@ import UserSelectionListItem from '../UserSelectionListItem';
 import setLocalEvents from '../../actions/setLocalEvents';
 import fetchUpdateParticipants from '../../actions/fetchUpdateParticipants';
 import FlexContainer from '../FlexContainer';
-import Popup from '../Popup';
+import Popup from '../popup';
 import UserSelectionPopup from '../UserSelectionPopup';
-import Spinner from '../spinner/spinner';
+import Spinner from '../spinner';
 
 class UserSelection extends PureComponent {
 	state = {

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PopupFooter from './popup-footer';
 import styles from './popup.css';
 
-class Popup extends PureComponent {
+export default class Popup extends PureComponent {
 	static propTypes = {
 		title: PropTypes.string.isRequired,
 		closeIcon: PropTypes.bool,
@@ -70,5 +70,3 @@ class Popup extends PureComponent {
 		);
 	}
 }
-
-export default Popup;

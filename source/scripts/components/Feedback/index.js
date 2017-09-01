@@ -1,9 +1,9 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
-import FormRow from '../form-row/form-row';
-import FormLabel from '../form-label/form-label';
-import FormInput from '../form-input/form-input';
+import FormRow from '../form-row';
+import FormLabel from '../form-label';
+import FormInput from '../form-input';
 
 import { saveFeedbackAsync } from '../../actions/saveFeedback';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import withRouter from 'react-router/lib/withRouter';
-import FormRow from '../form-row/form-row';
-import FormLabel from '../form-label/form-label';
-import FormInput from '../form-input/form-input';
-import Popup from '../Popup';
+import FormRow from '../form-row';
+import FormLabel from '../form-label';
+import FormInput from '../form-input';
+import Popup from '../popup';
 
 const BalanceItemPopup = React.createClass({
 	getInitialState() {

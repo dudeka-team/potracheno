@@ -5,7 +5,7 @@ import assign from 'object-assign';
 
 import NewPurchasePage from './new-purchase-page';
 import FlexContainer from '../components/FlexContainer';
-import Spinner from '../components/spinner/spinner';
+import Spinner from '../components/spinner';
 import fetchEventData from '../actions/fetchEventData';
 import getLocalEvents from '../actions/getLocalEvents';
 

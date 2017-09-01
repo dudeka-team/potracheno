@@ -9,11 +9,11 @@ import { Page, PageContent } from '../Page';
 import FlexContainer from '../FlexContainer';
 import Separator from '../Separator';
 import GreySubtitle from '../GreySubtitle';
-import FormRow from '../form-row/form-row';
-import FormLabel from '../form-label/form-label';
-import FormInput from '../form-input/form-input';
-import FormError from '../form-error/form-error';
-import Spinner from '../spinner/spinner';
+import FormRow from '../form-row';
+import FormLabel from '../form-label';
+import FormInput from '../form-input';
+import FormError from '../form-error';
+import Spinner from '../spinner';
 
 import styles from './index.css';
 

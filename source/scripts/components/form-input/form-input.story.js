@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import FormInput from './form-input';
+import FormInput from './';
 
 storiesOf('FormInput', module)
 	.add('empty', () => (

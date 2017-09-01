@@ -10,10 +10,10 @@ import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
 import { TopBar, TopBarHeading, TopBarIcon } from '../../components/TopBar';
 import Menu from '../../components/Menu';
-import Popup from '../../components/Popup';
+import Popup from '../../components/popup';
 import PopupPoster from '../../components/PopupPoster';
 import HintPopup from '../../components/HintPopup';
-import Spinner from '../../components/spinner/spinner';
+import Spinner from '../../components/spinner';
 
 import Balance from './Balance';
 import Purchases from './Purchases';

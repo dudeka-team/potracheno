@@ -9,7 +9,7 @@ import ActionButton from '../components/ActionButton';
 import readEvents from '../actions/readEvents';
 import FlexContainer from '../components/FlexContainer';
 import Poster from '../components/Poster';
-import Spinner from '../components/spinner/spinner';
+import Spinner from '../components/spinner';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
 import { getEventBalance } from '../modules/balance';
 import getLocalEvents from '../actions/getLocalEvents';
