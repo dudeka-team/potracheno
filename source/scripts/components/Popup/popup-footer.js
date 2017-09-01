@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import FlatButton from 'material-ui/FlatButton';
 import styles from './popup.css';
 
 export default function PopupFooter(props) {
@@ -16,8 +15,21 @@ export default function PopupFooter(props) {
 				[styles.footer_unbordered]: unBordered,
 			})}
 		>
-			{cancelButton && <FlatButton label={cancelButton.text} onTouchTap={cancelButton.onClick} />}
-			{okButton && <FlatButton label={okButton.text} onTouchTap={okButton.onClick} />}
+			{cancelButton ?
+				<button className={styles.button} onClick={cancelButton.onClick}>
+					{cancelButton.text}
+				</button>
+				:
+				null
+			}
+
+			{okButton ?
+				<button className={styles.button} onClick={okButton.onClick}>
+					{okButton.text}
+				</button>
+				:
+				null
+			}
 		</div>
 	);
 }
