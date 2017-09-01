@@ -3,11 +3,11 @@ import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
 import Wrapper from '../../components/Wrapper';
-import Fab from '../../components/Fab';
+import Fab from '../../components/fab';
 import IconShoppingCart from '../../components/icons/shopping-cart';
 import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
-import Popup from '../../components/Popup';
+import Popup from '../../components/popup';
 import FlexContainer from '../../components/FlexContainer';
 import Poster from '../../components/Poster';
 
@@ -114,11 +114,7 @@ const EventPurchasesPage = React.createClass({
 					this.renderPlaceholder()
 				}
 
-				<Fab
-					backgroundColor="#ffe151"
-					iconStyle={{ fill: '#333' }}
-					onClick={this.goToNewPurchase}
-				>
+				<Fab onClick={this.goToNewPurchase}>
 					<IconShoppingCart />
 				</Fab>
 			</Wrapper>

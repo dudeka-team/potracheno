@@ -8,7 +8,7 @@ import updateEvent from '../actions/updateEvent';
 
 import FlexContainer from '../components/FlexContainer';
 import EditEvent from '../components/EditEvent';
-import Spinner from '../components/spinner/spinner';
+import Spinner from '../components/spinner';
 
 import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/createEventAction';
 

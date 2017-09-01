@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import FormRow from '../form-row/form-row';
-import FormInput from '../form-input/form-input';
+import FormRow from '../form-row';
+import FormInput from '../form-input';
 
 import styles from './index.css';
 

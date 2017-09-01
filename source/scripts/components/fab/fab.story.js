@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Spinner from './';
+import Fab from './index';
 
-storiesOf('Spinner', module)
+storiesOf('Fab', module)
 	.add('default', () => (
-		<Spinner />
+		<Fab />
 	));

@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import FormLabel from './form-label';
+import FormLabel from './';
 
 storiesOf('FormLabel', module)
 	.add('default', () => (
