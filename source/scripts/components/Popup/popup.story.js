@@ -56,4 +56,4 @@ storiesOf('Popup', module)
 		>
 			Content
 		</Popup>
-	))
+	));

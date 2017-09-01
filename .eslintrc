@@ -28,7 +28,7 @@
     "react/require-extension": "off",
     "react/jsx-indent": ["error", "tab"],
     "react/jsx-indent-props": ["error", "tab"],
-    "react/prefer-es6-class": ["error", "always"],
+    "react/prefer-es6-class": ["warn", "always"],
     "react/prop-types": "off",
     "react/prefer-stateless-function": "off",
     "react/jsx-filename-extension": "off"
