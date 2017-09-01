@@ -83,7 +83,7 @@ class EventsPage extends PureComponent {
 
 	renderPreloader = () => (
 		<FlexContainer fullHeight alignItems="center" justifyContent="center">
-			<Spinner size={Spinner.sizes.large} />
+			<Spinner />
 		</FlexContainer>
 	)
 
