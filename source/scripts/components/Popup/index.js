@@ -72,20 +72,3 @@ class Popup extends PureComponent {
 }
 
 export default Popup;
-
-// Example usage
-// <Popup
-// 	title="Шашлык"
-// 	closeIcon
-// 	onClose={() => {}}
-// 	okButton={{
-// 		text: 'Добавить',
-// 		onClick: () => {},
-// 	}}
-// 	cancelButton={{
-// 		text: 'Отменить',
-// 		onClick: () => {},
-// 	}}
-// >
-// 	<div>Popup content</div>
-// </Popup>
