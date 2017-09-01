@@ -20,9 +20,10 @@ class EventsPage extends PureComponent {
 	};
 
 	componentDidMount() {
-		const { props } = this;
-		props.dispatch(getLocalEvents());
-		props.dispatch(readEvents());
+		const { dispatch } = this.props;
+
+		dispatch(getLocalEvents());
+		dispatch(readEvents());
 	}
 
 	goToNewEvent = () => {

@@ -9,6 +9,7 @@ new WebpackDevServer(webpack(config), {
 	publicPath: '',
 	hot: true,
 	historyApiFallback: true,
+	stats: 'errors-only',
 }).listen(8080, 'localhost', (error) => {
 	if (error) {
 		console.error(error);

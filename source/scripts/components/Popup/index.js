@@ -1,8 +1,10 @@
-import React, { PropTypes } from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import React, { PureComponent, PropTypes } from 'react';
+import classNames from 'classnames';
+import PopupFooter from './popup-footer';
+import styles from './popup.css';
 
-const Popup = React.createClass({
-	propTypes: {
+class Popup extends PureComponent {
+	static propTypes = {
 		title: PropTypes.string.isRequired,
 		closeIcon: PropTypes.bool,
 		okButton: PropTypes.shape({
@@ -14,58 +16,59 @@ const Popup = React.createClass({
 			onClick: PropTypes.func,
 		}),
 		onClose: PropTypes.func,
-	},
+	};
 
 	render() {
 		const { props } = this;
 		const { okButton, cancelButton, unBordered, largeHeader } = props;
-		const rootClasses = ['popup'];
-		const headerClasses = ['popup__header'];
-		if (largeHeader) headerClasses.push('popup__header_large');
-		if (unBordered) headerClasses.push('popup__header_unbordered');
-		const titleClasses = ['popup__title'];
-		if (largeHeader) titleClasses.push('popup__title_large');
-
-		if (!okButton && !cancelButton) {
-			rootClasses.push('popup_without-footer');
-		}
 
 		return (
-			<div className={rootClasses.join(' ')}>
-				<div className="popup__overlay" onClick={props.onClose} />
-				<div className="popup__wrapper">
-					<div className="popup__inner">
-						<div className={headerClasses.join(' ')}>
+			<div
+				className={classNames(styles.root, {
+					[styles['root_without-footer']]: !okButton && !cancelButton,
+				})}
+			>
+				<div className={styles.overlay} onClick={props.onClose} />
+				<div className={styles.wrapper}>
+					<div className={styles.inner}>
+						<div
+							className={classNames(styles.header, {
+								[styles.header_large]: largeHeader,
+								[styles.header_unbordered]: unBordered,
+							})}
+						>
 							{props.closeIcon && <div
-								className="popup__icon popup__icon_close"
+								className={classNames(styles.icon, styles.icon_close)}
 								onClick={props.onClose}
 							/>}
-							<div className={titleClasses.join(' ')}>{props.title}</div>
+
+							<div
+								className={classNames(styles.title, {
+									[styles.title_large]: largeHeader,
+								})}
+							>
+								{props.title}
+							</div>
 						</div>
-						<div className={`popup__content ${unBordered && 'popup__content_unbordered'}`}>
+
+						<div
+							className={classNames(styles.content, {
+								[styles.content_unbordered]: unBordered,
+							})}
+						>
 							{props.children}
 						</div>
-						{(okButton || cancelButton) && <PopupFooter
+
+						<PopupFooter
 							okButton={okButton}
 							cancelButton={cancelButton}
 							unBordered={unBordered}
-						/>}
+						/>
 					</div>
 				</div>
 			</div>
 		);
-	},
-});
-
-function PopupFooter(props) {
-	const { okButton, cancelButton, unBordered } = props;
-
-	return (
-		<div className={`popup__footer ${unBordered && 'popup__footer_unbordered'}`}>
-			{cancelButton && <FlatButton label={cancelButton.text} onTouchTap={cancelButton.onClick} />}
-			{okButton && <FlatButton label={okButton.text} onTouchTap={okButton.onClick} />}
-		</div>
-	);
+	}
 }
 
 export default Popup;

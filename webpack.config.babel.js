@@ -38,7 +38,12 @@ const config = {
 				use: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
 					use: [
-						'postcss-loader',
+						{
+							loader: 'postcss-loader',
+							options: {
+								sourceMap: true,
+							},
+						},
 						'stylus-loader',
 					],
 				}),
@@ -53,11 +58,20 @@ const config = {
 							options: {
 								modules: true,
 								importLoaders: 1,
+								localIdentName: '[name]-[local]-[hash:base64:5]',
 							},
 						},
 						'postcss-loader',
 					],
 				}),
+			},
+			{
+				test: /\.svg$/,
+				loader: 'url-loader',
+				options: {
+					limit: 100000,
+					mimetype: 'image/svg+xml',
+				},
 			},
 		],
 	},
