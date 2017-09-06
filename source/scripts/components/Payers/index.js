@@ -1,24 +1,23 @@
-import React from 'react';
-import UniversalListItem from '../UniversalListItem';
+import React, { PureComponent } from 'react';
+import UniversalListItem from '../universal-list-item';
+import IconCheck from '../icons/check';
 
-const Payers = React.createClass({
+export default class Payers extends PureComponent {
 	render() {
-		const { props } = this;
+		const { participants, payer, getFullName, changePayer } = this.props;
+
 		return (
 			<div className="payers">
-				{props.participants.map((user) => (
+				{participants.map((user) => (
 					<UniversalListItem
-						onClick={() => this.props.changePayer(user)}
-						id={user}
-						text={props.getFullName(user)}
 						key={user}
-						iconId={7}
-						checkMark={props.payer === user}
-					/>
+						onClick={() => changePayer(user)}
+						postfix={payer === user ? <IconCheck /> : null}
+					>
+						{getFullName(user)}
+					</UniversalListItem>
 				))}
 			</div>
 		);
-	},
-});
-
-export default Payers;
+	}
+}

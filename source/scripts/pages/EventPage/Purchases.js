@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import Wrapper from '../../components/Wrapper';
 import Fab from '../../components/fab';
 import IconShoppingCart from '../../components/icons/shopping-cart';
-import PurchaseInfo from '../../components/PurchaseInfo';
 import PurchaseListItem from '../../components/PurchaseListItem';
-import Popup from '../../components/popup';
 import FlexContainer from '../../components/FlexContainer';
 import Poster from '../../components/Poster';
 
@@ -24,24 +22,6 @@ function getSubtitle(participantsCount, eventParticipantsCount) {
 }
 
 const EventPurchasesPage = React.createClass({
-	getInitialState() {
-		return {
-			popupOpened: false,
-		};
-	},
-
-	openPopup() {
-		this.setState({
-			popupOpened: true,
-		});
-	},
-
-	closePopup() {
-		this.setState({
-			popupOpened: false,
-		});
-	},
-
 	goToNewPurchase() {
 		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/new`);
@@ -50,22 +30,6 @@ const EventPurchasesPage = React.createClass({
 	goToPurchase(purchaseId) {
 		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
-	},
-
-	renderPopup() {
-		const { state, props } = this;
-		return (
-			<Popup
-				title={state.openedPurchase.name}
-				closeIcon
-				onClose={this.closePopup}
-			>
-				<PurchaseInfo
-					purchase={state.openedPurchase}
-					eventParticipants={props.eventParticipants}
-				/>
-			</Popup>
-		);
 	},
 
 	renderPurchases() {
@@ -107,7 +71,6 @@ const EventPurchasesPage = React.createClass({
 		const { props } = this;
 		return (
 			<Wrapper>
-				{this.state.popupOpened && this.renderPopup()}
 				{props.purchases.length ?
 					this.renderPurchases()
 					:
