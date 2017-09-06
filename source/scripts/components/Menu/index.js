@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import EventStatus from '../EventStatus';
 import GreySubtitle from '../GreySubtitle';
-import UniversalListItem from '../UniversalListItem';
+import UniversalListItem from '../universal-list-item';
 
 const Menu = React.createClass({
 	renderControls() {
@@ -40,10 +40,9 @@ const Menu = React.createClass({
 		}
 
 		return (
-			<UniversalListItem
-				key={name}
-				text={displayName}
-			/>
+			<UniversalListItem key={name}>
+				{displayName}
+			</UniversalListItem>
 		);
 	},
 

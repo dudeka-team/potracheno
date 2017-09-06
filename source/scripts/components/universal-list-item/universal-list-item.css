@@ -1,0 +1,39 @@
+.root {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 18px 16px;
+	padding-right: 9px;
+	font-size: 16px;
+	color: #1d1e1f;
+	background: #fff;
+	user-select: none;
+}
+
+.root_bordered {
+	border-bottom: 1px solid #e1e4e7;
+	box-sizing: content-box;
+}
+
+.root_bordered:last-child {
+	border-bottom: none;
+}
+
+.prefix,
+.postfix {
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+
+.prefix {
+	padding-right: 15px;
+}
+
+.postfix {
+	padding-left: 15px;
+}
+
+.content {
+	flex-grow: 1;
+	flex-shrink: 1;
+}

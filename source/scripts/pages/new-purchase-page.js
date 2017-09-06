@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import withRouter from 'react-router/lib/withRouter';
 import deepEqual from 'deep-equal';
@@ -14,12 +14,14 @@ import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/popup';
 import Payers from '../components/Payers';
 import GreySubtitle from '../components/GreySubtitle';
-import UniversalListItem from '../components/UniversalListItem';
+import UniversalListItem from '../components/universal-list-item';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
 import FormRow from '../components/form-row';
 import FormLabel from '../components/form-label';
 import FormInput from '../components/form-input';
 import Spinner from '../components/spinner';
+import IconCross from '../components/icons/cross';
+import Checkbox from '../components/checkbox';
 
 import fetchEventData from '../actions/fetchEventData';
 import fetchPurchaseChange from '../actions/fetchPurchaseChange';
@@ -39,17 +41,21 @@ import styles from './new-purchase-page.css';
 const EDIT = 'EDIT';
 const CREATE = 'CREATE';
 
-const NewPurchasePage = React.createClass({
-	getInitialState() {
-		const { props } = this;
+class NewPurchasePage extends Component {
+	constructor(props) {
+		super(props);
+
 		const { eventParticipants, purchase, myName } = props.data;
 		let purchaseCopy;
+
 		if (props.mode === EDIT) {
-			purchaseCopy = assign({}, purchase, {
+			purchaseCopy = {
+				...purchase,
 				participants: purchase.participants.slice(),
-			});
+			};
 		}
-		return {
+
+		this.state = {
 			mode: props.mode || CREATE,
 			isSavingData: false,
 			purchase,
@@ -57,27 +63,25 @@ const NewPurchasePage = React.createClass({
 			myName,
 			purchaseCopy,
 		};
-	},
+	}
 
 	componentDidMount() {
 		const { params, dispatch } = this.props;
 		dispatch(fetchEventData(params.id));
-	},
+	}
 
-	getLoan(user) {
+	getLoan = (user) => {
 		const { purchase } = this.state;
 		const count = purchase.participants.length;
 		if (!count || purchase.participants.indexOf(user) === -1) {
 			return 0;
 		}
 		return Math.round((purchase.amount || 0) / count);
-	},
+	};
 
-	getFullName(name) {
-		return this.state.myName === name ? `${name} (Вы)` : name;
-	},
+	getFullName = (name) => (this.state.myName === name ? `${name} (Вы)` : name);
 
-	save() {
+	save = () => {
 		const { state, props } = this;
 		const { localEvents } = props;
 
@@ -120,14 +124,14 @@ const NewPurchasePage = React.createClass({
 		this.setState({
 			isSavingData: true,
 		});
-	},
+	};
 
-	goToEvent() {
+	goToEvent = () => {
 		this.props.router.push(`/events/${this.props.params.id}`);
 		this.props.dispatch(loadEventDataAsync(this.props.params.id));
-	},
+	};
 
-	saveChanges() {
+	saveChanges = () => {
 		const { props, state } = this;
 		const { dispatch, localEvents } = props;
 		const { purchase_id, id } = props.params;
@@ -166,9 +170,9 @@ const NewPurchasePage = React.createClass({
 		this.setState({
 			isSavingData: true,
 		});
-	},
+	};
 
-	editPageTopBar() {
+	editPageTopBar = () => {
 		const { purchase, purchaseCopy } = this.state;
 		const { participants, name } = purchase;
 		const changed = purchase.name !== purchaseCopy.name ||
@@ -193,9 +197,9 @@ const NewPurchasePage = React.createClass({
 				}
 			</TopBar>
 		);
-	},
+	};
 
-	createPageTopBar() {
+	createPageTopBar = () => {
 		const { purchase } = this.state;
 		const { participants, name } = purchase;
 		const disabled = participants.length === 0 ||
@@ -213,9 +217,9 @@ const NewPurchasePage = React.createClass({
 				}
 			</TopBar>
 		);
-	},
+	};
 
-	deletePurchase() {
+	deletePurchase = () => {
 		const { state, props } = this;
 		const { id, purchase_id } = this.props.params;
 		const { dispatch } = this.props;
@@ -230,17 +234,17 @@ const NewPurchasePage = React.createClass({
 			},
 		}));
 		dispatch(fetchPurchaseDelete(id, purchase_id));
-	},
+	};
 
-	handleChangePurchasePrice(event) {
+	handleChangePurchasePrice = (event) => {
 		const amount = Number(event.target.value);
 
 		this.setState((state) => ({
 			purchase: Object.assign({}, state.purchase, { amount }),
 		}));
-	},
+	};
 
-	handleChangePurchaseName(event) {
+	handleChangePurchaseName = (event) => {
 		const name = event.target.value;
 
 		this.setState((state) => ({
@@ -249,7 +253,23 @@ const NewPurchasePage = React.createClass({
 				name,
 			},
 		}));
-	},
+	};
+
+	handleClickEventParticipant = (user) => () => {
+		const { mode, purchase } = this.state;
+		const { participants } = purchase;
+		const { hasRepayedDebts } = this.props;
+
+		if (mode === EDIT && hasRepayedDebts) return;
+
+		if (participants.indexOf(user) !== -1) {
+			purchase.participants = participants.filter(x => x !== user);
+		} else {
+			participants.push(user);
+		}
+
+		this.setState({ purchase });
+	};
 
 	render() {
 		const { state, props } = this;
@@ -329,27 +349,22 @@ const NewPurchasePage = React.createClass({
 
 					<div style={{ paddingRight: '9px' }}>
 						<GreySubtitle text="Участники покупки" />
-						{state.eventParticipants.map(user => (
+
+						{state.eventParticipants.map((user) => (
 							<UniversalListItem
-								id={user}
-								key={user}
-								text={this.getFullName(user)}
-								price={this.getLoan(user)}
-								isCheckBox
-								checkBoxDisabled={mode === EDIT && hasRepayedDebts}
-								checkBoxChecked={purchase.participants.indexOf(user) !== -1}
 								isBordered
-								onClick={() => {
-									if (mode === EDIT && hasRepayedDebts) return;
-									const { participants } = purchase;
-									if (participants.indexOf(user) !== -1) {
-										purchase.participants = participants.filter(x => x !== user);
-									} else {
-										participants.push(user);
-									}
-									this.setState({ purchase });
-								}}
-							/>
+								key={user}
+								prefix={
+									<Checkbox
+										disabled={mode === EDIT && hasRepayedDebts}
+										checked={purchase.participants.indexOf(user) !== -1}
+									/>
+								}
+								postfix={`${this.getLoan(user)} Р`}
+								onClick={this.handleClickEventParticipant(user)}
+							>
+								{this.getFullName(user)}
+							</UniversalListItem>
 						))}
 					</div>
 					{mode === EDIT &&
@@ -370,15 +385,13 @@ const NewPurchasePage = React.createClass({
 								/>
 							}
 
-							{!hasRepayedDebts && [
-								<Separator key="first" />,
-								<UniversalListItem
-									isDelete
-									key="second"
-									text="Удалить покупку"
-									onClick={() => this.setState({ popupDeleteOpened: true })}
-								/>,
-							]}
+							{!hasRepayedDebts && <Separator />}
+							{!hasRepayedDebts && <UniversalListItem
+								prefix={<IconCross />}
+								onClick={() => this.setState({ popupDeleteOpened: true })}
+							>
+								Удалить покупку
+							</UniversalListItem>}
 
 							<Separator />
 						</div>
@@ -386,8 +399,8 @@ const NewPurchasePage = React.createClass({
 				</PageContent>
 			</Page>
 		);
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {
