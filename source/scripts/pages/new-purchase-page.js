@@ -81,6 +81,8 @@ class NewPurchasePage extends Component {
 
 	getFullName = (name) => (this.state.myName === name ? `${name} (Вы)` : name);
 
+	isEditingDisabled = () => this.state.mode === EDIT && this.props.hasRepayedDebts;
+
 	save = () => {
 		const { state, props } = this;
 		const { localEvents } = props;
@@ -255,12 +257,26 @@ class NewPurchasePage extends Component {
 		}));
 	};
 
-	handleClickEventParticipant = (user) => () => {
-		const { mode, purchase } = this.state;
-		const { participants } = purchase;
-		const { hasRepayedDebts } = this.props;
+	handleToggleAllPurchaseParticipants = () => {
+		const { eventParticipants } = this.props.data;
+		const { purchase } = this.state;
+		const everyUserParticipates = purchase.participants.length === eventParticipants.length;
 
-		if (mode === EDIT && hasRepayedDebts) return;
+		this.setState({
+			purchase: {
+				...purchase,
+				participants: everyUserParticipates ? [] : [...eventParticipants],
+			},
+		});
+	}
+
+	handleClickEventParticipant = (user) => () => {
+		const { purchase } = this.state;
+		const { participants } = purchase;
+
+		if (this.isEditingDisabled()) {
+			return;
+		}
 
 		if (participants.indexOf(user) !== -1) {
 			purchase.participants = participants.filter(x => x !== user);
@@ -274,14 +290,16 @@ class NewPurchasePage extends Component {
 	render() {
 		const { state, props } = this;
 		const { mode, purchase } = state;
-		const { hasRepayedDebts } = props;
+		const { hasRepayedDebts, data: { eventParticipants } } = props;
+		const everyUserParticipates = eventParticipants.length === purchase.participants.length;
+		const somebodyParticipates = purchase.participants.length > 0;
 
 		return (
 			<Page>
 				{mode === EDIT && this.editPageTopBar()}
 				{mode === CREATE && this.createPageTopBar()}
 				<PageContent>
-					{mode === EDIT && hasRepayedDebts &&
+					{this.isEditingDisabled() &&
 						<div
 							style={{
 								paddingLeft: '16px',
@@ -293,14 +311,17 @@ class NewPurchasePage extends Component {
 							После начала возвращения долгов можно редактировать только название покупки.
 						</div>
 					}
+
 					<NewPurchasePayer
 						payer={this.getFullName(purchase.payer) || ''}
 						disabled={hasRepayedDebts}
 						onClick={() => {
-							if (mode === EDIT && hasRepayedDebts) return;
-							this.setState({ popupOpened: true });
+							if (!this.isEditingDisabled()) {
+								this.setState({ popupOpened: true });
+							}
 						}}
 					/>
+
 					{state.popupOpened &&
 						<Popup
 							title="Кто платит"
@@ -329,7 +350,7 @@ class NewPurchasePage extends Component {
 								id="purchase-price"
 								type="number"
 								size={FormInput.sizes.large}
-								disabled={mode === EDIT && hasRepayedDebts}
+								disabled={this.isEditingDisabled()}
 								value={purchase.amount || 0}
 								onChange={this.handleChangePurchasePrice}
 							/>
@@ -350,13 +371,27 @@ class NewPurchasePage extends Component {
 					<div style={{ paddingRight: '9px' }}>
 						<GreySubtitle text="Участники покупки" />
 
+						<UniversalListItem
+							isBordered
+							prefix={
+								<Checkbox
+									disabled={this.isEditingDisabled()}
+									checked={everyUserParticipates}
+									indeterminate={!everyUserParticipates && somebodyParticipates}
+								/>
+							}
+							onClick={this.isEditingDisabled() ? undefined : this.handleToggleAllPurchaseParticipants}
+						>
+							Все пользователи
+						</UniversalListItem>
+
 						{state.eventParticipants.map((user) => (
 							<UniversalListItem
 								isBordered
 								key={user}
 								prefix={
 									<Checkbox
-										disabled={mode === EDIT && hasRepayedDebts}
+										disabled={this.isEditingDisabled()}
 										checked={purchase.participants.indexOf(user) !== -1}
 									/>
 								}
