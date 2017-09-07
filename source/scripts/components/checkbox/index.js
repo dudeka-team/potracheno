@@ -1,22 +1,49 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import styles from './checkbox.css';
 
-export default function Checkbox(props) {
-	const {
-		className,
-		...inputProps
-	} = props;
+export default class Checkbox extends PureComponent {
+	componentDidMount() {
+		if (this.props.indeterminate) {
+			this.setIndeterminateState();
+		}
+	}
 
-	return (
-		<div className={classNames(styles.root, className)}>
-			<input
-				className={styles.input}
-				type="checkbox"
-				{...inputProps}
-			/>
+	componentDidUpdate(prevProps) {
+		const { indeterminate } = this.props;
 
-			<span className={styles.checkbox} />
-		</div>
-	);
+		if (!prevProps.indeterminate && indeterminate) {
+			this.setIndeterminateState();
+		} else if (prevProps.indeterminate && !indeterminate) {
+			this.unsetIndeterminateState();
+		}
+	}
+
+	setIndeterminateState() {
+		this.inputNode.indeterminate = true;
+	}
+
+	unsetIndeterminateState() {
+		this.inputNode.indeterminate = false;
+	}
+
+	render() {
+		const {
+			className,
+			...inputProps
+		} = this.props;
+
+		return (
+			<div className={classNames(styles.root, className)}>
+				<input
+					className={styles.input}
+					type="checkbox"
+					ref={(node) => (this.inputNode = node)}
+					{...inputProps}
+				/>
+
+				<span className={styles.checkbox} />
+			</div>
+		);
+	}
 }
