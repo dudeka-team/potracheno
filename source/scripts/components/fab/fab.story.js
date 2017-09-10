@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Fab from './index';
+import Fab from './';
 
 storiesOf('Fab', module)
 	.add('default', () => (
