@@ -22,7 +22,8 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": "lint:scripts"
+    "*.js": "lint",
+    "*": "test"
   },
   "bugs": {
     "url": "https://github.com/yandexdataschool/prj-c-dudeka/issues"
