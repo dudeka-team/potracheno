@@ -10,17 +10,15 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "test": "npm run lint && npm run test:scripts",
-    "test:scripts": "jest",
-    "test:coverage": "jest --coverage",
-    "lint": "npm run lint:scripts",
-    "lint:scripts": "eslint source/scripts --ext .js",
-    "clean": "rm -rf build/",
-    "copy-static": "cp -R static build",
     "start": "node ./server.js",
     "start:production": "npm run clean && npm run copy-static && cross-env NODE_ENV=production node ./server.js",
     "start:storybook": "start-storybook -p 9001 -c .storybook",
+    "clean": "rm -rf build/",
+    "copy-static": "cp -R static build",
     "build": "npm run clean && npm run copy-static && cross-env NODE_ENV=production webpack --progress --colors",
+    "qa": "npm run lint && npm run test",
+    "lint": "eslint source/scripts --ext .js",
+    "test": "jest",
     "precommit": "lint-staged"
   },
   "lint-staged": {
