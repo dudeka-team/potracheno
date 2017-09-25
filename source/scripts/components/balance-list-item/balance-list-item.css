@@ -1,0 +1,87 @@
+.root {
+	display: flex;
+	align-items: center;
+	padding: 18px;
+	border-bottom: 1px solid #e1e4e7;
+}
+
+.wrapper {
+	position: relative;
+	flex-shrink: 1;
+	flex-grow: 1;
+	overflow: hidden;
+}
+
+.wrapper::after {
+	content: '';
+	position: absolute;
+	right: 12px;
+	top: 0;
+	bottom: 0;
+	width: 20px;
+	background-image: linear-gradient(to right, rgba(255,255,255,0) 0%, #fff 100%);
+}
+
+.direction {
+	position: relative;
+	flex-grow: 1;
+	flex-shrink: 1;
+	display: flex;
+	align-items: center;
+	overflow-x: auto;
+	overflow-y: hidden;
+	margin-right: 15px;
+	font-size: 18px;
+	font-weight: normal;
+	line-height: 1.11;
+	color: #1d1e1f;
+}
+
+.root_returned .direction {
+	color: #83888d;
+}
+
+.from,
+.to {
+	white-space: nowrap;
+}
+
+.icon {
+	flex-grow: 0;
+	flex-shrink: 0;
+	position: relative;
+	top: 1px;
+	width: 24px;
+	height: 24px;
+	margin: 0 8px;
+	background: url('./resources/arrow.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.sum {
+	flex-grow: 0;
+	flex-shrink: 0;
+	display: inline-block;
+	overflow: hidden;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 1.22;
+}
+
+.root_negative .sum {
+	color: #f1353b;
+}
+
+.root_positive .sum {
+	color: #34c082;
+}
+
+.root_neutral .sum {
+	color: #1d1e1f;
+}
+
+.root_returned .sum {
+	display: none;
+	color: #83888d;
+}

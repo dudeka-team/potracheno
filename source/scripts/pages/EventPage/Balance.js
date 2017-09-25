@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Portal from 'react-portal';
 import assign from 'object-assign';
 
-import BalanceListItem from '../../components/BalanceListItem';
+import BalanceListItem from '../../components/balance-list-item';
 import BalanceCheck from '../../components/BalanceCheck';
 import BalanceItemPopup from '../../components/BalanceItemPopup';
 import PopupPoster from '../../components/PopupPoster';

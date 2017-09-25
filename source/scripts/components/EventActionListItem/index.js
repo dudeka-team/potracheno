@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EventActionItem = React.createClass({
+const EventActionListItem = React.createClass({
 	renderAction(actionType) {
 		const { props } = this;
 		const {
@@ -212,4 +212,4 @@ const EventActionItem = React.createClass({
 	},
 });
 
-export default EventActionItem;
+export default EventActionListItem;
