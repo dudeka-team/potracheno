@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Page, PageContent } from '../components/Page';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
-import ActionButton from '../components/ActionButton';
+import ActionButton from '../components/action-button';
 import readEvents from '../actions/readEvents';
 import FlexContainer from '../components/FlexContainer';
 import Poster from '../components/Poster';
@@ -103,7 +103,10 @@ class EventsPage extends PureComponent {
 						:
 						this.renderEvents(props.events, props.eventsById)
 					}
-					<ActionButton text="Добавить мероприятие" onClick={this.goToNewEvent} />
+
+					<ActionButton onClick={this.goToNewEvent}>
+						Добавить мероприятие
+					</ActionButton>
 				</PageContent>
 			</Page>
 		);
