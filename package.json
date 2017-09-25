@@ -63,6 +63,7 @@
     "uglifyjs-webpack-plugin": "0.4.4",
     "url-loader": "^0.5.9",
     "webpack": "2.6.1",
+    "webpack-bundle-analyzer": "2.9.0",
     "webpack-dev-server": "^1.15.1"
   },
   "dependencies": {

@@ -5,10 +5,14 @@ import webpack from 'webpack';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const SOURCE_DIR = './source';
 const BUILD_DIR = './build';
-const ENVIRONMENT = process.env.NODE_ENV || 'development';
+const {
+	NODE_ENV = 'production',
+	ANALYZE = false,
+} = process.env;
 const config = {
 	entry: [
 		`${SOURCE_DIR}/scripts/index.js`,
@@ -78,7 +82,7 @@ const config = {
 	plugins: [
 		new ExtractTextPlugin('app.css'),
 		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(ENVIRONMENT),
+			'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
 		}),
 		new HtmlWebpackPlugin({
 			template: `${SOURCE_DIR}/index.html`,
@@ -91,7 +95,7 @@ const config = {
 	],
 };
 
-if (ENVIRONMENT === 'production') {
+if (NODE_ENV === 'production') {
 	config.plugins.push(
 		new UglifyJsPlugin({
 			compress: {
@@ -107,6 +111,10 @@ if (ENVIRONMENT === 'production') {
 		'webpack-dev-server/client?http://localhost:8080',
 		'webpack/hot/dev-server',
 	].concat(config.entry);
+}
+
+if (ANALYZE) {
+	config.plugins.push(new BundleAnalyzerPlugin());
 }
 
 module.exports = config;

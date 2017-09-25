@@ -9,6 +9,7 @@ $ npm start # starts server in development mode
 $ npm run start:production # starts server in production mode
 $ npm run start:storybook # starts react-storybook server
 $ npm run build # builds project
+$ ANALYZE=true npm run build # builds project and starts webpack bundle analyzer server
 $ npm run qa # lints and tests code
 ```
 
