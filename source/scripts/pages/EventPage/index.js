@@ -5,9 +5,9 @@ import assign from 'object-assign';
 import Drawer from 'material-ui/Drawer';
 import Portal from 'react-portal';
 
-import { Page } from '../../components/page';
+import Page from '../../components/page';
 import FlexContainer from '../../components/FlexContainer';
-import Tabs from '../../components/Tabs';
+import Tabs from '../../components/tabs';
 import { TopBar, TopBarHeading, TopBarIcon } from '../../components/TopBar';
 import Menu from '../../components/Menu';
 import Popup from '../../components/popup';
@@ -239,43 +239,48 @@ const EventPage = React.createClass({
 
 			return (
 				<Page>
-					{this.renderDrawer(currentEvent, currentUserName, subtitle)}
-					{this.renderTopBar(currentEvent.name)}
-					{this.renderSharePopup()}
-					{this.renderHintPopup()}
-					<PopupPoster
-						text={state.shareResultMessage}
-						isOpened={state.showShareResult}
-					/>
-					<Tabs
-						config={[
-							{
-								labelContent: 'Покупки',
-								content: <Purchases
-									eventId={props.id}
-									purchases={purchases}
-									eventParticipants={currentEvent.participants}
-									currentUser={currentUserName}
-								/>,
-							},
-							{
-								labelContent: 'Баланс',
-								content: <Balance
-									purchases={purchases}
-									participants={currentEvent.participants}
-									currentUser={currentUserName}
-									currentEvent={currentEvent}
-									eventId={props.id}
-								/>,
-							},
-							{
-								labelContent: 'Действия',
-								content: <EventActions
-									actions={actions}
-								/>,
-							},
-						]}
-					/>
+					<Page.Header>
+						{this.renderTopBar(currentEvent.name)}
+					</Page.Header>
+
+					<Page.Content>
+						{this.renderDrawer(currentEvent, currentUserName, subtitle)}
+						{this.renderSharePopup()}
+						{this.renderHintPopup()}
+						<PopupPoster
+							text={state.shareResultMessage}
+							isOpened={state.showShareResult}
+						/>
+						<Tabs
+							config={[
+								{
+									labelContent: 'Покупки',
+									content: <Purchases
+										eventId={props.id}
+										purchases={purchases}
+										eventParticipants={currentEvent.participants}
+										currentUser={currentUserName}
+									/>,
+								},
+								{
+									labelContent: 'Баланс',
+									content: <Balance
+										purchases={purchases}
+										participants={currentEvent.participants}
+										currentUser={currentUserName}
+										currentEvent={currentEvent}
+										eventId={props.id}
+									/>,
+								},
+								{
+									labelContent: 'Действия',
+									content: <EventActions
+										actions={actions}
+									/>,
+								},
+							]}
+						/>
+					</Page.Content>
 				</Page>
 			);
 		}

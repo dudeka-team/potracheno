@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import assign from 'object-assign';
 
 import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
-import { Page, PageContent } from '../page';
+import Page from '../page';
 import FlexContainer from '../FlexContainer';
 import Separator from '../Separator';
 import GreySubtitle from '../grey-subtitle';
@@ -324,8 +324,11 @@ const EditEvent = React.createClass({
 		const { state } = this;
 		return (
 			<Page>
-				{this.renderTopBar()}
-				<PageContent style={{ padding: '8px 1rem 5rem' }}>
+				<Page.Header>
+					{this.renderTopBar()}
+				</Page.Header>
+
+				<Page.Content style={{ padding: '8px 1rem 5rem' }}>
 					<FormRow>
 						<FormLabel htmlFor="event-name">Название мероприятия</FormLabel>
 						<FormInput
@@ -352,7 +355,7 @@ const EditEvent = React.createClass({
 					</FormRow>
 
 					{this.renderParticipants()}
-				</PageContent>
+				</Page.Content>
 			</Page>
 		);
 	},

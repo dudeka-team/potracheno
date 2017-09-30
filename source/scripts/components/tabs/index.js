@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { PropTypes, PureComponent } from 'react';
+import classNames from 'classnames';
 import Hammer from 'react-hammerjs';
-
 import { DRAWER_SWIPE_AREA_WIDTH } from '../../constants';
+import styles from './tabs.css';
 
-const Tabs = React.createClass({
-	getInitialState() {
-		const { defaultTabIndex, config } = this.props;
+export default class Tabs extends PureComponent {
+	static propTypes = {
+		config: PropTypes.arrayOf(PropTypes.shape({
+			labelContent: PropTypes.string.isRequired,
+			content: PropTypes.node.isRequired,
+		})).isRequired,
+	};
+
+	constructor(props) {
+		super(props);
+
+		const { defaultTabIndex, config } = props;
 		let activeTabIndex = 0;
 
 		if (
@@ -16,12 +26,23 @@ const Tabs = React.createClass({
 			activeTabIndex = defaultTabIndex;
 		}
 
-		return {
+		this.state = {
 			activeTabIndex,
 		};
-	},
+	}
 
-	handleTabChange(event) {
+	computeTabsTransform = () => {
+		const { activeTabIndex } = this.state;
+		const transform = `translateX(-${100 * activeTabIndex}%)`;
+		return {
+			transform,
+			webkitTransform: transform,
+			mozTransform: transform,
+			msTransform: transform,
+		};
+	};
+
+	handleTabChange = (event) => {
 		const { target } = event;
 		const targetTabIndex = parseInt(target.getAttribute('data-tab'), 10);
 
@@ -30,9 +51,9 @@ const Tabs = React.createClass({
 				activeTabIndex: targetTabIndex,
 			});
 		}
-	},
+	};
 
-	handleSwipe(event) {
+	handleSwipe = (event) => {
 		const swipeStartX = event.center.x - event.deltaX;
 		if ((window.innerWidth - swipeStartX) < DRAWER_SWIPE_AREA_WIDTH) return;
 
@@ -51,83 +72,40 @@ const Tabs = React.createClass({
 		this.setState({
 			activeTabIndex: newActiveTabIndex,
 		});
-	},
-
-	computeTabsTransform() {
-		const { activeTabIndex } = this.state;
-		const transform = `translateX(-${100 * activeTabIndex}%)`;
-		return {
-			transform,
-			webkitTransform: transform,
-			mozTransform: transform,
-			msTransform: transform,
-		};
-	},
+	};
 
 	render() {
 		const { config } = this.props;
 		const { activeTabIndex } = this.state;
 
 		return (
-			<div className="tabs">
-				<div className="tabs__nav" onClick={this.handleTabChange}>
+			<div className={styles.root}>
+				<div className={styles.nav} onClick={this.handleTabChange}>
 					{config.map((item, index) => (
-						<TabsItem
+						<div
 							key={index}
-							isActive={activeTabIndex === index}
-							index={index}
-							className="tabs__link"
+							data-tab={index}
+							className={classNames(styles.link, {
+								[styles.link_active]: activeTabIndex === index,
+							})}
 						>
 							{item.labelContent}
-						</TabsItem>
+						</div>
 					))}
 				</div>
-				<div className="tabs__content" style={this.computeTabsTransform()}>
+				<div className={styles.content} style={this.computeTabsTransform()}>
 					{config.map((item, index) => (
 						<Hammer onSwipe={this.handleSwipe} key={index}>
-							<TabsItem
-								isActive={activeTabIndex === index}
-								index={index}
-								className="tabs__item"
+							<div
+								data-tab={index}
+								className={styles.item}
 							>
 								{item.content}
-							</TabsItem>
+							</div>
 						</Hammer>
 					))}
 				</div>
 			</div>
 		);
-	},
-});
-
-function TabsItem(props) {
-	let classes = props.className || '';
-
-	if (props.isActive) {
-		classes += ' is-active';
 	}
-
-	return (
-		<div className={classes.trim()} data-tab={props.index}>{props.children}</div>
-	);
 }
-
-export default Tabs;
-
-// Example usage
-// <Tabs
-// 	config={[
-// 		{
-// 			labelContent: 'Покупки',
-// 			content: <Purchases />,
-// 		},
-// 		{
-// 			labelContent: 'Баланс',
-// 			content: <Balance />,
-// 		},
-// 		{
-// 			labelContent: 'Действия',
-// 			content: <EventActions />,
-// 		},
-// 	]}
-// />

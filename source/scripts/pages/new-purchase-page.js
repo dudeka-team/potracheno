@@ -8,7 +8,7 @@ import { createPurchaseAsync } from '../actions/createPurchase';
 import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/createEventAction';
 import { loadEventDataAsync } from '../actions';
 
-import { Page, PageContent } from '../components/page';
+import Page from '../components/page';
 import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/popup';
@@ -296,9 +296,12 @@ class NewPurchasePage extends Component {
 
 		return (
 			<Page>
-				{mode === EDIT && this.editPageTopBar()}
-				{mode === CREATE && this.createPageTopBar()}
-				<PageContent>
+				<Page.Header>
+					{mode === EDIT && this.editPageTopBar()}
+					{mode === CREATE && this.createPageTopBar()}
+				</Page.Header>
+
+				<Page.Content>
 					{this.isEditingDisabled() &&
 						<div
 							style={{
@@ -433,7 +436,7 @@ class NewPurchasePage extends Component {
 							<Separator />
 						</div>
 					}
-				</PageContent>
+				</Page.Content>
 			</Page>
 		);
 	}

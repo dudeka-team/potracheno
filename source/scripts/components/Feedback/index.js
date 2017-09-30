@@ -8,7 +8,7 @@ import FormInput from '../form-input';
 import { saveFeedbackAsync } from '../../actions/saveFeedback';
 
 import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
-import { Page, PageContent } from '../page';
+import Page from '../page';
 
 const FeedBack = React.createClass({
 	getInitialState(email = '', review = '') {
@@ -49,16 +49,19 @@ const FeedBack = React.createClass({
 
 		return (
 			<Page>
-				<TopBar bordered>
-					<TopBarIcon icon="close" onClick={this.goToEvents} />
-					<TopBarHeading title="Написать разработчикам" />
-					<TopBarIcon
-						icon="check-active"
-						disabled={review.trim() === ''}
-						onClick={this.goToEvents}
-					/>
-				</TopBar>
-				<PageContent style={{ padding: '8px 1rem 5rem' }}>
+				<Page.Header>
+					<TopBar bordered>
+						<TopBarIcon icon="close" onClick={this.goToEvents} />
+						<TopBarHeading title="Написать разработчикам" />
+						<TopBarIcon
+							icon="check-active"
+							disabled={review.trim() === ''}
+							onClick={this.goToEvents}
+						/>
+					</TopBar>
+				</Page.Header>
+
+				<Page.Content style={{ padding: '8px 1rem 5rem' }}>
 					<FormRow>
 						<FormLabel htmlFor="review">Ваш отзыв</FormLabel>
 						<FormInput
@@ -77,7 +80,7 @@ const FeedBack = React.createClass({
 							onChange={this.handleChangeEmail}
 						/>
 					</FormRow>
-				</PageContent>
+				</Page.Content>
 			</Page>
 		);
 	},

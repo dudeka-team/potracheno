@@ -1,0 +1,43 @@
+.root {
+	width: 255px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-bottom: 40px;
+}
+
+.icon-wrapper {
+	width: 120px;
+	height: 120px;
+	background-color: #e7ebef;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	margin-bottom: 16px;
+}
+
+.icon {
+	width: 72px;
+	height: 72px;
+	background-repeat: no-repeat;
+
+}
+
+.icon_purchase {
+	background-position: 3px 4px;
+	background-image: url('./resources/purchase.svg');
+}
+
+.icon_calendar {
+	background-position: 7px 5px;
+	background-image: url('./resources/calendar.svg');
+}
+
+.content {
+	width: 255px;
+	font-size: 14px;
+	font-weight: normal;
+	text-align: center;
+	color: #768390;
+}

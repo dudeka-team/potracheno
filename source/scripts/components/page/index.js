@@ -1,28 +1,25 @@
-import React from 'react';
+import React, { PropTypes, PureComponent } from 'react';
+import PageHeader from './page-header';
+import PageFooter from './page-footer';
+import PageContent from './page-content';
 import styles from './page.css';
 
-export function Page(props) {
-	return (
-		<div className={styles.root} {...props}>
-			{props.children}
-		</div>
-	);
-}
+export default class Page extends PureComponent {
+	static propTypes = {
+		children: PropTypes.node,
+	};
 
-export function PageContent(props) {
-	return (
-		<div className={styles.content} {...props}>
-			{props.children}
-		</div>
-	);
-}
+	static Header = PageHeader;
+	static Footer = PageFooter;
+	static Content = PageContent;
 
-// Example usage
-// <Page>
-// 	<TopBar>
-// 		top bar is fixed
-// 	</TopBar>
-// 	<PageContent>
-// 		page content is scrollable
-// 	</PageContent>
-// </Page>
+	render() {
+		const { children, ...restProps } = this.props;
+
+		return (
+			<div className={styles.root} {...restProps}>
+				{children}
+			</div>
+		);
+	}
+}

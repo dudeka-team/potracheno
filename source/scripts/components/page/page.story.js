@@ -1,14 +1,20 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Page, PageContent } from './';
+import Page from './';
 
 storiesOf('Page', module)
 	.add('default', () => (
 		<Page>
-			topbar
+			<Page.Header>
+				page header
+			</Page.Header>
 
-			<PageContent>
-				PageContent
-			</PageContent>
+			<Page.Content>
+				page content
+			</Page.Content>
+
+			<Page.Footer>
+				page footer
+			</Page.Footer>
 		</Page>
 	));

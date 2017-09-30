@@ -10,7 +10,7 @@ import PopupPoster from '../../components/PopupPoster';
 import Separator from '../../components/Separator';
 import GreySubtitle from '../../components/grey-subtitle';
 import FlexContainer from '../../components/FlexContainer';
-import Poster from '../../components/Poster';
+import Poster from '../../components/poster';
 import Wrapper from '../../components/Wrapper';
 
 import { getEventBalance, getEventsParticipantsDebts } from '../../modules/balance';
@@ -240,7 +240,9 @@ const BalancePage = React.createClass({
 				</div>
 				{(positiveSum === 0 && negativeSum === 0 && returnedDebts.length === 0) &&
 					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-						<Poster icon="purchase" text="Баланс появится, когда вы заведёте покупки" />
+						<Poster icon="purchase">
+							Баланс появится, когда вы заведёте покупки
+						</Poster>
 					</FlexContainer>
 				}
 			</Wrapper>

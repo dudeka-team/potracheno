@@ -7,7 +7,7 @@ import Fab from '../../components/fab';
 import IconShoppingCart from '../../components/icons/shopping-cart';
 import PurchaseListItem from '../../components/PurchaseListItem';
 import FlexContainer from '../../components/FlexContainer';
-import Poster from '../../components/Poster';
+import Poster from '../../components/poster';
 
 function getSubtitle(participantsCount, eventParticipantsCount) {
 	let result;
@@ -62,7 +62,9 @@ const EventPurchasesPage = React.createClass({
 	renderPlaceholder() {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<Poster icon="purchase" text="У вас пока нет покупок" />
+				<Poster icon="purchase">
+					У вас пока нет покупок
+				</Poster>
 			</FlexContainer>
 		);
 	},

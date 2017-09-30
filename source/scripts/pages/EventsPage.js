@@ -2,13 +2,13 @@ import React, { PureComponent } from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
-import { Page, PageContent } from '../components/page';
+import Page from '../components/page';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import ActionButton from '../components/action-button';
 import readEvents from '../actions/readEvents';
 import FlexContainer from '../components/FlexContainer';
-import Poster from '../components/Poster';
+import Poster from '../components/poster';
 import Spinner from '../components/spinner';
 import changeCurrentEvent from '../actions/changeCurrentEvent';
 import { getEventBalance } from '../modules/balance';
@@ -68,10 +68,9 @@ class EventsPage extends PureComponent {
 		if (!events.length) {
 			return (
 				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-					<Poster
-						icon="calendar"
-						text="У вас пока нет мероприятий, создайте первым свое мероприятие и добавьте участников"
-					/>
+					<Poster icon="calendar">
+						У вас пока нет мероприятий, создайте первым свое мероприятие и добавьте участников
+					</Poster>
 				</FlexContainer>
 			);
 		}
@@ -92,22 +91,27 @@ class EventsPage extends PureComponent {
 		const { props } = this;
 
 		return (
-			<Page style={{ paddingBottom: '64px' }}>
-				<TopBar bordered>
-					<TopBarHeading title="Мероприятия" />
-					<TopBarIcon icon="mail" onClick={this.goToFeedback} />
-				</TopBar>
-				<PageContent>
+			<Page>
+				<Page.Header>
+					<TopBar bordered>
+						<TopBarHeading title="Мероприятия" />
+						<TopBarIcon icon="mail" onClick={this.goToFeedback} />
+					</TopBar>
+				</Page.Header>
+
+				<Page.Content>
 					{props.isFetchingEvents ?
 						this.renderPreloader()
 						:
 						this.renderEvents(props.events, props.eventsById)
 					}
+				</Page.Content>
 
+				<Page.Footer>
 					<ActionButton onClick={this.goToNewEvent}>
 						Добавить мероприятие
 					</ActionButton>
-				</PageContent>
+				</Page.Footer>
 			</Page>
 		);
 	}
