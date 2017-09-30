@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import assign from 'object-assign';
 
 import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
-import { Page, PageContent } from '../Page';
+import { Page, PageContent } from '../page';
 import FlexContainer from '../FlexContainer';
 import Separator from '../Separator';
 import GreySubtitle from '../grey-subtitle';

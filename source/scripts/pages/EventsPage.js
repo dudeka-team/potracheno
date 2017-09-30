@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
-import { Page, PageContent } from '../components/Page';
+import { Page, PageContent } from '../components/page';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
 import EventsListItem from '../components/EventsListItem';
 import ActionButton from '../components/action-button';

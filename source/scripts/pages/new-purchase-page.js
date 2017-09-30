@@ -8,7 +8,7 @@ import { createPurchaseAsync } from '../actions/createPurchase';
 import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/createEventAction';
 import { loadEventDataAsync } from '../actions';
 
-import { Page, PageContent } from '../components/Page';
+import { Page, PageContent } from '../components/page';
 import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/popup';

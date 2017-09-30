@@ -5,7 +5,7 @@ import assign from 'object-assign';
 import Drawer from 'material-ui/Drawer';
 import Portal from 'react-portal';
 
-import { Page } from '../../components/Page';
+import { Page } from '../../components/page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/Tabs';
 import { TopBar, TopBarHeading, TopBarIcon } from '../../components/TopBar';

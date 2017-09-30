@@ -8,7 +8,7 @@ import FormInput from '../form-input';
 import { saveFeedbackAsync } from '../../actions/saveFeedback';
 
 import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
-import { Page, PageContent } from '../Page';
+import { Page, PageContent } from '../page';
 
 const FeedBack = React.createClass({
 	getInitialState(email = '', review = '') {

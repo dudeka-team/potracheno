@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from './page.css';
 
 export function Page(props) {
 	return (
-		<div className="page" {...props}>
+		<div className={styles.root} {...props}>
 			{props.children}
 		</div>
 	);
@@ -10,7 +11,7 @@ export function Page(props) {
 
 export function PageContent(props) {
 	return (
-		<div className="page__content" {...props}>
+		<div className={styles.content} {...props}>
 			{props.children}
 		</div>
 	);
