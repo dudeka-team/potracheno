@@ -13,7 +13,7 @@ import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/NewPurchasePayer';
 import Popup from '../components/popup';
 import Payers from '../components/Payers';
-import GreySubtitle from '../components/GreySubtitle';
+import GreySubtitle from '../components/grey-subtitle';
 import UniversalListItem from '../components/universal-list-item';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
 import FormRow from '../components/form-row';
@@ -369,7 +369,9 @@ class NewPurchasePage extends Component {
 					<Separator />
 
 					<div style={{ paddingRight: '9px' }}>
-						<GreySubtitle text="Участники покупки" />
+						<GreySubtitle>
+							Участники покупки
+						</GreySubtitle>
 
 						<UniversalListItem
 							isBordered

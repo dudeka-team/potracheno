@@ -1,0 +1,19 @@
+.root {
+	background-color: #fff;
+	padding: 15px 16px;
+	font-size: 13px;
+	font-weight: 500;
+	text-transform: uppercase;
+	line-height: 1.38;
+	letter-spacing: 1px;
+	color: #83888d;
+}
+
+.root_user-selection {
+	padding: 13px 24px 14px;
+	text-transform: none;
+	letter-spacing: 0;
+	font-size: 18px;
+	font-weight: 500;
+	color: #83888d;
+}

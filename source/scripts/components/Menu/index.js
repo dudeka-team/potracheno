@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import EventHeader from '../event-header';
-import GreySubtitle from '../GreySubtitle';
+import GreySubtitle from '../grey-subtitle';
 import UniversalListItem from '../universal-list-item';
 
 const Menu = React.createClass({
@@ -56,14 +56,20 @@ const Menu = React.createClass({
 				<div className="menu__inner">
 					{this.renderControls()}
 					<EventHeader name={currentEvent.name} subtitle={props.subtitle} />
-					<GreySubtitle text="Участники" />
+
+					<GreySubtitle>
+						Участники
+					</GreySubtitle>
+
 					<div className="menu__list">
 						{currentEvent.participants.map(this.renderParticipant)}
 					</div>
+
 					<div onClick={props.handleRelogin} className="menu__bottom-bar bottom-bar">
 						<div className="bottom-bar__icon" />
 						<div className="bottom-bar__text">Войти под другим именем</div>
 					</div>
+
 					<div className="menu__manager-annotation">★ — организатор мероприятия</div>
 				</div>
 			</div>

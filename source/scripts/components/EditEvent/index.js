@@ -8,7 +8,7 @@ import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
 import { Page, PageContent } from '../Page';
 import FlexContainer from '../FlexContainer';
 import Separator from '../Separator';
-import GreySubtitle from '../GreySubtitle';
+import GreySubtitle from '../grey-subtitle';
 import FormRow from '../form-row';
 import FormLabel from '../form-label';
 import FormInput from '../form-input';
@@ -339,10 +339,9 @@ const EditEvent = React.createClass({
 
 					<Separator />
 
-					<GreySubtitle
-						style={{ margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0' }}
-						text="Добавить участников"
-					/>
+					<GreySubtitle style={{ margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0' }}>
+						Добавить участников
+					</GreySubtitle>
 
 					<FormRow>
 						<FormInput

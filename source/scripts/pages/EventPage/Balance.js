@@ -8,7 +8,7 @@ import BalanceCheck from '../../components/BalanceCheck';
 import BalanceItemPopup from '../../components/BalanceItemPopup';
 import PopupPoster from '../../components/PopupPoster';
 import Separator from '../../components/Separator';
-import GreySubtitle from '../../components/GreySubtitle';
+import GreySubtitle from '../../components/grey-subtitle';
 import FlexContainer from '../../components/FlexContainer';
 import Poster from '../../components/Poster';
 import Wrapper from '../../components/Wrapper';
@@ -217,7 +217,9 @@ const BalancePage = React.createClass({
 					{(positiveSum !== 0 || negativeSum !== 0) &&
 						<div>
 							<Separator />
-							<GreySubtitle text="Текущие долги" />
+							<GreySubtitle>
+								Текущие долги
+							</GreySubtitle>
 						</div>}
 					{positiveDebts}
 					{negativeDebts}
@@ -228,7 +230,9 @@ const BalancePage = React.createClass({
 								{(negativeDebts.length !== 0 || positiveDebts.length !== 0) &&
 									<Separator />
 								}
-								<GreySubtitle text="Возвращенные долги" />
+								<GreySubtitle>
+									Возвращенные долги
+								</GreySubtitle>
 								{returnedDebts}
 							</div>
 						}

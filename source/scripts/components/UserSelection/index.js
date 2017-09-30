@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Wrapper from '../Wrapper';
 import EventHeader from '../event-header';
-import GreySubtitle from '../GreySubtitle';
+import GreySubtitle from '../grey-subtitle';
 import UserSelectionListItem from '../UserSelectionListItem';
 import setLocalEvents from '../../actions/setLocalEvents';
 import fetchUpdateParticipants from '../../actions/fetchUpdateParticipants';
@@ -119,12 +119,17 @@ class UserSelection extends PureComponent {
 							{' прислал(-а) вам приглашение на мероприятие'}
 						</div>
 					</div>
+
 					<EventHeader
 						userSelection
 						name={currentEvent.name}
 						subtitle={`${this.formatSubtitle(currentEvent)}`}
 					/>
-					<GreySubtitle text="Выберите себя среди участников" userSelection />
+
+					<GreySubtitle userSelection>
+						Выберите себя среди участников
+					</GreySubtitle>
+
 					<div className="user-selection__list">
 						{currentEvent.participants.sort().map(participant => (
 							<UserSelectionListItem
