@@ -1,0 +1,34 @@
+.root {
+	padding: 16px;
+	border-bottom: 1px solid #eff2f6;
+}
+
+.root_user-selection {
+	margin-bottom: 16px;
+	background-color: #fde17a;
+	padding: 40px 24px 20px 24px;
+}
+
+.name {
+	font-size: 24px;
+	font-weight: 500;
+	padding-bottom: 4px;
+}
+
+.root_user-selection .name {
+	font-size: 28px;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.subtitle {
+	font-size: 13px;
+	font-weight: normal;
+	color: #83888D;
+	line-height: 1.23;
+}
+
+.root_user-selection .subtitle {
+	font-size: 14px;
+	color: rgba(46, 54, 62, 0.55);
+}

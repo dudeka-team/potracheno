@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import EventStatus from '../EventStatus';
+import EventHeader from '../event-header';
 import GreySubtitle from '../GreySubtitle';
 import UniversalListItem from '../universal-list-item';
 
@@ -55,7 +55,7 @@ const Menu = React.createClass({
 			<div className={classes.join(' ')}>
 				<div className="menu__inner">
 					{this.renderControls()}
-					<EventStatus name={currentEvent.name} subtitle={props.subtitle} />
+					<EventHeader name={currentEvent.name} subtitle={props.subtitle} />
 					<GreySubtitle text="Участники" />
 					<div className="menu__list">
 						{currentEvent.participants.map(this.renderParticipant)}
@@ -77,9 +77,3 @@ Menu.propTypes = {
 };
 
 export default Menu;
-
-// Example
-// <Menu participants={currentEvent.participants}
-// 		name={currentEvent.name}
-// 		subtitle={this.formatSubtitle(currentEvent)}
-// />

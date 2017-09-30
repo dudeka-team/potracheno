@@ -3,7 +3,7 @@ import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
 import Wrapper from '../Wrapper';
-import EventStatus from '../EventStatus';
+import EventHeader from '../event-header';
 import GreySubtitle from '../GreySubtitle';
 import UserSelectionListItem from '../UserSelectionListItem';
 import setLocalEvents from '../../actions/setLocalEvents';
@@ -119,10 +119,10 @@ class UserSelection extends PureComponent {
 							{' прислал(-а) вам приглашение на мероприятие'}
 						</div>
 					</div>
-					<EventStatus
+					<EventHeader
+						userSelection
 						name={currentEvent.name}
 						subtitle={`${this.formatSubtitle(currentEvent)}`}
-						userSelection
 					/>
 					<GreySubtitle text="Выберите себя среди участников" userSelection />
 					<div className="user-selection__list">
