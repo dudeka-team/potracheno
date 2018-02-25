@@ -6,14 +6,12 @@ import Drawer from 'material-ui/Drawer';
 import Portal from 'react-portal';
 
 import Page from '../../components/page';
-import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/tabs';
 import { TopBar, TopBarHeading, TopBarIcon } from '../../components/TopBar';
 import Menu from '../../components/Menu';
 import Popup from '../../components/popup';
 import PopupPoster from '../../components/PopupPoster';
 import HintPopup from '../../components/HintPopup';
-import Spinner from '../../components/spinner';
 
 import Balance from './Balance';
 import Purchases from './Purchases';
@@ -129,14 +127,6 @@ const EventPage = React.createClass({
 		}, 2000);
 	},
 
-	renderPreloader() {
-		return (
-			<FlexContainer fullHeight alignItems="center" justifyContent="center">
-				<Spinner />
-			</FlexContainer>
-		);
-	},
-
 	renderDrawer(currentEvent, currentUserName, subtitle) {
 		return (
 			<Drawer
@@ -222,17 +212,13 @@ const EventPage = React.createClass({
 
 	render() {
 		const { props, state } = this;
-		const { currentEvent, currentUserName, isFetchingEvent } = props;
+		const { currentEvent, currentUserName } = props;
 		const purchases = Object
 			.keys((currentEvent && currentEvent.purchases) || [])
 			.map((purchaseId) => assign({ id: purchaseId }, currentEvent.purchases[purchaseId]));
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
 			.map((config) => assign({ config }, currentEvent.actions[config]));
-
-		if (isFetchingEvent) {
-			return this.renderPreloader();
-		}
 
 		if (currentEvent) {
 			const subtitle = this.formatSubtitle(currentEvent);
@@ -293,7 +279,6 @@ function mapStateToProps({ events }) {
 	return {
 		currentEvent: events.currentEvent,
 		currentUserName: events.currentUserName,
-		isFetchingEvent: events.isFetchingEvent,
 		shareLinkPopupOpened: events.shareLinkPopupOpened,
 	};
 }
