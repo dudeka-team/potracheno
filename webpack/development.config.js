@@ -2,14 +2,18 @@ const webpack = require('webpack');
 const { devServerPort, assetsDir } = require('../config');
 const baseWebpackConfig = require('./base.config');
 
-module.exports = Object.assign({}, baseWebpackConfig, {
+module.exports = {
+	...baseWebpackConfig,
 	entry: [
 		`webpack-dev-server/client?http://localhost:${devServerPort}`,
 		'webpack/hot/only-dev-server',
-	].concat(baseWebpackConfig.entry),
+		...baseWebpackConfig.entry,
+	],
 	devtool: 'eval-source-map',
-	module: Object.assign({}, baseWebpackConfig.module, {
-		rules: baseWebpackConfig.module.rules.concat([
+	module: {
+		...baseWebpackConfig.module,
+		rules: [
+			...baseWebpackConfig.module.rules,
 			{
 				test: /\.styl$/,
 				use: [
@@ -44,12 +48,13 @@ module.exports = Object.assign({}, baseWebpackConfig, {
 					},
 				],
 			},
-		]),
-	}),
-	plugins: baseWebpackConfig.plugins.concat([
+		],
+	},
+	plugins: [
+		...baseWebpackConfig.plugins,
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NamedModulesPlugin(),
-	]),
+	],
 	devServer: {
 		host: 'localhost',
 		port: devServerPort,
@@ -57,4 +62,4 @@ module.exports = Object.assign({}, baseWebpackConfig, {
 		hot: true,
 		contentBase: assetsDir,
 	},
-});
+};

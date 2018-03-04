@@ -2,9 +2,12 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const baseWebpackConfig = require('./base.config');
 
-module.exports = Object.assign({}, baseWebpackConfig, {
-	module: Object.assign({}, baseWebpackConfig.module, {
-		rules: baseWebpackConfig.module.rules.concat([
+module.exports = {
+	...baseWebpackConfig,
+	module: {
+		...baseWebpackConfig.module,
+		rules: [
+			...baseWebpackConfig.module.rules,
 			{
 				test: /\.styl$/,
 				use: ExtractTextPlugin.extract({
@@ -32,10 +35,11 @@ module.exports = Object.assign({}, baseWebpackConfig, {
 					],
 				}),
 			},
-		]),
-	}),
-	plugins: baseWebpackConfig.plugins.concat([
+		],
+	},
+	plugins: [
+		...baseWebpackConfig.plugins,
 		new ExtractTextPlugin('app.css'),
 		new UglifyJsPlugin(),
-	]),
-});
+	],
+};
