@@ -6,6 +6,7 @@
 ```bash
 $ npm i
 $ npm start # starts development server
+$ PORT=3000 npm start # starts development server on specified port
 $ npm run start:storybook # starts react-storybook server
 $ npm run build # builds project
 $ ANALYZE=true npm run build # builds project and starts webpack bundle analyzer server

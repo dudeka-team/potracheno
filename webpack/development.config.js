@@ -1,20 +1,25 @@
 const webpack = require('webpack');
-const { assetsDir } = require('../config');
+const { devServerPort, assetsDir } = require('../config');
 const baseWebpackConfig = require('./base.config');
 
 module.exports = Object.assign({}, baseWebpackConfig, {
 	entry: [
-		'webpack-dev-server/client?http://localhost:3000',
+		`webpack-dev-server/client?http://localhost:${devServerPort}`,
 		'webpack/hot/only-dev-server',
 	].concat(baseWebpackConfig.entry),
-	devtool: 'source-map',
+	devtool: 'eval-source-map',
 	module: Object.assign({}, baseWebpackConfig.module, {
 		rules: baseWebpackConfig.module.rules.concat([
 			{
 				test: /\.styl$/,
 				use: [
 					'style-loader',
-					'postcss-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							sourceMap: 'inline',
+						},
+					},
 					'stylus-loader',
 				],
 			},
@@ -25,12 +30,18 @@ module.exports = Object.assign({}, baseWebpackConfig, {
 					{
 						loader: 'css-loader',
 						options: {
+							sourceMap: true,
 							modules: true,
 							importLoaders: 1,
 							localIdentName: '[name]-[local]-[hash:base64:5]',
 						},
 					},
-					'postcss-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							sourceMap: true,
+						},
+					},
 				],
 			},
 		]),
@@ -41,7 +52,7 @@ module.exports = Object.assign({}, baseWebpackConfig, {
 	]),
 	devServer: {
 		host: 'localhost',
-		port: 8080,
+		port: devServerPort,
 		historyApiFallback: true,
 		hot: true,
 		contentBase: assetsDir,
