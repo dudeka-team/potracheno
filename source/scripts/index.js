@@ -15,12 +15,6 @@ injectTapEventPlugin();
 moment.locale('ru');
 firebase.initializeApp(firebaseConfig);
 
-function onDOMContentLoaded() {
-	ReactDOM.render(<Root />, document.querySelector('#app'));
-}
-
-document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
-
 if (typeof localStorage === 'object') {
 	try {
 		localStorage.setItem('localStorage', 1);
@@ -30,3 +24,5 @@ if (typeof localStorage === 'object') {
 		alert('Выйдите из приватного режима, иначе приложение не будет работать');
 	}
 }
+
+ReactDOM.render(<Root />, document.querySelector('#app'));
