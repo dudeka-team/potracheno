@@ -1,18 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
-
-import browserHistory from 'react-router/lib/browserHistory';
-import { Provider } from 'react-redux';
-import { syncHistoryWithStore } from 'react-router-redux';
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
-import store from './store';
-import Routes from './Routes';
+import Root from './root';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q',
@@ -21,40 +11,9 @@ const firebaseConfig = {
 	storageBucket: 'dudeka-401e8.appspot.com',
 };
 
-const accentColor = '#ffe151';
-const accentDarkColor = '#f7cc00';
-const dudekaTheme = getMuiTheme({
-	datePicker: {
-		color: accentDarkColor,
-		textColor: '#333',
-		selectColor: accentColor,
-		selectTextColor: '#fff',
-	},
-	flatButton: {
-		textColor: '#3f95ff',
-		primaryTextColor: '#3f95ff',
-	},
-});
-
 injectTapEventPlugin();
 moment.locale('ru');
 firebase.initializeApp(firebaseConfig);
-
-function AppRoot() {
-	return (
-		<MuiThemeProvider muiTheme={dudekaTheme}>
-			<Provider store={store}>
-				<Routes history={syncHistoryWithStore(browserHistory, store)} />
-			</Provider>
-		</MuiThemeProvider>
-	);
-}
-
-function onDOMContentLoaded() {
-	ReactDOM.render(<AppRoot />, document.querySelector('#app'));
-}
-
-document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
 
 if (typeof localStorage === 'object') {
 	try {
@@ -65,3 +24,5 @@ if (typeof localStorage === 'object') {
 		alert('Выйдите из приватного режима, иначе приложение не будет работать');
 	}
 }
+
+ReactDOM.render(<Root />, document.querySelector('#app'));
