@@ -217,32 +217,25 @@ const BalancePage = React.createClass({
 					{(positiveSum !== 0 || negativeSum !== 0) &&
 						<div>
 							<Separator />
-							<GreySubtitle>
-								Текущие долги
-							</GreySubtitle>
+							<GreySubtitle text="Текущие долги" />
 						</div>}
 					{positiveDebts}
 					{negativeDebts}
 					{othersDebts}
-					<div>
-						{(returnedDebts.length !== 0) &&
-							<div>
-								{(negativeDebts.length !== 0 || positiveDebts.length !== 0) &&
-									<Separator />
-								}
-								<GreySubtitle>
-									Возвращенные долги
-								</GreySubtitle>
-								{returnedDebts}
-							</div>
-						}
-					</div>
 				</div>
 				{(positiveSum === 0 && negativeSum === 0 && returnedDebts.length === 0) &&
 					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 						<Poster icon="purchase">
 							Баланс появится, когда вы заведёте покупки
 						</Poster>
+					</FlexContainer>
+				}
+				{(positiveSum === 0 &&
+					negativeSum === 0 &&
+					othersDebts.length === 0 &&
+					returnedDebts.length !== 0) &&
+					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+						Все долги возвращены
 					</FlexContainer>
 				}
 			</Wrapper>
