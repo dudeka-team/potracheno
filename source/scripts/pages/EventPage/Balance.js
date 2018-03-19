@@ -235,7 +235,9 @@ const BalancePage = React.createClass({
 					othersDebts.length === 0 &&
 					returnedDebts.length !== 0) &&
 					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-						Все долги возвращены
+						<Poster icon="check">
+							Все долги возвращены
+						</Poster>
 					</FlexContainer>
 				}
 			</Wrapper>

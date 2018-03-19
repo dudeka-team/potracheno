@@ -34,6 +34,12 @@
 	background-image: url('./resources/calendar.svg');
 }
 
+.icon_check {
+	background-image: url('./resources/check.svg');
+	background-position: 15px 13px;
+	background-size: 45px;
+}
+
 .content {
 	width: 255px;
 	font-size: 14px;
