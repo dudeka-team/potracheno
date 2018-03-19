@@ -2,9 +2,11 @@ import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
-import Drawer from 'material-ui/Drawer';
-import Portal from 'react-portal';
 
+import Portal from 'react-portal';
+// import Drawer from 'material-ui/Drawer';
+// import Drawer from '../../components/drawer';
+import Drawer from '../../components/drawerTouch';
 import Page from '../../components/page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/tabs';
@@ -141,10 +143,8 @@ const EventPage = React.createClass({
 		return (
 			<Drawer
 				onRequestChange={(menuOpen) => this.setState({ menuOpen })}
-				docked={false}
 				swipeAreaWidth={DRAWER_SWIPE_AREA_WIDTH}
 				open={this.state.menuOpen}
-				openSecondary
 			>
 				<Menu
 					icon="bordered-plus"
