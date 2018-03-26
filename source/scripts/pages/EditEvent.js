@@ -6,8 +6,8 @@ import assign from 'object-assign';
 import fetchEventData from '../actions/fetchEventData';
 import updateEvent from '../actions/updateEvent';
 
-import FlexContainer from '../components/FlexContainer';
-import EditEvent from '../components/EditEvent';
+import FlexContainer from '../components/flex-container';
+import EditEvent from '../components/edit-event';
 import Spinner from '../components/spinner';
 
 import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/createEventAction';

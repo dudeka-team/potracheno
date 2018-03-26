@@ -4,7 +4,7 @@ import withRouter from 'react-router/lib/withRouter';
 import assign from 'object-assign';
 
 import NewPurchasePage from './new-purchase-page';
-import FlexContainer from '../components/FlexContainer';
+import FlexContainer from '../components/flex-container';
 import Spinner from '../components/spinner';
 import fetchEventData from '../actions/fetchEventData';
 import getLocalEvents from '../actions/getLocalEvents';

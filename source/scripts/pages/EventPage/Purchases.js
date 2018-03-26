@@ -2,11 +2,11 @@ import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
-import Wrapper from '../../components/Wrapper';
+import Wrapper from '../../components/wrapper';
 import Fab from '../../components/fab';
 import IconShoppingCart from '../../components/icons/shopping-cart';
-import PurchaseListItem from '../../components/PurchaseListItem';
-import FlexContainer from '../../components/FlexContainer';
+import PurchaseListItem from '../../components/purchase-list-item';
+import FlexContainer from '../../components/flex-container';
 import Poster from '../../components/poster';
 
 function getSubtitle(participantsCount, eventParticipantsCount) {

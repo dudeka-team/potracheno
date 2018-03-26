@@ -7,7 +7,7 @@ import FormInput from '../form-input';
 
 import { saveFeedbackAsync } from '../../actions/saveFeedback';
 
-import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
+import { TopBar, TopBarHeading, TopBarIcon } from '../top-bar';
 import Page from '../page';
 
 const FeedBack = React.createClass({
