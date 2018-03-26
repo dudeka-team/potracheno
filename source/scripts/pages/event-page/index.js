@@ -13,10 +13,10 @@ import Popup from '../../components/popup';
 import PopupPoster from '../../components/popup-poster';
 import HintPopup from '../../components/hint-popup';
 
-import Balance from './Balance';
-import Purchases from './Purchases';
+import Balance from './balance';
+import Purchases from './purchases';
 
-import EventActions from './EventActions';
+import EventActions from './event-actions';
 
 import fetchEventData from '../../actions/fetchEventData';
 import relogin from '../../actions/relogin';
