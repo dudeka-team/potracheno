@@ -7,11 +7,11 @@ import Portal from 'react-portal';
 
 import Page from '../../components/page';
 import Tabs from '../../components/tabs';
-import { TopBar, TopBarHeading, TopBarIcon } from '../../components/TopBar';
-import Menu from '../../components/Menu';
+import { TopBar, TopBarHeading, TopBarIcon } from '../../components/top-bar';
+import Menu from '../../components/menu';
 import Popup from '../../components/popup';
-import PopupPoster from '../../components/PopupPoster';
-import HintPopup from '../../components/HintPopup';
+import PopupPoster from '../../components/popup-poster';
+import HintPopup from '../../components/hint-popup';
 
 import Balance from './Balance';
 import Purchases from './Purchases';

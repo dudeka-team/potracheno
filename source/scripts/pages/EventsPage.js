@@ -3,11 +3,11 @@ import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
 import Page from '../components/page';
-import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
-import EventsListItem from '../components/EventsListItem';
+import { TopBar, TopBarHeading, TopBarIcon } from '../components/top-bar';
+import EventsListItem from '../components/events-list-item';
 import ActionButton from '../components/action-button';
 import readEvents from '../actions/readEvents';
-import FlexContainer from '../components/FlexContainer';
+import FlexContainer from '../components/flex-container';
 import Poster from '../components/poster';
 import Spinner from '../components/spinner';
 import changeCurrentEvent from '../actions/changeCurrentEvent';

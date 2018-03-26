@@ -9,13 +9,13 @@ import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/cr
 import { loadEventDataAsync } from '../actions';
 
 import Page from '../components/page';
-import Separator from '../components/Separator';
-import NewPurchasePayer from '../components/NewPurchasePayer';
+import Separator from '../components/separator';
+import NewPurchasePayer from '../components/new-purchase-payer';
 import Popup from '../components/popup';
-import Payers from '../components/Payers';
+import Payers from '../components/payers';
 import GreySubtitle from '../components/grey-subtitle';
 import UniversalListItem from '../components/universal-list-item';
-import { TopBar, TopBarHeading, TopBarIcon } from '../components/TopBar';
+import { TopBar, TopBarHeading, TopBarIcon } from '../components/top-bar';
 import FormRow from '../components/form-row';
 import FormLabel from '../components/form-label';
 import FormInput from '../components/form-input';

@@ -4,10 +4,10 @@ import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
 
-import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
+import { TopBar, TopBarHeading, TopBarIcon } from '../top-bar';
 import Page from '../page';
-import FlexContainer from '../FlexContainer';
-import Separator from '../Separator';
+import FlexContainer from '../flex-container';
+import Separator from '../separator';
 import GreySubtitle from '../grey-subtitle';
 import FormRow from '../form-row';
 import FormLabel from '../form-label';

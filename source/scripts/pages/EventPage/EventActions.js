@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import withRouter from 'react-router/lib/withRouter';
-import EventActionListItem from '../../components/EventActionListItem';
+import EventActionListItem from '../../components/event-action-list-item';
 
 const EventActions = React.createClass({
 	render() {
