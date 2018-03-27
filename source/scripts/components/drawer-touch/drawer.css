@@ -1,0 +1,37 @@
+.drawer {
+	color: rgba(0, 0, 0, 0.87);
+    background-color: #fff;
+    transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
+    height: 100%;
+    width: 256px;
+    position: fixed;
+    z-index: 1300;
+    left: auto;
+    top: 0px;
+	transform: translate(266px, 0px);
+    overflow: auto;
+    right: 0px;
+  }
+
+.drawerOverlay {
+	z-index: 1200;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity .3s ease-out, visibility .3s ease-out;
+	background-color: rgba(0,0,0,.54);
+  }
+
+.dragArea {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 1;
+}

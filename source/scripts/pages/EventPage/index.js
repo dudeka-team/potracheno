@@ -2,9 +2,9 @@ import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
-import Drawer from 'material-ui/Drawer';
-import Portal from 'react-portal';
 
+import Portal from 'react-portal';
+import Drawer from '../../components/drawer-touch';
 import Page from '../../components/page';
 import Tabs from '../../components/tabs';
 import { TopBar, TopBarHeading, TopBarIcon } from '../../components/TopBar';
@@ -130,11 +130,10 @@ const EventPage = React.createClass({
 	renderDrawer(currentEvent, currentUserName, subtitle) {
 		return (
 			<Drawer
-				onRequestChange={(menuOpen) => this.setState({ menuOpen })}
-				docked={false}
+				onOpen={() => this.setState({ menuOpen: true })}
+				onClose={() => this.setState({ menuOpen: false })}
 				swipeAreaWidth={DRAWER_SWIPE_AREA_WIDTH}
 				open={this.state.menuOpen}
-				openSecondary
 			>
 				<Menu
 					icon="bordered-plus"
