@@ -16,7 +16,7 @@ $icons = burger close plus arrow-back check-active info arrow-forward-gray arrow
 	&_bordered
 		box-shadow 0 0 4px rgba(0, 0, 0, .1)
 		border-bottom 1px solid $topBarBorderColor
-		
+
 
 	&__heading
 		position relative
@@ -70,3 +70,4 @@ $icons = burger close plus arrow-back check-active info arrow-forward-gray arrow
 		for $icon in $icons
 			&--{$icon}
 				background-image inline('' + $icon + '.svg')
+				z-index: 2

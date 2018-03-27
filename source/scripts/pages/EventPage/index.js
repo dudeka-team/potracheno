@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import assign from 'object-assign';
 
 import Portal from 'react-portal';
-// import Drawer from 'material-ui/Drawer';
-// import Drawer from '../../components/drawer';
-import Drawer from '../../components/drawerTouch';
+import Drawer from '../../components/drawer-touch';
 import Page from '../../components/page';
 import FlexContainer from '../../components/FlexContainer';
 import Tabs from '../../components/tabs';
@@ -142,7 +140,8 @@ const EventPage = React.createClass({
 	renderDrawer(currentEvent, currentUserName, subtitle) {
 		return (
 			<Drawer
-				onRequestChange={(menuOpen) => this.setState({ menuOpen })}
+				onOpen={() => this.setState({ menuOpen: true })}
+				onClose={() => this.setState({ menuOpen: false })}
 				swipeAreaWidth={DRAWER_SWIPE_AREA_WIDTH}
 				open={this.state.menuOpen}
 			>
