@@ -32,12 +32,5 @@
     "react/prop-types": "off",
     "react/prefer-stateless-function": "off",
     "react/jsx-filename-extension": "off"
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx"]
-      }
-    }
   }
 }

@@ -9,10 +9,10 @@ import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/cr
 import { loadEventDataAsync } from '../actions';
 
 import Page from '../components/page';
-import Separator from '../components/separator';
+import Separator from '../components/Separator';
 import NewPurchasePayer from '../components/new-purchase-payer';
 import Popup from '../components/popup';
-import Payers from '../components/payers';
+import Payers from '../components/Payers';
 import GreySubtitle from '../components/grey-subtitle';
 import UniversalListItem from '../components/universal-list-item';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/top-bar';

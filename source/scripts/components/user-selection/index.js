@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
-import Wrapper from '../wrapper';
+import Wrapper from '../Wrapper';
 import EventHeader from '../event-header';
 import GreySubtitle from '../grey-subtitle';
 import UserSelectionListItem from '../user-selection-list-item';

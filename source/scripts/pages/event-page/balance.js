@@ -7,11 +7,11 @@ import BalanceListItem from '../../components/balance-list-item';
 import BalanceCheck from '../../components/balance-check';
 import BalanceItemPopup from '../../components/balance-item-popup';
 import PopupPoster from '../../components/popup-poster';
-import Separator from '../../components/separator';
+import Separator from '../../components/Separator';
 import GreySubtitle from '../../components/grey-subtitle';
 import FlexContainer from '../../components/flex-container';
 import Poster from '../../components/poster';
-import Wrapper from '../../components/wrapper';
+import Wrapper from '../../components/Wrapper';
 
 import { getEventBalance, getEventsParticipantsDebts } from '../../modules/balance';
 import repayDebt from '../../actions/repayDebt';
