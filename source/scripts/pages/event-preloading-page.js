@@ -2,7 +2,7 @@ import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
-import Wrapper from '../components/wrapper';
+import Wrapper from '../components/Wrapper';
 import EventPage from './event-page';
 import UserSelection from '../components/user-selection';
 

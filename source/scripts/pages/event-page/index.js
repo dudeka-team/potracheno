@@ -8,7 +8,7 @@ import Portal from 'react-portal';
 import Page from '../../components/page';
 import Tabs from '../../components/tabs';
 import { TopBar, TopBarHeading, TopBarIcon } from '../../components/top-bar';
-import Menu from '../../components/menu';
+import Menu from '../../components/Menu';
 import Popup from '../../components/popup';
 import PopupPoster from '../../components/popup-poster';
 import HintPopup from '../../components/hint-popup';
