@@ -4,7 +4,7 @@ import {
 	RELOGIN,
 } from '../constants';
 
-import selLocalEvents from './setLocalEvents';
+import selLocalEvents from './set-local-events';
 
 export default function relogin(id) {
 	return (dispatch) => {

@@ -1,6 +1,6 @@
 import React, { PropTypes, PureComponent } from 'react';
 import classNames from 'classnames';
-import sumFormat from '../../modules/sumFormat';
+import sumFormat from '../../modules/sum-format';
 import styles from './balance-list-item.css';
 
 export default class BalanceListItem extends PureComponent {

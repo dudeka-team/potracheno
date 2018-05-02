@@ -2,12 +2,12 @@ import React, { PureComponent } from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
-import Wrapper from '../Wrapper';
+import Wrapper from '../wrapper';
 import EventHeader from '../event-header';
 import GreySubtitle from '../grey-subtitle';
 import UserSelectionListItem from '../user-selection-list-item';
-import setLocalEvents from '../../actions/setLocalEvents';
-import fetchUpdateParticipants from '../../actions/fetchUpdateParticipants';
+import setLocalEvents from '../../actions/set-local-events';
+import fetchUpdateParticipants from '../../actions/fetch-update-participants';
 import FlexContainer from '../flex-container';
 import Popup from '../popup';
 import UserSelectionPopup from '../user-selection-popup';

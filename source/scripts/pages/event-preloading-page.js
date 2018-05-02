@@ -2,12 +2,12 @@ import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 
-import Wrapper from '../components/Wrapper';
+import Wrapper from '../components/wrapper';
 import EventPage from './event-page';
 import UserSelection from '../components/user-selection';
 
-import fetchEventData from '../actions/fetchEventData';
-import getLocalEvents from '../actions/getLocalEvents';
+import fetchEventData from '../actions/fetch-event-data';
+import getLocalEvents from '../actions/get-local-events';
 
 import db from '../database';
 

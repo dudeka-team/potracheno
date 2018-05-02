@@ -6,13 +6,13 @@ import Page from '../components/page';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/top-bar';
 import EventsListItem from '../components/events-list-item';
 import ActionButton from '../components/action-button';
-import readEvents from '../actions/readEvents';
+import readEvents from '../actions/read-events';
 import FlexContainer from '../components/flex-container';
 import Poster from '../components/poster';
 import Spinner from '../components/spinner';
-import changeCurrentEvent from '../actions/changeCurrentEvent';
+import changeCurrentEvent from '../actions/change-current-event';
 import { getEventBalance } from '../modules/balance';
-import getLocalEvents from '../actions/getLocalEvents';
+import getLocalEvents from '../actions/get-local-events';
 
 class EventsPage extends PureComponent {
 	state = {

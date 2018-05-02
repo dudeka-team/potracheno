@@ -17,7 +17,7 @@
     "indent": ["error", "tab", {
       "SwitchCase": 1
     }],
-    "max-len":"warn",
+    "max-len": 0,
     "no-use-before-define": ["error", "nofunc"],
     "no-multiple-empty-lines": ["error", {
       "max": 1

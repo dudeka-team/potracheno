@@ -4,8 +4,8 @@ import {
 	CREATE_EVENT,
 } from '../constants';
 
-import setLocalEvents from './setLocalEvents';
-import openShareLinkPopup from './openShareLinkPopup';
+import setLocalEvents from './set-local-events';
+import openShareLinkPopup from './open-share-link-popup';
 
 import db from '../database';
 

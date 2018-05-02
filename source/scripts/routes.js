@@ -4,7 +4,7 @@ import Route from 'react-router/lib/Route';
 import IndexRedirect from 'react-router/lib/IndexRedirect';
 import Redirect from 'react-router/lib/Redirect';
 
-import App from './App';
+import App from './app';
 import EventsPage from './pages/events-page';
 
 import EventPreloadingPage from './pages/event-preloading-page';

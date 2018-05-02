@@ -4,15 +4,15 @@ import withRouter from 'react-router/lib/withRouter';
 import deepEqual from 'deep-equal';
 import assign from 'object-assign';
 
-import { createPurchaseAsync } from '../actions/createPurchase';
-import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/createEventAction';
+import { createPurchaseAsync } from '../actions/create-purchase';
+import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/create-event-action';
 import { loadEventDataAsync } from '../actions';
 
 import Page from '../components/page';
-import Separator from '../components/Separator';
+import Separator from '../components/separator';
 import NewPurchasePayer from '../components/new-purchase-payer';
 import Popup from '../components/popup';
-import Payers from '../components/Payers';
+import Payers from '../components/payers';
 import GreySubtitle from '../components/grey-subtitle';
 import UniversalListItem from '../components/universal-list-item';
 import { TopBar, TopBarHeading, TopBarIcon } from '../components/top-bar';
@@ -23,9 +23,9 @@ import Spinner from '../components/spinner';
 import IconCross from '../components/icons/cross';
 import Checkbox from '../components/checkbox';
 
-import fetchEventData from '../actions/fetchEventData';
-import fetchPurchaseChange from '../actions/fetchPurchaseChange';
-import fetchPurchaseDelete from '../actions/fetchPurchaseDelete';
+import fetchEventData from '../actions/fetch-event-data';
+import fetchPurchaseChange from '../actions/fetch-purchase-change';
+import fetchPurchaseDelete from '../actions/fetch-purchase-delete';
 
 import {
 	getUserType,

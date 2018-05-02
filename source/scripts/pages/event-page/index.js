@@ -8,7 +8,7 @@ import Portal from 'react-portal';
 import Page from '../../components/page';
 import Tabs from '../../components/tabs';
 import { TopBar, TopBarHeading, TopBarIcon } from '../../components/top-bar';
-import Menu from '../../components/Menu';
+import Menu from '../../components/menu';
 import Popup from '../../components/popup';
 import PopupPoster from '../../components/popup-poster';
 import HintPopup from '../../components/hint-popup';
@@ -18,10 +18,10 @@ import Purchases from './purchases';
 
 import EventActions from './event-actions';
 
-import fetchEventData from '../../actions/fetchEventData';
+import fetchEventData from '../../actions/fetch-event-data';
 import relogin from '../../actions/relogin';
-import closeShareLinkPopup from '../../actions/closeShareLinkPopup';
-import openShareLinkPopup from '../../actions/openShareLinkPopup';
+import closeShareLinkPopup from '../../actions/close-share-link-popup';
+import openShareLinkPopup from '../../actions/open-share-link-popup';
 
 import {
 	DRAWER_SWIPE_AREA_WIDTH,

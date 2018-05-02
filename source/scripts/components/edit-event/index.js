@@ -7,7 +7,7 @@ import assign from 'object-assign';
 import { TopBar, TopBarHeading, TopBarIcon } from '../top-bar';
 import Page from '../page';
 import FlexContainer from '../flex-container';
-import Separator from '../Separator';
+import Separator from '../separator';
 import GreySubtitle from '../grey-subtitle';
 import FormRow from '../form-row';
 import FormLabel from '../form-label';

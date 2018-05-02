@@ -3,14 +3,14 @@ import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
 
-import fetchEventData from '../actions/fetchEventData';
-import updateEvent from '../actions/updateEvent';
+import fetchEventData from '../actions/fetch-event-data';
+import updateEvent from '../actions/update-event';
 
 import FlexContainer from '../components/flex-container';
 import EditEvent from '../components/edit-event';
 import Spinner from '../components/spinner';
 
-import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/createEventAction';
+import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/create-event-action';
 
 const EditEventPage = React.createClass({
 	componentDidMount() {
