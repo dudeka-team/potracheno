@@ -23,7 +23,6 @@ const BalanceCheck = React.createClass({
 		selection.addRange(range);
 
 		if (!document.execCommand('copy')) {
-			// eslint-disable-next-line max-len
 			props.onCopy('Устройство не поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами');
 		} else {
 			props.onCopy('Чек скопирован в буфер обмена');

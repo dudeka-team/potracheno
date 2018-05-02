@@ -111,7 +111,6 @@ const EventPage = React.createClass({
 			message = 'Ссылка&nbsp;скопирована в&nbsp;буфер обмена';
 			props.dispatch(closeShareLinkPopup());
 		} else {
-			// eslint-disable-next-line max-len
 			message = 'Устройство не&nbsp;поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами';
 		}
 
@@ -164,7 +163,6 @@ const EventPage = React.createClass({
 
 	renderSharePopup() {
 		const { props } = this;
-		// eslint-disable-next-line max-len
 		const annotation = 'Поделитесь ссылкой на мероприятие с друзьями, чтобы они могли вести учёт покупок вместе с вами:';
 
 		return (
@@ -196,13 +194,10 @@ const EventPage = React.createClass({
 	},
 
 	renderHintPopup() {
-		const { state } = this;
-		// eslint-disable-next-line max-len
-		const annotation = 'Для установки приложения нажмите «Добавить на&nbsp;главный экран» или «На&nbsp;экран домой» в&nbsp;меню браузера';
 		return (
-			<Portal isOpened={state.hintPopupOpen}>
+			<Portal isOpened={this.state.hintPopupOpen}>
 				<HintPopup
-					text={annotation}
+					text="Для установки приложения нажмите «Добавить на&nbsp;главный экран» или «На&nbsp;экран домой» в&nbsp;меню браузера"
 					bottomText="Не сейчас"
 					closeHintPopup={this.closeHintPopup}
 				/>
