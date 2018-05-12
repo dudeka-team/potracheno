@@ -31,6 +31,26 @@ const BalancePage = React.createClass({
 		};
 	},
 
+	getDebtsData() {
+		const allDebts = getEventsParticipantsDebts(
+			getEventBalance(this.props.eventsById[this.props.eventId]),
+			this.props.eventsById[this.props.eventId]
+		);
+		const { currentUser } = this.props;
+
+		const positiveDebts = allDebts.filter((debt) => currentUser === debt.to);
+		const negativeDebts = allDebts.filter((debt) => currentUser === debt.from);
+		const othersDebts = allDebts.filter((debt) => currentUser !== debt.from && currentUser !== debt.to);
+
+		return {
+			allDebts,
+			positiveDebts,
+			negativeDebts,
+			othersDebts,
+			hasReturnedDebts: this.state.actions.filter((action) => action.config.actionType === 'giveBack').length > 0,
+		};
+	},
+
 	repayDebtHandler(debt) {
 		const { props } = this;
 		let oldRepayedFrom = 0;
@@ -120,93 +140,54 @@ const BalancePage = React.createClass({
 		});
 	},
 
+	renderNoPurchasesNotification() {
+		return (
+			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+				<Poster icon="purchase">
+					Баланс появится, когда вы заведёте покупки
+				</Poster>
+			</FlexContainer>
+		);
+	},
+
+	renderNoPendingDebtsNotification() {
+		return (
+			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
+				<Poster icon="check">
+					Все долги возвращены
+				</Poster>
+			</FlexContainer>
+		);
+	},
+
 	render() {
-		const { currentUser, eventId } = this.props;
-		const eventsParticipantsDebts =
-			getEventsParticipantsDebts(
-				getEventBalance(this.props.eventsById[eventId]),
-				this.props.eventsById[eventId]
-			);
+		const { currentUser } = this.props;
+		const {
+			allDebts,
+			positiveDebts,
+			negativeDebts,
+			othersDebts,
+			hasReturnedDebts,
+		} = this.getDebtsData();
 
-		let positiveSum = 0;
-		let negativeSum = 0;
-		const positiveDebts = eventsParticipantsDebts
-			.filter((debt) => currentUser === debt.to)
-			.map((debt) => {
-				positiveSum += -Math.round(debt.sum);
+		if (allDebts.length === 0 && !hasReturnedDebts) {
+			return this.renderNoPurchasesNotification();
+		}
 
-				return (
-					<BalanceListItem
-						key={`${debt.from}${debt.to}${debt.sum}`}
-						sum={-Math.round(debt.sum)}
-						from={debt.from}
-						to={debt.to + ((currentUser === debt.to && ' (Вы)') || '')}
-						debtType="positive"
-						onClick={() => this.showRepayPopup(debt)}
-					/>
-				);
-			});
-
-		const negativeDebts = eventsParticipantsDebts
-			.filter((debt) => currentUser === debt.from)
-			.map((debt) => {
-				negativeSum += -Math.round(debt.sum);
-
-				return (
-					<BalanceListItem
-						key={`${debt.from}${debt.to}${debt.sum}`}
-						sum={-Math.round(debt.sum)}
-						from={debt.from + ((currentUser === debt.from && ' (Вы)') || '')}
-						to={debt.to}
-						debtType="negative"
-						onClick={() => this.showRepayPopup(debt)}
-					/>
-				);
-			});
-
-		const othersDebts = eventsParticipantsDebts
-			.filter((debt) => currentUser !== debt.from && currentUser !== debt.to)
-			.map((debt) => (
-				<BalanceListItem
-					key={`${debt.to}${debt.from}${debt.sum}`}
-					sum={-Math.round(debt.sum)}
-					from={debt.from}
-					to={debt.to}
-					debtType="neutral"
-				/>
-			));
-
-		const returnedDebtsActions = [];
-		this.state.actions.slice().reverse().forEach((action) => {
-			if (action.config.actionType === 'giveBack') {
-				returnedDebtsActions.push(action);
-			}
-		});
-
-		const returnedDebts = returnedDebtsActions
-			.filter((action) => action.config.actionType === 'giveBack')
-			.map((action) => (
-				<BalanceListItem
-					key={`${action.config.debtSum}${action.config.currentUser}${action.config.payerName}`}
-					sum={action.config.debtSum}
-					from={action.config.currentUser}
-					to={action.config.payerName}
-					debtType="returned"
-				/>
-			));
+		if (allDebts.length === 0 && hasReturnedDebts) {
+			return this.renderNoPendingDebtsNotification();
+		}
 
 		return (
 			<Wrapper>
 				<div className="balance-page">
-					{(positiveSum !== 0 || negativeSum !== 0 || othersDebts.length !== 0) &&
-						<BalanceCheck debts={eventsParticipantsDebts} onCopy={this.showPopupPoster} />
-					}
 					<Portal isOpened>
 						<PopupPoster
 							text={this.state.popupPosterContent}
 							isOpened={this.state.showPopupPoster}
 						/>
 					</Portal>
+
 					<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
 						<BalanceItemPopup
 							debt={this.state.currentDebt}
@@ -214,37 +195,47 @@ const BalancePage = React.createClass({
 							onClose={() => this.closeRepayPopup()}
 						/>
 					</Portal>
-					{(positiveSum !== 0 || negativeSum !== 0) &&
-						<div>
-							<Separator />
-							<GreySubtitle>
-								Текущие долги
-							</GreySubtitle>
-						</div>}
-					{positiveDebts}
-					{negativeDebts}
-					{othersDebts}
-					<div>
-						{(returnedDebts.length !== 0) &&
-							<div>
-								{(negativeDebts.length !== 0 || positiveDebts.length !== 0) &&
-									<Separator />
-								}
-								<GreySubtitle>
-									Возвращенные долги
-								</GreySubtitle>
-								{returnedDebts}
-							</div>
-						}
-					</div>
+
+					<BalanceCheck debts={allDebts} onCopy={this.showPopupPoster} />
+
+					<Separator />
+
+					<GreySubtitle>
+						Текущие долги
+					</GreySubtitle>
+
+					{positiveDebts.map((debt) => (
+						<BalanceListItem
+							key={`${debt.from}${debt.to}${debt.sum}`}
+							sum={Math.abs(Math.round(debt.sum))}
+							from={debt.from}
+							to={`${debt.to} ${currentUser === debt.to ? '(Вы)' : ''}`.trim()}
+							debtType="positive"
+							onClick={() => this.showRepayPopup(debt)}
+						/>
+					))}
+
+					{negativeDebts.map((debt) => (
+						<BalanceListItem
+							key={`${debt.from}${debt.to}${debt.sum}`}
+							sum={Math.abs(Math.round(debt.sum))}
+							from={`${debt.from} ${currentUser === debt.from ? '(Вы)' : ''}`.trim()}
+							to={debt.to}
+							debtType="negative"
+							onClick={() => this.showRepayPopup(debt)}
+						/>
+					))}
+
+					{othersDebts.map((debt) => (
+						<BalanceListItem
+							key={`${debt.to}${debt.from}${debt.sum}`}
+							sum={Math.abs(Math.round(debt.sum))}
+							from={debt.from}
+							to={debt.to}
+							debtType="neutral"
+						/>
+					))}
 				</div>
-				{(positiveSum === 0 && negativeSum === 0 && returnedDebts.length === 0) &&
-					<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-						<Poster icon="purchase">
-							Баланс появится, когда вы заведёте покупки
-						</Poster>
-					</FlexContainer>
-				}
 			</Wrapper>
 		);
 	},

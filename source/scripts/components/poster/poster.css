@@ -14,7 +14,7 @@
 	justify-content: center;
 	align-items: center;
 	border-radius: 50%;
-	margin-bottom: 16px;
+	margin-bottom: 32px;
 }
 
 .icon {
@@ -34,9 +34,16 @@
 	background-image: url('./resources/calendar.svg');
 }
 
+.icon_check {
+	background-image: url('./resources/check.svg');
+	background-position: 15px 13px;
+	background-size: 45px;
+}
+
 .content {
 	width: 255px;
 	font-size: 14px;
+	line-height: calc(20 / 14);
 	font-weight: normal;
 	text-align: center;
 	color: #768390;

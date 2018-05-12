@@ -11,17 +11,15 @@ export default class GreySubtitle extends PureComponent {
 	};
 
 	render() {
-		const { userSelection, text, style, onClick } = this.props;
-
 		return (
 			<div
 				className={classNames(styles.root, {
-					[styles['root_user-selection']]: userSelection,
+					[styles['root_user-selection']]: this.props.userSelection,
 				})}
-				style={style || {}}
-				onClick={onClick}
+				style={this.props.style || {}}
+				onClick={this.props.onClick}
 			>
-				{text}
+				{this.props.children}
 			</div>
 		);
 	}
