@@ -4,19 +4,19 @@ import Portal from 'react-portal';
 import assign from 'object-assign';
 
 import BalanceListItem from '../../components/balance-list-item';
-import BalanceCheck from '../../components/BalanceCheck';
-import BalanceItemPopup from '../../components/BalanceItemPopup';
-import PopupPoster from '../../components/PopupPoster';
-import Separator from '../../components/Separator';
+import BalanceCheck from '../../components/balance-check';
+import BalanceItemPopup from '../../components/balance-item-popup';
+import PopupPoster from '../../components/popup-poster';
+import Separator from '../../components/separator';
 import GreySubtitle from '../../components/grey-subtitle';
-import FlexContainer from '../../components/FlexContainer';
+import FlexContainer from '../../components/flex-container';
 import Poster from '../../components/poster';
-import Wrapper from '../../components/Wrapper';
+import Wrapper from '../../components/wrapper';
 
 import { getEventBalance, getEventsParticipantsDebts } from '../../modules/balance';
-import repayDebt from '../../actions/repayDebt';
+import repayDebt from '../../actions/repay-debt';
 
-import { createEventActionAsync, eventActionTypes } from '../../actions/createEventAction';
+import { createEventActionAsync, eventActionTypes } from '../../actions/create-event-action';
 
 const BalancePage = React.createClass({
 	getInitialState() {

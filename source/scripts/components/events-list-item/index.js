@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import sumFormat from '../../modules/sumFormat';
+import sumFormat from '../../modules/sum-format';
 
 function getDate(options) {
 	const start = new Date(options.start);

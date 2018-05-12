@@ -6,7 +6,7 @@ import browserHistory from 'react-router/lib/browserHistory';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import store from './store';
-import Routes from './Routes';
+import Routes from './routes';
 
 const accentColor = '#ffe151';
 const accentDarkColor = '#f7cc00';

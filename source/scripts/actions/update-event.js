@@ -4,7 +4,7 @@ import {
 	UPDATE_EVENT,
 } from '../constants';
 
-import setLocalEvents from './setLocalEvents';
+import setLocalEvents from './set-local-events';
 
 import db from '../database';
 

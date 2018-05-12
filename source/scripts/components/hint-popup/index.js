@@ -1,5 +1,5 @@
 import React from 'react';
-import FlexContainer from '../FlexContainer';
+import FlexContainer from '../flex-container';
 
 export default function HintPopup(props) {
 	return (

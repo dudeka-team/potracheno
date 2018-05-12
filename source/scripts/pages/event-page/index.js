@@ -7,21 +7,21 @@ import Portal from 'react-portal';
 
 import Page from '../../components/page';
 import Tabs from '../../components/tabs';
-import { TopBar, TopBarHeading, TopBarIcon } from '../../components/TopBar';
-import Menu from '../../components/Menu';
+import { TopBar, TopBarHeading, TopBarIcon } from '../../components/top-bar';
+import Menu from '../../components/menu';
 import Popup from '../../components/popup';
-import PopupPoster from '../../components/PopupPoster';
-import HintPopup from '../../components/HintPopup';
+import PopupPoster from '../../components/popup-poster';
+import HintPopup from '../../components/hint-popup';
 
-import Balance from './Balance';
-import Purchases from './Purchases';
+import Balance from './balance';
+import Purchases from './purchases';
 
-import EventActions from './EventActions';
+import EventActions from './event-actions';
 
-import fetchEventData from '../../actions/fetchEventData';
+import fetchEventData from '../../actions/fetch-event-data';
 import relogin from '../../actions/relogin';
-import closeShareLinkPopup from '../../actions/closeShareLinkPopup';
-import openShareLinkPopup from '../../actions/openShareLinkPopup';
+import closeShareLinkPopup from '../../actions/close-share-link-popup';
+import openShareLinkPopup from '../../actions/open-share-link-popup';
 
 import {
 	DRAWER_SWIPE_AREA_WIDTH,
@@ -111,7 +111,6 @@ const EventPage = React.createClass({
 			message = 'Ссылка&nbsp;скопирована в&nbsp;буфер обмена';
 			props.dispatch(closeShareLinkPopup());
 		} else {
-			// eslint-disable-next-line max-len
 			message = 'Устройство не&nbsp;поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами';
 		}
 
@@ -164,7 +163,6 @@ const EventPage = React.createClass({
 
 	renderSharePopup() {
 		const { props } = this;
-		// eslint-disable-next-line max-len
 		const annotation = 'Поделитесь ссылкой на мероприятие с друзьями, чтобы они могли вести учёт покупок вместе с вами:';
 
 		return (
@@ -196,13 +194,10 @@ const EventPage = React.createClass({
 	},
 
 	renderHintPopup() {
-		const { state } = this;
-		// eslint-disable-next-line max-len
-		const annotation = 'Для установки приложения нажмите «Добавить на&nbsp;главный экран» или «На&nbsp;экран домой» в&nbsp;меню браузера';
 		return (
-			<Portal isOpened={state.hintPopupOpen}>
+			<Portal isOpened={this.state.hintPopupOpen}>
 				<HintPopup
-					text={annotation}
+					text="Для установки приложения нажмите «Добавить на&nbsp;главный экран» или «На&nbsp;экран домой» в&nbsp;меню браузера"
 					bottomText="Не сейчас"
 					closeHintPopup={this.closeHintPopup}
 				/>

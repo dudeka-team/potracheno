@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
 
-import EditEvent from '../components/EditEvent';
+import EditEvent from '../components/edit-event';
 
-import createEvent from '../actions/createEvent';
+import createEvent from '../actions/create-event';
 import db from '../database';
 import {
 	getUserType,

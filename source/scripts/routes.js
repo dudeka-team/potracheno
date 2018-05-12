@@ -4,14 +4,14 @@ import Route from 'react-router/lib/Route';
 import IndexRedirect from 'react-router/lib/IndexRedirect';
 import Redirect from 'react-router/lib/Redirect';
 
-import App from './App';
-import EventsPage from './pages/EventsPage';
+import App from './app';
+import EventsPage from './pages/events-page';
 
-import EventPreloadingPage from './pages/EventPreloadingPage';
-import NewEventPage from './pages/NewEvent';
-import EditEventPage from './pages/EditEvent';
-import PurchasePage from './pages/PurchasePage';
-import FeedbackPage from './pages/FeedbackPage';
+import EventPreloadingPage from './pages/event-preloading-page';
+import NewEventPage from './pages/new-event-page';
+import EditEventPage from './pages/edit-event-page';
+import PurchasePage from './pages/purchase-page';
+import FeedbackPage from './pages/feedback-page';
 
 export default function Routes(props) {
 	return (

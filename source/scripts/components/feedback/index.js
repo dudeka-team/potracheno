@@ -5,9 +5,9 @@ import FormRow from '../form-row';
 import FormLabel from '../form-label';
 import FormInput from '../form-input';
 
-import { saveFeedbackAsync } from '../../actions/saveFeedback';
+import { saveFeedbackAsync } from '../../actions/save-feedback';
 
-import { TopBar, TopBarHeading, TopBarIcon } from '../TopBar';
+import { TopBar, TopBarHeading, TopBarIcon } from '../top-bar';
 import Page from '../page';
 
 const FeedBack = React.createClass({

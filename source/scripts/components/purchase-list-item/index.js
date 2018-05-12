@@ -1,5 +1,5 @@
 import React from 'react';
-import sumFormat from '../../modules/sumFormat';
+import sumFormat from '../../modules/sum-format';
 
 export default function PurchaseListItem(props) {
 	return (
