@@ -1,19 +1,17 @@
 const webpack = require('webpack');
+const merge = require('webpack-merge');
 const { devServerPort, assetsDir } = require('../config');
-const baseWebpackConfig = require('./base.config');
+const common = require('./common.config');
 
-module.exports = {
-	...baseWebpackConfig,
+module.exports = merge(common, {
+	mode: 'development',
 	entry: [
 		`webpack-dev-server/client?http://localhost:${devServerPort}`,
 		'webpack/hot/only-dev-server',
-		...baseWebpackConfig.entry,
 	],
 	devtool: 'eval-source-map',
 	module: {
-		...baseWebpackConfig.module,
 		rules: [
-			...baseWebpackConfig.module.rules,
 			{
 				test: /\.styl$/,
 				use: [
@@ -51,9 +49,7 @@ module.exports = {
 		],
 	},
 	plugins: [
-		...baseWebpackConfig.plugins,
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NamedModulesPlugin(),
 	],
 	devServer: {
 		host: 'localhost',
@@ -62,4 +58,4 @@ module.exports = {
 		hot: true,
 		contentBase: assetsDir,
 	},
-};
+});

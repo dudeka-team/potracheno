@@ -1,13 +1,11 @@
+const merge = require('webpack-merge');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const baseWebpackConfig = require('./base.config');
+const common = require('./common.config');
 
-module.exports = {
-	...baseWebpackConfig,
+module.exports = merge(common, {
+	mode: 'production',
 	module: {
-		...baseWebpackConfig.module,
 		rules: [
-			...baseWebpackConfig.module.rules,
 			{
 				test: /\.styl$/,
 				use: ExtractTextPlugin.extract({
@@ -38,8 +36,6 @@ module.exports = {
 		],
 	},
 	plugins: [
-		...baseWebpackConfig.plugins,
 		new ExtractTextPlugin('app.css'),
-		new UglifyJsPlugin(),
 	],
-};
+});
