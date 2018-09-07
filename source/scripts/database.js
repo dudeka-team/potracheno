@@ -18,22 +18,19 @@ Database.getLocalEvents = function getLocalEvents() {
 Database.readEvents = function readEvents() {
 	const localEvents = Database.getLocalEvents();
 	const result = {};
-	return new
-		Promise((resolve, reject) => {
-			Promise.all(
-				Object.keys(localEvents).map(eventId => firebase
-					.database()
-					.ref(`events/${eventId}`)
-					.once('value')
-					.then((snapshot) => {
-						if (snapshot.val()) {
-							result[eventId] = snapshot.val() || {};
-						}
-					}))
-			)
-			.then(() => resolve(result))
-			.catch(reject);
-		});
+	return new Promise((resolve, reject) => {
+		Promise.all(
+			Object.keys(localEvents).map(eventId => firebase
+				.database()
+				.ref(`events/${eventId}`)
+				.once('value')
+				.then((snapshot) => {
+					if (snapshot.val()) {
+						result[eventId] = snapshot.val() || {};
+					}
+				}))
+		).then(() => resolve(result)).catch(reject);
+	});
 };
 
 Database.saveEvent = function saveEvent(data) {

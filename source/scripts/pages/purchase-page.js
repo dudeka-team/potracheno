@@ -38,6 +38,7 @@ const PurchasePage = React.createClass({
 	render() {
 		const { props, state } = this;
 		const { mode } = state;
+		// eslint-disable-next-line camelcase
 		const { purchase_id, id } = this.props.params;
 		if (props.currentEvent) {
 			const { currentEvent, localEvents } = props;
