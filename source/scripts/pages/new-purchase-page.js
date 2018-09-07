@@ -136,6 +136,7 @@ class NewPurchasePage extends Component {
 	saveChanges = () => {
 		const { props, state } = this;
 		const { dispatch, localEvents } = props;
+		// eslint-disable-next-line camelcase
 		const { purchase_id, id } = props.params;
 
 		const participants = getDiff(state.purchaseCopy.participants, state.purchase.participants);
@@ -223,6 +224,7 @@ class NewPurchasePage extends Component {
 
 	deletePurchase = () => {
 		const { state, props } = this;
+		// eslint-disable-next-line camelcase
 		const { id, purchase_id } = this.props.params;
 		const { dispatch } = this.props;
 		props.dispatch(createEventActionAsync({
