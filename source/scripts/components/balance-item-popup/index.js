@@ -9,16 +9,16 @@ import Popup from '../popup';
 class BalanceItemPopup extends React.Component {
 	state = {
 		value: Math.abs(this.props.debt.sum),
-	}
+	};
 
-	handleChangeRepayedDebtAmount = (event) => {
+	handleChangeRepayedDebtAmount = event => {
 		const debt = Math.abs(this.props.debt.sum);
 		const value = Number(event.target.value);
 
 		this.setState({
 			value: Math.max(0, Math.min(debt, value)),
 		});
-	}
+	};
 
 	payDebt = () => {
 		const { state, props } = this;
@@ -27,7 +27,7 @@ class BalanceItemPopup extends React.Component {
 			...props.debt,
 			sum: state.value,
 		});
-	}
+	};
 
 	render() {
 		const { debt, onClose } = this.props;
@@ -56,9 +56,7 @@ class BalanceItemPopup extends React.Component {
 					</div>
 
 					<FormRow>
-						<FormLabel htmlFor="repayed-debt-amount">
-							Сколько, ₽
-						</FormLabel>
+						<FormLabel htmlFor="repayed-debt-amount">Сколько, ₽</FormLabel>
 						<FormInput
 							id="repayed-debt-amount"
 							type="number"

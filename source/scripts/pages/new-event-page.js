@@ -17,7 +17,7 @@ import {
 } from '../modules/metrics';
 
 class NewEventPage extends React.Component {
-	save = (eventData) => {
+	save = eventData => {
 		const { dispatch } = this.props;
 		const localEvents = db.getLocalEvents();
 		const localEventsCount = Object.keys(localEvents).length;
@@ -35,7 +35,7 @@ class NewEventPage extends React.Component {
 		delete finalEventData.updatedParticipants;
 
 		dispatch(createEvent(finalEventData));
-	}
+	};
 
 	render() {
 		return (

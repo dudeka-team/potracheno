@@ -36,11 +36,7 @@ storiesOf('Popup', module)
 		</Popup>
 	))
 	.add('no footer', () => (
-		<Popup
-			title="Шашлык"
-			closeIcon
-			onClose={() => {}}
-		>
+		<Popup title="Шашлык" closeIcon onClose={() => {}}>
 			Content
 		</Popup>
 	))

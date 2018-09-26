@@ -20,11 +20,14 @@
     "test": "jest --silent --passWithNoTests",
     "lint": "eslint source webpack --ext .js",
     "qa": "npm run lint && npm test",
-    "precommit": "lint-staged"
+    "precommit": "npm test && lint-staged"
   },
   "lint-staged": {
-    "*.js": "eslint",
-    "*": "npm test"
+    "*.js": [
+      "eslint",
+      "prettier --write",
+      "git add"
+    ]
   },
   "bugs": {
     "url": "https://github.com/dudeka-team/potracheno/issues"
@@ -55,6 +58,7 @@
     "mini-css-extract-plugin": "^0.4.0",
     "postcss-assets": "5.0.0",
     "postcss-loader": "2.1.5",
+    "prettier": "1.14.3",
     "prop-types": "15.6.2",
     "raw-loader": "^0.5.1",
     "style-loader": "0.21.0",

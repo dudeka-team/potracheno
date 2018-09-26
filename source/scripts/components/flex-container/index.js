@@ -22,11 +22,7 @@ export default function FlexContainer(props) {
 		classes.push(`flex_fd-${flexDirection}`);
 	}
 
-	return (
-		<div className={classes.join(' ')}>
-			{props.children}
-		</div>
-	);
+	return <div className={classes.join(' ')}>{props.children}</div>;
 }
 
 FlexContainer.propTypes = {

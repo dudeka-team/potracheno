@@ -10,7 +10,11 @@ import FlexContainer from '../components/flex-container';
 import EditEvent from '../components/edit-event';
 import Spinner from '../components/spinner';
 
-import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/create-event-action';
+import {
+	createEventActionAsync,
+	eventActionTypes,
+	getDiff,
+} from '../actions/create-event-action';
 
 class EditEventPage extends React.Component {
 	componentDidMount() {
@@ -21,7 +25,7 @@ class EditEventPage extends React.Component {
 		}
 	}
 
-	save = (updatedEvent) => {
+	save = updatedEvent => {
 		const { currentEvent, currentUserName, params, dispatch } = this.props;
 		const {
 			manager,
@@ -30,9 +34,8 @@ class EditEventPage extends React.Component {
 			deletedParticipants,
 		} = updatedEvent;
 
-		let purchases = Object
-			.keys(currentEvent.purchases || {})
-			.map((purchaseId) => {
+		let purchases = Object.keys(currentEvent.purchases || {})
+			.map(purchaseId => {
 				const originalPurchase = currentEvent.purchases[purchaseId];
 
 				// если организатор покупки был удалён, покупку тоже удаляем
@@ -42,10 +45,12 @@ class EditEventPage extends React.Component {
 
 				const updatedPurchaseParticipants = originalPurchase.participants
 					// убираем удалённых из мероприятия участников
-					.filter((name) => deletedParticipants.indexOf(name) === -1)
+					.filter(name => deletedParticipants.indexOf(name) === -1)
 					// заменяем старые имена на новые
-					.map((name) => {
-						const changedData = updatedParticipants.filter(({ old }) => old === name)[0];
+					.map(name => {
+						const changedData = updatedParticipants.filter(
+							({ old }) => old === name
+						)[0];
 
 						if (changedData) {
 							return changedData.updated;
@@ -55,7 +60,9 @@ class EditEventPage extends React.Component {
 					});
 
 				let payer = originalPurchase.payer;
-				const changedPayerData = updatedParticipants.filter(({ old }) => old === payer)[0];
+				const changedPayerData = updatedParticipants.filter(
+					({ old }) => old === payer
+				)[0];
 
 				if (changedPayerData) {
 					payer = changedPayerData.updated;
@@ -80,9 +87,9 @@ class EditEventPage extends React.Component {
 			purchases = [];
 		}
 
-		const actions = Object
-			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => assign({ config }, currentEvent.actions[config]));
+		const actions = Object.keys(
+			(currentEvent && currentEvent.actions) || []
+		).map(config => assign({ config }, currentEvent.actions[config]));
 
 		const finalEvent = {
 			name: updatedEvent.name,
@@ -99,14 +106,17 @@ class EditEventPage extends React.Component {
 			delete finalEvent.repayedDebts;
 		}
 
-		const currentUserNameChangeData = updatedParticipants
-			.filter(({ old }) => old === currentUserName)[0];
+		const currentUserNameChangeData = updatedParticipants.filter(
+			({ old }) => old === currentUserName
+		)[0];
 
-		dispatch(updateEvent({
-			id: params.id,
-			data: finalEvent,
-			currentUserNameChangeData,
-		}));
+		dispatch(
+			updateEvent({
+				id: params.id,
+				data: finalEvent,
+				currentUserNameChangeData,
+			})
+		);
 
 		const filteredParticipants = getDiff(
 			currentEvent.participants,
@@ -114,63 +124,73 @@ class EditEventPage extends React.Component {
 		);
 
 		if (updatedEvent.name !== currentEvent.name) {
-			dispatch(createEventActionAsync({
-				eventId: this.props.params.id,
-				eventActionInfo: {
-					config: eventActionTypes.changeEventName(
-						currentUserName,
-						updatedEvent.name,
-						(new Date()).getTime()
-					),
-				},
-			}));
+			dispatch(
+				createEventActionAsync({
+					eventId: this.props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.changeEventName(
+							currentUserName,
+							updatedEvent.name,
+							new Date().getTime()
+						),
+					},
+				})
+			);
 		}
 
-		if (updatedEvent.start !== currentEvent.start
-			|| updatedEvent.end !== currentEvent.end) {
-			dispatch(createEventActionAsync({
-				eventId: this.props.params.id,
-				eventActionInfo: {
-					config: eventActionTypes.changeEventDate(
-						currentUserName,
-						moment(updatedEvent.start).format('DD MMMM'),
-						moment(updatedEvent.end).format('DD MMMM'),
-						(new Date()).getTime()
-					),
-				},
-			}));
+		if (
+			updatedEvent.start !== currentEvent.start ||
+			updatedEvent.end !== currentEvent.end
+		) {
+			dispatch(
+				createEventActionAsync({
+					eventId: this.props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.changeEventDate(
+							currentUserName,
+							moment(updatedEvent.start).format('DD MMMM'),
+							moment(updatedEvent.end).format('DD MMMM'),
+							new Date().getTime()
+						),
+					},
+				})
+			);
 		}
 
-		filteredParticipants.added.forEach((p) => {
+		filteredParticipants.added.forEach(p => {
 			if (filteredParticipants.added) {
-				dispatch(createEventActionAsync({
-					eventId: this.props.params.id,
-					eventActionInfo: {
-						config: eventActionTypes.addParticipantToEvent(
-							currentUserName,
-							p,
-							(new Date()).getTime()
-						),
-					},
-				}));
+				dispatch(
+					createEventActionAsync({
+						eventId: this.props.params.id,
+						eventActionInfo: {
+							config: eventActionTypes.addParticipantToEvent(
+								currentUserName,
+								p,
+								new Date().getTime()
+							),
+						},
+					})
+				);
 			}
 		});
 
-		filteredParticipants.removed.forEach((p) => {
+		filteredParticipants.removed.forEach(p => {
 			if (filteredParticipants.removed) {
-				dispatch(createEventActionAsync({
-					eventId: this.props.params.id,
-					eventActionInfo: {
-						config: eventActionTypes.removeParticipantFromEvent(
-							currentUserName,
-							p,
-							(new Date()).getTime()
-						),
-					},
-				}));
+				dispatch(
+					createEventActionAsync({
+						eventId: this.props.params.id,
+						eventActionInfo: {
+							config: eventActionTypes.removeParticipantFromEvent(
+								currentUserName,
+								p,
+								new Date().getTime()
+							),
+						},
+					})
+				);
 			}
 		});
-	}
+	};
 
 	renderPreloader = () => {
 		return (
@@ -178,7 +198,7 @@ class EditEventPage extends React.Component {
 				<Spinner />
 			</FlexContainer>
 		);
-	}
+	};
 
 	render() {
 		const { currentEvent, params } = this.props;
@@ -193,7 +213,9 @@ class EditEventPage extends React.Component {
 					managerName={currentEvent.manager}
 					start={new Date(currentEvent.start)}
 					end={new Date(currentEvent.end)}
-					participants={currentEvent.participants.filter((name) => name !== currentEvent.manager)}
+					participants={currentEvent.participants.filter(
+						name => name !== currentEvent.manager
+					)}
 					hasRepayedDebts={Boolean(currentEvent.repayedDebts)}
 					handleSave={this.save}
 				/>

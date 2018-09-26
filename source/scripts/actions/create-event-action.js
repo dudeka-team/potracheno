@@ -1,12 +1,10 @@
 import { createAction } from 'redux-actions';
 import db from '../database';
-import {
-	CREATE_EVENT_ACTION,
-} from '../constants';
+import { CREATE_EVENT_ACTION } from '../constants';
 
 export const getDiff = (oldPs, newPs) => ({
-	added: newPs.filter((newP) => oldPs.indexOf(newP) === -1),
-	removed: oldPs.filter((oldP) => newPs.indexOf(oldP) === -1),
+	added: newPs.filter(newP => oldPs.indexOf(newP) === -1),
+	removed: oldPs.filter(oldP => newPs.indexOf(oldP) === -1),
 });
 
 export const eventActionTypes = {
@@ -76,7 +74,12 @@ export const eventActionTypes = {
 			actionType: 'addParticipantToPurchase',
 		};
 	},
-	addParticipantsToPurchase(currentUser, purchaseParticipantsNumber, purchaseName, date) {
+	addParticipantsToPurchase(
+		currentUser,
+		purchaseParticipantsNumber,
+		purchaseName,
+		date
+	) {
 		return {
 			currentUser,
 			purchaseParticipantsNumber,
@@ -123,11 +126,13 @@ export const createEventAction = createAction(CREATE_EVENT_ACTION);
 export function createEventActionAsync(payload) {
 	return dispatch => {
 		db.addEventAction(payload.eventId, payload.eventActionInfo).then(result => {
-			dispatch(createEventAction({
-				key: result.key,
-				eventActionInfo: result.eventActionInfo,
-				eventId: payload.eventId,
-			}));
+			dispatch(
+				createEventAction({
+					key: result.key,
+					eventActionInfo: result.eventActionInfo,
+					eventId: payload.eventId,
+				})
+			);
 		});
 	};
 }

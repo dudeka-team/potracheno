@@ -7,10 +7,12 @@ import styles from './tabs.css';
 
 export default class Tabs extends PureComponent {
 	static propTypes = {
-		config: PropTypes.arrayOf(PropTypes.shape({
-			labelContent: PropTypes.string.isRequired,
-			content: PropTypes.node.isRequired,
-		})).isRequired,
+		config: PropTypes.arrayOf(
+			PropTypes.shape({
+				labelContent: PropTypes.string.isRequired,
+				content: PropTypes.node.isRequired,
+			})
+		).isRequired,
 	};
 
 	constructor(props) {
@@ -43,7 +45,7 @@ export default class Tabs extends PureComponent {
 		};
 	};
 
-	handleTabChange = (event) => {
+	handleTabChange = event => {
 		const { target } = event;
 		const targetTabIndex = parseInt(target.getAttribute('data-tab'), 10);
 
@@ -54,9 +56,9 @@ export default class Tabs extends PureComponent {
 		}
 	};
 
-	handleSwipe = (event) => {
+	handleSwipe = event => {
 		const swipeStartX = event.center.x - event.deltaX;
-		if ((window.innerWidth - swipeStartX) < DRAWER_SWIPE_AREA_WIDTH) return;
+		if (window.innerWidth - swipeStartX < DRAWER_SWIPE_AREA_WIDTH) return;
 
 		const { activeTabIndex } = this.state;
 		const { config } = this.props;
@@ -97,10 +99,7 @@ export default class Tabs extends PureComponent {
 				<div className={styles.content} style={this.computeTabsTransform()}>
 					{config.map((item, index) => (
 						<Hammer onSwipe={this.handleSwipe} key={index}>
-							<div
-								data-tab={index}
-								className={styles.item}
-							>
+							<div data-tab={index} className={styles.item}>
 								{item.content}
 							</div>
 						</Hammer>

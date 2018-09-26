@@ -13,9 +13,7 @@ export default class ActionButton extends PureComponent {
 
 		return (
 			<div className={styles.root} onClick={onClick}>
-				<div className={styles.content}>
-					{children}
-				</div>
+				<div className={styles.content}>{children}</div>
 			</div>
 		);
 	}

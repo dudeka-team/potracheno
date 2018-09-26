@@ -16,11 +16,7 @@ export default class Spinner extends PureComponent {
 		const { className } = this.props;
 
 		return (
-			<div
-				className={classNames(styles.root, className)}
-			>
-				Загрузка...
-			</div>
+			<div className={classNames(styles.root, className)}>Загрузка...</div>
 		);
 	}
 }

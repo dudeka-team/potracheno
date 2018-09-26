@@ -1,8 +1,6 @@
 import { push } from 'react-router-redux/lib/actions';
 
-import {
-	CREATE_EVENT,
-} from '../constants';
+import { CREATE_EVENT } from '../constants';
 
 import setLocalEvents from './set-local-events';
 import openShareLinkPopup from './open-share-link-popup';
@@ -14,8 +12,7 @@ export default function createEvent(payload) {
 		dispatch({
 			type: CREATE_EVENT,
 			payload: new Promise((resolve, reject) => {
-				db
-					.saveEvent(payload)
+				db.saveEvent(payload)
 					.then(data => {
 						resolve(data);
 						return data;

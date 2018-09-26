@@ -11,11 +11,7 @@ import getLocalEvents from '../actions/get-local-events';
 
 import db from '../database';
 
-import {
-	getUserType,
-	setUserType,
-	INVITED,
-} from '../modules/metrics';
+import { getUserType, setUserType, INVITED } from '../modules/metrics';
 
 class EventPreloadingPage extends React.Component {
 	componentDidMount() {
@@ -37,12 +33,11 @@ class EventPreloadingPage extends React.Component {
 		const { id } = props.params;
 		return (
 			<Wrapper>
-				{
-					props.localEvents[id] ?
-						<EventPage id={id} />
-						:
-						<UserSelection id={id} />
-				}
+				{props.localEvents[id] ? (
+					<EventPage id={id} />
+				) : (
+					<UserSelection id={id} />
+				)}
 			</Wrapper>
 		);
 	}

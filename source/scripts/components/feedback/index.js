@@ -14,33 +14,35 @@ class FeedBack extends React.Component {
 	state = {
 		email: '',
 		review: '',
-	}
+	};
 
 	goToEvents = () => {
 		this.saveFeedback();
 		this.props.router.push('/events');
-	}
+	};
 
 	saveFeedback = () => {
 		const { state, props } = this;
 
-		props.dispatch(saveFeedbackAsync({
-			mail: state.email,
-			problem: state.review,
-		}));
-	}
+		props.dispatch(
+			saveFeedbackAsync({
+				mail: state.email,
+				problem: state.review,
+			})
+		);
+	};
 
-	handleChangeReview = (event) => {
+	handleChangeReview = event => {
 		this.setState({
 			review: event.target.value,
 		});
-	}
+	};
 
-	handleChangeEmail = (event) => {
+	handleChangeEmail = event => {
 		this.setState({
 			email: event.target.value,
 		});
-	}
+	};
 
 	render() {
 		const { email, review } = this.state;
@@ -70,7 +72,9 @@ class FeedBack extends React.Component {
 					</FormRow>
 
 					<FormRow>
-						<FormLabel htmlFor="email">Электронная почта (необязательно)</FormLabel>
+						<FormLabel htmlFor="email">
+							Электронная почта (необязательно)
+						</FormLabel>
 						<FormInput
 							id="email"
 							type="email"

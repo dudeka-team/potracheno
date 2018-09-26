@@ -18,9 +18,7 @@ export default class Poster extends PureComponent {
 					<div className={classNames(styles.icon, styles[`icon_${icon}`])} />
 				</div>
 
-				<div className={styles.content}>
-					{children}
-				</div>
+				<div className={styles.content}>{children}</div>
 			</div>
 		);
 	}

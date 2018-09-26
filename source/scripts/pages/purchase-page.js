@@ -23,7 +23,7 @@ function renderPreloader() {
 class PurchasePage extends React.Component {
 	state = {
 		mode: /\bnew/.test(this.props.route.path) ? CREATE : EDIT,
-	}
+	};
 
 	componentDidMount() {
 		const { props } = this;
@@ -42,8 +42,7 @@ class PurchasePage extends React.Component {
 
 			const myName = localEvents[id];
 
-			const eventParticipants = currentEvent
-				.participants
+			const eventParticipants = currentEvent.participants
 				.slice()
 				.sort()
 				.filter(x => x !== myName);

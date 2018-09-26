@@ -23,9 +23,7 @@ import relogin from '../../actions/relogin';
 import closeShareLinkPopup from '../../actions/close-share-link-popup';
 import openShareLinkPopup from '../../actions/open-share-link-popup';
 
-import {
-	DRAWER_SWIPE_AREA_WIDTH,
-} from '../../constants';
+import { DRAWER_SWIPE_AREA_WIDTH } from '../../constants';
 
 class EventPage extends React.Component {
 	state = {
@@ -33,7 +31,7 @@ class EventPage extends React.Component {
 		showShareResult: false,
 		shareResultMessage: '',
 		hintPopupOpen: false,
-	}
+	};
 
 	componentDidMount() {
 		const { id, dispatch } = this.props;
@@ -42,43 +40,43 @@ class EventPage extends React.Component {
 
 	goToEvents = () => {
 		this.props.router.push('/events');
-	}
+	};
 
 	toggleMenu = () => {
 		this.setState({ menuOpen: !this.state.menuOpen });
-	}
+	};
 
 	openSharePopup = () => {
 		this.props.dispatch(openShareLinkPopup());
-	}
+	};
 
 	closeSharePopup = () => {
 		this.props.dispatch(closeShareLinkPopup());
-	}
+	};
 
 	openHintPopup = () => {
 		this.setState({
 			hintPopupOpen: true,
 		});
-	}
+	};
 
 	closeHintPopup = () => {
 		this.setState({
 			hintPopupOpen: false,
 		});
-	}
+	};
 
 	goToEdit = () => {
 		const { router } = this.props;
 		router.push(`/events/${this.props.id}/edit`);
-	}
+	};
 
 	handleRelogin = () => {
 		const { id, dispatch } = this.props;
 		dispatch(relogin(id));
-	}
+	};
 
-	formatSubtitle = (currentEvent) => {
+	formatSubtitle = currentEvent => {
 		const participantsStatus = `${currentEvent.participants.length} участников`;
 		const formattedStart = moment(currentEvent.start).format('DD MMMM');
 		const formattedEnd = moment(currentEvent.end).format('DD MMMM');
@@ -91,7 +89,7 @@ class EventPage extends React.Component {
 		}
 
 		return `${participantsStatus} • ${formattedDate}`;
-	}
+	};
 
 	handleCopy = () => {
 		const { props } = this;
@@ -109,7 +107,8 @@ class EventPage extends React.Component {
 			message = 'Ссылка&nbsp;скопирована в&nbsp;буфер обмена';
 			props.dispatch(closeShareLinkPopup());
 		} else {
-			message = 'Устройство не&nbsp;поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами';
+			message =
+				'Устройство не&nbsp;поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами';
 		}
 
 		this.setState({
@@ -122,12 +121,12 @@ class EventPage extends React.Component {
 				showShareResult: false,
 			});
 		}, 2000);
-	}
+	};
 
 	renderDrawer = (currentEvent, currentUserName, subtitle) => {
 		return (
 			<Drawer
-				onRequestChange={(menuOpen) => this.setState({ menuOpen })}
+				onRequestChange={menuOpen => this.setState({ menuOpen })}
 				docked={false}
 				swipeAreaWidth={DRAWER_SWIPE_AREA_WIDTH}
 				open={this.state.menuOpen}
@@ -144,24 +143,23 @@ class EventPage extends React.Component {
 				/>
 			</Drawer>
 		);
-	}
+	};
 
-	renderTopBar = (eventName) => {
+	renderTopBar = eventName => {
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
-				<TopBarHeading
-					title={eventName}
-				/>
+				<TopBarHeading title={eventName} />
 				<TopBarIcon icon="share" onClick={this.openSharePopup} />
 				<TopBarIcon icon="burger" onClick={this.toggleMenu} />
 			</TopBar>
 		);
-	}
+	};
 
 	renderSharePopup = () => {
 		const { props } = this;
-		const annotation = 'Поделитесь ссылкой на мероприятие с друзьями, чтобы они могли вести учёт покупок вместе с вами:';
+		const annotation =
+			'Поделитесь ссылкой на мероприятие с друзьями, чтобы они могли вести учёт покупок вместе с вами:';
 
 		return (
 			<Portal isOpened={props.shareLinkPopupOpened}>
@@ -182,14 +180,14 @@ class EventPage extends React.Component {
 						<div className="share-link__link-wrapper">
 							<div
 								className="share-link__link"
-								ref={(linkNode) => (this.linkNode = linkNode)}
+								ref={linkNode => (this.linkNode = linkNode)}
 							>{`${window.location.origin}/events/${props.id}`}</div>
 						</div>
 					</div>
 				</Popup>
 			</Portal>
 		);
-	}
+	};
 
 	renderHintPopup = () => {
 		return (
@@ -201,26 +199,26 @@ class EventPage extends React.Component {
 				/>
 			</Portal>
 		);
-	}
+	};
 
 	render() {
 		const { props, state } = this;
 		const { currentEvent, currentUserName } = props;
-		const purchases = Object
-			.keys((currentEvent && currentEvent.purchases) || [])
-			.map((purchaseId) => assign({ id: purchaseId }, currentEvent.purchases[purchaseId]));
-		const actions = Object
-			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => assign({ config }, currentEvent.actions[config]));
+		const purchases = Object.keys(
+			(currentEvent && currentEvent.purchases) || []
+		).map(purchaseId =>
+			assign({ id: purchaseId }, currentEvent.purchases[purchaseId])
+		);
+		const actions = Object.keys(
+			(currentEvent && currentEvent.actions) || []
+		).map(config => assign({ config }, currentEvent.actions[config]));
 
 		if (currentEvent) {
 			const subtitle = this.formatSubtitle(currentEvent);
 
 			return (
 				<Page>
-					<Page.Header>
-						{this.renderTopBar(currentEvent.name)}
-					</Page.Header>
+					<Page.Header>{this.renderTopBar(currentEvent.name)}</Page.Header>
 
 					<Page.Content>
 						{this.renderDrawer(currentEvent, currentUserName, subtitle)}
@@ -234,28 +232,30 @@ class EventPage extends React.Component {
 							config={[
 								{
 									labelContent: 'Покупки',
-									content: <Purchases
-										eventId={props.id}
-										purchases={purchases}
-										eventParticipants={currentEvent.participants}
-										currentUser={currentUserName}
-									/>,
+									content: (
+										<Purchases
+											eventId={props.id}
+											purchases={purchases}
+											eventParticipants={currentEvent.participants}
+											currentUser={currentUserName}
+										/>
+									),
 								},
 								{
 									labelContent: 'Баланс',
-									content: <Balance
-										purchases={purchases}
-										participants={currentEvent.participants}
-										currentUser={currentUserName}
-										currentEvent={currentEvent}
-										eventId={props.id}
-									/>,
+									content: (
+										<Balance
+											purchases={purchases}
+											participants={currentEvent.participants}
+											currentUser={currentUserName}
+											currentEvent={currentEvent}
+											eventId={props.id}
+										/>
+									),
 								},
 								{
 									labelContent: 'Действия',
-									content: <EventActions
-										actions={actions}
-									/>,
+									content: <EventActions actions={actions} />,
 								},
 							]}
 						/>

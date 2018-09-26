@@ -11,11 +11,7 @@ export default class EventHeader extends PureComponent {
 	};
 
 	render() {
-		const {
-			name,
-			subtitle,
-			userSelection,
-		} = this.props;
+		const { name, subtitle, userSelection } = this.props;
 
 		return (
 			<div

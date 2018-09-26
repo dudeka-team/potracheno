@@ -5,7 +5,11 @@ import deepEqual from 'deep-equal';
 import assign from 'object-assign';
 
 import { createPurchaseAsync } from '../actions/create-purchase';
-import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/create-event-action';
+import {
+	createEventActionAsync,
+	eventActionTypes,
+	getDiff,
+} from '../actions/create-event-action';
 import { loadEventDataAsync } from '../actions';
 
 import Page from '../components/page';
@@ -70,7 +74,7 @@ class NewPurchasePage extends Component {
 		dispatch(fetchEventData(params.id));
 	}
 
-	getLoan = (user) => {
+	getLoan = user => {
 		const { purchase } = this.state;
 		const count = purchase.participants.length;
 		if (!count || purchase.participants.indexOf(user) === -1) {
@@ -79,38 +83,43 @@ class NewPurchasePage extends Component {
 		return Math.round((purchase.amount || 0) / count);
 	};
 
-	getFullName = (name) => (this.state.myName === name ? `${name} (Вы)` : name);
+	getFullName = name => (this.state.myName === name ? `${name} (Вы)` : name);
 
-	isEditingDisabled = () => this.state.mode === EDIT && this.props.hasRepayedDebts;
+	isEditingDisabled = () =>
+		this.state.mode === EDIT && this.props.hasRepayedDebts;
 
 	save = () => {
 		const { state, props } = this;
 		const { localEvents } = props;
 
 		if (state.mode === CREATE) {
-			props.dispatch(createEventActionAsync({
-				eventId: props.params.id,
-				eventActionInfo: {
-					config: eventActionTypes.addPurchase(
-						state.purchase.payer,
-						state.purchase.name,
-						state.purchase.amount,
-						(new Date()).getTime()
-					),
-				},
-			}));
+			props.dispatch(
+				createEventActionAsync({
+					eventId: props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.addPurchase(
+							state.purchase.payer,
+							state.purchase.name,
+							state.purchase.amount,
+							new Date().getTime()
+						),
+					},
+				})
+			);
 
-			props.dispatch(createEventActionAsync({
-				eventId: props.params.id,
-				eventActionInfo: {
-					config: eventActionTypes.addParticipantsToPurchase(
-						localEvents[props.params.id],
-						state.purchase.participants.length,
-						state.purchase.name,
-						(new Date()).getTime()
-					),
-				},
-			}));
+			props.dispatch(
+				createEventActionAsync({
+					eventId: props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.addParticipantsToPurchase(
+							localEvents[props.params.id],
+							state.purchase.participants.length,
+							state.purchase.name,
+							new Date().getTime()
+						),
+					},
+				})
+			);
 		}
 
 		if (getUserType() === INDEPENDENT && !hasCreatedPurchase()) {
@@ -118,10 +127,12 @@ class NewPurchasePage extends Component {
 			markPurchaseCreation();
 		}
 
-		props.dispatch(createPurchaseAsync({
-			eventId: props.params.id,
-			purchaseData: state.purchase,
-		}));
+		props.dispatch(
+			createPurchaseAsync({
+				eventId: props.params.id,
+				purchaseData: state.purchase,
+			})
+		);
 
 		this.setState({
 			isSavingData: true,
@@ -139,35 +150,42 @@ class NewPurchasePage extends Component {
 		// eslint-disable-next-line camelcase
 		const { purchase_id, id } = props.params;
 
-		const participants = getDiff(state.purchaseCopy.participants, state.purchase.participants);
+		const participants = getDiff(
+			state.purchaseCopy.participants,
+			state.purchase.participants
+		);
 		dispatch(fetchPurchaseChange(id, purchase_id, state.purchase));
 
-		participants.added.forEach((participant) => {
-			props.dispatch(createEventActionAsync({
-				eventId: props.params.id,
-				eventActionInfo: {
-					config: eventActionTypes.addParticipantToPurchase(
-						localEvents[props.params.id],
-						participant,
-						state.purchase.name,
-						(new Date()).getTime()
-					),
-				},
-			}));
+		participants.added.forEach(participant => {
+			props.dispatch(
+				createEventActionAsync({
+					eventId: props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.addParticipantToPurchase(
+							localEvents[props.params.id],
+							participant,
+							state.purchase.name,
+							new Date().getTime()
+						),
+					},
+				})
+			);
 		});
 
-		participants.removed.forEach((participant) => {
-			props.dispatch(createEventActionAsync({
-				eventId: props.params.id,
-				eventActionInfo: {
-					config: eventActionTypes.removeParticipantFromPurchase(
-						localEvents[props.params.id],
-						participant,
-						state.purchase.name,
-						(new Date()).getTime()
-					),
-				},
-			}));
+		participants.removed.forEach(participant => {
+			props.dispatch(
+				createEventActionAsync({
+					eventId: props.params.id,
+					eventActionInfo: {
+						config: eventActionTypes.removeParticipantFromPurchase(
+							localEvents[props.params.id],
+							participant,
+							state.purchase.name,
+							new Date().getTime()
+						),
+					},
+				})
+			);
 		});
 
 		this.setState({
@@ -178,12 +196,17 @@ class NewPurchasePage extends Component {
 	editPageTopBar = () => {
 		const { purchase, purchaseCopy } = this.state;
 		const { participants, name } = purchase;
-		const changed = purchase.name !== purchaseCopy.name ||
+		const changed =
+			purchase.name !== purchaseCopy.name ||
 			purchase.amount !== purchaseCopy.amount ||
 			purchase.payer !== purchaseCopy.payer ||
-			!deepEqual(purchase.participants.sort(), purchaseCopy.participants.sort());
+			!deepEqual(
+				purchase.participants.sort(),
+				purchaseCopy.participants.sort()
+			);
 
-		const disabled = participants.length === 0 ||
+		const disabled =
+			participants.length === 0 ||
 			isNaN(purchase.amount) ||
 			!purchase.amount ||
 			!(name || '').trim() ||
@@ -193,11 +216,15 @@ class NewPurchasePage extends Component {
 			<TopBar bordered>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Редактирование покупки" />
-				{this.state.isSavingData ?
+				{this.state.isSavingData ? (
 					<Spinner className={styles.spinner} />
-					:
-					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.saveChanges} />
-				}
+				) : (
+					<TopBarIcon
+						disabled={disabled}
+						icon="check-active"
+						onClick={this.saveChanges}
+					/>
+				)}
 			</TopBar>
 		);
 	};
@@ -205,7 +232,8 @@ class NewPurchasePage extends Component {
 	createPageTopBar = () => {
 		const { purchase } = this.state;
 		const { participants, name } = purchase;
-		const disabled = participants.length === 0 ||
+		const disabled =
+			participants.length === 0 ||
 			isNaN(purchase.amount) ||
 			!purchase.amount ||
 			!(name || '').trim();
@@ -213,11 +241,15 @@ class NewPurchasePage extends Component {
 			<TopBar bordered>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvent} />
 				<TopBarHeading title="Новая покупка" />
-				{this.state.isSavingData ?
+				{this.state.isSavingData ? (
 					<Spinner className={styles.spinner} />
-					:
-					<TopBarIcon disabled={disabled} icon="check-active" onClick={this.save} />
-				}
+				) : (
+					<TopBarIcon
+						disabled={disabled}
+						icon="check-active"
+						onClick={this.save}
+					/>
+				)}
 			</TopBar>
 		);
 	};
@@ -227,31 +259,33 @@ class NewPurchasePage extends Component {
 		// eslint-disable-next-line camelcase
 		const { id, purchase_id } = this.props.params;
 		const { dispatch } = this.props;
-		props.dispatch(createEventActionAsync({
-			eventId: props.params.id,
-			eventActionInfo: {
-				config: eventActionTypes.deletePurchase(
-					props.localEvents[props.params.id],
-					state.purchase.name,
-					(new Date()).getTime()
-				),
-			},
-		}));
+		props.dispatch(
+			createEventActionAsync({
+				eventId: props.params.id,
+				eventActionInfo: {
+					config: eventActionTypes.deletePurchase(
+						props.localEvents[props.params.id],
+						state.purchase.name,
+						new Date().getTime()
+					),
+				},
+			})
+		);
 		dispatch(fetchPurchaseDelete(id, purchase_id));
 	};
 
-	handleChangePurchasePrice = (event) => {
+	handleChangePurchasePrice = event => {
 		const amount = Number(event.target.value);
 
-		this.setState((state) => ({
+		this.setState(state => ({
 			purchase: Object.assign({}, state.purchase, { amount }),
 		}));
 	};
 
-	handleChangePurchaseName = (event) => {
+	handleChangePurchaseName = event => {
 		const name = event.target.value;
 
-		this.setState((state) => ({
+		this.setState(state => ({
 			purchase: {
 				...state.purchase,
 				name,
@@ -262,7 +296,8 @@ class NewPurchasePage extends Component {
 	handleToggleAllPurchaseParticipants = () => {
 		const { eventParticipants } = this.props.data;
 		const { purchase } = this.state;
-		const everyUserParticipates = purchase.participants.length === eventParticipants.length;
+		const everyUserParticipates =
+			purchase.participants.length === eventParticipants.length;
 
 		this.setState({
 			purchase: {
@@ -270,9 +305,9 @@ class NewPurchasePage extends Component {
 				participants: everyUserParticipates ? [] : [...eventParticipants],
 			},
 		});
-	}
+	};
 
-	handleClickEventParticipant = (user) => () => {
+	handleClickEventParticipant = user => () => {
 		const { purchase } = this.state;
 		const { participants } = purchase;
 
@@ -292,8 +327,12 @@ class NewPurchasePage extends Component {
 	render() {
 		const { state, props } = this;
 		const { mode, purchase } = state;
-		const { hasRepayedDebts, data: { eventParticipants } } = props;
-		const everyUserParticipates = eventParticipants.length === purchase.participants.length;
+		const {
+			hasRepayedDebts,
+			data: { eventParticipants },
+		} = props;
+		const everyUserParticipates =
+			eventParticipants.length === purchase.participants.length;
 		const somebodyParticipates = purchase.participants.length > 0;
 
 		return (
@@ -304,7 +343,7 @@ class NewPurchasePage extends Component {
 				</Page.Header>
 
 				<Page.Content>
-					{this.isEditingDisabled() &&
+					{this.isEditingDisabled() && (
 						<div
 							style={{
 								paddingLeft: '16px',
@@ -313,9 +352,10 @@ class NewPurchasePage extends Component {
 								color: 'red',
 							}}
 						>
-							После начала возвращения долгов можно редактировать только название покупки.
+							После начала возвращения долгов можно редактировать только
+							название покупки.
 						</div>
-					}
+					)}
 
 					<NewPurchasePayer
 						payer={this.getFullName(purchase.payer) || ''}
@@ -327,7 +367,7 @@ class NewPurchasePage extends Component {
 						}}
 					/>
 
-					{state.popupOpened &&
+					{state.popupOpened && (
 						<Popup
 							title="Кто платит"
 							closeIcon
@@ -346,7 +386,7 @@ class NewPurchasePage extends Component {
 								}}
 							/>
 						</Popup>
-					}
+					)}
 
 					<div style={{ paddingLeft: '16px', paddingRight: '16px' }}>
 						<FormRow>
@@ -374,9 +414,7 @@ class NewPurchasePage extends Component {
 					<Separator />
 
 					<div style={{ paddingRight: '9px' }}>
-						<GreySubtitle>
-							Участники покупки
-						</GreySubtitle>
+						<GreySubtitle>Участники покупки</GreySubtitle>
 
 						<UniversalListItem
 							isBordered
@@ -387,12 +425,16 @@ class NewPurchasePage extends Component {
 									indeterminate={!everyUserParticipates && somebodyParticipates}
 								/>
 							}
-							onClick={this.isEditingDisabled() ? undefined : this.handleToggleAllPurchaseParticipants}
+							onClick={
+								this.isEditingDisabled()
+									? undefined
+									: this.handleToggleAllPurchaseParticipants
+							}
 						>
 							Все пользователи
 						</UniversalListItem>
 
-						{state.eventParticipants.map((user) => (
+						{state.eventParticipants.map(user => (
 							<UniversalListItem
 								isBordered
 								key={user}
@@ -409,35 +451,41 @@ class NewPurchasePage extends Component {
 							</UniversalListItem>
 						))}
 					</div>
-					{mode === EDIT &&
+					{mode === EDIT && (
 						<div>
-							{state.popupDeleteOpened &&
+							{state.popupDeleteOpened && (
 								<Popup
 									unBordered
 									largeHeader
 									title="Вы уверены?"
 									okButton={{
 										text: 'удалить',
-										onClick: () => { this.deletePurchase(); },
+										onClick: () => {
+											this.deletePurchase();
+										},
 									}}
 									cancelButton={{
 										text: 'отмена',
-										onClick: () => { this.setState({ popupDeleteOpened: false }); },
+										onClick: () => {
+											this.setState({ popupDeleteOpened: false });
+										},
 									}}
 								/>
-							}
+							)}
 
 							{!hasRepayedDebts && <Separator />}
-							{!hasRepayedDebts && <UniversalListItem
-								prefix={<IconCross />}
-								onClick={() => this.setState({ popupDeleteOpened: true })}
-							>
-								Удалить покупку
-							</UniversalListItem>}
+							{!hasRepayedDebts && (
+								<UniversalListItem
+									prefix={<IconCross />}
+									onClick={() => this.setState({ popupDeleteOpened: true })}
+								>
+									Удалить покупку
+								</UniversalListItem>
+							)}
 
 							<Separator />
 						</div>
-					}
+					)}
 				</Page.Content>
 			</Page>
 		);

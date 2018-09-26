@@ -1,9 +1,14 @@
 import db from '../database';
-import {
-	REPAY_DEBT,
-} from '../constants';
+import { REPAY_DEBT } from '../constants';
 
-export default function repayDebt(eventId, sum, fromUser, toUser, oldSumFrom, oldSumTo) {
+export default function repayDebt(
+	eventId,
+	sum,
+	fromUser,
+	toUser,
+	oldSumFrom,
+	oldSumTo
+) {
 	const sumFrom = sum + (oldSumFrom || 0);
 	const sumTo = -sum + (oldSumTo || 0);
 
@@ -11,8 +16,7 @@ export default function repayDebt(eventId, sum, fromUser, toUser, oldSumFrom, ol
 		dispatch({
 			type: REPAY_DEBT,
 			payload: new Promise((resolve, reject) => {
-				db
-					.repayDebt(eventId, sumFrom, fromUser)
+				db.repayDebt(eventId, sumFrom, fromUser)
 					.then(resolve)
 					.catch(reject);
 			}),
@@ -20,8 +24,7 @@ export default function repayDebt(eventId, sum, fromUser, toUser, oldSumFrom, ol
 		dispatch({
 			type: REPAY_DEBT,
 			payload: new Promise((resolve, reject) => {
-				db
-					.repayDebt(eventId, sumTo, toUser)
+				db.repayDebt(eventId, sumTo, toUser)
 					.then(resolve)
 					.catch(reject);
 			}),

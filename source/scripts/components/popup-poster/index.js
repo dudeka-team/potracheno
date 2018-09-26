@@ -6,6 +6,9 @@ export default function PopupPoster(props) {
 		classes.push('popup-poster__open');
 	}
 	return (
-		<div className={classes.join(' ')} dangerouslySetInnerHTML={{ __html: props.text }} />
+		<div
+			className={classes.join(' ')}
+			dangerouslySetInnerHTML={{ __html: props.text }}
+		/>
 	);
 }

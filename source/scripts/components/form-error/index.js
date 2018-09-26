@@ -9,11 +9,7 @@ export default function FormError(props) {
 		return null;
 	}
 
-	return (
-		<p className={styles.root}>
-			{children}
-		</p>
-	);
+	return <p className={styles.root}>{children}</p>;
 }
 
 FormError.propTypes = {

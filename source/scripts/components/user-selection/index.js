@@ -16,23 +16,18 @@ import Spinner from '../spinner';
 class UserSelection extends PureComponent {
 	state = {
 		name: '',
-	}
+	};
 
 	openPopup = () => this.setState({ popupOpened: true });
 	closePopup = () => this.setState({ popupOpened: false });
 
-	changeEventName = (name) => {
-		this.props.dispatch(
-			setLocalEvents(
-				this.props.id,
-				name
-			)
-		);
+	changeEventName = name => {
+		this.props.dispatch(setLocalEvents(this.props.id, name));
 
 		this.setState({ currentName: name });
 	};
 
-	userNameChangeHandler = (event) => {
+	userNameChangeHandler = event => {
 		const { currentEvent } = this.props;
 		const newUserName = event.target.value;
 		const names = currentEvent.participants.map(name => name.toLowerCase());
@@ -58,7 +53,7 @@ class UserSelection extends PureComponent {
 		}
 	};
 
-	formatSubtitle = (currentEvent) => {
+	formatSubtitle = currentEvent => {
 		const participantsStatus = `${currentEvent.participants.length} участников`;
 		const formattedStart = moment(currentEvent.start).format('DD MMMM');
 		const formattedEnd = moment(currentEvent.end).format('DD MMMM');
@@ -97,7 +92,10 @@ class UserSelection extends PureComponent {
 			}}
 			onClose={this.closePopup}
 		>
-			<UserSelectionPopup name={this.state.name} onChangeName={this.userNameChangeHandler} />
+			<UserSelectionPopup
+				name={this.state.name}
+				onChangeName={this.userNameChangeHandler}
+			/>
 		</Popup>
 	);
 
@@ -115,7 +113,9 @@ class UserSelection extends PureComponent {
 				<div className="user-selection">
 					<div className="user-selection__top-bar">
 						<div className="user-selection__invite-text">
-							<span className="user-selection__invite-author">{currentEvent.manager}</span>
+							<span className="user-selection__invite-author">
+								{currentEvent.manager}
+							</span>
 							{' прислал(-а) вам приглашение на мероприятие'}
 						</div>
 					</div>

@@ -19,11 +19,7 @@ export default class UniversalListItem extends PureComponent {
 			return null;
 		}
 
-		return (
-			<div className={styles.prefix}>
-				{prefix}
-			</div>
-		);
+		return <div className={styles.prefix}>{prefix}</div>;
 	};
 
 	renderPostfix = () => {
@@ -33,19 +29,11 @@ export default class UniversalListItem extends PureComponent {
 			return null;
 		}
 
-		return (
-			<div className={styles.postfix}>
-				{postfix}
-			</div>
-		);
-	}
+		return <div className={styles.postfix}>{postfix}</div>;
+	};
 
 	render() {
-		const {
-			isBordered,
-			children,
-			onClick,
-		} = this.props;
+		const { isBordered, children, onClick } = this.props;
 
 		return (
 			<div
@@ -55,9 +43,7 @@ export default class UniversalListItem extends PureComponent {
 				onClick={onClick}
 			>
 				{this.renderPrefix()}
-				<div className={styles.content}>
-					{children}
-				</div>
+				<div className={styles.content}>{children}</div>
 				{this.renderPostfix()}
 			</div>
 		);

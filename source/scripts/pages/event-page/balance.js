@@ -13,18 +13,24 @@ import FlexContainer from '../../components/flex-container';
 import Poster from '../../components/poster';
 import Wrapper from '../../components/wrapper';
 
-import { getEventBalance, getEventsParticipantsDebts } from '../../modules/balance';
+import {
+	getEventBalance,
+	getEventsParticipantsDebts,
+} from '../../modules/balance';
 import repayDebt from '../../actions/repay-debt';
 
-import { createEventActionAsync, eventActionTypes } from '../../actions/create-event-action';
+import {
+	createEventActionAsync,
+	eventActionTypes,
+} from '../../actions/create-event-action';
 
 class BalancePage extends React.Component {
 	constructor(props) {
 		super(props);
 		const { currentEvent } = this.props;
-		const actions = Object
-			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => assign({ config }, currentEvent.actions[config]));
+		const actions = Object.keys(
+			(currentEvent && currentEvent.actions) || []
+		).map(config => assign({ config }, currentEvent.actions[config]));
 		this.state = {
 			actions,
 			showPopup: false,
@@ -39,18 +45,23 @@ class BalancePage extends React.Component {
 		);
 		const { currentUser } = this.props;
 
-		const positiveDebts = allDebts.filter((debt) => currentUser === debt.to);
-		const negativeDebts = allDebts.filter((debt) => currentUser === debt.from);
-		const othersDebts = allDebts.filter((debt) => currentUser !== debt.from && currentUser !== debt.to);
+		const positiveDebts = allDebts.filter(debt => currentUser === debt.to);
+		const negativeDebts = allDebts.filter(debt => currentUser === debt.from);
+		const othersDebts = allDebts.filter(
+			debt => currentUser !== debt.from && currentUser !== debt.to
+		);
 
 		return {
 			allDebts,
 			positiveDebts,
 			negativeDebts,
 			othersDebts,
-			hasReturnedDebts: this.state.actions.filter((action) => action.config.actionType === 'giveBack').length > 0,
+			hasReturnedDebts:
+				this.state.actions.filter(
+					action => action.config.actionType === 'giveBack'
+				).length > 0,
 		};
-	}
+	};
 
 	repayDebtHandler = debt => {
 		const { props } = this;
@@ -59,14 +70,16 @@ class BalancePage extends React.Component {
 
 		if (props.eventsById[props.eventId].repayedDebts) {
 			oldRepayedFrom =
-				this.props.eventsById[this.props.eventId].repayedDebts[debt.from]
-					|| 0;
-			oldRepayedTo =
-				this.props.eventsById[this.props.eventId].repayedDebts[debt.to];
+				this.props.eventsById[this.props.eventId].repayedDebts[debt.from] || 0;
+			oldRepayedTo = this.props.eventsById[this.props.eventId].repayedDebts[
+				debt.to
+			];
 		}
 
-		const actionType = (Math.abs(this.state.currentDebt.sum) === debt.sum) ?
-			'giveBack' : 'giveBackPartially';
+		const actionType =
+			Math.abs(this.state.currentDebt.sum) === debt.sum
+				? 'giveBack'
+				: 'giveBackPartially';
 
 		const currentUser = props.localEvents[props.eventId];
 
@@ -82,7 +95,7 @@ class BalancePage extends React.Component {
 				currentUser,
 				debtTo,
 				debt.sum,
-				(new Date()).getTime()
+				new Date().getTime()
 			),
 		};
 
@@ -94,10 +107,12 @@ class BalancePage extends React.Component {
 			});
 		}
 
-		props.dispatch(createEventActionAsync({
-			eventId: props.eventId,
-			eventActionInfo: newAction,
-		}));
+		props.dispatch(
+			createEventActionAsync({
+				eventId: props.eventId,
+				eventActionInfo: newAction,
+			})
+		);
 
 		props.dispatch(
 			repayDebt(
@@ -113,9 +128,9 @@ class BalancePage extends React.Component {
 		this.setState({
 			showPopup: false,
 		});
-	}
+	};
 
-	showPopupPoster = (content) => {
+	showPopupPoster = content => {
 		this.setState({
 			showPopupPoster: true,
 			popupPosterContent: content,
@@ -126,20 +141,20 @@ class BalancePage extends React.Component {
 				showPopupPoster: false,
 			});
 		}, 2000);
-	}
+	};
 
-	showRepayPopup = (debt) => {
+	showRepayPopup = debt => {
 		this.setState({
 			showPopup: true,
 			currentDebt: debt,
 		});
-	}
+	};
 
 	closeRepayPopup = () => {
 		this.setState({
 			showPopup: false,
 		});
-	}
+	};
 
 	renderNoPurchasesNotification = () => {
 		return (
@@ -149,17 +164,15 @@ class BalancePage extends React.Component {
 				</Poster>
 			</FlexContainer>
 		);
-	}
+	};
 
 	renderNoPendingDebtsNotification = () => {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<Poster icon="check">
-					Все долги возвращены
-				</Poster>
+				<Poster icon="check">Все долги возвращены</Poster>
 			</FlexContainer>
 		);
-	}
+	};
 
 	render() {
 		const { currentUser } = this.props;
@@ -189,7 +202,11 @@ class BalancePage extends React.Component {
 						/>
 					</Portal>
 
-					<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
+					<Portal
+						closeOnEsc
+						closeOnOutsideClick
+						isOpened={this.state.showPopup}
+					>
 						<BalanceItemPopup
 							debt={this.state.currentDebt}
 							onSubmit={this.repayDebtHandler}
@@ -201,11 +218,9 @@ class BalancePage extends React.Component {
 
 					<Separator />
 
-					<GreySubtitle>
-						Текущие долги
-					</GreySubtitle>
+					<GreySubtitle>Текущие долги</GreySubtitle>
 
-					{positiveDebts.map((debt) => (
+					{positiveDebts.map(debt => (
 						<BalanceListItem
 							key={`${debt.from}${debt.to}${debt.sum}`}
 							sum={Math.abs(Math.round(debt.sum))}
@@ -216,18 +231,20 @@ class BalancePage extends React.Component {
 						/>
 					))}
 
-					{negativeDebts.map((debt) => (
+					{negativeDebts.map(debt => (
 						<BalanceListItem
 							key={`${debt.from}${debt.to}${debt.sum}`}
 							sum={Math.abs(Math.round(debt.sum))}
-							from={`${debt.from} ${currentUser === debt.from ? '(Вы)' : ''}`.trim()}
+							from={`${debt.from} ${
+								currentUser === debt.from ? '(Вы)' : ''
+							}`.trim()}
 							to={debt.to}
 							debtType="negative"
 							onClick={() => this.showRepayPopup(debt)}
 						/>
 					))}
 
-					{othersDebts.map((debt) => (
+					{othersDebts.map(debt => (
 						<BalanceListItem
 							key={`${debt.to}${debt.from}${debt.sum}`}
 							sum={Math.abs(Math.round(debt.sum))}

@@ -7,14 +7,10 @@ import Checkbox from '../checkbox';
 
 storiesOf('UniversalListItem', module)
 	.add('default', () => (
-		<UniversalListItem>
-			Universal list item
-		</UniversalListItem>
+		<UniversalListItem>Universal list item</UniversalListItem>
 	))
 	.add('with custom prefix (icon)', () => (
-		<UniversalListItem prefix={<IconCross />}>
-			Deletable
-		</UniversalListItem>
+		<UniversalListItem prefix={<IconCross />}>Deletable</UniversalListItem>
 	))
 	.add('with custom prefix (checkbox)', () => (
 		<UniversalListItem prefix={<Checkbox id="list-item-checkbox" />}>
@@ -22,14 +18,10 @@ storiesOf('UniversalListItem', module)
 		</UniversalListItem>
 	))
 	.add('with custom postfix (text)', () => (
-		<UniversalListItem postfix="100 ₽">
-			Колбаса
-		</UniversalListItem>
+		<UniversalListItem postfix="100 ₽">Колбаса</UniversalListItem>
 	))
 	.add('with custom postfix (icon)', () => (
-		<UniversalListItem postfix={<IconCheck />}>
-			Selected
-		</UniversalListItem>
+		<UniversalListItem postfix={<IconCheck />}>Selected</UniversalListItem>
 	))
 	.add('isBordered', () => (
 		<div>

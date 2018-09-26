@@ -23,7 +23,10 @@ export default function Routes(props) {
 				<Route path="events/:id" component={EventPreloadingPage} />
 				<Route path="events/:id/edit" component={EditEventPage} />
 				<Route path="events/:id/purchases/new" component={PurchasePage} />
-				<Route path="events/:id/purchases/:purchase_id" component={PurchasePage} />
+				<Route
+					path="events/:id/purchases/:purchase_id"
+					component={PurchasePage}
+				/>
 				<Route path="feedback" component={FeedbackPage} />
 				<Redirect path="*" to="events" />
 			</Route>

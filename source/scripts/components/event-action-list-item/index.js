@@ -61,7 +61,10 @@ class EventActionListItem extends React.Component {
 					<p className="event-action__text">
 						<b className="event-action__text_bold">{manager} </b>
 						добавил(-а)
-						<b className="event-action__text_bold"> {eventParticipantsNumber} </b>
+						<b className="event-action__text_bold">
+							{' '}
+							{eventParticipantsNumber}{' '}
+						</b>
 						человек в мероприятие
 					</p>
 				);
@@ -104,7 +107,10 @@ class EventActionListItem extends React.Component {
 					<p className="event-action__text">
 						<b className="event-action__text_bold">{currentUser} </b>
 						добавил(-а)
-						<b className="event-action__text_bold"> {purchaseParticipantsNumber} </b>
+						<b className="event-action__text_bold">
+							{' '}
+							{purchaseParticipantsNumber}{' '}
+						</b>
 						человек в покупку
 						<b className="event-action__text_bold"> {purchaseName}</b>
 					</p>
@@ -112,8 +118,8 @@ class EventActionListItem extends React.Component {
 			}
 
 			case 'addParticipantToPurchase': {
-				const payer = (payerName === currentUser) ?
-					(
+				const payer =
+					payerName === currentUser ? (
 						<span className="event-action__text">себя</span>
 					) : (
 						<span className="event-action__text_bold">{payerName}</span>
@@ -121,18 +127,16 @@ class EventActionListItem extends React.Component {
 
 				return (
 					<p className="event-action__text">
-						<b className="event-action__text_bold">{currentUser}</b>
-						{' '}
-						добавил(-а) {payer} в покупку
-						{' '}
+						<b className="event-action__text_bold">{currentUser}</b> добавил(-а){' '}
+						{payer} в покупку{' '}
 						<b className="event-action__text_bold">{purchaseName}</b>
 					</p>
 				);
 			}
 
 			case 'removeParticipantFromPurchase': {
-				const payer = (payerName === currentUser) ?
-					(
+				const payer =
+					payerName === currentUser ? (
 						<span className="event-action__text">себя</span>
 					) : (
 						<span className="event-action__text_bold">{payerName}</span>
@@ -140,10 +144,8 @@ class EventActionListItem extends React.Component {
 
 				return (
 					<p className="event-action__text">
-						<b className="event-action__text_bold">{currentUser}</b>
-						{' '}
-						исключил(-а) {payer} из покупки
-						{' '}
+						<b className="event-action__text_bold">{currentUser}</b>{' '}
+						исключил(-а) {payer} из покупки{' '}
 						<b className="event-action__text_bold">{purchaseName}</b>
 					</p>
 				);
@@ -152,13 +154,9 @@ class EventActionListItem extends React.Component {
 			case 'giveBackPartially': {
 				return (
 					<p className="event-action__text">
-						<b className="event-action__text_bold">{currentUser}</b>
-						{' '}
-						отметил(-а) долг
-						{' '}
-						<b className="event-action__text_bold">{payerName}</b>
-						{' '}
-						частично возращенным
+						<b className="event-action__text_bold">{currentUser}</b> отметил(-а)
+						долг <b className="event-action__text_bold">{payerName}</b> частично
+						возращенным
 					</p>
 				);
 			}
@@ -166,12 +164,8 @@ class EventActionListItem extends React.Component {
 			case 'giveBack': {
 				return (
 					<p className="event-action__text">
-						<b className="event-action__text_bold">{currentUser}</b>
-						{' '}
-						отметил(-а) долг
-						{' '}
-						<b className="event-action__text_bold">{payerName}</b>
-						{' '}
+						<b className="event-action__text_bold">{currentUser}</b> отметил(-а)
+						долг <b className="event-action__text_bold">{payerName}</b>{' '}
 						полностью возращенным
 					</p>
 				);
@@ -181,7 +175,7 @@ class EventActionListItem extends React.Component {
 				return null;
 			}
 		}
-	}
+	};
 
 	render() {
 		const { props } = this;
@@ -189,7 +183,10 @@ class EventActionListItem extends React.Component {
 
 		return (
 			<div className="event-action">
-				<div className={`event-action__icon-wrapper ${(icon === 'check-active-yellow') && 'event-action__icon-wrapper_yellow'}`}>
+				<div
+					className={`event-action__icon-wrapper ${icon ===
+						'check-active-yellow' && 'event-action__icon-wrapper_yellow'}`}
+				>
 					<div className={`event-action__icon event-action__icon_${icon}`} />
 				</div>
 				<div className="event-action__info">
@@ -198,14 +195,16 @@ class EventActionListItem extends React.Component {
 							{this.renderAction(actionType)}
 						</div>
 						{sum && <div className="event-action__sum">{sum} Р</div>}
-						{debtSum &&
+						{debtSum && (
 							<div className="event-action__debt-sum">
 								<div className="event-action__debt-icon" />
 								{debtSum} Р
 							</div>
-						}
+						)}
 					</div>
-					{date && <div className="event-action__date">{moment(date).fromNow()}</div>}
+					{date && (
+						<div className="event-action__date">{moment(date).fromNow()}</div>
+					)}
 				</div>
 			</div>
 		);

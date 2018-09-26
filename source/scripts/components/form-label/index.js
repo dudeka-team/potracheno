@@ -6,10 +6,7 @@ export default function FormLabel(props) {
 	const { htmlFor, children } = props;
 
 	return (
-		<label
-			className={styles.root}
-			htmlFor={htmlFor}
-		>
+		<label className={styles.root} htmlFor={htmlFor}>
 			{children}
 		</label>
 	);

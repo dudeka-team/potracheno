@@ -25,12 +25,12 @@ class EventPurchasesPage extends React.Component {
 	goToNewPurchase = () => {
 		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/new`);
-	}
+	};
 
-	goToPurchase = (purchaseId) => {
+	goToPurchase = purchaseId => {
 		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
-	}
+	};
 
 	renderPurchases = () => {
 		const { props } = this;
@@ -51,33 +51,32 @@ class EventPurchasesPage extends React.Component {
 						key={purchase.id}
 						buyer={payerName}
 						title={purchase.name}
-						subtitle={getSubtitle(participants.length, eventParticipants.length)}
+						subtitle={getSubtitle(
+							participants.length,
+							eventParticipants.length
+						)}
 						price={purchase.amount}
 						onClick={() => this.goToPurchase(purchase.id)}
 					/>
 				);
 			});
-	}
+	};
 
 	renderPlaceholder = () => {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<Poster icon="purchase">
-					У вас пока нет покупок
-				</Poster>
+				<Poster icon="purchase">У вас пока нет покупок</Poster>
 			</FlexContainer>
 		);
-	}
+	};
 
 	render() {
 		const { props } = this;
 		return (
 			<Wrapper>
-				{props.purchases.length ?
-					this.renderPurchases()
-					:
-					this.renderPlaceholder()
-				}
+				{props.purchases.length
+					? this.renderPurchases()
+					: this.renderPlaceholder()}
 
 				<Fab onClick={this.goToNewPurchase}>
 					<IconShoppingCart />

@@ -1,23 +1,24 @@
 import assign from 'object-assign';
 
 export function getEventBalance(currentEvent) {
-	const purchases = Object
-		.keys((currentEvent && currentEvent.purchases) || [])
-		.map((purchaseId) => assign({ id: purchaseId }, currentEvent.purchases[purchaseId]));
+	const purchases = Object.keys(
+		(currentEvent && currentEvent.purchases) || []
+	).map(purchaseId =>
+		assign({ id: purchaseId }, currentEvent.purchases[purchaseId])
+	);
 
 	const participantsBalance = {};
 	//	вычисление баланса мероприятия для каждого учасника
 	purchases.forEach(purchase => {
 		purchase.participants.forEach(participant => {
 			participantsBalance[participant] =
-				(participantsBalance[participant] || 0)
-					+ (((participant === purchase.payer) && purchase.amount)
-						- (purchase.amount / purchase.participants.length));
+				(participantsBalance[participant] || 0) +
+				((participant === purchase.payer && purchase.amount) -
+					purchase.amount / purchase.participants.length);
 		});
 		if (purchase.participants.indexOf(purchase.payer) === -1) {
 			participantsBalance[purchase.payer] =
-				(participantsBalance[purchase.payer] || 0)
-					+ purchase.amount;
+				(participantsBalance[purchase.payer] || 0) + purchase.amount;
 		}
 	});
 
@@ -26,23 +27,23 @@ export function getEventBalance(currentEvent) {
 
 	Object.keys(participantsBalance).forEach(participant => {
 		participantsBalance[participant] +=
-			((currentEvent.repayedDebts && (currentEvent.repayedDebts[participant] || 0)) || 0);
+			(currentEvent.repayedDebts &&
+				(currentEvent.repayedDebts[participant] || 0)) ||
+			0;
 
 		if (participantsBalance[participant] % 1 !== 0) {
-			const pointPosition =
+			const pointPosition = participantsBalance[participant]
+				.toString()
+				.split('')
+				.indexOf('.');
+
+			participantsBalance[participant] = parseFloat(
 				participantsBalance[participant]
 					.toString()
 					.split('')
-					.indexOf('.');
-
-			participantsBalance[participant] =
-				parseFloat(
-					participantsBalance[participant]
-						.toString()
-						.split('')
-						.slice(0, pointPosition)
-						.join('')
-				);
+					.slice(0, pointPosition)
+					.join('')
+			);
 		}
 
 		if (participantsBalance[participant] < 0) {
@@ -77,15 +78,16 @@ export function getEventsParticipantsDebts(participantsBalance, currentEvent) {
 
 	// вычисляем долг и запиываем в массив
 	const payerReducer = function payerReducer(payerParticipant) {
-		currentEvent.participants.forEach((participant) => {
+		currentEvent.participants.forEach(participant => {
 			//	собираем долги с учасников с отрицательным балансов
 			if (reducedBalance[participant] < 0) {
 				//	вычисляем сколько может отдать текущий учасник с отрицательным балансом
-				const currDebt = ((reducedBalance[payerParticipant] + reducedBalance[participant] >= 0)
-						&& (reducedBalance[participant]))
-							|| (reducedBalance[participant]
-								- (reducedBalance[payerParticipant]
-									+ reducedBalance[participant]));
+				const currDebt =
+					(reducedBalance[payerParticipant] + reducedBalance[participant] >=
+						0 &&
+						reducedBalance[participant]) ||
+					reducedBalance[participant] -
+						(reducedBalance[payerParticipant] + reducedBalance[participant]);
 
 				// записываем объект долга
 				if (currDebt) {
@@ -104,8 +106,8 @@ export function getEventsParticipantsDebts(participantsBalance, currentEvent) {
 	};
 
 	//	для каждого учасника с положительным балансом запускаем функцию сбора долгов
-	currentEvent.participants.forEach((participant) => {
-		if ((reducedBalance[participant]) > 0) {
+	currentEvent.participants.forEach(participant => {
+		if (reducedBalance[participant] > 0) {
 			payerReducer(participant);
 		}
 	});

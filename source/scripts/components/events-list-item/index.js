@@ -9,12 +9,18 @@ function getDate(options) {
 
 	if (start.getMonth() === end.getMonth()) {
 		if (start.getDate() === end.getDate()) {
-			result = `${moment(end).format('DD MMMM')}, ${moment(end).format('dddd')}`;
+			result = `${moment(end).format('DD MMMM')}, ${moment(end).format(
+				'dddd'
+			)}`;
 		} else {
-			result = `${moment(start).format('DD')} — ${moment(end).format('DD MMMM')}`;
+			result = `${moment(start).format('DD')} — ${moment(end).format(
+				'DD MMMM'
+			)}`;
 		}
 	} else {
-		result = `${moment(start).format('DD MMMM')} — ${moment(end).format('DD MMMM')}`;
+		result = `${moment(start).format('DD MMMM')} — ${moment(end).format(
+			'DD MMMM'
+		)}`;
 	}
 
 	return result;
@@ -30,15 +36,21 @@ export default function EventsListItem(props) {
 				<div className="events-item__title">{props.title}</div>
 				<div className="events-item__subtitle">
 					<div className="events-item__date">{getDate(props.datePeriod)}</div>
-					<div className="events-item__members-count">{props.membersCount} участников</div>
+					<div className="events-item__members-count">
+						{props.membersCount} участников
+					</div>
 				</div>
 			</div>
 			<div className="events-item__rightside">
 				<div className={debtStatusClasses.join(' ')}>
 					<div className="events-item__sum">
-						{(props.sum === 0) ? null : `${sumFormat(Math.abs(props.sum))} Р`}
+						{props.sum === 0 ? null : `${sumFormat(Math.abs(props.sum))} Р`}
 					</div>
-					<div className={`events-item__status events-item__status_${props.debtType}`}>
+					<div
+						className={`events-item__status events-item__status_${
+							props.debtType
+						}`}
+					>
 						{formatStatus(props.sum)}
 					</div>
 				</div>

@@ -12,12 +12,12 @@ class Menu extends React.Component {
 		return (
 			<div className="menu__top-bar">
 				<div className="menu__icons icons-section">
-					{isManager &&
+					{isManager && (
 						<div
 							onClick={props.handleEdit}
 							className="icons-section__icon icons-section__icon_event-edit"
 						/>
-					}
+					)}
 					<div
 						onClick={props.handleHint}
 						className="icons-section__icon icons-section__icon_show-hint"
@@ -25,7 +25,7 @@ class Menu extends React.Component {
 				</div>
 			</div>
 		);
-	}
+	};
 
 	renderParticipant = name => {
 		const { currentEvent, currentUserName } = this.props;
@@ -40,12 +40,8 @@ class Menu extends React.Component {
 			displayName += ' ★';
 		}
 
-		return (
-			<UniversalListItem key={name}>
-				{displayName}
-			</UniversalListItem>
-		);
-	}
+		return <UniversalListItem key={name}>{displayName}</UniversalListItem>;
+	};
 
 	render() {
 		const { props } = this;
@@ -58,20 +54,23 @@ class Menu extends React.Component {
 					{this.renderControls()}
 					<EventHeader name={currentEvent.name} subtitle={props.subtitle} />
 
-					<GreySubtitle>
-						Участники
-					</GreySubtitle>
+					<GreySubtitle>Участники</GreySubtitle>
 
 					<div className="menu__list">
 						{currentEvent.participants.map(this.renderParticipant)}
 					</div>
 
-					<div onClick={props.handleRelogin} className="menu__bottom-bar bottom-bar">
+					<div
+						onClick={props.handleRelogin}
+						className="menu__bottom-bar bottom-bar"
+					>
 						<div className="bottom-bar__icon" />
 						<div className="bottom-bar__text">Войти под другим именем</div>
 					</div>
 
-					<div className="menu__manager-annotation">★ — организатор мероприятия</div>
+					<div className="menu__manager-annotation">
+						★ — организатор мероприятия
+					</div>
 				</div>
 			</div>
 		);
