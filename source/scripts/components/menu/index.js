@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import EventHeader from '../event-header';
 import GreySubtitle from '../grey-subtitle';
 import UniversalListItem from '../universal-list-item';
 
-const Menu = React.createClass({
-	renderControls() {
+class Menu extends React.Component {
+	renderControls = () => {
 		const { props } = this;
 		const { currentEvent, currentUserName } = props;
 		const isManager = currentUserName === currentEvent.manager;
@@ -24,9 +25,9 @@ const Menu = React.createClass({
 				</div>
 			</div>
 		);
-	},
+	}
 
-	renderParticipant(name) {
+	renderParticipant = name => {
 		const { currentEvent, currentUserName } = this.props;
 		const { manager } = currentEvent;
 		let displayName = name;
@@ -44,7 +45,7 @@ const Menu = React.createClass({
 				{displayName}
 			</UniversalListItem>
 		);
-	},
+	}
 
 	render() {
 		const { props } = this;
@@ -74,8 +75,8 @@ const Menu = React.createClass({
 				</div>
 			</div>
 		);
-	},
-});
+	}
+}
 
 Menu.propTypes = {
 	currentEvent: PropTypes.object.isRequired,

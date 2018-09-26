@@ -6,14 +6,12 @@ function getCheck(eventsParticipantsDebts) {
 		.map((debt) => `${debt.from} → ${debt.to}   ${Math.abs(debt.sum)} руб.`);
 }
 
-const BalanceCheck = React.createClass({
-	getInitialState() {
-		return {
-			expanded: false,
-		};
-	},
+class BalanceCheck extends React.Component {
+	state = {
+		expanded: false,
+	}
 
-	handleCopy() {
+	handleCopy = () => {
 		const { props } = this;
 		const range = document.createRange();
 		const selection = window.getSelection();
@@ -29,13 +27,13 @@ const BalanceCheck = React.createClass({
 		}
 
 		selection.removeAllRanges();
-	},
+	}
 
-	handleToggle() {
+	handleToggle = () => {
 		this.setState({
 			expanded: !this.state.expanded,
 		});
-	},
+	}
 
 	render() {
 		const { props, state } = this;
@@ -58,8 +56,8 @@ const BalanceCheck = React.createClass({
 				</div>
 			</div>
 		);
-	},
-});
+	}
+}
 
 function BalanceCheckToggle(props) {
 	const indicatorClasses = ['balance-check-toggle__indicator'];

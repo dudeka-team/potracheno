@@ -1,7 +1,7 @@
 import React from 'react';
 
-const EventActionListItem = React.createClass({
-	renderAction(actionType) {
+class EventActionListItem extends React.Component {
+	renderAction = actionType => {
 		const { props } = this;
 		const {
 			purchaseName,
@@ -181,7 +181,7 @@ const EventActionListItem = React.createClass({
 				return null;
 			}
 		}
-	},
+	}
 
 	render() {
 		const { props } = this;
@@ -209,7 +209,7 @@ const EventActionListItem = React.createClass({
 				</div>
 			</div>
 		);
-	},
-});
+	}
+}
 
 export default EventActionListItem;

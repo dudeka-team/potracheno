@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Hammer from 'react-hammerjs';
 import { DRAWER_SWIPE_AREA_WIDTH } from '../../constants';

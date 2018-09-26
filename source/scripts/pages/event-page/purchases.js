@@ -21,18 +21,18 @@ function getSubtitle(participantsCount, eventParticipantsCount) {
 	return result;
 }
 
-const EventPurchasesPage = React.createClass({
-	goToNewPurchase() {
+class EventPurchasesPage extends React.Component {
+	goToNewPurchase = () => {
 		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/new`);
-	},
+	}
 
-	goToPurchase(purchaseId) {
+	goToPurchase = (purchaseId) => {
 		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
-	},
+	}
 
-	renderPurchases() {
+	renderPurchases = () => {
 		const { props } = this;
 		const { localEvents, eventParticipants } = props;
 		const currentUser = localEvents[props.eventId];
@@ -57,9 +57,9 @@ const EventPurchasesPage = React.createClass({
 					/>
 				);
 			});
-	},
+	}
 
-	renderPlaceholder() {
+	renderPlaceholder = () => {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 				<Poster icon="purchase">
@@ -67,7 +67,7 @@ const EventPurchasesPage = React.createClass({
 				</Poster>
 			</FlexContainer>
 		);
-	},
+	}
 
 	render() {
 		const { props } = this;
@@ -84,8 +84,8 @@ const EventPurchasesPage = React.createClass({
 				</Fab>
 			</Wrapper>
 		);
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

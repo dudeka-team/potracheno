@@ -6,30 +6,28 @@ import FormLabel from '../form-label';
 import FormInput from '../form-input';
 import Popup from '../popup';
 
-const BalanceItemPopup = React.createClass({
-	getInitialState() {
-		return {
-			value: Math.abs(this.props.debt.sum),
-		};
-	},
+class BalanceItemPopup extends React.Component {
+	state = {
+		value: Math.abs(this.props.debt.sum),
+	}
 
-	handleChangeRepayedDebtAmount(event) {
+	handleChangeRepayedDebtAmount = (event) => {
 		const debt = Math.abs(this.props.debt.sum);
 		const value = Number(event.target.value);
 
 		this.setState({
 			value: Math.max(0, Math.min(debt, value)),
 		});
-	},
+	}
 
-	payDebt() {
+	payDebt = () => {
 		const { state, props } = this;
 
 		props.onSubmit({
 			...props.debt,
 			sum: state.value,
 		});
-	},
+	}
 
 	render() {
 		const { debt, onClose } = this.props;
@@ -71,8 +69,8 @@ const BalanceItemPopup = React.createClass({
 				</div>
 			</Popup>
 		);
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

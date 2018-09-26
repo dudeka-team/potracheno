@@ -20,20 +20,17 @@ function renderPreloader() {
 	);
 }
 
-const PurchasePage = React.createClass({
-	getInitialState() {
-		const { path } = this.props.route;
-		return {
-			mode: /\bnew/.test(path) ? CREATE : EDIT,
-		};
-	},
+class PurchasePage extends React.Component {
+	state = {
+		mode: /\bnew/.test(this.props.route.path) ? CREATE : EDIT,
+	}
 
 	componentDidMount() {
 		const { props } = this;
 		const { dispatch } = props;
 		dispatch(getLocalEvents());
 		dispatch(fetchEventData(props.params.id));
-	},
+	}
 
 	render() {
 		const { props, state } = this;
@@ -76,8 +73,8 @@ const PurchasePage = React.createClass({
 			);
 		}
 		return renderPreloader();
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

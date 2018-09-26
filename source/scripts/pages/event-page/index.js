@@ -27,60 +27,58 @@ import {
 	DRAWER_SWIPE_AREA_WIDTH,
 } from '../../constants';
 
-const EventPage = React.createClass({
-	getInitialState() {
-		return {
-			menuOpen: false,
-			showShareResult: false,
-			shareResultMessage: '',
-			hintPopupOpen: false,
-		};
-	},
+class EventPage extends React.Component {
+	state = {
+		menuOpen: false,
+		showShareResult: false,
+		shareResultMessage: '',
+		hintPopupOpen: false,
+	}
 
 	componentDidMount() {
 		const { id, dispatch } = this.props;
 		dispatch(fetchEventData(id));
-	},
+	}
 
-	goToEvents() {
+	goToEvents = () => {
 		this.props.router.push('/events');
-	},
+	}
 
-	toggleMenu() {
+	toggleMenu = () => {
 		this.setState({ menuOpen: !this.state.menuOpen });
-	},
+	}
 
-	openSharePopup() {
+	openSharePopup = () => {
 		this.props.dispatch(openShareLinkPopup());
-	},
+	}
 
-	closeSharePopup() {
+	closeSharePopup = () => {
 		this.props.dispatch(closeShareLinkPopup());
-	},
+	}
 
-	openHintPopup() {
+	openHintPopup = () => {
 		this.setState({
 			hintPopupOpen: true,
 		});
-	},
+	}
 
-	closeHintPopup() {
+	closeHintPopup = () => {
 		this.setState({
 			hintPopupOpen: false,
 		});
-	},
+	}
 
-	goToEdit() {
+	goToEdit = () => {
 		const { router } = this.props;
 		router.push(`/events/${this.props.id}/edit`);
-	},
+	}
 
-	handleRelogin() {
+	handleRelogin = () => {
 		const { id, dispatch } = this.props;
 		dispatch(relogin(id));
-	},
+	}
 
-	formatSubtitle(currentEvent) {
+	formatSubtitle = (currentEvent) => {
 		const participantsStatus = `${currentEvent.participants.length} участников`;
 		const formattedStart = moment(currentEvent.start).format('DD MMMM');
 		const formattedEnd = moment(currentEvent.end).format('DD MMMM');
@@ -93,9 +91,9 @@ const EventPage = React.createClass({
 		}
 
 		return `${participantsStatus} • ${formattedDate}`;
-	},
+	}
 
-	handleCopy() {
+	handleCopy = () => {
 		const { props } = this;
 		const range = document.createRange();
 		const selection = window.getSelection();
@@ -124,9 +122,9 @@ const EventPage = React.createClass({
 				showShareResult: false,
 			});
 		}, 2000);
-	},
+	}
 
-	renderDrawer(currentEvent, currentUserName, subtitle) {
+	renderDrawer = (currentEvent, currentUserName, subtitle) => {
 		return (
 			<Drawer
 				onRequestChange={(menuOpen) => this.setState({ menuOpen })}
@@ -146,9 +144,9 @@ const EventPage = React.createClass({
 				/>
 			</Drawer>
 		);
-	},
+	}
 
-	renderTopBar(eventName) {
+	renderTopBar = (eventName) => {
 		return (
 			<TopBar>
 				<TopBarIcon icon="arrow-back" onClick={this.goToEvents} />
@@ -159,9 +157,9 @@ const EventPage = React.createClass({
 				<TopBarIcon icon="burger" onClick={this.toggleMenu} />
 			</TopBar>
 		);
-	},
+	}
 
-	renderSharePopup() {
+	renderSharePopup = () => {
 		const { props } = this;
 		const annotation = 'Поделитесь ссылкой на мероприятие с друзьями, чтобы они могли вести учёт покупок вместе с вами:';
 
@@ -191,9 +189,9 @@ const EventPage = React.createClass({
 				</Popup>
 			</Portal>
 		);
-	},
+	}
 
-	renderHintPopup() {
+	renderHintPopup = () => {
 		return (
 			<Portal isOpened={this.state.hintPopupOpen}>
 				<HintPopup
@@ -203,7 +201,7 @@ const EventPage = React.createClass({
 				/>
 			</Portal>
 		);
-	},
+	}
 
 	render() {
 		const { props, state } = this;
@@ -267,8 +265,8 @@ const EventPage = React.createClass({
 		}
 
 		return null;
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

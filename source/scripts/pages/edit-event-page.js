@@ -12,16 +12,16 @@ import Spinner from '../components/spinner';
 
 import { createEventActionAsync, eventActionTypes, getDiff } from '../actions/create-event-action';
 
-const EditEventPage = React.createClass({
+class EditEventPage extends React.Component {
 	componentDidMount() {
 		const { props } = this;
 
 		if (!props.currentEvent) {
 			props.dispatch(fetchEventData(props.params.id));
 		}
-	},
+	}
 
-	save(updatedEvent) {
+	save = (updatedEvent) => {
 		const { currentEvent, currentUserName, params, dispatch } = this.props;
 		const {
 			manager,
@@ -170,15 +170,15 @@ const EditEventPage = React.createClass({
 				}));
 			}
 		});
-	},
+	}
 
-	renderPreloader() {
+	renderPreloader = () => {
 		return (
 			<FlexContainer fullHeight alignItems="center" justifyContent="center">
 				<Spinner />
 			</FlexContainer>
 		);
-	},
+	}
 
 	render() {
 		const { currentEvent, params } = this.props;
@@ -203,8 +203,8 @@ const EditEventPage = React.createClass({
 		}
 
 		return result;
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

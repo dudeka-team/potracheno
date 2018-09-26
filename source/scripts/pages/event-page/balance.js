@@ -18,20 +18,21 @@ import repayDebt from '../../actions/repay-debt';
 
 import { createEventActionAsync, eventActionTypes } from '../../actions/create-event-action';
 
-const BalancePage = React.createClass({
-	getInitialState() {
+class BalancePage extends React.Component {
+	constructor(props) {
+		super(props);
 		const { currentEvent } = this.props;
 		const actions = Object
 			.keys((currentEvent && currentEvent.actions) || [])
 			.map((config) => assign({ config }, currentEvent.actions[config]));
-		return {
+		this.state = {
 			actions,
 			showPopup: false,
 			showPopupPoster: false,
 		};
-	},
+	}
 
-	getDebtsData() {
+	getDebtsData = () => {
 		const allDebts = getEventsParticipantsDebts(
 			getEventBalance(this.props.eventsById[this.props.eventId]),
 			this.props.eventsById[this.props.eventId]
@@ -49,9 +50,9 @@ const BalancePage = React.createClass({
 			othersDebts,
 			hasReturnedDebts: this.state.actions.filter((action) => action.config.actionType === 'giveBack').length > 0,
 		};
-	},
+	}
 
-	repayDebtHandler(debt) {
+	repayDebtHandler = debt => {
 		const { props } = this;
 		let oldRepayedFrom = 0;
 		let oldRepayedTo = 0;
@@ -112,9 +113,9 @@ const BalancePage = React.createClass({
 		this.setState({
 			showPopup: false,
 		});
-	},
+	}
 
-	showPopupPoster(content) {
+	showPopupPoster = (content) => {
 		this.setState({
 			showPopupPoster: true,
 			popupPosterContent: content,
@@ -125,22 +126,22 @@ const BalancePage = React.createClass({
 				showPopupPoster: false,
 			});
 		}, 2000);
-	},
+	}
 
-	showRepayPopup(debt) {
+	showRepayPopup = (debt) => {
 		this.setState({
 			showPopup: true,
 			currentDebt: debt,
 		});
-	},
+	}
 
-	closeRepayPopup() {
+	closeRepayPopup = () => {
 		this.setState({
 			showPopup: false,
 		});
-	},
+	}
 
-	renderNoPurchasesNotification() {
+	renderNoPurchasesNotification = () => {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 				<Poster icon="purchase">
@@ -148,9 +149,9 @@ const BalancePage = React.createClass({
 				</Poster>
 			</FlexContainer>
 		);
-	},
+	}
 
-	renderNoPendingDebtsNotification() {
+	renderNoPendingDebtsNotification = () => {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 				<Poster icon="check">
@@ -158,7 +159,7 @@ const BalancePage = React.createClass({
 				</Poster>
 			</FlexContainer>
 		);
-	},
+	}
 
 	render() {
 		const { currentUser } = this.props;
@@ -238,8 +239,8 @@ const BalancePage = React.createClass({
 				</div>
 			</Wrapper>
 		);
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

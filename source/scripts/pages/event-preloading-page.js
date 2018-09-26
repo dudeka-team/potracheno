@@ -17,7 +17,7 @@ import {
 	INVITED,
 } from '../modules/metrics';
 
-const EventPreloadingPage = React.createClass({
+class EventPreloadingPage extends React.Component {
 	componentDidMount() {
 		const { params, dispatch } = this.props;
 		dispatch(fetchEventData(params.id));
@@ -30,7 +30,7 @@ const EventPreloadingPage = React.createClass({
 		if (localEventsCount === 0 && !userType) {
 			setUserType(INVITED);
 		}
-	},
+	}
 
 	render() {
 		const { props } = this;
@@ -45,8 +45,8 @@ const EventPreloadingPage = React.createClass({
 				}
 			</Wrapper>
 		);
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import PageHeader from './page-header';
 import PageFooter from './page-footer';
 import PageContent from './page-content';

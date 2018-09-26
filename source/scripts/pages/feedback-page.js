@@ -1,12 +1,12 @@
 import React from 'react';
 import Feedback from '../components/feedback';
 
-const FeedbackPage = React.createClass({
+class FeedbackPage extends React.Component{
 	render() {
 		return (
 			<Feedback />
 		);
-	},
-});
+	}
+}
 
 export default FeedbackPage;
