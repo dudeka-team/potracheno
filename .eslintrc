@@ -1,7 +1,8 @@
 {
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "prettier"
   ],
   "settings": {
     "react": {
@@ -39,6 +40,10 @@
     "react/prefer-es6-class": ["warn", "always"],
     "react/prop-types": "off",
     "react/prefer-stateless-function": "off",
-    "react/jsx-filename-extension": "off"
-  }
+    "react/jsx-filename-extension": "off",
+    "prettier/prettier": "error"
+  },
+  "plugins": [
+    "prettier"
+  ]
 }
