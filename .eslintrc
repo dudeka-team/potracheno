@@ -28,6 +28,7 @@
     "indent": ["error", "tab", {
       "SwitchCase": 1
     }],
+    "linebreak-style": "off",
     "max-len": 0,
     "no-use-before-define": ["error", "nofunc"],
     "no-multiple-empty-lines": ["error", {

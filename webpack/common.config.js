@@ -3,10 +3,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { isAnalyzeModeEnabled, sourceDir, buildDir } = require('../config');
 
 const config = {
-	entry: [
-		`${sourceDir}/scripts/index.js`,
-		`${sourceDir}/styles/main.styl`,
-	],
+	entry: [`${sourceDir}/scripts/index.js`, `${sourceDir}/styles/main.styl`],
 	output: {
 		path: buildDir,
 		publicPath: '/',
@@ -14,10 +11,7 @@ const config = {
 	},
 	resolve: {
 		extensions: ['.js', '.jsx'],
-		modules: [
-			`${sourceDir}/scripts`,
-			'node_modules',
-		],
+		modules: [`${sourceDir}/scripts`, 'node_modules'],
 	},
 	module: {
 		rules: [
