@@ -33,7 +33,9 @@
     "no-multiple-empty-lines": ["error", {
       "max": 1
     }],
-    "import/no-extraneous-dependencies": "off",
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["**/*.story.js", "**/webpack/**/*.js"]
+    }],
     "react/require-extension": "off",
     "react/jsx-indent": ["error", "tab"],
     "react/jsx-indent-props": ["error", "tab"],
@@ -44,6 +46,7 @@
     "prettier/prettier": "error"
   },
   "plugins": [
+    "import",
     "prettier"
   ]
 }
