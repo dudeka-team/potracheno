@@ -20,16 +20,20 @@ Database.readEvents = function readEvents() {
 	const result = {};
 	return new Promise((resolve, reject) => {
 		Promise.all(
-			Object.keys(localEvents).map(eventId => firebase
-				.database()
-				.ref(`events/${eventId}`)
-				.once('value')
-				.then((snapshot) => {
-					if (snapshot.val()) {
-						result[eventId] = snapshot.val() || {};
-					}
-				}))
-		).then(() => resolve(result)).catch(reject);
+			Object.keys(localEvents).map(eventId =>
+				firebase
+					.database()
+					.ref(`events/${eventId}`)
+					.once('value')
+					.then(snapshot => {
+						if (snapshot.val()) {
+							result[eventId] = snapshot.val() || {};
+						}
+					})
+			)
+		)
+			.then(() => resolve(result))
+			.catch(reject);
 	});
 };
 
@@ -38,7 +42,7 @@ Database.saveEvent = function saveEvent(data) {
 		.database()
 		.ref('events')
 		.push(data)
-		.then((snapshot) => ({
+		.then(snapshot => ({
 			key: snapshot.key,
 			eventInfo: data,
 		}));
@@ -58,7 +62,7 @@ Database.loadEvent = function loadEvent(eventId) {
 		.database()
 		.ref(`/events/${eventId}`)
 		.once('value')
-		.then((snapshot) => ({
+		.then(snapshot => ({
 			key: snapshot.key,
 			value: snapshot.val(),
 		}));
@@ -80,13 +84,17 @@ Database.addEventAction = function addEventAction(eventId, data) {
 		.database()
 		.ref(`events/${eventId}/actions`)
 		.push(data)
-		.then((snapshot) => ({
+		.then(snapshot => ({
 			key: snapshot.key,
 			eventActionInfo: data,
 		}));
 };
 
-Database.changePurchase = function changePurchase(eventId, purchaseId, purchase) {
+Database.changePurchase = function changePurchase(
+	eventId,
+	purchaseId,
+	purchase
+) {
 	return firebase
 		.database()
 		.ref(`events/${eventId}/purchases/${purchaseId}`)
@@ -121,7 +129,10 @@ Database.deletePurchase = function deletePurchase(eventId, purchaseId) {
 		}));
 };
 
-Database.fetchUpdateParticipants = function fetchUpdateParticipants(eventId, participantsList) {
+Database.fetchUpdateParticipants = function fetchUpdateParticipants(
+	eventId,
+	participantsList
+) {
 	return firebase
 		.database()
 		.ref(`events/${eventId}/participants`)

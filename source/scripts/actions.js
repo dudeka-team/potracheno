@@ -1,17 +1,13 @@
 import { createAction } from 'redux-actions';
 
 import db from './database';
-import {
-	READ_EVENTS,
-	LOAD_EVENT_DATA,
-} from './constants';
+import { READ_EVENTS, LOAD_EVENT_DATA } from './constants';
 
 export function readEvents() {
 	return {
 		type: READ_EVENTS,
 		payload: new Promise((resolve, reject) => {
-			db
-				.readEvents()
+			db.readEvents()
 				.then(resolve)
 				.catch(reject);
 		}),

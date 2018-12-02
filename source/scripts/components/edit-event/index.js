@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import shortid from 'shortid';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
@@ -24,25 +25,14 @@ function createParticipant(name = '') {
 	};
 }
 
-const EditEvent = React.createClass({
-	propTypes: {
-		pageTitle: PropTypes.string.isRequired,
-		prevUrl: PropTypes.string.isRequired,
-		name: PropTypes.string,
-		managerName: PropTypes.string,
-		start: PropTypes.object,
-		end: PropTypes.object,
-		participants: PropTypes.array,
-		handleSave: PropTypes.func.isRequired,
-	},
-
-	getInitialState() {
-		const { props } = this;
+class EditEvent extends React.Component {
+	constructor(props) {
+		super(props);
 		const now = new Date();
 		const participants = [];
 
-		if (props.participants) {
-			props.participants.forEach((name) => {
+		if (this.props.participants) {
+			this.props.participants.forEach(name => {
 				participants.push(createParticipant(name));
 			});
 		}
@@ -51,29 +41,38 @@ const EditEvent = React.createClass({
 
 		this.initialParticipants = {};
 
-		participants
-			.filter(({ name }) => name)
-			.forEach(({ id, name }) => {
-				this.initialParticipants[id] = name;
-			});
+		participants.filter(({ name }) => name).forEach(({ id, name }) => {
+			this.initialParticipants[id] = name;
+		});
 
-		this.initialManagerName = props.managerName || '';
+		this.initialManagerName = this.props.managerName || '';
 
-		return {
-			name: props.name || '',
-			manager: props.managerName || '',
-			start: props.start || now,
-			end: props.end || now,
+		this.state = {
+			name: this.props.name || '',
+			manager: this.props.managerName || '',
+			start: this.props.start || now,
+			end: this.props.end || now,
 			participants,
 		};
-	},
+	}
 
-	goBack() {
+	static propTypes = {
+		pageTitle: PropTypes.string.isRequired,
+		prevUrl: PropTypes.string.isRequired,
+		name: PropTypes.string,
+		managerName: PropTypes.string,
+		start: PropTypes.object,
+		end: PropTypes.object,
+		participants: PropTypes.array,
+		handleSave: PropTypes.func.isRequired,
+	};
+
+	goBack = () => {
 		const { prevUrl, router } = this.props;
 		router.push(prevUrl);
-	},
+	};
 
-	isSaveAvailable() {
+	isSaveAvailable = () => {
 		const { state } = this;
 
 		const hasName = state.name.trim().length > 2;
@@ -87,32 +86,32 @@ const EditEvent = React.createClass({
 			.filter(({ name }) => name.trim())
 			.map(markDuplicateParticipants([state.manager]));
 
-		const participantsAreUnique = participants.length && !participants
-			.filter(({ isDuplicate }) => isDuplicate)
-			.length;
+		const participantsAreUnique =
+			participants.length &&
+			!participants.filter(({ isDuplicate }) => isDuplicate).length;
 		if (!participantsAreUnique) return false;
 
 		return true;
-	},
+	};
 
-	save() {
+	save = () => {
 		const { props, state } = this;
 		const { initialParticipants } = this;
-		const participants = state.participants.filter(({ name }) => name.trim() !== '');
+		const participants = state.participants.filter(
+			({ name }) => name.trim() !== ''
+		);
 		const participantsByIds = {};
 
 		participants.forEach(({ id, name }) => {
 			participantsByIds[id] = name;
 		});
 
-		const deletedParticipants = Object
-			.keys(initialParticipants)
-			.filter((pId) => !participantsByIds[pId])
-			.map((pId) => initialParticipants[pId]);
+		const deletedParticipants = Object.keys(initialParticipants)
+			.filter(pId => !participantsByIds[pId])
+			.map(pId => initialParticipants[pId]);
 
-		const updatedParticipants = Object
-			.keys(initialParticipants)
-			.map((id) => ({
+		const updatedParticipants = Object.keys(initialParticipants)
+			.map(id => ({
 				id,
 				name: initialParticipants[id],
 			}))
@@ -135,19 +134,21 @@ const EditEvent = React.createClass({
 			manager: state.manager,
 			start: state.start.valueOf(),
 			end: state.end.valueOf(),
-			participants: [state.manager].concat(participants.map(({ name }) => name.trim())),
+			participants: [state.manager].concat(
+				participants.map(({ name }) => name.trim())
+			),
 			deletedParticipants,
 			updatedParticipants,
 		});
-	},
+	};
 
-	handleEventNameChange(event) {
+	handleEventNameChange = event => {
 		this.setState({
 			name: event.target.value,
 		});
-	},
+	};
 
-	handleStartDateChange(event) {
+	handleStartDateChange = event => {
 		const { state } = this;
 		const start = new Date(event.target.value).valueOf();
 
@@ -155,30 +156,31 @@ const EditEvent = React.createClass({
 			start,
 			end: start > state.end ? start : state.end,
 		});
-	},
+	};
 
-	handleEndDateChange(event) {
+	handleEndDateChange = event => {
 		this.setState({
 			end: new Date(event.target.value).valueOf(),
 		});
-	},
+	};
 
-	handleStartDateBlur(event) {
+	handleStartDateBlur = event => {
 		this.setState({
 			start: new Date(event.target.value).valueOf() || new Date().valueOf(),
 		});
-	},
+	};
 
-	handleEndDateBlur(event) {
+	handleEndDateBlur = event => {
 		const { state } = this;
-		const end = new Date(event.target.value).valueOf() || new Date(state.start).valueOf();
+		const end =
+			new Date(event.target.value).valueOf() || new Date(state.start).valueOf();
 
 		this.setState({
 			end: end < state.start ? state.start : end,
 		});
-	},
+	};
 
-	handleChangeOrganizerName(event) {
+	handleChangeOrganizerName = event => {
 		const managerName = event.target.value;
 		const updatedParticipants = this.state.participants
 			.slice()
@@ -188,19 +190,20 @@ const EditEvent = React.createClass({
 			manager: managerName,
 			participants: updatedParticipants,
 		});
-	},
+	};
 
-	handleParticipantChange(id, name) {
+	handleParticipantChange = (id, name) => {
 		const { state, props, initialParticipants } = this;
 		const { hasRepayedDebts } = props;
 		const updatedParticipants = state.participants
 			.slice()
-			.map((participant) => {
+			.map(participant => {
 				if (participant.id !== id) return participant;
 				return {
 					id,
 					name,
-					showRemovalWarning: hasRepayedDebts && initialParticipants[id] && !name.trim(),
+					showRemovalWarning:
+						hasRepayedDebts && initialParticipants[id] && !name.trim(),
 				};
 			})
 			.map(markDuplicateParticipants([this.state.manager]));
@@ -208,14 +211,14 @@ const EditEvent = React.createClass({
 		this.setState({
 			participants: keepOneEmptyItem(updatedParticipants),
 		});
-	},
+	};
 
-	handleParticipantBlur() {
+	handleParticipantBlur = () => {
 		const { initialParticipants } = this;
 		let result;
 
 		if (this.props.hasRepayedDebts) {
-			result = this.state.participants.map((participant) => {
+			result = this.state.participants.map(participant => {
 				const participantCopy = assign({}, participant);
 
 				if (!participantCopy.name.trim()) {
@@ -236,10 +239,10 @@ const EditEvent = React.createClass({
 		this.setState({
 			participants: keepOneEmptyItem(result),
 		});
-	},
+	};
 
-	renderParticipants() {
-		return this.state.participants.map((participant) => {
+	renderParticipants = () => {
+		return this.state.participants.map(participant => {
 			const { id, name, isDuplicate, showRemovalWarning } = participant;
 			let errorText;
 			const isInvalid = isDuplicate || showRemovalWarning;
@@ -249,7 +252,8 @@ const EditEvent = React.createClass({
 			}
 
 			if (showRemovalWarning) {
-				errorText = 'Нельзя удалять участников из мероприятия с возвращёнными долгами';
+				errorText =
+					'Нельзя удалять участников из мероприятия с возвращёнными долгами';
 			}
 
 			return (
@@ -258,38 +262,38 @@ const EditEvent = React.createClass({
 						placeholder="Имя участника"
 						invalid={isInvalid}
 						value={name}
-						onChange={(event) => this.handleParticipantChange(id, event.target.value)}
+						onChange={event =>
+							this.handleParticipantChange(id, event.target.value)
+						}
 						onBlur={this.handleParticipantBlur}
 					/>
-					<FormError visible={isInvalid}>
-						{errorText}
-					</FormError>
+					<FormError visible={isInvalid}>{errorText}</FormError>
 				</FormRow>
 			);
 		});
-	},
+	};
 
-	renderTopBar() {
+	renderTopBar = () => {
 		const { props } = this;
 
 		return (
 			<TopBar bordered>
 				<TopBarIcon icon="close" onClick={this.goBack} />
 				<TopBarHeading title={props.pageTitle} />
-				{props.isCreatingEvent ?
+				{props.isCreatingEvent ? (
 					<Spinner className={styles.spinner} />
-					:
+				) : (
 					<TopBarIcon
 						icon="check-active"
 						onClick={this.save}
 						disabled={!this.isSaveAvailable()}
 					/>
-				}
+				)}
 			</TopBar>
 		);
-	},
+	};
 
-	renderDatesInputs() {
+	renderDatesInputs = () => {
 		const { state } = this;
 
 		return (
@@ -318,15 +322,13 @@ const EditEvent = React.createClass({
 				</FormRow>
 			</FlexContainer>
 		);
-	},
+	};
 
 	render() {
 		const { state } = this;
 		return (
 			<Page>
-				<Page.Header>
-					{this.renderTopBar()}
-				</Page.Header>
+				<Page.Header>{this.renderTopBar()}</Page.Header>
 
 				<Page.Content style={{ padding: '8px 1rem 5rem' }}>
 					<FormRow>
@@ -342,7 +344,13 @@ const EditEvent = React.createClass({
 
 					<Separator />
 
-					<GreySubtitle style={{ margin: '0 -1rem', width: 'calc(100% + 32px)', paddingBottom: '0' }}>
+					<GreySubtitle
+						style={{
+							margin: '0 -1rem',
+							width: 'calc(100% + 32px)',
+							paddingBottom: '0',
+						}}
+					>
 						Добавить участников
 					</GreySubtitle>
 
@@ -358,8 +366,8 @@ const EditEvent = React.createClass({
 				</Page.Content>
 			</Page>
 		);
-	},
-});
+	}
+}
 
 function keepOneEmptyItem(participants) {
 	const result = participants.slice();
@@ -374,11 +382,11 @@ function keepOneEmptyItem(participants) {
 function markDuplicateParticipants(additionalNames) {
 	const names = {};
 
-	additionalNames.forEach((name) => {
+	additionalNames.forEach(name => {
 		names[name.toLowerCase()] = 1;
 	});
 
-	return (item) => {
+	return item => {
 		const name = item.name.toLowerCase();
 		const isDuplicate = !!names[name];
 

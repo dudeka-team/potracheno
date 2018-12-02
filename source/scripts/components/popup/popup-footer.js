@@ -15,21 +15,17 @@ export default function PopupFooter(props) {
 				[styles.footer_unbordered]: unBordered,
 			})}
 		>
-			{cancelButton ?
+			{cancelButton ? (
 				<button className={styles.button} onClick={cancelButton.onClick}>
 					{cancelButton.text}
 				</button>
-				:
-				null
-			}
+			) : null}
 
-			{okButton ?
+			{okButton ? (
 				<button className={styles.button} onClick={okButton.onClick}>
 					{okButton.text}
 				</button>
-				:
-				null
-			}
+			) : null}
 		</div>
 	);
 }

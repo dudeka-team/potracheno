@@ -1,14 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './form-label.css';
 
 export default function FormLabel(props) {
 	const { htmlFor, children } = props;
 
 	return (
-		<label
-			className={styles.root}
-			htmlFor={htmlFor}
-		>
+		<label className={styles.root} htmlFor={htmlFor}>
 			{children}
 		</label>
 	);

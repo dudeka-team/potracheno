@@ -8,7 +8,7 @@ export default class Payers extends PureComponent {
 
 		return (
 			<div className="payers">
-				{participants.map((user) => (
+				{participants.map(user => (
 					<UniversalListItem
 						key={user}
 						onClick={() => changePayer(user)}

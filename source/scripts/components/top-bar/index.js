@@ -1,15 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export function TopBar(props) {
 	const classes = ['top-bar'];
 	if (props.bordered) {
 		classes.push('top-bar_bordered');
 	}
-	return (
-		<div className={classes.join(' ')}>
-			{props.children}
-		</div>
-	);
+	return <div className={classes.join(' ')}>{props.children}</div>;
 }
 
 export function TopBarHeading(props) {
@@ -22,7 +19,9 @@ export function TopBarHeading(props) {
 	return (
 		<div className={classes.join(' ')}>
 			<div className="top-bar__title">{props.title}</div>
-			{props.subtitle && <div className="top-bar__subtitle">{props.subtitle}</div>}
+			{props.subtitle && (
+				<div className="top-bar__subtitle">{props.subtitle}</div>
+			)}
 		</div>
 	);
 }

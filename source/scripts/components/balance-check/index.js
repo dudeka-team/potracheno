@@ -2,18 +2,17 @@ import React from 'react';
 import IconContentCopy from '../icons/content-copy';
 
 function getCheck(eventsParticipantsDebts) {
-	return eventsParticipantsDebts
-		.map((debt) => `${debt.from} → ${debt.to}   ${Math.abs(debt.sum)} руб.`);
+	return eventsParticipantsDebts.map(
+		debt => `${debt.from} → ${debt.to}   ${Math.abs(debt.sum)} руб.`
+	);
 }
 
-const BalanceCheck = React.createClass({
-	getInitialState() {
-		return {
-			expanded: false,
-		};
-	},
+class BalanceCheck extends React.Component {
+	state = {
+		expanded: false,
+	};
 
-	handleCopy() {
+	handleCopy = () => {
 		const { props } = this;
 		const range = document.createRange();
 		const selection = window.getSelection();
@@ -23,19 +22,21 @@ const BalanceCheck = React.createClass({
 		selection.addRange(range);
 
 		if (!document.execCommand('copy')) {
-			props.onCopy('Устройство не поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами');
+			props.onCopy(
+				'Устройство не поддерживает автоматическое копирование. Пожалуйста, скопируйте выделенный текст сами'
+			);
 		} else {
 			props.onCopy('Чек скопирован в буфер обмена');
 		}
 
 		selection.removeAllRanges();
-	},
+	};
 
-	handleToggle() {
+	handleToggle = () => {
 		this.setState({
 			expanded: !this.state.expanded,
 		});
-	},
+	};
 
 	render() {
 		const { props, state } = this;
@@ -43,23 +44,28 @@ const BalanceCheck = React.createClass({
 		return (
 			<div>
 				<div className="balance-check">
-					<BalanceCheckToggle isExpanded={state.expanded} onClick={this.handleToggle} />
-					{state.expanded &&
+					<BalanceCheckToggle
+						isExpanded={state.expanded}
+						onClick={this.handleToggle}
+					/>
+					{state.expanded && (
 						<div className="balance-check-content">
 							<div
 								className="balance-check-content__debts"
-								ref={(checkContent) => (this.checkContent = checkContent)}
+								ref={checkContent => (this.checkContent = checkContent)}
 							>
-								{getCheck(props.debts).map((row, index) => <p key={index}>{row}</p>)}
+								{getCheck(props.debts).map((row, index) => (
+									<p key={index}>{row}</p>
+								))}
 							</div>
 							<BalanceCheckCopy onCopy={this.handleCopy} />
 						</div>
-					}
+					)}
 				</div>
 			</div>
 		);
-	},
-});
+	}
+}
 
 function BalanceCheckToggle(props) {
 	const indicatorClasses = ['balance-check-toggle__indicator'];
@@ -73,7 +79,9 @@ function BalanceCheckToggle(props) {
 			<div className="balance-check-toggle__icon" />
 			<div className="balance-check-toggle__text">
 				<div className="balance-check-toggle__title">Чек</div>
-				<div className="balance-check-toggle__subtitle">Баланс всего мероприятия</div>
+				<div className="balance-check-toggle__subtitle">
+					Баланс всего мероприятия
+				</div>
 			</div>
 			<div className={indicatorClasses.join(' ')} />
 		</div>

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './form-error.css';
 
 export default function FormError(props) {
@@ -8,11 +9,7 @@ export default function FormError(props) {
 		return null;
 	}
 
-	return (
-		<p className={styles.root}>
-			{children}
-		</p>
-	);
+	return <p className={styles.root}>{children}</p>;
 }
 
 FormError.propTypes = {

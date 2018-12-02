@@ -11,13 +11,9 @@ import getLocalEvents from '../actions/get-local-events';
 
 import db from '../database';
 
-import {
-	getUserType,
-	setUserType,
-	INVITED,
-} from '../modules/metrics';
+import { getUserType, setUserType, INVITED } from '../modules/metrics';
 
-const EventPreloadingPage = React.createClass({
+class EventPreloadingPage extends React.Component {
 	componentDidMount() {
 		const { params, dispatch } = this.props;
 		dispatch(fetchEventData(params.id));
@@ -30,23 +26,22 @@ const EventPreloadingPage = React.createClass({
 		if (localEventsCount === 0 && !userType) {
 			setUserType(INVITED);
 		}
-	},
+	}
 
 	render() {
 		const { props } = this;
 		const { id } = props.params;
 		return (
 			<Wrapper>
-				{
-					props.localEvents[id] ?
-						<EventPage id={id} />
-						:
-						<UserSelection id={id} />
-				}
+				{props.localEvents[id] ? (
+					<EventPage id={id} />
+				) : (
+					<UserSelection id={id} />
+				)}
 			</Wrapper>
 		);
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

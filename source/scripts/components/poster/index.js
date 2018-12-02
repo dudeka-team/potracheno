@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './poster.css';
 
@@ -17,9 +18,7 @@ export default class Poster extends PureComponent {
 					<div className={classNames(styles.icon, styles[`icon_${icon}`])} />
 				</div>
 
-				<div className={styles.content}>
-					{children}
-				</div>
+				<div className={styles.content}>{children}</div>
 			</div>
 		);
 	}

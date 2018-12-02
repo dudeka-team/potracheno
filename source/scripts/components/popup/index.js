@@ -1,4 +1,5 @@
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import PopupFooter from './popup-footer';
 import styles from './popup.css';
@@ -37,10 +38,12 @@ export default class Popup extends PureComponent {
 								[styles.header_unbordered]: unBordered,
 							})}
 						>
-							{props.closeIcon && <div
-								className={classNames(styles.icon, styles.icon_close)}
-								onClick={props.onClose}
-							/>}
+							{props.closeIcon && (
+								<div
+									className={classNames(styles.icon, styles.icon_close)}
+									onClick={props.onClose}
+								/>
+							)}
 
 							<div
 								className={classNames(styles.title, {

@@ -13,59 +13,73 @@ import FlexContainer from '../../components/flex-container';
 import Poster from '../../components/poster';
 import Wrapper from '../../components/wrapper';
 
-import { getEventBalance, getEventsParticipantsDebts } from '../../modules/balance';
+import {
+	getEventBalance,
+	getEventsParticipantsDebts,
+} from '../../modules/balance';
 import repayDebt from '../../actions/repay-debt';
 
-import { createEventActionAsync, eventActionTypes } from '../../actions/create-event-action';
+import {
+	createEventActionAsync,
+	eventActionTypes,
+} from '../../actions/create-event-action';
 
-const BalancePage = React.createClass({
-	getInitialState() {
+class BalancePage extends React.Component {
+	constructor(props) {
+		super(props);
 		const { currentEvent } = this.props;
-		const actions = Object
-			.keys((currentEvent && currentEvent.actions) || [])
-			.map((config) => assign({ config }, currentEvent.actions[config]));
-		return {
+		const actions = Object.keys(
+			(currentEvent && currentEvent.actions) || []
+		).map(config => assign({ config }, currentEvent.actions[config]));
+		this.state = {
 			actions,
 			showPopup: false,
 			showPopupPoster: false,
 		};
-	},
+	}
 
-	getDebtsData() {
+	getDebtsData = () => {
 		const allDebts = getEventsParticipantsDebts(
 			getEventBalance(this.props.eventsById[this.props.eventId]),
 			this.props.eventsById[this.props.eventId]
 		);
 		const { currentUser } = this.props;
 
-		const positiveDebts = allDebts.filter((debt) => currentUser === debt.to);
-		const negativeDebts = allDebts.filter((debt) => currentUser === debt.from);
-		const othersDebts = allDebts.filter((debt) => currentUser !== debt.from && currentUser !== debt.to);
+		const positiveDebts = allDebts.filter(debt => currentUser === debt.to);
+		const negativeDebts = allDebts.filter(debt => currentUser === debt.from);
+		const othersDebts = allDebts.filter(
+			debt => currentUser !== debt.from && currentUser !== debt.to
+		);
 
 		return {
 			allDebts,
 			positiveDebts,
 			negativeDebts,
 			othersDebts,
-			hasReturnedDebts: this.state.actions.filter((action) => action.config.actionType === 'giveBack').length > 0,
+			hasReturnedDebts:
+				this.state.actions.filter(
+					action => action.config.actionType === 'giveBack'
+				).length > 0,
 		};
-	},
+	};
 
-	repayDebtHandler(debt) {
+	repayDebtHandler = debt => {
 		const { props } = this;
 		let oldRepayedFrom = 0;
 		let oldRepayedTo = 0;
 
 		if (props.eventsById[props.eventId].repayedDebts) {
 			oldRepayedFrom =
-				this.props.eventsById[this.props.eventId].repayedDebts[debt.from]
-					|| 0;
-			oldRepayedTo =
-				this.props.eventsById[this.props.eventId].repayedDebts[debt.to];
+				this.props.eventsById[this.props.eventId].repayedDebts[debt.from] || 0;
+			oldRepayedTo = this.props.eventsById[this.props.eventId].repayedDebts[
+				debt.to
+			];
 		}
 
-		const actionType = (Math.abs(this.state.currentDebt.sum) === debt.sum) ?
-			'giveBack' : 'giveBackPartially';
+		const actionType =
+			Math.abs(this.state.currentDebt.sum) === debt.sum
+				? 'giveBack'
+				: 'giveBackPartially';
 
 		const currentUser = props.localEvents[props.eventId];
 
@@ -81,7 +95,7 @@ const BalancePage = React.createClass({
 				currentUser,
 				debtTo,
 				debt.sum,
-				(new Date()).getTime()
+				new Date().getTime()
 			),
 		};
 
@@ -93,10 +107,12 @@ const BalancePage = React.createClass({
 			});
 		}
 
-		props.dispatch(createEventActionAsync({
-			eventId: props.eventId,
-			eventActionInfo: newAction,
-		}));
+		props.dispatch(
+			createEventActionAsync({
+				eventId: props.eventId,
+				eventActionInfo: newAction,
+			})
+		);
 
 		props.dispatch(
 			repayDebt(
@@ -112,9 +128,9 @@ const BalancePage = React.createClass({
 		this.setState({
 			showPopup: false,
 		});
-	},
+	};
 
-	showPopupPoster(content) {
+	showPopupPoster = content => {
 		this.setState({
 			showPopupPoster: true,
 			popupPosterContent: content,
@@ -125,22 +141,22 @@ const BalancePage = React.createClass({
 				showPopupPoster: false,
 			});
 		}, 2000);
-	},
+	};
 
-	showRepayPopup(debt) {
+	showRepayPopup = debt => {
 		this.setState({
 			showPopup: true,
 			currentDebt: debt,
 		});
-	},
+	};
 
-	closeRepayPopup() {
+	closeRepayPopup = () => {
 		this.setState({
 			showPopup: false,
 		});
-	},
+	};
 
-	renderNoPurchasesNotification() {
+	renderNoPurchasesNotification = () => {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 				<Poster icon="purchase">
@@ -148,17 +164,15 @@ const BalancePage = React.createClass({
 				</Poster>
 			</FlexContainer>
 		);
-	},
+	};
 
-	renderNoPendingDebtsNotification() {
+	renderNoPendingDebtsNotification = () => {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<Poster icon="check">
-					Все долги возвращены
-				</Poster>
+				<Poster icon="check">Все долги возвращены</Poster>
 			</FlexContainer>
 		);
-	},
+	};
 
 	render() {
 		const { currentUser } = this.props;
@@ -188,7 +202,11 @@ const BalancePage = React.createClass({
 						/>
 					</Portal>
 
-					<Portal closeOnEsc closeOnOutsideClick isOpened={this.state.showPopup}>
+					<Portal
+						closeOnEsc
+						closeOnOutsideClick
+						isOpened={this.state.showPopup}
+					>
 						<BalanceItemPopup
 							debt={this.state.currentDebt}
 							onSubmit={this.repayDebtHandler}
@@ -200,11 +218,9 @@ const BalancePage = React.createClass({
 
 					<Separator />
 
-					<GreySubtitle>
-						Текущие долги
-					</GreySubtitle>
+					<GreySubtitle>Текущие долги</GreySubtitle>
 
-					{positiveDebts.map((debt) => (
+					{positiveDebts.map(debt => (
 						<BalanceListItem
 							key={`${debt.from}${debt.to}${debt.sum}`}
 							sum={Math.abs(Math.round(debt.sum))}
@@ -215,18 +231,20 @@ const BalancePage = React.createClass({
 						/>
 					))}
 
-					{negativeDebts.map((debt) => (
+					{negativeDebts.map(debt => (
 						<BalanceListItem
 							key={`${debt.from}${debt.to}${debt.sum}`}
 							sum={Math.abs(Math.round(debt.sum))}
-							from={`${debt.from} ${currentUser === debt.from ? '(Вы)' : ''}`.trim()}
+							from={`${debt.from} ${
+								currentUser === debt.from ? '(Вы)' : ''
+							}`.trim()}
 							to={debt.to}
 							debtType="negative"
 							onClick={() => this.showRepayPopup(debt)}
 						/>
 					))}
 
-					{othersDebts.map((debt) => (
+					{othersDebts.map(debt => (
 						<BalanceListItem
 							key={`${debt.to}${debt.from}${debt.sum}`}
 							sum={Math.abs(Math.round(debt.sum))}
@@ -238,8 +256,8 @@ const BalancePage = React.createClass({
 				</div>
 			</Wrapper>
 		);
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

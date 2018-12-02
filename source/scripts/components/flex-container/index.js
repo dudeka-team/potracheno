@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function FlexContainer(props) {
 	const baseClass = 'flex';
@@ -21,11 +22,7 @@ export default function FlexContainer(props) {
 		classes.push(`flex_fd-${flexDirection}`);
 	}
 
-	return (
-		<div className={classes.join(' ')}>
-			{props.children}
-		</div>
-	);
+	return <div className={classes.join(' ')}>{props.children}</div>;
 }
 
 FlexContainer.propTypes = {

@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import styles from './action-button.css';
 
 export default class ActionButton extends PureComponent {
@@ -12,9 +13,7 @@ export default class ActionButton extends PureComponent {
 
 		return (
 			<div className={styles.root} onClick={onClick}>
-				<div className={styles.content}>
-					{children}
-				</div>
+				<div className={styles.content}>{children}</div>
 			</div>
 		);
 	}

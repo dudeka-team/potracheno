@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import sumFormat from '../../modules/sum-format';
 import styles from './balance-list-item.css';
@@ -8,18 +9,13 @@ export default class BalanceListItem extends PureComponent {
 		sum: PropTypes.number.isRequired,
 		from: PropTypes.string.isRequired,
 		to: PropTypes.string.isRequired,
-		debtType: PropTypes.oneOf(['positive', 'negative', 'neutral', 'returned']).isRequired,
+		debtType: PropTypes.oneOf(['positive', 'negative', 'neutral', 'returned'])
+			.isRequired,
 		onClick: PropTypes.func,
 	};
 
 	render() {
-		const {
-			debtType,
-			from,
-			to,
-			sum,
-			onClick,
-		} = this.props;
+		const { debtType, from, to, sum, onClick } = this.props;
 
 		return (
 			<div
@@ -33,9 +29,7 @@ export default class BalanceListItem extends PureComponent {
 						<div className={styles.to}>{to}</div>
 					</div>
 				</div>
-				<div className={styles.sum}>
-					{sumFormat(sum)} P
-				</div>
+				<div className={styles.sum}>{sumFormat(sum)} P</div>
 			</div>
 		);
 	}

@@ -1,4 +1,5 @@
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './spinner.css';
 
@@ -15,11 +16,7 @@ export default class Spinner extends PureComponent {
 		const { className } = this.props;
 
 		return (
-			<div
-				className={classNames(styles.root, className)}
-			>
-				Загрузка...
-			</div>
+			<div className={classNames(styles.root, className)}>Загрузка...</div>
 		);
 	}
 }

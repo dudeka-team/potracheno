@@ -21,18 +21,18 @@ function getSubtitle(participantsCount, eventParticipantsCount) {
 	return result;
 }
 
-const EventPurchasesPage = React.createClass({
-	goToNewPurchase() {
+class EventPurchasesPage extends React.Component {
+	goToNewPurchase = () => {
 		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/new`);
-	},
+	};
 
-	goToPurchase(purchaseId) {
+	goToPurchase = purchaseId => {
 		const { props } = this;
 		props.router.push(`/events/${props.eventId}/purchases/${purchaseId}`);
-	},
+	};
 
-	renderPurchases() {
+	renderPurchases = () => {
 		const { props } = this;
 		const { localEvents, eventParticipants } = props;
 		const currentUser = localEvents[props.eventId];
@@ -51,41 +51,40 @@ const EventPurchasesPage = React.createClass({
 						key={purchase.id}
 						buyer={payerName}
 						title={purchase.name}
-						subtitle={getSubtitle(participants.length, eventParticipants.length)}
+						subtitle={getSubtitle(
+							participants.length,
+							eventParticipants.length
+						)}
 						price={purchase.amount}
 						onClick={() => this.goToPurchase(purchase.id)}
 					/>
 				);
 			});
-	},
+	};
 
-	renderPlaceholder() {
+	renderPlaceholder = () => {
 		return (
 			<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-				<Poster icon="purchase">
-					У вас пока нет покупок
-				</Poster>
+				<Poster icon="purchase">У вас пока нет покупок</Poster>
 			</FlexContainer>
 		);
-	},
+	};
 
 	render() {
 		const { props } = this;
 		return (
 			<Wrapper>
-				{props.purchases.length ?
-					this.renderPurchases()
-					:
-					this.renderPlaceholder()
-				}
+				{props.purchases.length
+					? this.renderPurchases()
+					: this.renderPlaceholder()}
 
 				<Fab onClick={this.goToNewPurchase}>
 					<IconShoppingCart />
 				</Fab>
 			</Wrapper>
 		);
-	},
-});
+	}
+}
 
 function mapStateToProps({ events }) {
 	return {

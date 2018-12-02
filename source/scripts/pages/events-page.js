@@ -28,22 +28,23 @@ class EventsPage extends PureComponent {
 
 	goToNewEvent = () => {
 		this.props.router.push('/events/new');
-	}
+	};
 
 	goToFeedback = () => {
 		this.props.router.push('/feedback');
-	}
+	};
 
-	goToEvent = (eventId) => {
+	goToEvent = eventId => {
 		this.props.dispatch(changeCurrentEvent(eventId));
 		this.props.router.push(`events/${eventId}`);
-	}
+	};
 
-	renderEventPreview = (eventData) => {
+	renderEventPreview = eventData => {
 		const { eventId, data } = eventData;
 		const { start, end } = data;
-		const currentBalance =
-			getEventBalance(data)[this.props.localEvents[eventId]];
+		const currentBalance = getEventBalance(data)[
+			this.props.localEvents[eventId]
+		];
 
 		return (
 			<div onClick={() => this.goToEvent(eventId)} key={eventId}>
@@ -53,23 +54,22 @@ class EventsPage extends PureComponent {
 					datePeriod={{ start, end }}
 					sum={Math.round(currentBalance || 0)}
 					debtType={
-						((currentBalance > 0) && 'positive')
-						||
-						((currentBalance < 0) && 'negative')
-						||
+						(currentBalance > 0 && 'positive') ||
+						(currentBalance < 0 && 'negative') ||
 						(!currentBalance && 'neutural')
 					}
 				/>
 			</div>
 		);
-	}
+	};
 
 	renderEvents = (events, eventsById) => {
 		if (!events.length) {
 			return (
 				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
 					<Poster icon="calendar">
-						У вас пока нет мероприятий, создайте первым свое мероприятие и добавьте участников
+						У вас пока нет мероприятий, создайте первым свое мероприятие и
+						добавьте участников
 					</Poster>
 				</FlexContainer>
 			);
@@ -79,13 +79,13 @@ class EventsPage extends PureComponent {
 			.reverse()
 			.map(getEventData(eventsById))
 			.map(this.renderEventPreview);
-	}
+	};
 
 	renderPreloader = () => (
 		<FlexContainer fullHeight alignItems="center" justifyContent="center">
 			<Spinner />
 		</FlexContainer>
-	)
+	);
 
 	render() {
 		const { props } = this;
@@ -100,11 +100,9 @@ class EventsPage extends PureComponent {
 				</Page.Header>
 
 				<Page.Content>
-					{props.isFetchingEvents ?
-						this.renderPreloader()
-						:
-						this.renderEvents(props.events, props.eventsById)
-					}
+					{props.isFetchingEvents
+						? this.renderPreloader()
+						: this.renderEvents(props.events, props.eventsById)}
 				</Page.Content>
 
 				<Page.Footer>
@@ -118,7 +116,7 @@ class EventsPage extends PureComponent {
 }
 
 function getEventData(eventsById) {
-	return (eventId) => ({
+	return eventId => ({
 		eventId,
 		data: eventsById[eventId],
 	});

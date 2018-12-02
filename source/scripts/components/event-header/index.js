@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './event-header.css';
 
@@ -10,11 +11,7 @@ export default class EventHeader extends PureComponent {
 	};
 
 	render() {
-		const {
-			name,
-			subtitle,
-			userSelection,
-		} = this.props;
+		const { name, subtitle, userSelection } = this.props;
 
 		return (
 			<div

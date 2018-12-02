@@ -10,39 +10,39 @@ import { saveFeedbackAsync } from '../../actions/save-feedback';
 import { TopBar, TopBarHeading, TopBarIcon } from '../top-bar';
 import Page from '../page';
 
-const FeedBack = React.createClass({
-	getInitialState(email = '', review = '') {
-		return {
-			email,
-			review,
-		};
-	},
+class FeedBack extends React.Component {
+	state = {
+		email: '',
+		review: '',
+	};
 
-	goToEvents() {
+	goToEvents = () => {
 		this.saveFeedback();
 		this.props.router.push('/events');
-	},
+	};
 
-	saveFeedback() {
+	saveFeedback = () => {
 		const { state, props } = this;
 
-		props.dispatch(saveFeedbackAsync({
-			mail: state.email,
-			problem: state.review,
-		}));
-	},
+		props.dispatch(
+			saveFeedbackAsync({
+				mail: state.email,
+				problem: state.review,
+			})
+		);
+	};
 
-	handleChangeReview(event) {
+	handleChangeReview = event => {
 		this.setState({
 			review: event.target.value,
 		});
-	},
+	};
 
-	handleChangeEmail(event) {
+	handleChangeEmail = event => {
 		this.setState({
 			email: event.target.value,
 		});
-	},
+	};
 
 	render() {
 		const { email, review } = this.state;
@@ -72,7 +72,9 @@ const FeedBack = React.createClass({
 					</FormRow>
 
 					<FormRow>
-						<FormLabel htmlFor="email">Электронная почта (необязательно)</FormLabel>
+						<FormLabel htmlFor="email">
+							Электронная почта (необязательно)
+						</FormLabel>
 						<FormInput
 							id="email"
 							type="email"
@@ -83,7 +85,7 @@ const FeedBack = React.createClass({
 				</Page.Content>
 			</Page>
 		);
-	},
-});
+	}
+}
 
 export default connect()(withRouter(FeedBack));

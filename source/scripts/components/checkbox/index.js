@@ -28,17 +28,14 @@ export default class Checkbox extends PureComponent {
 	}
 
 	render() {
-		const {
-			className,
-			...inputProps
-		} = this.props;
+		const { className, ...inputProps } = this.props;
 
 		return (
 			<div className={classNames(styles.root, className)}>
 				<input
 					className={styles.input}
 					type="checkbox"
-					ref={(node) => (this.inputNode = node)}
+					ref={node => (this.inputNode = node)}
 					{...inputProps}
 				/>
 

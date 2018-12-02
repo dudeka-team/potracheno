@@ -16,8 +16,8 @@ import {
 	INVITED,
 } from '../modules/metrics';
 
-const NewEventPage = React.createClass({
-	save(eventData) {
+class NewEventPage extends React.Component {
+	save = eventData => {
 		const { dispatch } = this.props;
 		const localEvents = db.getLocalEvents();
 		const localEventsCount = Object.keys(localEvents).length;
@@ -35,7 +35,7 @@ const NewEventPage = React.createClass({
 		delete finalEventData.updatedParticipants;
 
 		dispatch(createEvent(finalEventData));
-	},
+	};
 
 	render() {
 		return (
@@ -45,7 +45,7 @@ const NewEventPage = React.createClass({
 				handleSave={this.save}
 			/>
 		);
-	},
-});
+	}
+}
 
 export default connect()(NewEventPage);

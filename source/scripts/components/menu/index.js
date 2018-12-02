@@ -1,22 +1,23 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import EventHeader from '../event-header';
 import GreySubtitle from '../grey-subtitle';
 import UniversalListItem from '../universal-list-item';
 
-const Menu = React.createClass({
-	renderControls() {
+class Menu extends React.Component {
+	renderControls = () => {
 		const { props } = this;
 		const { currentEvent, currentUserName } = props;
 		const isManager = currentUserName === currentEvent.manager;
 		return (
 			<div className="menu__top-bar">
 				<div className="menu__icons icons-section">
-					{isManager &&
+					{isManager && (
 						<div
 							onClick={props.handleEdit}
 							className="icons-section__icon icons-section__icon_event-edit"
 						/>
-					}
+					)}
 					<div
 						onClick={props.handleHint}
 						className="icons-section__icon icons-section__icon_show-hint"
@@ -24,9 +25,9 @@ const Menu = React.createClass({
 				</div>
 			</div>
 		);
-	},
+	};
 
-	renderParticipant(name) {
+	renderParticipant = name => {
 		const { currentEvent, currentUserName } = this.props;
 		const { manager } = currentEvent;
 		let displayName = name;
@@ -39,12 +40,8 @@ const Menu = React.createClass({
 			displayName += ' ★';
 		}
 
-		return (
-			<UniversalListItem key={name}>
-				{displayName}
-			</UniversalListItem>
-		);
-	},
+		return <UniversalListItem key={name}>{displayName}</UniversalListItem>;
+	};
 
 	render() {
 		const { props } = this;
@@ -57,25 +54,28 @@ const Menu = React.createClass({
 					{this.renderControls()}
 					<EventHeader name={currentEvent.name} subtitle={props.subtitle} />
 
-					<GreySubtitle>
-						Участники
-					</GreySubtitle>
+					<GreySubtitle>Участники</GreySubtitle>
 
 					<div className="menu__list">
 						{currentEvent.participants.map(this.renderParticipant)}
 					</div>
 
-					<div onClick={props.handleRelogin} className="menu__bottom-bar bottom-bar">
+					<div
+						onClick={props.handleRelogin}
+						className="menu__bottom-bar bottom-bar"
+					>
 						<div className="bottom-bar__icon" />
 						<div className="bottom-bar__text">Войти под другим именем</div>
 					</div>
 
-					<div className="menu__manager-annotation">★ — организатор мероприятия</div>
+					<div className="menu__manager-annotation">
+						★ — организатор мероприятия
+					</div>
 				</div>
 			</div>
 		);
-	},
-});
+	}
+}
 
 Menu.propTypes = {
 	currentEvent: PropTypes.object.isRequired,
