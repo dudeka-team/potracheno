@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import assign from 'object-assign';
 import Drawer from 'material-ui/Drawer';
 import Portal from 'react-portal';
+import dayjs from 'dayjs';
 
 import Page from '../../components/page';
 import Tabs from '../../components/tabs';
@@ -78,8 +79,8 @@ class EventPage extends React.Component {
 
 	formatSubtitle = currentEvent => {
 		const participantsStatus = `${currentEvent.participants.length} участников`;
-		const formattedStart = moment(currentEvent.start).format('DD MMMM');
-		const formattedEnd = moment(currentEvent.end).format('DD MMMM');
+		const formattedStart = dayjs(currentEvent.start).format('DD MMMM');
+		const formattedEnd = dayjs(currentEvent.end).format('DD MMMM');
 		let formattedDate;
 
 		if (formattedStart === formattedEnd) {

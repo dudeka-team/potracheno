@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Root from './root';
 
@@ -12,7 +15,8 @@ const firebaseConfig = {
 };
 
 injectTapEventPlugin();
-moment.locale('ru');
+dayjs.locale('ru');
+dayjs.extend(relativeTime);
 firebase.initializeApp(firebaseConfig);
 
 if (typeof localStorage === 'object') {

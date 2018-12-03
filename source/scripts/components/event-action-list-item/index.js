@@ -1,4 +1,5 @@
 import React from 'react';
+import dayjs from 'dayjs';
 
 class EventActionListItem extends React.Component {
 	renderAction = actionType => {
@@ -203,7 +204,7 @@ class EventActionListItem extends React.Component {
 						)}
 					</div>
 					{date && (
-						<div className="event-action__date">{moment(date).fromNow()}</div>
+						<div className="event-action__date">{dayjs(date).fromNow()}</div>
 					)}
 				</div>
 			</div>

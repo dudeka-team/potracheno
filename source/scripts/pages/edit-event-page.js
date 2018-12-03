@@ -2,6 +2,7 @@ import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
+import dayjs from 'dayjs';
 
 import fetchEventData from '../actions/fetch-event-data';
 import updateEvent from '../actions/update-event';
@@ -148,8 +149,8 @@ class EditEventPage extends React.Component {
 					eventActionInfo: {
 						config: eventActionTypes.changeEventDate(
 							currentUserName,
-							moment(updatedEvent.start).format('DD MMMM'),
-							moment(updatedEvent.end).format('DD MMMM'),
+							dayjs(updatedEvent.start).format('DD MMMM'),
+							dayjs(updatedEvent.end).format('DD MMMM'),
 							new Date().getTime()
 						),
 					},

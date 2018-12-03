@@ -4,6 +4,7 @@ import shortid from 'shortid';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
+import dayjs from 'dayjs';
 
 import { TopBar, TopBarHeading, TopBarIcon } from '../top-bar';
 import Page from '../page';
@@ -303,7 +304,7 @@ class EditEvent extends React.Component {
 					<FormInput
 						id="event-date-start"
 						type="date"
-						value={moment(state.start).format('YYYY-MM-DD')}
+						value={dayjs(state.start).format('YYYY-MM-DD')}
 						onChange={this.handleStartDateChange}
 						onBlur={this.handleStartDateBlur}
 					/>
@@ -314,8 +315,8 @@ class EditEvent extends React.Component {
 					<FormInput
 						id="event-date-end"
 						type="date"
-						value={moment(state.end).format('YYYY-MM-DD')}
-						min={moment(state.start).format('YYYY-MM-DD')}
+						value={dayjs(state.end).format('YYYY-MM-DD')}
+						min={dayjs(state.start).format('YYYY-MM-DD')}
 						onChange={this.handleEndDateChange}
 						onBlur={this.handleEndDateBlur}
 					/>
