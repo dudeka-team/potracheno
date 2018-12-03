@@ -73,6 +73,7 @@
   },
   "dependencies": {
     "classnames": "2.2.5",
+    "dayjs": "1.7.7",
     "deep-equal": "^1.0.1",
     "firebase": "^3.3.0",
     "material-ui": "0.20.0",

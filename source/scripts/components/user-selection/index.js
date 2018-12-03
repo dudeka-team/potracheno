@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
 
 import Wrapper from '../wrapper';
 import EventHeader from '../event-header';
@@ -55,8 +56,8 @@ class UserSelection extends PureComponent {
 
 	formatSubtitle = currentEvent => {
 		const participantsStatus = `${currentEvent.participants.length} участников`;
-		const formattedStart = moment(currentEvent.start).format('DD MMMM');
-		const formattedEnd = moment(currentEvent.end).format('DD MMMM');
+		const formattedStart = dayjs(currentEvent.start).format('DD MMMM');
+		const formattedEnd = dayjs(currentEvent.end).format('DD MMMM');
 		let formattedDate;
 
 		if (formattedStart === formattedEnd) {

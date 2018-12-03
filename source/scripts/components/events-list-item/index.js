@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 import sumFormat from '../../modules/sum-format';
 
 function getDate(options) {
@@ -9,16 +10,12 @@ function getDate(options) {
 
 	if (start.getMonth() === end.getMonth()) {
 		if (start.getDate() === end.getDate()) {
-			result = `${moment(end).format('DD MMMM')}, ${moment(end).format(
-				'dddd'
-			)}`;
+			result = `${dayjs(end).format('DD MMMM')}, ${dayjs(end).format('dddd')}`;
 		} else {
-			result = `${moment(start).format('DD')} — ${moment(end).format(
-				'DD MMMM'
-			)}`;
+			result = `${dayjs(start).format('DD')} — ${dayjs(end).format('DD MMMM')}`;
 		}
 	} else {
-		result = `${moment(start).format('DD MMMM')} — ${moment(end).format(
+		result = `${dayjs(start).format('DD MMMM')} — ${dayjs(end).format(
 			'DD MMMM'
 		)}`;
 	}
