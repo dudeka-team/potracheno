@@ -42,9 +42,11 @@ class EditEvent extends React.Component {
 
 		this.initialParticipants = {};
 
-		participants.filter(({ name }) => name).forEach(({ id, name }) => {
-			this.initialParticipants[id] = name;
-		});
+		participants
+			.filter(({ name }) => name)
+			.forEach(({ id, name }) => {
+				this.initialParticipants[id] = name;
+			});
 
 		this.initialManagerName = this.props.managerName || '';
 
