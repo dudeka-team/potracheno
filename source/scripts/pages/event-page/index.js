@@ -1,7 +1,6 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
-import assign from 'object-assign';
 import Drawer from 'material-ui/Drawer';
 import Portal from 'react-portal';
 import dayjs from 'dayjs';
@@ -207,12 +206,13 @@ class EventPage extends React.Component {
 		const { currentEvent, currentUserName } = props;
 		const purchases = Object.keys(
 			(currentEvent && currentEvent.purchases) || []
-		).map(purchaseId =>
-			assign({ id: purchaseId }, currentEvent.purchases[purchaseId])
-		);
+		).map(purchaseId => ({
+			id: purchaseId,
+			...currentEvent.purchases[purchaseId],
+		}));
 		const actions = Object.keys(
 			(currentEvent && currentEvent.actions) || []
-		).map(config => assign({ config }, currentEvent.actions[config]));
+		).map(config => ({ ...config, ...currentEvent.actions[config] }));
 
 		if (currentEvent) {
 			const subtitle = this.formatSubtitle(currentEvent);

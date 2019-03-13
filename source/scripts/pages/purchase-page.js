@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import withRouter from 'react-router/lib/withRouter';
-import assign from 'object-assign';
 
 import NewPurchasePage from './new-purchase-page';
 import FlexContainer from '../components/flex-container';
@@ -54,7 +53,7 @@ class PurchasePage extends React.Component {
 				participants: eventParticipants,
 			};
 			if (mode === EDIT) {
-				purchase = assign({}, currentEvent.purchases[purchase_id]);
+				purchase = { ...currentEvent.purchases[purchase_id] };
 			}
 
 			const data = {

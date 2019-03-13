@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Portal from 'react-portal';
-import assign from 'object-assign';
 
 import BalanceListItem from '../../components/balance-list-item';
 import BalanceCheck from '../../components/balance-check';
@@ -30,7 +29,7 @@ class BalancePage extends React.Component {
 		const { currentEvent } = this.props;
 		const actions = Object.keys(
 			(currentEvent && currentEvent.actions) || []
-		).map(config => assign({ config }, currentEvent.actions[config]));
+		).map(config => ({ ...config, ...currentEvent.actions[config] }));
 		this.state = {
 			actions,
 			showPopup: false,

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import shortid from 'shortid';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
-import assign from 'object-assign';
 import dayjs from 'dayjs';
 
 import { TopBar, TopBarHeading, TopBarIcon } from '../top-bar';
@@ -222,7 +221,7 @@ class EditEvent extends React.Component {
 
 		if (this.props.hasRepayedDebts) {
 			result = this.state.participants.map(participant => {
-				const participantCopy = assign({}, participant);
+				const participantCopy = { ...participant };
 
 				if (!participantCopy.name.trim()) {
 					participantCopy.name = initialParticipants[participantCopy.id] || '';
@@ -395,9 +394,7 @@ function markDuplicateParticipants(additionalNames) {
 
 		if (!name.trim()) return item;
 
-		const result = assign({}, item, {
-			isDuplicate,
-		});
+		const result = { ...item, isDuplicate };
 
 		if (!isDuplicate) {
 			names[name] = 1;
