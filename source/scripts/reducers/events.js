@@ -1,5 +1,4 @@
 import { handleActions } from 'redux-actions';
-import assign from 'object-assign';
 
 import {
 	CREATE_EVENT_LOADING,
@@ -38,167 +37,188 @@ const initialState = {
 
 export default handleActions(
 	{
-		[FETCH_EVENT_DATA_LOADING]: state =>
-			assign({}, state, {
-				isFetchingEvent: true,
-			}),
+		[FETCH_EVENT_DATA_LOADING]: state => ({ ...state, isFetchingEvent: true }),
 
-		[FETCH_EVENT_DATA_ERROR]: state =>
-			assign({}, state, {
-				isFetchingEvent: false,
-			}),
+		[FETCH_EVENT_DATA_ERROR]: state => ({ ...state, isFetchingEvent: false }),
 
-		[FETCH_EVENT_DATA_SUCCESS]: (state, { payload }) =>
-			assign({}, state, {
-				eventsById: assign({}, state.eventsById, {
-					[payload.key]: payload.value,
-				}),
-				currentEvent: assign({}, payload.value),
-				currentUserName: state.localEvents[payload.key],
-				isFetchingEvent: false,
-			}),
+		[FETCH_EVENT_DATA_SUCCESS]: (state, { payload }) => ({
+			...state,
+			eventsById: {
+				...state.eventsById,
+				[payload.key]: payload.value,
+			},
+			currentEvent: { ...payload.value },
+			currentUserName: state.localEvents[payload.key],
+			isFetchingEvent: false,
+		}),
 
-		[CREATE_EVENT_LOADING]: state =>
-			assign({}, state, {
-				isCreatingEvent: true,
-			}),
+		[CREATE_EVENT_LOADING]: state => ({
+			...state,
+			isCreatingEvent: true,
+		}),
 
 		[CREATE_EVENT_SUCCESS]: stopCreatingEvent,
 		[CREATE_EVENT_ERROR]: stopCreatingEvent,
 
-		[READ_EVENTS_LOADING]: state =>
-			assign({}, state, {
-				isFetchingEvents: true,
-			}),
+		[READ_EVENTS_LOADING]: state => ({
+			...state,
+			isFetchingEvents: true,
+		}),
 
-		[READ_EVENTS_SUCCESS]: (state, { payload }) =>
-			assign({}, state, {
-				events: Object.keys(payload),
-				eventsById: payload,
-				isFetchingEvents: false,
-			}),
+		[READ_EVENTS_SUCCESS]: (state, { payload }) => ({
+			...state,
+			events: Object.keys(payload),
+			eventsById: payload,
+			isFetchingEvents: false,
+		}),
 
-		[READ_EVENTS_ERROR]: state =>
-			assign({}, state, {
-				isFetchingEvents: false,
-			}),
-		[CHANGE_CURRENT_EVENT]: (state, { payload }) =>
-			assign({}, state, {
-				currentEvent: state.eventsById[payload],
-			}),
+		[READ_EVENTS_ERROR]: state => ({
+			...state,
+			isFetchingEvents: false,
+		}),
+		[CHANGE_CURRENT_EVENT]: (state, { payload }) => ({
+			...state,
+			currentEvent: state.eventsById[payload],
+		}),
 
 		[CREATE_PURCHASE]: (state, { payload }) => {
-			const currentEvent = assign({}, state.currentEvent);
-			currentEvent.purchases = assign({}, currentEvent.purchases, {
+			const currentEvent = { ...state.currentEvent };
+			currentEvent.purchases = {
+				...currentEvent.purchases,
 				[payload.key]: payload.purchaseData,
-			});
-			return assign({}, state, {
+			};
+			return {
+				...state,
 				currentEvent,
-				eventsById: assign({}, state.eventsById, {
+				eventsById: {
+					...state.eventsById,
 					[currentEvent.id]: currentEvent,
-				}),
-			});
+				},
+			};
 		},
 
 		[CREATE_EVENT_ACTION]: (state, { payload }) => {
-			const currentEvent = assign({}, state.currentEvent);
-			currentEvent.actions = assign({}, currentEvent.actions, {
-				[payload.key]: payload.eventActionInfo,
-			});
-			return assign({}, state, {
+			const currentEvent = {
+				...state.currentEvent,
+				actions: {
+					...state.currentEvent.actions,
+					[payload.key]: payload.eventActionInfo,
+				},
+			};
+
+			return {
+				...state,
 				currentEvent,
-				eventsById: assign({}, state.eventsById, {
+				eventsById: {
+					...state.eventsById,
 					[payload.eventId]: currentEvent,
-				}),
-			});
+				},
+			};
 		},
 
-		[GET_LOCAL_EVENTS]: (state, { payload }) =>
-			assign({}, state, { localEvents: payload }),
+		[GET_LOCAL_EVENTS]: (state, { payload }) => ({
+			...state,
+			localEvents: payload,
+		}),
 
-		[SET_LOCAL_EVENTS]: (state, { payload }) =>
-			assign({}, state, { localEvents: payload }),
+		[SET_LOCAL_EVENTS]: (state, { payload }) => ({
+			...state,
+			localEvents: payload,
+		}),
 
 		[CHANGE_PURCHASE]: (state, { payload }) => {
 			const { eventId, purchase } = payload;
 			const { eventsById } = state;
 			const participants = purchase.participants.slice();
-			const changedPurchase = assign({}, purchase, { participants });
+			const changedPurchase = { ...purchase, participants };
 
-			const changedEvents = assign({}, eventsById, {
-				[eventId]: assign({}, eventsById[eventId], {
-					purchases: assign({}, eventsById[eventId].purchases, {
+			const changedEvents = {
+				...eventsById,
+				[eventId]: {
+					...eventsById[eventId],
+					purchases: {
+						...eventsById[eventId].purchases,
 						changedPurchase,
-					}),
-				}),
-			});
+					},
+				},
+			};
 
-			return assign({}, state, {
-				eventsById: assign({}, eventsById, changedEvents),
-			});
+			return {
+				...state,
+				eventsById: { ...eventsById, ...changedEvents },
+			};
 		},
 
 		[REPAY_DEBT_SUCCESS]: (state, { payload }) => {
 			const { eventId, sum, name } = payload;
 
-			const updatedEvent = assign({}, state.eventsById[eventId], {
-				repayedDebts: assign({}, state.eventsById[eventId].repayedDebts, {
+			const updatedEvent = {
+				...state.eventsById[eventId],
+				repayedDebts: {
+					...state.eventsById[eventId].repayedDebts,
 					[name]: sum,
-				}),
-			});
+				},
+			};
 
-			return assign({}, state, {
-				eventsById: assign({}, state.eventsById, {
+			return {
+				...state,
+				eventsById: {
+					...state.eventsById,
 					[eventId]: updatedEvent,
-				}),
+				},
 				currentEvent: updatedEvent,
-			});
+			};
 		},
 
 		[FETCH_PURCHASE_DELETE]: (state, { payload }) => {
 			const { eventId, purchaseId } = payload;
 			const { eventsById } = state;
 
-			const purchases = assign({}, eventsById[eventId].purchases);
+			const purchases = { ...eventsById[eventId].purchases };
 			delete purchases[purchaseId];
 
-			const changedEvent = assign({}, eventsById[eventId], { purchases });
-			const changedEvents = assign({}, eventsById, { [eventId]: changedEvent });
-
-			return assign({}, state, {
-				eventsById: assign({}, changedEvents),
-			});
+			return {
+				...state,
+				eventsById: {
+					...eventsById,
+					[eventId]: { ...eventsById[eventId], ...purchases },
+				},
+			};
 		},
 
 		[FETCH_UPDATE_PARTICIPANTS_SUCCESS]: (state, { payload }) => {
 			const { eventId, participantsList } = payload;
 			const { eventsById } = state;
-			const changedEvent = assign({}, eventsById[eventId], {
+			const changedEvent = {
+				...eventsById[eventId],
 				participants: participantsList,
-			});
-			return assign({}, state, {
-				eventsById: assign({}, eventsById, {
+			};
+			return {
+				...state,
+				eventsById: {
+					...eventsById,
 					[eventId]: changedEvent,
-				}),
+				},
 				currentEvent: changedEvent,
-			});
+			};
 		},
 
-		[OPEN_SHARE_LINK_POPUP]: state =>
-			assign({}, state, {
-				shareLinkPopupOpened: true,
-			}),
-		[CLOSE_SHARE_LINK_POPUP]: state =>
-			assign({}, state, {
-				shareLinkPopupOpened: false,
-			}),
+		[OPEN_SHARE_LINK_POPUP]: state => ({
+			...state,
+			shareLinkPopupOpened: true,
+		}),
+		[CLOSE_SHARE_LINK_POPUP]: state => ({
+			...state,
+			shareLinkPopupOpened: false,
+		}),
 	},
 	initialState
 );
 
 function stopCreatingEvent(state) {
-	return assign({}, state, {
+	return {
+		...state,
 		isCreatingEvent: false,
 		currentEvent: null,
-	});
+	};
 }

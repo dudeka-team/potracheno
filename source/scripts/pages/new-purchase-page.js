@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import withRouter from 'react-router/lib/withRouter';
 import deepEqual from 'deep-equal';
-import assign from 'object-assign';
 
 import { createPurchaseAsync } from '../actions/create-purchase';
 import {
@@ -278,7 +277,7 @@ class NewPurchasePage extends Component {
 		const amount = Number(event.target.value);
 
 		this.setState(state => ({
-			purchase: Object.assign({}, state.purchase, { amount }),
+			purchase: { ...state.purchase, amount },
 		}));
 	};
 
@@ -380,7 +379,7 @@ class NewPurchasePage extends Component {
 								getFullName={this.getFullName}
 								changePayer={user => {
 									this.setState({
-										purchase: assign(purchase, { payer: user }),
+										purchase: { ...purchase, payer: user },
 										popupOpened: false,
 									});
 								}}

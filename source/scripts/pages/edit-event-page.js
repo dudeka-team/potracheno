@@ -1,7 +1,6 @@
 import React from 'react';
 import withRouter from 'react-router/lib/withRouter';
 import { connect } from 'react-redux';
-import assign from 'object-assign';
 import dayjs from 'dayjs';
 
 import fetchEventData from '../actions/fetch-event-data';
@@ -77,10 +76,11 @@ class EditEventPage extends React.Component {
 					return null;
 				}
 
-				return assign({}, originalPurchase, {
+				return {
+					...originalPurchase,
 					payer,
 					participants: updatedPurchaseParticipants,
-				});
+				};
 			})
 			.filter(Boolean);
 
@@ -90,7 +90,7 @@ class EditEventPage extends React.Component {
 
 		const actions = Object.keys(
 			(currentEvent && currentEvent.actions) || []
-		).map(config => assign({ config }, currentEvent.actions[config]));
+		).map(config => ({ ...config, ...currentEvent.actions[config] }));
 
 		const finalEvent = {
 			name: updatedEvent.name,

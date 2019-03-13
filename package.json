@@ -69,7 +69,6 @@
     "deep-equal": "1.0.1",
     "firebase": "3.9.0",
     "material-ui": "0.20.0",
-    "object-assign": "4.1.1",
     "prop-types": "15.7.2",
     "react": "15.6.2",
     "react-dom": "15.6.2",
