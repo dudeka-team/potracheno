@@ -67,7 +67,7 @@ class EventsPage extends PureComponent {
 		if (!events.length) {
 			return (
 				<FlexContainer alignItems="center" justifyContent="center" fullHeight>
-					<Poster icon="calendar">
+					<Poster data-marker="events-page/placeholder" icon="calendar">
 						У вас пока нет мероприятий, создайте первым свое мероприятие и
 						добавьте участников
 					</Poster>
@@ -91,7 +91,7 @@ class EventsPage extends PureComponent {
 		const { props } = this;
 
 		return (
-			<Page>
+			<Page data-marker="events-page">
 				<Page.Header>
 					<TopBar bordered>
 						<TopBarHeading title="Мероприятия" />
@@ -106,7 +106,10 @@ class EventsPage extends PureComponent {
 				</Page.Content>
 
 				<Page.Footer>
-					<ActionButton onClick={this.goToNewEvent}>
+					<ActionButton
+						data-marker="events-page/add-event"
+						onClick={this.goToNewEvent}
+					>
 						Добавить мероприятие
 					</ActionButton>
 				</Page.Footer>

@@ -39,6 +39,10 @@ const config = {
 			},
 		}),
 	],
+	stats: {
+		children: false,
+		modules: false,
+	},
 };
 
 if (isAnalyzeModeEnabled) {
