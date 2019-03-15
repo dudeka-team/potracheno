@@ -4,6 +4,8 @@
 
 # Build
 build/
+cypress/videos/
+cypress/screenshots/
 
 # Development stuff
 platforms/

@@ -1,51 +1,60 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "prettier"
-  ],
-  "settings": {
-    "react": {
-      "version": "15.6.2"
-    }
-  },
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module"
-  },
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
-  "globals": {
-    "test": true,
-    "expect": true
-  },
-  "rules": {
-    "indent": ["error", "tab", {
-      "SwitchCase": 1
-    }],
-    "max-len": 0,
-    "no-use-before-define": ["error", "nofunc"],
-    "no-multiple-empty-lines": ["error", {
-      "max": 1
-    }],
-    "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": ["**/*.story.js", "**/webpack/**/*.js"]
-    }],
-    "react/require-extension": "off",
-    "react/jsx-indent": ["error", "tab"],
-    "react/jsx-indent-props": ["error", "tab"],
-    "react/prefer-es6-class": ["warn", "always"],
-    "react/prop-types": "off",
-    "react/prefer-stateless-function": "off",
-    "react/jsx-filename-extension": "off",
-    "prettier/prettier": "error"
-  },
-  "plugins": [
-    "import",
-    "prettier"
-  ]
+	"extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+	"settings": {
+		"react": {
+			"version": "15.6.2"
+		}
+	},
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module"
+	},
+	"env": {
+		"browser": true,
+		"node": true,
+		"es6": true,
+		"jest": true
+	},
+	"globals": {
+		"cy": true,
+		"Cypress": true,
+		"specify": true
+	},
+	"plugins": ["import", "prettier"],
+	"rules": {
+		"indent": [
+			"error",
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
+		"max-len": 0,
+		"no-use-before-define": ["error", "nofunc"],
+		"no-multiple-empty-lines": [
+			"error",
+			{
+				"max": 1
+			}
+		],
+		"import/no-extraneous-dependencies": [
+			"error",
+			{
+				"devDependencies": [
+					"**/*.story.js",
+					"**/webpack/**/*.js",
+					"**/cypress/**/*.js"
+				]
+			}
+		],
+		"react/require-extension": "off",
+		"react/jsx-indent": ["error", "tab"],
+		"react/jsx-indent-props": ["error", "tab"],
+		"react/prefer-es6-class": ["warn", "always"],
+		"react/prop-types": "off",
+		"react/prefer-stateless-function": "off",
+		"react/jsx-filename-extension": "off",
+		"prettier/prettier": "error"
+	}
 }
