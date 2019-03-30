@@ -1,20 +1,24 @@
 import React, { PureComponent } from 'react';
-import withRouter from 'react-router/lib/withRouter';
-import { connect } from 'react-redux';
+import Page from '~/components/page';
+import { TopBar, TopBarHeading, TopBarIcon } from '~/components/top-bar';
+import EventsListItem from '~/components/events-list-item';
+import ActionButton from '~/components/action-button';
+import readEvents from '~/actions/read-events';
+import FlexContainer from '~/components/flex-container';
+import Poster from '~/components/poster';
+import Spinner from '~/components/spinner';
+import changeCurrentEvent from '~/actions/change-current-event';
+import { getEventBalance } from '~/modules/balance';
+import getLocalEvents from '~/actions/get-local-events';
 
-import Page from '../components/page';
-import { TopBar, TopBarHeading, TopBarIcon } from '../components/top-bar';
-import EventsListItem from '../components/events-list-item';
-import ActionButton from '../components/action-button';
-import readEvents from '../actions/read-events';
-import FlexContainer from '../components/flex-container';
-import Poster from '../components/poster';
-import Spinner from '../components/spinner';
-import changeCurrentEvent from '../actions/change-current-event';
-import { getEventBalance } from '../modules/balance';
-import getLocalEvents from '../actions/get-local-events';
+function getEventData(eventsById) {
+	return eventId => ({
+		eventId,
+		data: eventsById[eventId],
+	});
+}
 
-class EventsPage extends PureComponent {
+export class EventsPage extends PureComponent {
 	state = {
 		balance: {},
 	};
@@ -95,7 +99,11 @@ class EventsPage extends PureComponent {
 				<Page.Header>
 					<TopBar bordered>
 						<TopBarHeading title="Мероприятия" />
-						<TopBarIcon icon="mail" onClick={this.goToFeedback} />
+						<TopBarIcon
+							data-marker="events-page/feedback"
+							icon="mail"
+							onClick={this.goToFeedback}
+						/>
 					</TopBar>
 				</Page.Header>
 
@@ -117,19 +125,3 @@ class EventsPage extends PureComponent {
 		);
 	}
 }
-
-function getEventData(eventsById) {
-	return eventId => ({
-		eventId,
-		data: eventsById[eventId],
-	});
-}
-
-const mapStateToProps = ({ events }) => ({
-	isFetchingEvents: events.isFetchingEvents,
-	events: events.events,
-	eventsById: events.eventsById,
-	localEvents: events.localEvents,
-});
-
-export default connect(mapStateToProps)(withRouter(EventsPage));

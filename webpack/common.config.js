@@ -12,6 +12,9 @@ const config = {
 	resolve: {
 		extensions: ['.js', '.jsx'],
 		modules: [`${sourceDir}/scripts`, 'node_modules'],
+		alias: {
+			'~': `${sourceDir}/scripts`,
+		},
 	},
 	module: {
 		rules: [

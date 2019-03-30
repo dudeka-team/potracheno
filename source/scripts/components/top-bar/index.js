@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 export function TopBar(props) {
 	const classes = ['top-bar'];
@@ -9,19 +10,16 @@ export function TopBar(props) {
 	return <div className={classes.join(' ')}>{props.children}</div>;
 }
 
-export function TopBarHeading(props) {
-	const classes = ['top-bar__heading'];
-
-	if (props.subtitle) {
-		classes.push('top-bar__heading--with-subtitle');
-	}
-
+export function TopBarHeading({ subtitle, title, className, ...restProps }) {
 	return (
-		<div className={classes.join(' ')}>
-			<div className="top-bar__title">{props.title}</div>
-			{props.subtitle && (
-				<div className="top-bar__subtitle">{props.subtitle}</div>
-			)}
+		<div
+			{...restProps}
+			className={cn(className, 'top-bar__heading', {
+				'top-bar__heading--with-subtitle': subtitle,
+			})}
+		>
+			<div className="top-bar__title">{title}</div>
+			{subtitle && <div className="top-bar__subtitle">{subtitle}</div>}
 		</div>
 	);
 }
@@ -31,18 +29,20 @@ TopBarHeading.propTypes = {
 	subtitle: PropTypes.string,
 };
 
-export function TopBarIcon(props) {
-	const baseClass = 'top-bar__icon';
-	const classes = [baseClass, `${baseClass}--${props.icon}`];
-
-	if (props.disabled) {
-		classes.push(`${baseClass}--disabled`);
-	}
-
+export function TopBarIcon({
+	className,
+	icon,
+	disabled,
+	onClick,
+	...restProps
+}) {
 	return (
 		<div
-			className={classes.join(' ')}
-			onClick={!props.disabled && props.onClick}
+			{...restProps}
+			className={cn(className, 'top-bar__icon', `top-bar__icon--${icon}`, {
+				'top-bar__icon--disabled': disabled,
+			})}
+			onClick={!disabled && onClick}
 		/>
 	);
 }
@@ -65,6 +65,7 @@ TopBarIcon.propTypes = {
 		'mail',
 		'bordered-plus',
 	]).isRequired,
+	className: PropTypes.string,
 	onClick: PropTypes.func,
 	disabled: PropTypes.bool,
 };

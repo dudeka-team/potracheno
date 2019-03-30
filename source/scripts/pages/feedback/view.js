@@ -1,16 +1,14 @@
 import React from 'react';
-import withRouter from 'react-router/lib/withRouter';
-import { connect } from 'react-redux';
-import FormRow from '../form-row';
-import FormLabel from '../form-label';
-import FormInput from '../form-input';
+import FormRow from '~/components/form-row';
+import FormLabel from '~/components/form-label';
+import FormInput from '~/components/form-input';
 
-import { saveFeedbackAsync } from '../../actions/save-feedback';
+import { saveFeedbackAsync } from '~/actions/save-feedback';
 
-import { TopBar, TopBarHeading, TopBarIcon } from '../top-bar';
-import Page from '../page';
+import { TopBar, TopBarHeading, TopBarIcon } from '~/components/top-bar';
+import Page from '~/components/page';
 
-class FeedBack extends React.Component {
+export class FeedbackPage extends React.Component {
 	state = {
 		email: '',
 		review: '',
@@ -23,6 +21,10 @@ class FeedBack extends React.Component {
 
 	saveFeedback = () => {
 		const { state, props } = this;
+
+		if (state.review.trim() === '') {
+			return;
+		}
 
 		props.dispatch(
 			saveFeedbackAsync({
@@ -48,12 +50,20 @@ class FeedBack extends React.Component {
 		const { email, review } = this.state;
 
 		return (
-			<Page>
+			<Page data-marker="feedback-page">
 				<Page.Header>
 					<TopBar bordered>
-						<TopBarIcon icon="close" onClick={this.goToEvents} />
-						<TopBarHeading title="Написать разработчикам" />
 						<TopBarIcon
+							data-marker="feedback-page/back"
+							icon="close"
+							onClick={this.goToEvents}
+						/>
+						<TopBarHeading
+							data-marker="feedback-page/title"
+							title="Написать разработчикам"
+						/>
+						<TopBarIcon
+							data-marker="feedback-page/submit"
 							icon="check-active"
 							disabled={review.trim() === ''}
 							onClick={this.goToEvents}
@@ -65,6 +75,7 @@ class FeedBack extends React.Component {
 					<FormRow>
 						<FormLabel htmlFor="review">Ваш отзыв</FormLabel>
 						<FormInput
+							data-marker="feedback-page/feedback-field"
 							id="review"
 							value={review}
 							onChange={this.handleChangeReview}
@@ -76,6 +87,7 @@ class FeedBack extends React.Component {
 							Электронная почта (необязательно)
 						</FormLabel>
 						<FormInput
+							data-marker="feedback-page/email-field"
 							id="email"
 							type="email"
 							value={email}
@@ -87,5 +99,3 @@ class FeedBack extends React.Component {
 		);
 	}
 }
-
-export default connect()(withRouter(FeedBack));
