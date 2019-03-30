@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './form-input.css';
 
-export default function FormInput(props) {
-	const {
-		id,
-		type,
-		size,
-		disabled,
-		invalid,
-		placeholder,
-		value,
-		onChange,
-		...restProps
-	} = props;
-
+export default function FormInput({
+	id,
+	type,
+	size,
+	disabled,
+	invalid,
+	placeholder,
+	value,
+	onChange,
+	...restProps
+}) {
 	return (
 		<input
 			className={classNames(styles.root, styles[`root_size_${size}`], {

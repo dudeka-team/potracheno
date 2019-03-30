@@ -20,3 +20,4 @@ static/index.appcache
 .idea
 .vscode
 npm-debug.*
+jsconfig.json

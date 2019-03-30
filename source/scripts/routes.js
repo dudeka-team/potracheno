@@ -5,13 +5,13 @@ import IndexRedirect from 'react-router/lib/IndexRedirect';
 import Redirect from 'react-router/lib/Redirect';
 
 import App from './app';
-import EventsPage from './pages/events-page';
+import { EventsPage } from './pages/events';
+import { FeedbackPage } from './pages/feedback';
 
 import EventPreloadingPage from './pages/event-preloading-page';
 import NewEventPage from './pages/new-event-page';
 import EditEventPage from './pages/edit-event-page';
 import PurchasePage from './pages/purchase-page';
-import FeedbackPage from './pages/feedback-page';
 
 export default function Routes(props) {
 	return (

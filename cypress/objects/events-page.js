@@ -10,6 +10,10 @@ class EventsPage {
 	addEventButton() {
 		return cy.get('[data-marker="events-page/add-event"]');
 	}
+
+	feedbackButton() {
+		return cy.get('[data-marker="events-page/feedback"]');
+	}
 }
 
 export const eventsPage = new EventsPage();
