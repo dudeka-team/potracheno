@@ -1,19 +1,25 @@
+# Potracheno
+
 [![Build Status](https://travis-ci.org/dudeka-team/potracheno.svg)](https://travis-ci.org/dudeka-team/potracheno)
-# dudeka
 
-## Getting started
+## Available Scripts
 
-```bash
-$ npm i
-$ npm start # starts development server
-$ PORT=3000 npm start # starts development server on specified port
-$ npm run start:storybook # starts react-storybook server
-$ npm run build # builds project
-$ ANALYZE=true npm run build # builds project and starts webpack bundle analyzer server
-```
+In the project directory, you can run:
 
-## Workflow
+### `npm start`
 
-- Branch name is the number of issue (**issue-***).
-- One single commit for every subtask or task if there are no subtasks. Сommit message starts with the task number (**[#1]**). Text of message is the task or the subtask name.
-- PullRequest text is the task name (**[#1] Do something**).
+Runs the app in the development mode.<br>
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
+
+> Note: you can change the `PORT` in environment variables.
+
+### `npm run start:storybook`
+
+Start storybook server.<br>
+Open [http://localhost:9001](http://localhost:9001) to view it in the browser.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.
+
+> Note: you can set the `ANALYZE=true` in environment variables, to start webpack bundle analyzer.
