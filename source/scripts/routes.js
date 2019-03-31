@@ -7,13 +7,13 @@ import Redirect from 'react-router/lib/Redirect';
 import App from './app';
 import { EventsPage } from './pages/events';
 import { FeedbackPage } from './pages/feedback';
+import { NewEventPage } from './pages/new-event';
 
 import EventPreloadingPage from './pages/event-preloading-page';
-import NewEventPage from './pages/new-event-page';
 import EditEventPage from './pages/edit-event-page';
 import PurchasePage from './pages/purchase-page';
 
-export default function Routes(props) {
+export function Routes(props) {
 	return (
 		<Router history={props.history}>
 			<Route path="/" component={App}>

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Root from './root';
+import { Root } from './root';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCRj3swJ1wBa7lwHKD_B-SYnKCQh_zl-4Q',

@@ -1,10 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
-import EditEvent from '../components/edit-event';
-
-import createEvent from '../actions/create-event';
-import db from '../database';
+import { EditEvent } from '~/components/edit-event';
+import createEvent from '~/actions/create-event';
+import db from '~/database';
 import {
 	getUserType,
 	setUserType,
@@ -13,9 +10,9 @@ import {
 	CREATE_EVENT_INVITED,
 	INDEPENDENT,
 	INVITED,
-} from '../modules/metrics';
+} from '~/modules/metrics';
 
-class NewEventPage extends React.Component {
+export class NewEventPage extends React.Component {
 	save = eventData => {
 		const { dispatch } = this.props;
 		const localEvents = db.getLocalEvents();
@@ -39,6 +36,7 @@ class NewEventPage extends React.Component {
 	render() {
 		return (
 			<EditEvent
+				marker="event-creation-page"
 				pageTitle="Новое мероприятие"
 				prevUrl="/events"
 				handleSave={this.save}
@@ -46,5 +44,3 @@ class NewEventPage extends React.Component {
 		);
 	}
 }
-
-export default connect()(NewEventPage);

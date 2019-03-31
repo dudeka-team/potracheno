@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 
-export default createStore(
+export const store = createStore(
 	combineReducers(reducers),
 	compose(
 		applyMiddleware(

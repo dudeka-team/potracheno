@@ -5,8 +5,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import browserHistory from 'react-router/lib/browserHistory';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
-import store from './store';
-import Routes from './routes';
+import { store } from './store';
+import { Routes } from './routes';
 
 const accentColor = '#ffe151';
 const accentDarkColor = '#f7cc00';
@@ -24,7 +24,7 @@ const dudekaTheme = getMuiTheme({
 	},
 });
 
-function Root() {
+function RootView() {
 	return (
 		<MuiThemeProvider muiTheme={dudekaTheme}>
 			<Provider store={store}>
@@ -34,4 +34,4 @@ function Root() {
 	);
 }
 
-export default hot(module)(Root);
+export const Root = hot(module)(RootView);

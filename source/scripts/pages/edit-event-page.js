@@ -7,7 +7,7 @@ import fetchEventData from '../actions/fetch-event-data';
 import updateEvent from '../actions/update-event';
 
 import FlexContainer from '../components/flex-container';
-import EditEvent from '../components/edit-event';
+import { EditEvent } from '../components/edit-event';
 import Spinner from '../components/spinner';
 
 import {
@@ -208,6 +208,7 @@ class EditEventPage extends React.Component {
 		if (currentEvent) {
 			result = (
 				<EditEvent
+					marker="edit-event-page"
 					pageTitle="Редактирование мероприятия"
 					prevUrl={`/events/${params.id}`}
 					name={currentEvent.name}

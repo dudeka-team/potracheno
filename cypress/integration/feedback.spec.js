@@ -2,11 +2,8 @@ import { eventsPage } from '../objects/events-page';
 import { feedbackPage } from '../objects/feedback-page';
 
 describe('Feedback page', () => {
-	beforeEach(() => {
-		cy.visit('/');
-	});
-
 	specify('should be available from events page', () => {
+		cy.openEventsPage();
 		eventsPage.root().should('be.visible');
 		eventsPage.feedbackButton().should('be.visible');
 		eventsPage.feedbackButton().click();
