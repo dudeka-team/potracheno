@@ -7,8 +7,7 @@
     "url": "https://github.com/dudeka-team/potracheno.git"
   },
   "engines": {
-    "node": "8.9.4",
-    "npm": "5.6.0"
+    "node": "10"
   },
   "author": "dudeka team",
   "license": "MIT",
